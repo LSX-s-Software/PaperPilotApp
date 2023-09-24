@@ -11,6 +11,8 @@
 		F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */; };
 		F5EBC0B62ABFD99000B2B4A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */; };
 		F5EBC0BA2ABFD99000B2B4A3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBC0B92ABFD99000B2B4A3 /* Preview Assets.xcassets */; };
+		F5EBC0C12ABFDD2900B2B4A3 /* ProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0C02ABFDD2900B2B4A3 /* ProjectList.swift */; };
+		F5EBC0C52ABFE19600B2B4A3 /* ProjectDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0C42ABFE19600B2B4A3 /* ProjectDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5EBC0B72ABFD99000B2B4A3 /* PaperHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PaperHelper.entitlements; sourceTree = "<group>"; };
 		F5EBC0B92ABFD99000B2B4A3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F5EBC0C02ABFDD2900B2B4A3 /* ProjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectList.swift; sourceTree = "<group>"; };
+		F5EBC0C42ABFE19600B2B4A3 /* ProjectDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				F5EBC0B12ABFD98E00B2B4A3 /* PaperHelperApp.swift */,
-				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
+				F5EBC0C22ABFDF5500B2B4A3 /* Views */,
 				F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */,
 				F5EBC0B72ABFD99000B2B4A3 /* PaperHelper.entitlements */,
 				F5EBC0B82ABFD99000B2B4A3 /* Preview Content */,
@@ -67,6 +71,24 @@
 				F5EBC0B92ABFD99000B2B4A3 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F5EBC0C22ABFDF5500B2B4A3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
+				F5EBC0C32ABFE16600B2B4A3 /* Projects */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F5EBC0C32ABFE16600B2B4A3 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				F5EBC0C02ABFDD2900B2B4A3 /* ProjectList.swift */,
+				F5EBC0C42ABFE19600B2B4A3 /* ProjectDetail.swift */,
+			);
+			path = Projects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +161,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5EBC0C52ABFE19600B2B4A3 /* ProjectDetail.swift in Sources */,
 				F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */,
 				F5EBC0B22ABFD98E00B2B4A3 /* PaperHelperApp.swift in Sources */,
+				F5EBC0C12ABFDD2900B2B4A3 /* ProjectList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

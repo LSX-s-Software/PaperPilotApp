@@ -13,5 +13,8 @@ struct PaperHelperApp: App {
         WindowGroup {
             ContentView()
         }
+        .commands {
+            SidebarCommands()
+        }
     }
 }
