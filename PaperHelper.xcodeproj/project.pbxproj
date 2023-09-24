@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F53D81402AC02A7A00865B80 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D813F2AC02A7A00865B80 /* Project.swift */; };
+		F53D81422AC02AF800865B80 /* Paper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81412AC02AF800865B80 /* Paper.swift */; };
+		F53D81442AC02C6500865B80 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81432AC02C6500865B80 /* ModelData.swift */; };
+		F53D81462AC038A700865B80 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81452AC038A700865B80 /* TagView.swift */; };
 		F5EBC0B22ABFD98E00B2B4A3 /* PaperHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B12ABFD98E00B2B4A3 /* PaperHelperApp.swift */; };
 		F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */; };
 		F5EBC0B62ABFD99000B2B4A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */; };
@@ -16,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F53D813F2AC02A7A00865B80 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		F53D81412AC02AF800865B80 /* Paper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paper.swift; sourceTree = "<group>"; };
+		F53D81432AC02C6500865B80 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		F53D81452AC038A700865B80 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		F5EBC0AE2ABFD98E00B2B4A3 /* PaperHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaperHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5EBC0B12ABFD98E00B2B4A3 /* PaperHelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperHelperApp.swift; sourceTree = "<group>"; };
 		F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -37,6 +45,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F53D813E2AC02A6B00865B80 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F53D813F2AC02A7A00865B80 /* Project.swift */,
+				F53D81412AC02AF800865B80 /* Paper.swift */,
+				F53D81432AC02C6500865B80 /* ModelData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F5EBC0A52ABFD98E00B2B4A3 = {
 			isa = PBXGroup;
 			children = (
@@ -57,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				F5EBC0B12ABFD98E00B2B4A3 /* PaperHelperApp.swift */,
+				F53D813E2AC02A6B00865B80 /* Models */,
 				F5EBC0C22ABFDF5500B2B4A3 /* Views */,
 				F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */,
 				F5EBC0B72ABFD99000B2B4A3 /* PaperHelper.entitlements */,
@@ -78,6 +97,7 @@
 			children = (
 				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
 				F5EBC0C32ABFE16600B2B4A3 /* Projects */,
+				F53D81452AC038A700865B80 /* TagView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -163,8 +183,12 @@
 			files = (
 				F5EBC0C52ABFE19600B2B4A3 /* ProjectDetail.swift in Sources */,
 				F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */,
+				F53D81422AC02AF800865B80 /* Paper.swift in Sources */,
 				F5EBC0B22ABFD98E00B2B4A3 /* PaperHelperApp.swift in Sources */,
+				F53D81402AC02A7A00865B80 /* Project.swift in Sources */,
 				F5EBC0C12ABFDD2900B2B4A3 /* ProjectList.swift in Sources */,
+				F53D81442AC02C6500865B80 /* ModelData.swift in Sources */,
+				F53D81462AC038A700865B80 /* TagView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,10 +334,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperHelper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -351,10 +375,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperHelper";
 				PRODUCT_NAME = "$(TARGET_NAME)";

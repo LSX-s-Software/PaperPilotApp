@@ -8,25 +8,26 @@
 import SwiftUI
 
 struct ProjectList: View {
-    @State var projects = ["hello"]
+    @EnvironmentObject var modelData: ModelData
 
     var body: some View {
         NavigationView {
             List {
                 Section("本地项目") {
-                    ForEach(projects, id: \.self) { item in
-                        NavigationLink(item) {
-                            ProjectDetail(projectName: item)
+                    ForEach(modelData.projects) { project in
+                        NavigationLink(project.name) {
+                            ProjectDetail(project: project)
                         }
                     }
                 }
             }
             .navigationTitle("项目")
+            .frame(minWidth: 175)
             .toolbar {
-                ToolbarItemGroup {
+                ToolbarItemGroup(placement: .primaryAction) {
                     Spacer()
-                    Button("项目", systemImage: "plus") {
-                        projects.append("hello\(projects.count)")
+                    Button("添加项目", systemImage: "plus") {
+                        modelData.projects.append(Project(id: modelData.projects.count + 1, name: "New Project", papers: []))
                     }
                 }
             }
@@ -37,9 +38,9 @@ struct ProjectList: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigation) {
-                Button(action: toggleSidebar, label: {
+                Button(action: toggleSidebar) {
                     Image(systemName: "sidebar.leading")
-                })
+                }
             }
         }
     }
@@ -56,4 +57,5 @@ struct ProjectList: View {
 
 #Preview {
     ProjectList()
+        .environmentObject(ModelData())
 }
