@@ -12,9 +12,10 @@ struct ProjectDetail: View {
     
     @State var project: Project
     @State private var selection = Set<Paper.ID>()
+    @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime)]
     
     var body: some View {
-        Table(project.papers, selection: $selection) {
+        Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
             TableColumn("名称", value: \.name)
             TableColumn("作者", value: \.formattedAuthors)
             TableColumn("年份", value: \.formattedYear)
