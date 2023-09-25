@@ -18,7 +18,7 @@ struct ProjectDetail: View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
             TableColumn("名称", value: \.name)
             TableColumn("作者", value: \.formattedAuthors)
-            TableColumn("年份", value: \.formattedYear)
+            TableColumn("出版时间", value: \.formattedYear)
                 .width(50)
             TableColumn("来源") { paper in
                 Text(paper.source ?? "未知")

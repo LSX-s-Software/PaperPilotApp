@@ -14,10 +14,13 @@ struct ProjectList: View {
         NavigationView {
             List {
                 Section("本地项目") {
-                    ForEach(modelData.projects) { project in
+                    ForEach($modelData.projects) { $project in
                         NavigationLink(project.name) {
                             ProjectDetail(project: project)
                         }
+                    }
+                    .onDelete { indexSet in
+                        modelData.projects.remove(atOffsets: indexSet)
                     }
                 }
             }

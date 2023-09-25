@@ -8,15 +8,23 @@
 import SwiftUI
 
 struct TagView: View {
-    var text: String
+    var text: String? = nil
+    var systemImage: String? = nil
     
     var body: some View {
-        Text(text)
-            .padding(.vertical, 2)
-            .padding(.horizontal, 6)
-            .foregroundStyle(.white)
-            .background(Color.accentColor.opacity(0.9))
-            .clipShape(RoundedRectangle(cornerRadius: 5))
+        HStack(spacing: 4) {
+            if let systemImage = systemImage {
+                Image(systemName: systemImage)
+            }
+            if let text = text {
+                Text(text)
+            }
+        }
+        .padding(.vertical, 2)
+        .padding(.horizontal, 6)
+        .foregroundStyle(.white)
+        .background(Color.accentColor.opacity(0.9))
+        .clipShape(RoundedRectangle(cornerRadius: 5))
     }
 }
 

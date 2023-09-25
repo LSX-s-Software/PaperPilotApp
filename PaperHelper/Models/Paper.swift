@@ -10,11 +10,13 @@ import Foundation
 struct Paper: Hashable, Codable, Identifiable {
     var id: Int
     var name: String
+    var doi: String?
     var authors: [String]?
     var formattedAuthors: String {
         ListFormatter.localizedString(byJoining: authors ?? [])
     }
     var tags: [String]?
+    var keywords: [String]?
     var year: Int?
     var formattedYear: String {
         year == nil ? "未知" : String(format: "%d年", year!)

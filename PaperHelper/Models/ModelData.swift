@@ -8,7 +8,7 @@
 import Foundation
 
 class ModelData: ObservableObject {
-    static var paper1 = Paper(id: 1, name: "paper1", authors: ["Haibo Chen", "et al."], year: 2021, source: "OSDI", file: nil)
+    static var paper1 = Paper(id: 1, name: "paper1", doi: "12.45678", authors: ["Haibo Chen", "et al."], year: 2021, source: "OSDI", file: Bundle.main.url(forResource: "frames", withExtension: ".pdf"))
     static var paper2 = Paper(id: 2, name: "paper2", authors: ["et al."], tags: ["HPC"], year: 2020, source: "OSDI", file: nil, read: true)
     static var paper3 = Paper(id: 3, name: "paper3", authors: [], year: nil, source: nil, file: nil)
     static var project1 = Project(id: 1, name: "test", papers: [paper1, paper2, paper3])
