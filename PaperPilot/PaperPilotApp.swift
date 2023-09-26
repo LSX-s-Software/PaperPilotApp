@@ -1,6 +1,6 @@
 //
-//  PaperHelperApp.swift
-//  PaperHelper
+//  PaperPilotApp.swift
+//  PaperPilot
 //
 //  Created by 林思行 on 2023/9/24.
 //
@@ -17,7 +17,7 @@ enum AppWindow: String, Identifiable {
 }
 
 @main
-struct PaperHelperApp: App {
+struct PaperPilotApp: App {
     @StateObject private var modelData = ModelData()
     
     var body: some Scene {
