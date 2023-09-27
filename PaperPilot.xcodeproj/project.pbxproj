@@ -14,6 +14,9 @@
 		F53D81492AC1369200865B80 /* PDFKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81482AC1369200865B80 /* PDFKitView.swift */; };
 		F53D814B2AC1385300865B80 /* PaperReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D814A2AC1385300865B80 /* PaperReader.swift */; };
 		F53D814D2AC1506C00865B80 /* frames.pdf in Resources */ = {isa = PBXBuildFile; fileRef = F53D814C2AC1506C00865B80 /* frames.pdf */; };
+		F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */ = {isa = PBXBuildFile; productRef = F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */; };
+		F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379012AC41EDA00C88C94 /* GRPC */; };
+		F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */; };
 		F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */; };
 		F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */; };
 		F5EBC0B62ABFD99000B2B4A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */; };
@@ -45,6 +48,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */,
+				F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */,
+				F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +150,11 @@
 			dependencies = (
 			);
 			name = PaperPilot;
+			packageProductDependencies = (
+				F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */,
+				F5C379012AC41EDA00C88C94 /* GRPC */,
+				F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */,
+			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
 			productType = "com.apple.product-type.application";
@@ -172,6 +183,9 @@
 				Base,
 			);
 			mainGroup = F5EBC0A52ABFD98E00B2B4A3;
+			packageReferences = (
+				F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */,
+			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -437,6 +451,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/grpc/grpc-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.19.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = CGRPCZlib;
+		};
+		F5C379012AC41EDA00C88C94 /* GRPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = GRPC;
+		};
+		F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = "protoc-gen-grpc-swift";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5EBC0A62ABFD98E00B2B4A3 /* Project object */;
 }
