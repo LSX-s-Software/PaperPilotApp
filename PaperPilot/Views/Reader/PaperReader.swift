@@ -44,7 +44,7 @@ struct PaperReader: View {
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
                     Group {
-                        Text(paper.name)
+                        Text(paper.title)
                             .font(.title)
                         Text(paper.formattedAuthors)
                             .foregroundStyle(.secondary)
@@ -71,6 +71,7 @@ struct PaperReader: View {
                                 TagView(text: "添加", systemImage: "plus")
                             }
                         }
+                        .listRowSeparator(.hidden)
                         
                         Section("基本信息") {
                             HStack {
@@ -80,15 +81,39 @@ struct PaperReader: View {
                                     .foregroundStyle(.secondary)
                             }
                             HStack {
-                                Text("来源")
+                                Text("出版方")
                                 Spacer()
-                                Text(paper.source ?? "未知")
+                                Text(paper.publication ?? "未知")
                                     .foregroundStyle(.secondary)
                             }
                             HStack {
                                 Text("出版时间")
                                 Spacer()
                                 Text(paper.formattedYear)
+                                    .foregroundStyle(.secondary)
+                            }
+                            HStack {
+                                Text("卷号")
+                                Spacer()
+                                Text(paper.volume ?? "未知")
+                                    .foregroundStyle(.secondary)
+                            }
+                            HStack {
+                                Text("期号")
+                                Spacer()
+                                Text(paper.issue ?? "未知")
+                                    .foregroundStyle(.secondary)
+                            }
+                            HStack {
+                                Text("页码")
+                                Spacer()
+                                Text(paper.pages ?? "未知")
+                                    .foregroundStyle(.secondary)
+                            }
+                            HStack {
+                                Text("URL")
+                                Spacer()
+                                Text(paper.url ?? "未知")
                                     .foregroundStyle(.secondary)
                             }
                             HStack {
@@ -100,11 +125,19 @@ struct PaperReader: View {
                         }
                         
                         Section("关键词") {
-                            
+                            LazyHGrid(rows: [GridItem()], spacing: 4) {
+                                ForEach(paper.keywords ?? [], id: \.self) { keyword in
+                                    TagView(text: keyword)
+                                }
+                                TagView(text: "添加", systemImage: "plus")
+                            }
                         }
+                        .listRowSeparator(.hidden)
                         
                         Section("摘要") {
-                            
+                            TextEditor(text: .constant(paper.abstract ?? "暂无摘要"))
+                                .font(.body)
+                                .disabled(true)
                         }
                     }
 #if !os(macOS)
@@ -119,5 +152,5 @@ struct PaperReader: View {
 }
 
 #Preview {
-    PaperReader(paper: ModelData.paper2)
+    PaperReader(paper: ModelData.paper1)
 }

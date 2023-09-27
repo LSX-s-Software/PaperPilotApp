@@ -7,25 +7,49 @@
 
 import Foundation
 
+/// 论文
 struct Paper: Hashable, Codable, Identifiable {
     var id: Int
-    var name: String
-    var doi: String?
+    /// 标题
+    var title: String
+    /// 摘要
+    var abstract: String?
+    /// 关键字列表
+    var keywords: [String]?
+    /// 作者列表
     var authors: [String]?
     var formattedAuthors: String {
         ListFormatter.localizedString(byJoining: authors ?? [])
     }
+    /// tag列表
     var tags: [String]?
-    var keywords: [String]?
-    var year: Int?
+    /// 出版日期
+    var publicationYear: Int?
     var formattedYear: String {
-        year == nil ? "未知" : String(format: "%d年", year!)
+        publicationYear == nil ? "未知" : String(format: "%d年", publicationYear!)
     }
-    var source: String?
+    /// 出版日期
+    var publicationDate: Date?
+    /// 出版方
+    var publication: String?
+    /// 卷号
+    var volume: String?
+    /// 期号
+    var issue: String?
+    /// 页码
+    var pages: String?
+    
+    var url: String?
+    var doi: String?
+    
+    /// 文件 url
     var file: URL?
+    
     var createTime: Date = Date.now
     var formattedCreateTime: String {
         createTime.formatted(date: .abbreviated, time: .omitted)
     }
+    
+    /// 已读
     var read: Bool = false
 }

@@ -16,12 +16,12 @@ struct ProjectDetail: View {
     
     var body: some View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
-            TableColumn("名称", value: \.name)
+            TableColumn("名称", value: \.title)
             TableColumn("作者", value: \.formattedAuthors)
             TableColumn("出版时间", value: \.formattedYear)
                 .width(50)
             TableColumn("来源") { paper in
-                Text(paper.source ?? "未知")
+                Text(paper.publication ?? "未知")
             }
             TableColumn("添加时间", value: \.formattedCreateTime)
                 .width(90)
@@ -76,7 +76,7 @@ struct ProjectDetail: View {
                 }
                 
                 Button("添加论文", systemImage: "plus") {
-                    project.papers.append(Paper(id: 4, name: "New Paper"))
+                    project.papers.append(Paper(id: 4, title: "New Paper"))
                 }
             }
 #if !os(macOS)

@@ -30,7 +30,7 @@ struct PaperPilotApp: App {
         }
         
         WindowGroup("论文阅读", id: AppWindow.reader.id, for: Paper.self) { $paper in
-            PaperReader(paper: paper ?? Paper(id: 0, name: "加载中"))
+            PaperReader(paper: paper ?? Paper(id: 0, title: "加载中"))
         }
         .commands {
             CommandGroup(replacing: .newItem, addition: { })
