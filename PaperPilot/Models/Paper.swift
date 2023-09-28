@@ -24,12 +24,7 @@ struct Paper: Hashable, Codable, Identifiable {
     /// tag列表
     var tags: [String]?
     /// 出版日期
-    var publicationYear: Int?
-    var formattedYear: String {
-        publicationYear == nil ? "未知" : String(format: "%d年", publicationYear!)
-    }
-    /// 出版日期
-    var publicationDate: Date?
+    var publicationYear: String?
     /// 出版方
     var publication: String?
     /// 卷号

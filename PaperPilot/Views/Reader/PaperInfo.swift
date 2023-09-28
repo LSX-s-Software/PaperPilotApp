@@ -8,6 +8,20 @@
 import SwiftUI
 import SwiftUIFlow
 
+private struct InfoRow: View {
+    let title: String
+    let content: String?
+    let onEditEnd: (String) -> Void
+    
+    var body: some View {
+        HStack {
+            Text(title)
+            Spacer()
+            EditableText(content, prompt: "请输入" + title, onEditEnd: onEditEnd)
+        }
+    }
+}
+
 struct PaperInfo: View {
     var paper: Paper
     
@@ -24,46 +38,26 @@ struct PaperInfo: View {
             .listRowSeparator(.hidden)
             
             Section("基本信息") {
-                HStack {
-                    Text("DOI")
-                    Spacer()
-                    Text(paper.doi ?? "未知")
-                        .foregroundStyle(.secondary)
+                InfoRow(title: "DOI", content: paper.doi) { newValue in
+                    
                 }
-                HStack {
-                    Text("出版方")
-                    Spacer()
-                    Text(paper.publication ?? "未知")
-                        .foregroundStyle(.secondary)
+                InfoRow(title: "出版方", content: paper.publication) { newValue in
+                    
                 }
-                HStack {
-                    Text("出版时间")
-                    Spacer()
-                    Text(paper.formattedYear)
-                        .foregroundStyle(.secondary)
+                InfoRow(title: "出版时间", content: paper.publicationYear) { newValue in
+                    
                 }
-                HStack {
-                    Text("卷号")
-                    Spacer()
-                    Text(paper.volume ?? "未知")
-                        .foregroundStyle(.secondary)
+                InfoRow(title: "卷号", content: paper.volume) { newValue in
+                    
                 }
-                HStack {
-                    Text("期号")
-                    Spacer()
-                    Text(paper.issue ?? "未知")
-                        .foregroundStyle(.secondary)
+                InfoRow(title: "期号", content: paper.issue) { newValue in
+                    
                 }
-                HStack {
-                    Text("页码")
-                    Spacer()
-                    Text(paper.pages ?? "未知")
-                        .foregroundStyle(.secondary)
+                InfoRow(title: "页码", content: paper.pages) { newValue in
+                    
                 }
-                HStack {
-                    Text("URL")
-                    Spacer()
-                    Link(paper.url ?? "", destination: URL(string: paper.url ?? "")!)
+                InfoRow(title: "URL", content: paper.url) { newValue in
+                    
                 }
                 HStack {
                     Text("添加时间")
