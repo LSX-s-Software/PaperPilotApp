@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIFlow
 
 struct ProjectDetail: View {
     @Environment(\.openWindow) var openWindow
@@ -26,11 +27,12 @@ struct ProjectDetail: View {
             TableColumn("添加时间", value: \.formattedCreateTime)
                 .width(90)
             TableColumn("标签") { paper in
-                LazyHGrid(rows: [GridItem()], spacing: 4) {
+                VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.tags ?? [], id: \.self) { tag in
                         TagView(text: tag)
                     }
                 }
+                .clipped()
             }
             TableColumn("已读") { paper in
                 if paper.read {
@@ -90,4 +92,5 @@ struct ProjectDetail: View {
 
 #Preview {
     ProjectDetail(project: ModelData.project1)
+        .frame(width: 800, height: 600)
 }

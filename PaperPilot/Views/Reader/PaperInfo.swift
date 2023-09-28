@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIFlow
 
 struct PaperInfo: View {
     var paper: Paper
@@ -13,7 +14,7 @@ struct PaperInfo: View {
     var body: some View {
         List {
             Section("标签") {
-                LazyHGrid(rows: [GridItem()], spacing: 4) {
+                VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.tags ?? [], id: \.self) { tag in
                         TagView(text: tag)
                     }
@@ -74,7 +75,7 @@ struct PaperInfo: View {
             }
             
             Section("关键词") {
-                LazyHGrid(rows: [GridItem()], spacing: 4) {
+                VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.keywords ?? [], id: \.self) { keyword in
                         TagView(text: keyword)
                     }
