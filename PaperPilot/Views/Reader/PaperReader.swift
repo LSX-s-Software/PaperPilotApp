@@ -68,7 +68,7 @@ struct PaperReader: View {
                         TextEditor(text: $note)
                     }
                 }
-                .frame(maxWidth: proxy.size.width / 2)
+                .frame(minWidth: 100, idealWidth: proxy.size.width / 4, maxWidth: proxy.size.width / 2)
             }
         }
     }
