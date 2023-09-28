@@ -62,15 +62,13 @@ struct PaperReader: View {
                     }
                     .padding([.horizontal, .top])
                     
-                    Group {
-                        if sidebarContent == .info {
-                            PaperInfo(paper: paper)
-                        } else {
-                            TextEditor(text: $note)
-                        }
+                    if sidebarContent == .info {
+                        PaperInfo(paper: paper)
+                    } else {
+                        TextEditor(text: $note)
                     }
-                    .frame(maxWidth: proxy.size.width / 2)
                 }
+                .frame(maxWidth: proxy.size.width / 2)
             }
         }
     }
