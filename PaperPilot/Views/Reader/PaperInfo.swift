@@ -63,8 +63,7 @@ struct PaperInfo: View {
                 HStack {
                     Text("URL")
                     Spacer()
-                    Text(paper.url ?? "未知")
-                        .foregroundStyle(.secondary)
+                    Link(paper.url ?? "", destination: URL(string: paper.url ?? "")!)
                 }
                 HStack {
                     Text("添加时间")
