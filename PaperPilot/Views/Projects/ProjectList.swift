@@ -9,20 +9,13 @@ import SwiftUI
 
 struct ProjectList: View {
     @EnvironmentObject var modelData: ModelData
-
+    
+    @State private var selectedProject: Project?
+    
     var body: some View {
-        NavigationView {
-            List {
-                Section("Local Projects") {
-                    ForEach($modelData.projects) { $project in
-                        NavigationLink(project.name) {
-                            ProjectDetail(project: project)
-                        }
-                    }
-                    .onDelete { indexSet in
-                        modelData.projects.remove(atOffsets: indexSet)
-                    }
-                }
+        NavigationSplitView {
+            List(modelData.projects, selection: $selectedProject) {
+                project in NavigationLink(project.name, value: project)
             }
             .navigationTitle("Projects")
             .frame(minWidth: 175)
@@ -34,16 +27,14 @@ struct ProjectList: View {
                     }
                 }
             }
-
-            Text("Select a project from the left sidebar.")
-                .font(.title)
-                .foregroundStyle(.secondary)
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigation) {
-                Button(action: toggleSidebar) {
-                    Image(systemName: "sidebar.leading")
-                }
+        } detail: {
+            var _ = print(selectedProject)
+            if let project = selectedProject {
+                ProjectDetail(project: project)
+            } else {
+                Text("Select a project from the left sidebar.")
+                    .font(.title)
+                    .foregroundStyle(.secondary)
             }
         }
     }
