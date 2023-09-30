@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */; };
+		279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */; };
+		279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2D002AC8276600FEA9D8 /* protoc-gen-swift */; };
+		279F2D222AC8364500FEA9D8 /* grpc-swift-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */; };
+		279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */; };
 		F53D81402AC02A7A00865B80 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D813F2AC02A7A00865B80 /* Project.swift */; };
 		F53D81422AC02AF800865B80 /* Paper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81412AC02AF800865B80 /* Paper.swift */; };
 		F53D81442AC02C6500865B80 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81432AC02C6500865B80 /* ModelData.swift */; };
@@ -29,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
+		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		F51A90C02AC19A5A00C26598 /* PaperPilot.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = PaperPilot.entitlements; sourceTree = "<group>"; };
 		F53D813F2AC02A7A00865B80 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		F53D81412AC02AF800865B80 /* Paper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paper.swift; sourceTree = "<group>"; };
@@ -53,16 +60,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */,
 				F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */,
 				F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */,
 				F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */,
+				279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */,
 				F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */,
+				279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		279F2D1F2AC8364500FEA9D8 /* proto */ = {
+			isa = PBXGroup;
+			children = (
+				279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */,
+				279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */,
+			);
+			path = proto;
+			sourceTree = "<group>";
+		};
 		F53D813E2AC02A6B00865B80 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +106,7 @@
 		F5EBC0A52ABFD98E00B2B4A3 = {
 			isa = PBXGroup;
 			children = (
+				279F2D1F2AC8364500FEA9D8 /* proto */,
 				F5EBC0B02ABFD98E00B2B4A3 /* PaperPilot */,
 				F5EBC0AF2ABFD98E00B2B4A3 /* Products */,
 			);
@@ -156,6 +176,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				279F2D092AC82A8A00FEA9D8 /* PBXTargetDependency */,
+				279F2D052AC82A7800FEA9D8 /* PBXTargetDependency */,
+				279F2CEE2AC8240900FEA9D8 /* PBXTargetDependency */,
+				278201142AC8199000D8BA05 /* PBXTargetDependency */,
 			);
 			name = PaperPilot;
 			packageProductDependencies = (
@@ -163,6 +187,9 @@
 				F5C379012AC41EDA00C88C94 /* GRPC */,
 				F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */,
 				F547D0DC2AC52A6F006D2216 /* SwiftUIFlow */,
+				279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */,
+				279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */,
+				279F2D002AC8276600FEA9D8 /* protoc-gen-swift */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -195,6 +222,7 @@
 			packageReferences = (
 				F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */,
 				F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
+				279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -212,7 +240,9 @@
 			files = (
 				F53D814D2AC1506C00865B80 /* frames.pdf in Resources */,
 				F5EBC0BA2ABFD99000B2B4A3 /* Preview Assets.xcassets in Resources */,
+				279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */,
 				F5EBC0B62ABFD99000B2B4A3 /* Assets.xcassets in Resources */,
+				279F2D222AC8364500FEA9D8 /* grpc-swift-config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +269,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		278201142AC8199000D8BA05 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 278201132AC8199000D8BA05 /* GRPCSwiftPlugin */;
+		};
+		279F2CEE2AC8240900FEA9D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 279F2CED2AC8240900FEA9D8 /* SwiftProtobufPlugin */;
+		};
+		279F2D052AC82A7800FEA9D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 279F2D042AC82A7800FEA9D8 /* protoc-gen-swift */;
+		};
+		279F2D092AC82A8A00FEA9D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 279F2D082AC82A8A00FEA9D8 /* protoc-gen-grpc-swift */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F5EBC0BB2ABFD99000B2B4A3 /* Debug */ = {
@@ -362,6 +411,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PaperPilot/PaperPilot.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PaperPilot/Preview Content\"";
@@ -405,6 +455,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PaperPilot/PaperPilot.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PaperPilot/Preview Content\"";
@@ -465,6 +516,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		279F2CE62AC823F000FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.23.0;
+			};
+		};
+		279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.23.0;
+			};
+		};
 		F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ciaranrobrien/SwiftUIFlow.git";
@@ -484,6 +551,41 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		278201132AC8199000D8BA05 /* GRPCSwiftPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = "plugin:GRPCSwiftPlugin";
+		};
+		279F2CED2AC8240900FEA9D8 /* SwiftProtobufPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 279F2CE62AC823F000FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = "plugin:SwiftProtobufPlugin";
+		};
+		279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+		279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobufPluginLibrary;
+		};
+		279F2D002AC8276600FEA9D8 /* protoc-gen-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = "protoc-gen-swift";
+		};
+		279F2D042AC82A7800FEA9D8 /* protoc-gen-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = "protoc-gen-swift";
+		};
+		279F2D082AC82A8A00FEA9D8 /* protoc-gen-grpc-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = "protoc-gen-grpc-swift";
+		};
 		F547D0DC2AC52A6F006D2216 /* SwiftUIFlow */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */;

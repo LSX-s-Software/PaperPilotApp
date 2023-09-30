@@ -1,0 +1,106 @@
+syntax = "proto3";
+package project;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+import "paperpilot_common/protobuf/user/user.proto";
+
+// 项目 ID
+message ProjectId {
+    string id = 1;
+}
+
+message ProjectInviteCode {
+    string invite_code = 1;
+}
+
+// 项目简要信息
+message ProjectInfo {
+    // 项目ID
+    string id = 1;
+    // 项目名称
+    string name = 2;
+    // 项目描述
+    string description = 3;
+    // 邀请码
+    string invite_code = 4;
+    // 拥有者 ID
+    string owner_id = 5;
+    // 项目成员列表
+    repeated user.UserInfo members = 6;
+}
+
+// 获取项目列表请求
+message ListProjectRequest {
+    // 页码
+    int32 page = 1;
+    // 每页大小
+    int32 page_size = 2;
+
+    // 排序字段
+    string order_by = 3;
+}
+
+// 获取项目列表响应
+message ListProjectResponse {
+    // 项目列表
+    repeated ProjectInfo projects = 1;
+    // 总数
+    int32 total = 2;
+    // 下一页
+    int32 next_page = 3;
+}
+
+// 创建项目请求
+message CreateProjectRequest {
+    // 项目名称
+    string name = 1;
+    // 项目描述
+    string description = 2;
+}
+
+// 修改项目请求
+message UpdateProjectRequest {
+    // 项目 ID
+    string id = 1;
+    // 项目名称
+    string name = 2;
+    // 项目描述
+    string description = 3;
+}
+
+// 检查用户是否加入项目请求
+message CheckUserJoinedProjectRequest {
+    // 项目 ID
+    string project_id = 1;
+    // 用户 ID
+    string user_id = 2;
+}
+
+// 项目接口
+service ProjectService {
+    // 检查用户是否加入项目
+    rpc CheckUserJoinedProject(CheckUserJoinedProjectRequest) returns (google.protobuf.BoolValue);
+}
+
+// 项目公开接口
+service ProjectPublicService {
+    // 获取用户参与的项目列表
+    rpc ListUserJoinedProjects(ListProjectRequest) returns (ListProjectResponse);
+    // 获取项目信息
+    rpc GetProjectInfo(ProjectId) returns (ProjectInfo);
+
+    // 创建项目
+    rpc CreateProject(CreateProjectRequest) returns (ProjectInfo);
+    // 修改项目信息
+    rpc UpdateProjectInfo(UpdateProjectRequest) returns (ProjectInfo);
+    // 删除项目
+    rpc DeleteProject(ProjectId) returns (google.protobuf.Empty);
+
+    // 加入项目
+    rpc JoinProject(ProjectInviteCode) returns (ProjectInfo);
+    // 退出项目
+    rpc QuitProject(ProjectId) returns (google.protobuf.Empty);
+}

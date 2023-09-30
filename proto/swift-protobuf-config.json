@@ -1,0 +1,15 @@
+{
+    "invocations": [
+        {
+            "protoFiles": [
+                "paperpilot_common/protobuf/paper/paper.proto",
+                "paperpilot_common/protobuf/test/test.proto",
+                "paperpilot_common/protobuf/user/user.proto",
+                "paperpilot_common/protobuf/user/auth.proto",
+                "paperpilot_common/protobuf/project/project.proto",
+                "paperpilot_common/protobuf/common/util.proto",
+            ],
+            "server": false
+        }
+    ]
+}

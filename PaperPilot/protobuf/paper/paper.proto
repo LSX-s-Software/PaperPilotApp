@@ -1,0 +1,146 @@
+syntax = "proto3";
+package paper;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+import "paperpilot_common/protobuf/common/util.proto";
+
+// 论文 ID
+message PaperId {
+    string id = 1;
+}
+
+// 论文简要信息
+message PaperInfo {
+    // 论文 ID
+    string id = 1;
+    // 标题
+    string title = 2;
+    // 作者列表
+    repeated string authors = 3;
+    // 年份
+    int32 publication_year = 4;
+    // 出版方
+    string publication = 5;
+    // 创建时间
+    google.protobuf.Timestamp create_time = 6;
+}
+
+// 论文详细信息
+message PaperDetail {
+    // 论文 ID
+    string id = 1;
+    // 所属项目 ID
+    string project_id = 2;
+    // 标题
+    string title = 3;
+    // 摘要
+    string abstract = 4;
+    // 关键字列表
+    repeated string keywords = 5;
+    // 作者列表
+    repeated string authors = 6;
+
+    // tag列表
+    repeated string tags = 7;
+
+    // 出版日期
+    util.Date publication_date = 8;
+    // 出版方
+    string publication = 9;
+    // 卷号
+    string volume = 10;
+    // 期号
+    string issue = 11;
+    // 页码
+    string pages = 12;
+
+    string url = 13;
+    string doi = 14;
+
+    // 文件 url
+    string file = 15;
+
+    google.protobuf.Timestamp create_time = 16;
+    google.protobuf.Timestamp update_time = 17;
+}
+
+// 获取论文列表请求
+message ListPaperRequest {
+    // 项目 ID
+    string project_id = 1;
+    // 页码
+    int32 page = 2;
+    // 每页数量
+    int32 page_size = 3;
+
+    // 排序
+    string order_by = 4;
+}
+
+// 获取论文列表响应
+message ListPaperResponse {
+    // 论文列表
+    repeated PaperInfo papers = 1;
+    // 总数
+    int32 total = 2;
+    // 下一页
+    int32 next_page = 3;
+}
+
+// 添加论文请求
+message CreatePaperRequest {
+    // 项目 ID
+    string project_id = 1;
+    PaperDetail paper = 2;
+}
+
+service PaperService {
+    // 添加论文
+    rpc AddPaper(CreatePaperRequest) returns (PaperDetail);
+
+    // 更新论文
+    rpc UpdatePaper(PaperDetail) returns (PaperDetail);
+}
+
+// 上传附件请求
+message UploadAttachmentRequest {
+    // 论文 ID
+    string paper_id = 1;
+    // 是否自动获取元数据
+    bool fetch_metadata = 2;
+}
+
+// 上传附件响应
+message UploadAttachmentResponse {
+    util.OssToken token = 1;
+}
+
+
+// 通过链接创建论文请求
+message CreatePaperByLinkRequest {
+    string project_id = 1;
+    string link = 2;
+}
+
+
+// 论文公开接口
+service PaperPublicService {
+    // 获取论文列表
+    rpc ListPaper(ListPaperRequest) returns (ListPaperResponse);
+    // 获取论文详情
+    rpc GetPaper(PaperId) returns (PaperDetail);
+
+    // 添加论文
+    rpc CreatePaper(CreatePaperRequest) returns (PaperDetail);
+    // 从链接创建论文
+    rpc CreatePaperByLink(CreatePaperByLinkRequest) returns (PaperDetail);
+    // 更新论文
+    rpc UpdatePaper(PaperDetail) returns (PaperDetail);
+    // 上传附件
+    rpc UploadAttachment(UploadAttachmentRequest) returns (UploadAttachmentResponse);
+    // 删除论文
+    rpc DeletePaper(PaperId) returns (google.protobuf.Empty);
+}

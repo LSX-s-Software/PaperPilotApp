@@ -1,0 +1,118 @@
+syntax = "proto3";
+package user;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+import "paperpilot_common/protobuf/common/util.proto";
+
+
+// 用户 ID
+message UserId {
+    // 用户 UUID
+    string id = 1;
+}
+
+// 用户简要信息 用于展示
+message UserInfo {
+    // 用户 UUID
+    string id = 1;
+    // 用户名
+    string username = 2;
+    // 头像
+    string avatar = 3;
+}
+
+// 用户详细信息
+message UserDetail {
+    // 用户 UUID
+    string id = 1;
+    // 用户名
+    string username = 2;
+    // 手机号
+    string phone = 3;
+    // 头像
+    string avatar = 4;
+    // 创建时间
+    google.protobuf.Timestamp create_time = 5;
+    // 更新时间
+    google.protobuf.Timestamp update_time = 6;
+}
+
+// 创建用户请求
+message CreateUserRequest {
+    // 手机号
+    string phone = 1;
+    // 验证码
+    string code = 2;
+    // 用户名
+    string username = 3;
+    // 密码
+    string password = 4;
+}
+
+// 更新用户头像请求
+message UpdateUserAvatarRequest {
+    // 用户 UUID
+    string id = 1;
+    // 头像
+    string avatar = 2;
+}
+
+message UpdateUserRequest {
+    // 用户 UUID
+    string id = 1;
+    // 用户名
+    string username = 2;
+    // 旧密码
+    string old_password = 3;
+    // 新密码
+    string new_password = 4;
+    // 手机号
+    string phone = 5;
+    // 验证码
+    string code = 6;
+}
+
+// 用户 ID 列表
+message UserIdList {
+    repeated string ids = 1;
+}
+
+// 用户简要信息列表
+message UserInfoList {
+    repeated UserInfo users = 1;
+}
+
+// 上传头像响应
+message UploadUserAvatarResponse {
+     util.OssToken token = 1;
+}
+
+
+// 用户服务接口
+service UserService {
+    // 获取指定ID用户简要信息
+    rpc GetUserInfo (UserId) returns (UserInfo);
+    // 获取指定ID用户详细信息
+    rpc GetUserDetail (UserId) returns (UserDetail);
+    // 批量获取用户简要信息
+    rpc ListUserInfo (UserIdList) returns (UserInfoList);
+
+    // 更新用户头像
+    rpc UpdateUserAvatar (UpdateUserAvatarRequest) returns (UserDetail);
+}
+
+// 用户公开接口
+service UserPublicService {
+    // 获取指定ID用户简要信息
+    rpc GetUserInfo (UserId) returns (UserInfo);
+
+    // 获取当前用户信息
+    rpc GetCurrentUser (google.protobuf.Empty) returns (UserDetail);
+
+    // 更新用户信息
+    rpc UpdateUser (UpdateUserRequest) returns (UserDetail);
+    // 上传用户头像
+    rpc UploadUserAvatar (google.protobuf.Empty) returns (UploadUserAvatarResponse);
+}

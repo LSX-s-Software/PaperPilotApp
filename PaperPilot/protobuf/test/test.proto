@@ -1,0 +1,23 @@
+syntax = "proto3";
+package test;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+import "paperpilot_common/protobuf/user/user.proto";
+
+
+// 测试接口返回
+message TestResult {
+    // 服务器当前时间
+    google.protobuf.Timestamp time = 1;
+    // （可选）当前登录用户简要信息
+    user.UserInfo user = 2;
+}
+
+
+// 测试公开接口
+service TestPublicService {
+    // 测试接口
+    rpc Test (google.protobuf.Empty) returns (TestResult);
+}

@@ -1,0 +1,3 @@
+[submodule "paperpilot-common"]
+	path = paperpilot-common
+	url = git@github.com:Nagico/paperpilot-common.git
