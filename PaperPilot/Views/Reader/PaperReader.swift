@@ -35,7 +35,7 @@ struct PaperReader: View {
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundStyle(.red)
                                 .font(.title)
-                            Text("PDF不存在")
+                            Text("No Document")
                                 .foregroundStyle(.secondary)
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -52,7 +52,7 @@ struct PaperReader: View {
                         }
                         .multilineTextAlignment(.leading)
                         
-                        Picker("边栏内容", selection: $sidebarContent) {
+                        Picker("Sidebar Content", selection: $sidebarContent) {
                             ForEach(SidebarContent.allCases) { content in
                                 Text(content.rawValue).tag(content)
                             }

@@ -13,7 +13,7 @@ struct ProjectList: View {
     var body: some View {
         NavigationView {
             List {
-                Section("本地项目") {
+                Section("Local Projects") {
                     ForEach($modelData.projects) { $project in
                         NavigationLink(project.name) {
                             ProjectDetail(project: project)
@@ -24,18 +24,18 @@ struct ProjectList: View {
                     }
                 }
             }
-            .navigationTitle("项目")
+            .navigationTitle("Projects")
             .frame(minWidth: 175)
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
                     Spacer()
-                    Button("添加项目", systemImage: "plus") {
+                    Button("New Project", systemImage: "plus") {
                         modelData.projects.append(Project(id: modelData.projects.count + 1, name: "New Project", papers: []))
                     }
                 }
             }
 
-            Text("从左侧列表中选择一个项目")
+            Text("Select a project from the left sidebar.")
                 .font(.title)
                 .foregroundStyle(.secondary)
         }

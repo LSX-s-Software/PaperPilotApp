@@ -17,18 +17,18 @@ struct ProjectDetail: View {
     
     var body: some View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
-            TableColumn("名称", value: \.title)
-            TableColumn("作者", value: \.formattedAuthors)
-            TableColumn("出版时间") { paper in
-                Text(paper.publicationYear ?? "未知")
+            TableColumn("Title", value: \.title)
+            TableColumn("Authors", value: \.formattedAuthors)
+            TableColumn("Publication Date") { paper in
+                Text(paper.publicationYear ?? "Unknown")
             }
             .width(50)
-            TableColumn("来源") { paper in
-                Text(paper.publication ?? "未知")
+            TableColumn("Publication") { paper in
+                Text(paper.publication ?? "Unknown")
             }
-            TableColumn("添加时间", value: \.formattedCreateTime)
+            TableColumn("Date Added", value: \.formattedCreateTime)
                 .width(90)
-            TableColumn("标签") { paper in
+            TableColumn("Tags") { paper in
                 VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.tags ?? [], id: \.self) { tag in
                         TagView(text: tag)
@@ -36,7 +36,7 @@ struct ProjectDetail: View {
                 }
                 .clipped()
             }
-            TableColumn("已读") { paper in
+            TableColumn("Read") { paper in
                 if paper.read {
                     Image(systemName: "checkmark.circle.fill")
                 }
@@ -45,21 +45,21 @@ struct ProjectDetail: View {
         }
         .contextMenu(forSelectionType: Paper.ID.self) { selectedPapers in
             if !selectedPapers.isEmpty {
-                Button("标为已读", systemImage: "checkmark.circle.fill") {
+                Button("Mark as Read", systemImage: "checkmark.circle.fill") {
                     for paperId in selectedPapers {
                         if let index = project.papers.firstIndex(where: { $0.id == paperId }) {
                             project.papers[index].read = true
                         }
                     }
                 }
-                Button("标为未读", systemImage: "circle") {
+                Button("Mark as Unread", systemImage: "circle") {
                     for paperId in selectedPapers {
                         if let index = project.papers.firstIndex(where: { $0.id == paperId }) {
                             project.papers[index].read = false
                         }
                     }
                 }
-                Button("删除", systemImage: "trash", role: .destructive) {
+                Button("Delete", systemImage: "trash", role: .destructive) {
                     for paperId in selectedPapers {
                         project.papers.removeAll { $0.id == paperId }
                     }
@@ -75,11 +75,11 @@ struct ProjectDetail: View {
         .navigationTitle($project.name)
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
-                Button("项目设置", systemImage: "folder.badge.gear") {
+                Button("Project Settings", systemImage: "folder.badge.gear") {
                     
                 }
                 
-                Button("添加论文", systemImage: "plus") {
+                Button("Add Document", systemImage: "plus") {
                     project.papers.append(Paper(id: 4, title: "New Paper"))
                 }
             }

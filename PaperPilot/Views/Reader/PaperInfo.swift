@@ -17,7 +17,7 @@ private struct InfoRow: View {
         HStack {
             Text(title)
             Spacer()
-            EditableText(content, prompt: "请输入" + title, onEditEnd: onEditEnd)
+            EditableText(content, prompt: "Enter Title" + title, onEditEnd: onEditEnd)
         }
     }
 }
@@ -27,58 +27,58 @@ struct PaperInfo: View {
     
     var body: some View {
         List {
-            Section("标签") {
+            Section("Tags") {
                 VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.tags ?? [], id: \.self) { tag in
                         TagView(text: tag)
                     }
-                    TagView(text: "添加", systemImage: "plus")
+                    TagView(text: "Add", systemImage: "plus")
                 }
             }
             .listRowSeparator(.hidden)
             
-            Section("基本信息") {
+            Section("Info") {
                 InfoRow(title: "DOI", content: paper.doi) { newValue in
                     
                 }
-                InfoRow(title: "出版方", content: paper.publication) { newValue in
+                InfoRow(title: "Publication", content: paper.publication) { newValue in
                     
                 }
-                InfoRow(title: "出版时间", content: paper.publicationYear) { newValue in
+                InfoRow(title: "Publication Date", content: paper.publicationYear) { newValue in
                     
                 }
-                InfoRow(title: "卷号", content: paper.volume) { newValue in
+                InfoRow(title: "Volume", content: paper.volume) { newValue in
                     
                 }
-                InfoRow(title: "期号", content: paper.issue) { newValue in
+                InfoRow(title: "Issue", content: paper.issue) { newValue in
                     
                 }
-                InfoRow(title: "页码", content: paper.pages) { newValue in
+                InfoRow(title: "Pages", content: paper.pages) { newValue in
                     
                 }
                 InfoRow(title: "URL", content: paper.url) { newValue in
                     
                 }
                 HStack {
-                    Text("添加时间")
+                    Text("Date Added")
                     Spacer()
                     Text(paper.formattedCreateTime)
                         .foregroundStyle(.secondary)
                 }
             }
             
-            Section("关键词") {
+            Section("Keywords") {
                 VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.keywords ?? [], id: \.self) { keyword in
                         TagView(text: keyword)
                     }
-                    TagView(text: "添加", systemImage: "plus")
+                    TagView(text: "Add", systemImage: "plus")
                 }
             }
             .listRowSeparator(.hidden)
             
-            Section("摘要") {
-                TextEditor(text: .constant(paper.abstract ?? "暂无摘要"))
+            Section("Abstract") {
+                TextEditor(text: .constant(paper.abstract ?? "Not available."))
                     .font(.body)
                     .disabled(true)
             }

@@ -31,8 +31,8 @@ struct PaperPilotApp: App {
             SidebarCommands()
         }
         
-        WindowGroup("论文阅读", id: AppWindow.reader.id, for: Paper.self) { $paper in
-            PaperReader(paper: paper ?? Paper(id: 0, title: "加载中"))
+        WindowGroup("Paper Reader", id: AppWindow.reader.id, for: Paper.self) { $paper in
+            PaperReader(paper: paper ?? Paper(id: 0, title: "Loading"))
                 .frame(minWidth: 500, idealWidth: 1200, maxWidth: .infinity,
                        minHeight: 300, idealHeight: 900, maxHeight: .infinity)
         }
