@@ -41,6 +41,11 @@ struct EditableText: View {
         .onTapGesture(count: 2) {
             editing = true
         }
+        .contextMenu {
+            Button("Edit", systemImage: "pencil") {
+                editing = true
+            }
+        }
         .onExitCommand(perform: cancelEdit)
     }
     

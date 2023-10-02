@@ -11,6 +11,12 @@ struct TagView: View {
     var text: String? = nil
     var systemImage: String? = nil
     
+    var onEdit: ((String) -> Void)? = nil
+    var onDelete: (() -> Void)? = nil
+    
+    @State var editing = false
+    @State var newText = ""
+    
     var body: some View {
         HStack(spacing: 4) {
             if let systemImage = systemImage {
@@ -25,9 +31,40 @@ struct TagView: View {
         .foregroundStyle(.white)
         .background(Color.accentColor.opacity(0.9))
         .clipShape(RoundedRectangle(cornerRadius: 5))
+        .contextMenu {
+            if onEdit != nil {
+                Button("Edit", systemImage: "pencil") {
+                    newText = text ?? ""
+                    editing = true
+                }
+            }
+            if let onDelete = onDelete {
+                Button("Delete", systemImage: "trash", action: onDelete)
+            }
+        }
+        .popover(isPresented: $editing) {
+            HStack {
+                TextField("New Tag", text: $newText)
+                    .textFieldStyle(.roundedBorder)
+                
+                Button("Add") {
+                    editing = false
+                    if !newText.isEmpty {
+                        onEdit?(newText)
+                    }
+                }
+                .keyboardShortcut(.defaultAction)
+            }
+            .padding()
+        }
     }
 }
 
 #Preview {
-    TagView(text: "Tag")
+    TagView(text: "Tag") { newValue in
+        print("Edit: \(newValue)")
+    } onDelete: {
+        print("Delete")
+    }
+    .padding()
 }

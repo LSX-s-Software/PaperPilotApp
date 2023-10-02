@@ -29,6 +29,7 @@ struct PaperReader: View {
                 Group {
                     if let url = paper.file {
                         PDFKitView(url: url)
+                            .frame(maxWidth: .infinity)
                     } else {
                         VStack(spacing: 6) {
                             Image(systemName: "exclamationmark.triangle.fill")
@@ -68,7 +69,7 @@ struct PaperReader: View {
                         TextEditor(text: $note)
                     }
                 }
-                .frame(minWidth: 100, idealWidth: proxy.size.width / 4, maxWidth: proxy.size.width / 2)
+                .frame(minWidth: 100, idealWidth: proxy.size.width / 4, maxWidth: proxy.size.width / 3)
             }
         }
     }
