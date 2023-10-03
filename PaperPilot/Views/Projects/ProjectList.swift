@@ -10,42 +10,36 @@ import SwiftUI
 struct ProjectList: View {
     @EnvironmentObject var modelData: ModelData
     
-    @State private var selectedProject: Project?
+    @State private var selectedProject: Project? = nil
     
     var body: some View {
         NavigationSplitView {
-            List(modelData.projects, selection: $selectedProject) {
-                project in NavigationLink(project.name, value: project)
+            List(selection: $selectedProject) {
+                Section("Local Projects") {
+                    ForEach(modelData.projects) {
+                        project in
+                        NavigationLink(project.name, value: project)
+                    }
+                }
             }
             .navigationTitle("Projects")
-            .frame(minWidth: 175)
+            .frame(minWidth: 180)
             .toolbar {
-                ToolbarItemGroup(placement: .primaryAction) {
-                    Spacer()
-                    Button("New Project", systemImage: "plus") {
+                ToolbarItem {
+                    Button("New Project", systemImage: "folder.badge.plus") {
                         modelData.projects.append(Project(id: modelData.projects.count + 1, name: "New Project", papers: []))
                     }
                 }
             }
         } detail: {
-            var _ = print(selectedProject)
             if let project = selectedProject {
-                ProjectDetail(project: project)
+                ProjectDetail(project: Binding { project } set: { selectedProject = $0 })
             } else {
                 Text("Select a project from the left sidebar.")
                     .font(.title)
                     .foregroundStyle(.secondary)
             }
         }
-    }
-    
-    private func toggleSidebar() {
-#if os(macOS)
-        NSApp
-            .keyWindow?
-            .firstResponder?
-            .tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
-#endif
     }
 }
 

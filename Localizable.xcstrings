@@ -94,7 +94,6 @@
       }
     },
     "Local Projects" : {
-      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

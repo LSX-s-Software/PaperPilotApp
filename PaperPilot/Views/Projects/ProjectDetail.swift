@@ -11,7 +11,7 @@ import SwiftUIFlow
 struct ProjectDetail: View {
     @Environment(\.openWindow) var openWindow
     
-    @State var project: Project
+    @Binding var project: Project
     @State private var selection = Set<Paper.ID>()
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime)]
     
@@ -93,6 +93,6 @@ struct ProjectDetail: View {
 }
 
 #Preview {
-    ProjectDetail(project: ModelData.project1)
+    ProjectDetail(project: .constant(ModelData.project1))
         .frame(width: 800, height: 600)
 }
