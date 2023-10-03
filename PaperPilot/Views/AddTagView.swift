@@ -37,7 +37,7 @@ struct AddTagView: View {
 }
 
 #Preview {
-    AddTagView() { tag in
+    AddTagView { tag in
         print(tag)
     }
     .padding()

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct TagView: View {
-    var text: String? = nil
-    var systemImage: String? = nil
+    var text: String?
+    var systemImage: String?
     
-    var onEdit: ((String) -> Void)? = nil
-    var onDelete: (() -> Void)? = nil
+    var onEdit: ((String) -> Void)?
+    var onDelete: (() -> Void)?
     
     @State var editing = false
     @State var newText = ""

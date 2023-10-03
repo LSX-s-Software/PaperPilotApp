@@ -10,14 +10,13 @@ import SwiftUI
 struct ProjectList: View {
     @EnvironmentObject var modelData: ModelData
     
-    @State private var selectedProject: Project? = nil
+    @State private var selectedProject: Project?
     
     var body: some View {
         NavigationSplitView {
             List(selection: $selectedProject) {
                 Section("Local Projects") {
-                    ForEach(modelData.projects) {
-                        project in
+                    ForEach(modelData.projects) { project in
                         NavigationLink(project.name, value: project)
                     }
                 }

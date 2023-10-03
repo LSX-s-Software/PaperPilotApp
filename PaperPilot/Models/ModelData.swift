@@ -5,6 +5,8 @@
 //  Created by 林思行 on 2023/9/24.
 //
 
+// swiftlint:disable line_length
+
 import Foundation
 
 class ModelData: ObservableObject {
@@ -23,15 +25,15 @@ class ModelData: ObservableObject {
                               doi: "10.5555/123456789",
                               file: Bundle.main.url(forResource: "frames", withExtension: "pdf"))
     static var paper2 = Paper(id: 2,
-                             title: "An Introduction to Swift Programming",
-                             abstract: nil,
-                             keywords: nil,
-                             authors: ["John Smith"],
-                             tags: ["Swift", "Programming"],
-                             publicationYear: "2020",
-                             publication: "ACM Transactions on Programming Languages and Systems",
-                             volume: nil,
-                             issue: nil)
+                              title: "An Introduction to Swift Programming",
+                              abstract: nil,
+                              keywords: nil,
+                              authors: ["John Smith"],
+                              tags: ["Swift", "Programming"],
+                              publicationYear: "2020",
+                              publication: "ACM Transactions on Programming Languages and Systems",
+                              volume: nil,
+                              issue: nil)
     static var paper3 = Paper(id: 3,
                               title: "A Comprehensive Study of Natural Language Processing Techniques",
                               abstract: "In this paper, we present a comprehensive study of natural language processing techniques, including tokenization, part-of-speech tagging, named entity recognition, and sentiment analysis. We evaluate the performance of these techniques on several benchmark datasets and provide recommendations for future research.",
@@ -45,6 +47,8 @@ class ModelData: ObservableObject {
                               file: Bundle.main.url(forResource: "frames", withExtension: "pdf"))
     static var project1 = Project(id: 1, name: "test", papers: [paper1, paper2, paper3])
     static var project2 = Project(id: 2, name: "test2", papers: [paper2, paper3])
-    
+
     @Published var projects = [project1, project2]
 }
+
+// swiftlint:enable line_length

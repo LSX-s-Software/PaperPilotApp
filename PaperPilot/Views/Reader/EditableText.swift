@@ -31,10 +31,10 @@ struct EditableText: View {
                 .foregroundStyle(.secondary)
                 .opacity(editing ? 0 : 1)
 
-            TextField(prompt, text: $newValue, onEditingChanged: { _ in }) {
+            TextField(prompt, text: $newValue, onEditingChanged: { _ in }, onCommit: {
                 editing = false
                 onEditEnd(newValue)
-            }
+            })
             .multilineTextAlignment(.trailing)
             .opacity(editing ? 1 : 0)
         }

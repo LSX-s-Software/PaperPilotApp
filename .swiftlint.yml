@@ -1,0 +1,22 @@
+disabled_rules: # 执行时排除掉的规则
+  - identifier_name
+  - trailing_whitespace
+  - function_body_length
+  - type_body_length
+  - for_where
+  - cyclomatic_complexity
+opt_in_rules: # 一些规则仅仅是可选的
+  - missing_docs
+included:
+  PaperPilot
+excluded: # 执行 linting 时忽略的路径。 优先级比 `included` 更高。
+  - Pods
+
+# 可配置的规则可以通过这个配置文件来自定义
+# 二进制规则可以设置他们的严格程度
+force_try:
+  severity: warning # 显式
+# 同时有警告和错误等级的规则，可以只设置它的警告等级
+line_length: 130
+file_length: 400
+reporter: "xcode" # 报告类型 (xcode, json, csv, checkstyle, codeclimate, junit, html, emoji, sonarqube, markdown, github-actions-logging)
