@@ -36,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27293A652AD2CE2500A98E13 /* team.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = team.xcconfig; sourceTree = "<group>"; };
 		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -110,6 +111,7 @@
 		F5EBC0A52ABFD98E00B2B4A3 = {
 			isa = PBXGroup;
 			children = (
+				27293A652AD2CE2500A98E13 /* team.xcconfig */,
 				279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */,
 				279F2D1F2AC8364500FEA9D8 /* proto */,
 				F5EBC0B02ABFD98E00B2B4A3 /* PaperPilot */,
@@ -307,6 +309,7 @@
 /* Begin XCBuildConfiguration section */
 		F5EBC0BB2ABFD99000B2B4A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27293A652AD2CE2500A98E13 /* team.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -368,6 +371,7 @@
 		};
 		F5EBC0BC2ABFD99000B2B4A3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27293A652AD2CE2500A98E13 /* team.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -430,7 +434,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PaperPilot/Preview Content\"";
-				DEVELOPMENT_TEAM = C2A3XCXCZS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -451,7 +454,6 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperPilot";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
@@ -474,7 +476,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PaperPilot/Preview Content\"";
-				DEVELOPMENT_TEAM = C2A3XCXCZS;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -495,7 +496,6 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperPilot";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
