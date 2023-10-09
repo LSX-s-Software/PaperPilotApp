@@ -8,11 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isShowingAccountView = false
     var body: some View {
         ProjectList()
+            .toolbar {
+                ToolbarItem {
+                    Button("Account", systemImage: "person.crop.circle") {
+                        isShowingAccountView = true
+                    }
+
+                    .sheet(
+                        isPresented: $isShowingAccountView,
+                        onDismiss: {},
+                        content: {
+                            AccountView(
+                                isShowingAccountView:
+                                    $isShowingAccountView)
+                        }
+                    )
+                }
+            }
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(ModelData())
 }

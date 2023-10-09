@@ -13,6 +13,7 @@
 		279F2D222AC8364500FEA9D8 /* grpc-swift-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */; };
 		279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */; };
 		279F2D272AC8398A00FEA9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
+		27ED7C7A2AD3B6540069F24C /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ED7C792AD3B6540069F24C /* AccountView.swift */; };
 		F53D81402AC02A7A00865B80 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D813F2AC02A7A00865B80 /* Project.swift */; };
 		F53D81422AC02AF800865B80 /* Paper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81412AC02AF800865B80 /* Paper.swift */; };
 		F53D81442AC02C6500865B80 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81432AC02C6500865B80 /* ModelData.swift */; };
@@ -41,6 +42,7 @@
 		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		27ED7C792AD3B6540069F24C /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		F51A90C02AC19A5A00C26598 /* PaperPilot.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = PaperPilot.entitlements; sourceTree = "<group>"; };
 		F53D813F2AC02A7A00865B80 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		F53D81412AC02AF800865B80 /* Paper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paper.swift; sourceTree = "<group>"; };
@@ -87,6 +89,14 @@
 				279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */,
 			);
 			path = proto;
+			sourceTree = "<group>";
+		};
+		27ED7C762AD3B6370069F24C /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				27ED7C792AD3B6540069F24C /* AccountView.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		F53D813E2AC02A6B00865B80 /* Models */ = {
@@ -162,6 +172,7 @@
 		F5EBC0C22ABFDF5500B2B4A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				27ED7C762AD3B6370069F24C /* Account */,
 				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
 				F5EBC0C32ABFE16600B2B4A3 /* Projects */,
 				F53D81472AC1367400865B80 /* Reader */,
@@ -281,6 +292,7 @@
 				F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */,
 				F5D8EEED2AD42D5100501B0E /* LoginSheet.swift in Sources */,
 				F53D81422AC02AF800865B80 /* Paper.swift in Sources */,
+				27ED7C7A2AD3B6540069F24C /* AccountView.swift in Sources */,
 				F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */,
 				F53D81492AC1369200865B80 /* PDFKitView.swift in Sources */,
 				F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */,
