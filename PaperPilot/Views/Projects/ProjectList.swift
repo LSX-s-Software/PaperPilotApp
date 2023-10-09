@@ -11,7 +11,9 @@ struct ProjectList: View {
     @EnvironmentObject var modelData: ModelData
     
     @State private var selectedProject: Project?
-    @State private var showLoginSheet = false
+    @State private var isShowingLoginSheet = false
+    @State private var isShowingAccountView = false
+    @State private var haveLoggedIn = false
     
     var body: some View {
         NavigationSplitView {
@@ -43,16 +45,32 @@ struct ProjectList: View {
             }
             .toolbar {
                 ToolbarItem(placement: selectedProject == nil ? .automatic : .principal) {
-                    Button {
-                        showLoginSheet.toggle()
-                    } label: {
-                        HStack {
-                            Image(systemName: "person.crop.circle")
-                            Text("Login")
+                    if !haveLoggedIn {
+                        Button {
+                            isShowingLoginSheet.toggle()
+                        } label: {
+                            HStack {
+                                Image(systemName: "person.crop.circle")
+                                Text("Login")
+                            }
                         }
-                    }
-                    .sheet(isPresented: $showLoginSheet) {
-                        LoginSheet()
+                        .sheet(isPresented: $isShowingLoginSheet) {
+                            LoginSheet()
+                        }
+                    } else {
+                        Button("Account", systemImage: "person.crop.circle") {
+                            isShowingAccountView = true
+                        }
+
+                        .sheet(
+                            isPresented: $isShowingAccountView,
+                            onDismiss: {},
+                            content: {
+                                AccountView(
+                                    isShowingAccountView:
+                                        $isShowingAccountView)
+                            }
+                        )
                     }
                 }
             }

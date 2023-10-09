@@ -91,14 +91,6 @@
 			path = proto;
 			sourceTree = "<group>";
 		};
-		27ED7C762AD3B6370069F24C /* Account */ = {
-			isa = PBXGroup;
-			children = (
-				27ED7C792AD3B6540069F24C /* AccountView.swift */,
-			);
-			path = Account;
-			sourceTree = "<group>";
-		};
 		F53D813E2AC02A6B00865B80 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +115,7 @@
 		F5D8EEE72AD42D3600501B0E /* User */ = {
 			isa = PBXGroup;
 			children = (
+				27ED7C792AD3B6540069F24C /* AccountView.swift */,
 				F5D8EEEC2AD42D5100501B0E /* LoginSheet.swift */,
 			);
 			path = User;
@@ -172,7 +165,6 @@
 		F5EBC0C22ABFDF5500B2B4A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				27ED7C762AD3B6370069F24C /* Account */,
 				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
 				F5EBC0C32ABFE16600B2B4A3 /* Projects */,
 				F53D81472AC1367400865B80 /* Reader */,
