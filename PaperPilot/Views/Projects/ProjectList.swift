@@ -11,6 +11,7 @@ struct ProjectList: View {
     @EnvironmentObject var modelData: ModelData
     
     @State private var selectedProject: Project?
+    @State private var showLoginSheet = false
     
     var body: some View {
         NavigationSplitView {
@@ -31,12 +32,29 @@ struct ProjectList: View {
                 }
             }
         } detail: {
-            if let project = selectedProject {
-                ProjectDetail(project: Binding { project } set: { selectedProject = $0 })
-            } else {
-                Text("Select a project from the left sidebar.")
-                    .font(.title)
-                    .foregroundStyle(.secondary)
+            Group {
+                if let project = selectedProject {
+                    ProjectDetail(project: Binding { project } set: { selectedProject = $0 })
+                } else {
+                    Text("Select a project from the left sidebar.")
+                        .font(.title)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: selectedProject == nil ? .automatic : .principal) {
+                    Button {
+                        showLoginSheet.toggle()
+                    } label: {
+                        HStack {
+                            Image(systemName: "person.crop.circle")
+                            Text("Login")
+                        }
+                    }
+                    .sheet(isPresented: $showLoginSheet) {
+                        LoginSheet()
+                    }
+                }
             }
         }
     }

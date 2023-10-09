@@ -27,6 +27,7 @@
 		F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379012AC41EDA00C88C94 /* GRPC */; };
 		F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */; };
 		F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C379082AC44BFF00C88C94 /* PaperInfo.swift */; };
+		F5D8EEED2AD42D5100501B0E /* LoginSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* LoginSheet.swift */; };
 		F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */; };
 		F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */; };
 		F5EBC0B62ABFD99000B2B4A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 		F547D0E52AC56F89006D2216 /* EditableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableText.swift; sourceTree = "<group>"; };
 		F59AD1022ACB0CA200DFABCC /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
 		F5C379082AC44BFF00C88C94 /* PaperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperInfo.swift; sourceTree = "<group>"; };
+		F5D8EEEC2AD42D5100501B0E /* LoginSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSheet.swift; sourceTree = "<group>"; };
 		F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaperPilot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPilotApp.swift; sourceTree = "<group>"; };
 		F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,14 @@
 			path = Reader;
 			sourceTree = "<group>";
 		};
+		F5D8EEE72AD42D3600501B0E /* User */ = {
+			isa = PBXGroup;
+			children = (
+				F5D8EEEC2AD42D5100501B0E /* LoginSheet.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		F5EBC0A52ABFD98E00B2B4A3 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
 				F5EBC0C32ABFE16600B2B4A3 /* Projects */,
 				F53D81472AC1367400865B80 /* Reader */,
+				F5D8EEE72AD42D3600501B0E /* User */,
 				F53D81452AC038A700865B80 /* TagView.swift */,
 				F59AD1022ACB0CA200DFABCC /* AddTagView.swift */,
 			);
@@ -268,6 +279,7 @@
 				F5EBC0C52ABFE19600B2B4A3 /* ProjectDetail.swift in Sources */,
 				F53D814B2AC1385300865B80 /* PaperReader.swift in Sources */,
 				F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */,
+				F5D8EEED2AD42D5100501B0E /* LoginSheet.swift in Sources */,
 				F53D81422AC02AF800865B80 /* Paper.swift in Sources */,
 				F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */,
 				F53D81492AC1369200865B80 /* PDFKitView.swift in Sources */,
