@@ -42,7 +42,7 @@ struct Paper: Hashable, Codable, Identifiable {
     
     var createTime: Date = Date.now
     var formattedCreateTime: String {
-        createTime.formatted(date: .abbreviated, time: .omitted)
+        createTime.formatted(date: .numeric, time: .omitted)
     }
     
     /// 已读

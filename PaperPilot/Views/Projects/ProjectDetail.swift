@@ -27,7 +27,7 @@ struct ProjectDetail: View {
                 Text(paper.publication ?? "Unknown")
             }
             TableColumn("Date Added", value: \.formattedCreateTime)
-                .width(90)
+                .width(70)
             TableColumn("Tags") { paper in
                 VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.tags ?? [], id: \.self) { tag in

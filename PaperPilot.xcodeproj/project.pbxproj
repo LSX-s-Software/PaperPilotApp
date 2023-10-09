@@ -111,11 +111,11 @@
 		F5EBC0A52ABFD98E00B2B4A3 = {
 			isa = PBXGroup;
 			children = (
-				27293A652AD2CE2500A98E13 /* team.xcconfig */,
-				279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */,
-				279F2D1F2AC8364500FEA9D8 /* proto */,
 				F5EBC0B02ABFD98E00B2B4A3 /* PaperPilot */,
 				F5EBC0AF2ABFD98E00B2B4A3 /* Products */,
+				279F2D1F2AC8364500FEA9D8 /* proto */,
+				279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */,
+				27293A652AD2CE2500A98E13 /* team.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
