@@ -12,7 +12,14 @@
       }
     },
     "Account" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号"
+          }
+        }
+      }
     },
     "Add" : {
       "extractionState" : "manual",
@@ -88,7 +95,14 @@
       }
     },
     "Done" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
     },
     "Edit" : {
       "extractionState" : "manual",
@@ -170,6 +184,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "登录之后即可开始协作"
+          }
+        }
+      }
+    },
+    "Logout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出登录"
           }
         }
       }

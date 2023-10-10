@@ -14,32 +14,34 @@ struct AccountView: View {
     var email = "user@example.com"
 
     var body: some View {
-        VStack {
-            HStack(alignment: .bottom) {
-                Text("Account")
-                    .font(.largeTitle)
-
-                Spacer()
-
-                Button("Done") {
-                    dismiss()
-                }
-                .buttonStyle(.borderless)
-            }
-
-            Divider()
-
-            HStack {
-                Image(systemName: "person.crop.circle")
-                    .resizable(resizingMode: .stretch)
-                    .frame(width: 40, height: 40)
-                VStack(alignment: .leading) {
-                    Text(verbatim: username)
-                        .font(.headline)
-                    Text(verbatim: email)
+        NavigationStack {
+            VStack {
+                HStack {
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                    VStack(alignment: .leading) {
+                        Text(username)
+                            .font(.headline)
+                        Text(email)
+                    }
+                    Spacer()
+                    Button("Logout", role: .destructive) {
+                        
+                    }
                 }
             }
-        }.padding(.all)
+            .padding()
+            .navigationTitle("Account")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                }
+            }
+        }
     }
 }
 
