@@ -36,7 +36,6 @@
 		F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */; };
 		F5EBC0B62ABFD99000B2B4A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */; };
 		F5EBC0BA2ABFD99000B2B4A3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5EBC0B92ABFD99000B2B4A3 /* Preview Assets.xcassets */; };
-		F5EBC0C12ABFDD2900B2B4A3 /* ProjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0C02ABFDD2900B2B4A3 /* ProjectList.swift */; };
 		F5EBC0C52ABFE19600B2B4A3 /* ProjectDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0C42ABFE19600B2B4A3 /* ProjectDetail.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +64,6 @@
 		F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5EBC0B92ABFD99000B2B4A3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F5EBC0C02ABFDD2900B2B4A3 /* ProjectList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectList.swift; sourceTree = "<group>"; };
 		F5EBC0C42ABFE19600B2B4A3 /* ProjectDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -194,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */,
-				F5EBC0C02ABFDD2900B2B4A3 /* ProjectList.swift */,
 				F5EBC0C42ABFE19600B2B4A3 /* ProjectDetail.swift */,
 			);
 			path = Projects;
@@ -309,7 +306,6 @@
 				F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */,
 				F53D81402AC02A7A00865B80 /* Project.swift in Sources */,
 				F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */,
-				F5EBC0C12ABFDD2900B2B4A3 /* ProjectList.swift in Sources */,
 				F53D81442AC02C6500865B80 /* ModelData.swift in Sources */,
 				F5D8EF012AD4F62E00501B0E /* AppStorageKey.swift in Sources */,
 				F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */,
