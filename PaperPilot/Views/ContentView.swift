@@ -30,18 +30,12 @@ struct ContentView: View {
                         }
                     } else {
                         Button("Account", systemImage: "person.crop.circle") {
-                            isShowingAccountView = true
+                            isShowingAccountView.toggle()
                         }
 
-                        .sheet(
-                            isPresented: $isShowingAccountView,
-                            onDismiss: {},
-                            content: {
-                                AccountView(
-                                    isShowingAccountView:
-                                        $isShowingAccountView)
-                            }
-                        )
+                        .sheet(isPresented: $isShowingAccountView) {
+                            AccountView()
+                        }
                     }
                 }
             }

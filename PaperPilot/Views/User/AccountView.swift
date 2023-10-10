@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AccountView: View {
-    @Binding var isShowingAccountView: Bool
+    @Environment(\.dismiss) var dismiss
+    
     var username = "User"
     var email = "user@example.com"
 
@@ -21,7 +22,7 @@ struct AccountView: View {
                 Spacer()
 
                 Button("Done") {
-                    isShowingAccountView = false
+                    dismiss()
                 }
                 .buttonStyle(.borderless)
             }
@@ -43,5 +44,5 @@ struct AccountView: View {
 }
 
 #Preview {
-    AccountView(isShowingAccountView: Binding(get: {true}, set: {_ in }))
+    AccountView()
 }
