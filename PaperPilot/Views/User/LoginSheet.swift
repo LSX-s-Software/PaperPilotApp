@@ -18,6 +18,7 @@ struct LoginSheet: View {
             VStack {
                 Image(systemName: "person.crop.circle.fill")
                     .font(.system(size: 80))
+                    .foregroundStyle(.blue)
                     .symbolRenderingMode(.hierarchical)
                 Text("Login")
                     .font(.largeTitle)
@@ -39,7 +40,7 @@ struct LoginSheet: View {
                             .textContentType(.telephoneNumber)
 #endif
                             .padding(8)
-                            .background(.tertiary)
+                            .background()
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                     .padding(.bottom, 4)
@@ -53,7 +54,7 @@ struct LoginSheet: View {
                             .textContentType(.password)
 #endif
                             .padding(8)
-                            .background(.tertiary)
+                            .background()
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                 }
