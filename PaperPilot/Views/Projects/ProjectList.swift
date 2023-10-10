@@ -13,6 +13,7 @@ struct ProjectList: View {
     @Environment(\.modelContext) private var modelContext
     
     @State private var selectedProject: Project?
+    @State private var isShowingNewProjectSheet = false
     
     var body: some View {
         NavigationSplitView {
@@ -34,7 +35,10 @@ struct ProjectList: View {
             .toolbar {
                 ToolbarItem {
                     Button("New Project", systemImage: "folder.badge.plus") {
-                        modelContext.insert(Project(id: projects.count + 1, name: "New Project", papers: []))
+                        isShowingNewProjectSheet.toggle()
+                    }
+                    .sheet(isPresented: $isShowingNewProjectSheet) {
+                        ProjectCreateEditView()
                     }
                 }
             }

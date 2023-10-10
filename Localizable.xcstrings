@@ -42,6 +42,9 @@
         }
       }
     },
+    "Are you sure to delete this project?" : {
+
+    },
     "Are you sure to logout?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -94,6 +97,26 @@
         }
       }
     },
+    "Create" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建"
+          }
+        }
+      }
+    },
+    "Create New Project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建新项目"
+          }
+        }
+      }
+    },
     "Date Added" : {
       "localizations" : {
         "zh-Hans" : {
@@ -131,6 +154,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑"
+          }
+        }
+      }
+    },
+    "Edit Project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑项目"
           }
         }
       }
@@ -323,6 +356,26 @@
         }
       }
     },
+    "Project Description" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目描述"
+          }
+        }
+      }
+    },
+    "Project Name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目名"
+          }
+        }
+      }
+    },
     "Project Settings" : {
       "localizations" : {
         "zh-Hans" : {
@@ -399,6 +452,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标签"
+          }
+        }
+      }
+    },
+    "This action cannot be undone." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此操作不能撤销"
           }
         }
       }

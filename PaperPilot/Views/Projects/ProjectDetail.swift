@@ -15,6 +15,7 @@ struct ProjectDetail: View {
     @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime)]
+    @State private var isShowingEditProjectSheet = false
     
     var body: some View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
@@ -77,7 +78,10 @@ struct ProjectDetail: View {
         .toolbar {
             ToolbarItemGroup {
                 Button("Project Settings", systemImage: "folder.badge.gear") {
-                    
+                    isShowingEditProjectSheet.toggle()
+                }
+                .sheet(isPresented: $isShowingEditProjectSheet) {
+                    ProjectCreateEditView(edit: true, project: project)
                 }
                 
                 Button("Add Document", systemImage: "plus") {

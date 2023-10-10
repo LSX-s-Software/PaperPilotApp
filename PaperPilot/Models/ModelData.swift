@@ -46,8 +46,8 @@ class ModelData {
                               volume: "10",
                               issue: "2",
                               file: Bundle.main.url(forResource: "frames", withExtension: "pdf"))
-    static var project1 = Project(id: 1, name: "test", papers: [paper1, paper2, paper3])
-    static var project2 = Project(id: 2, name: "test2", papers: [paper2, paper3])
+    static var project1 = Project(name: "Demo project", desc: "CVPR24 Project", papers: [paper1, paper2, paper3])
+    static var project2 = Project(name: "test2", desc: "", papers: [paper2, paper3])
 }
 
 // swiftlint:enable line_length
