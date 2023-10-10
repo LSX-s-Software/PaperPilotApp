@@ -18,18 +18,10 @@ struct ProjectCreateEditView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Image(systemName: "folder.fill.badge.\(edit ? "gearshape" : "plus")")
-                    .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(.blue)
-                    .font(.system(size: 48))
-                    .padding(.vertical)
-                
-                Text(edit ? "Edit Project" : "Create New Project")
-                    .font(.title)
-                    .fontWeight(.medium)
-                    .padding(.bottom)
-                
+            ImageTitleDialog(
+                title: edit ? "Edit Project" : "Create New Project",
+                systemImage: "folder.fill.badge.\(edit ? "gearshape" : "plus")"
+            ) {
                 Form {
                     Section("Project Name") {
                         TextField("Project Name", text: $project.name)
@@ -43,14 +35,7 @@ struct ProjectCreateEditView: View {
                     }
                 }
             }
-            .padding()
-            .frame(minWidth: 350)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(edit ? "Edit" : "Create") {
                         handleCreateEditProject()
