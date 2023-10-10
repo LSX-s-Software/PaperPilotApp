@@ -9,9 +9,10 @@ import SwiftUI
 import SwiftUIFlow
 
 struct ProjectDetail: View {
-    @Environment(\.openWindow) var openWindow
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.modelContext) private var modelContext
     
-    @Binding var project: Project
+    @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime)]
     
@@ -19,7 +20,7 @@ struct ProjectDetail: View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
             TableColumn("Title", value: \.title)
             TableColumn("Authors", value: \.formattedAuthors)
-            TableColumn("Publication Date") { paper in
+            TableColumn("Publication Year") { paper in
                 Text(paper.publicationYear ?? "Unknown")
             }
             .width(50)
@@ -30,7 +31,7 @@ struct ProjectDetail: View {
                 .width(70)
             TableColumn("Tags") { paper in
                 VFlow(alignment: .leading, spacing: 4) {
-                    ForEach(paper.tags ?? [], id: \.self) { tag in
+                    ForEach(paper.tags, id: \.self) { tag in
                         TagView(text: tag)
                     }
                 }
@@ -74,7 +75,7 @@ struct ProjectDetail: View {
         }
         .navigationTitle($project.name)
         .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
+            ToolbarItemGroup {
                 Button("Project Settings", systemImage: "folder.badge.gear") {
                     
                 }
@@ -93,6 +94,8 @@ struct ProjectDetail: View {
 }
 
 #Preview {
-    ProjectDetail(project: .constant(ModelData.project1))
+    ProjectDetail(project: ModelData.project1)
+#if os(macOS)
         .frame(width: 800, height: 600)
+#endif
 }

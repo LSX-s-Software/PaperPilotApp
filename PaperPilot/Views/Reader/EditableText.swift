@@ -9,14 +9,14 @@ import SwiftUI
 
 struct EditableText: View {
     let text: String?
-    let prompt: String
+    let prompt: LocalizedStringKey
     let onEditEnd: (String) -> Void
     
     @State private var newValue: String
     @State var editing = false
 
     init(_ text: String?,
-         prompt: String = "请输入内容",
+         prompt: LocalizedStringKey = "Please type",
          onEditEnd: @escaping (String) -> Void) {
         self.text = text
         self.prompt = prompt
@@ -26,7 +26,7 @@ struct EditableText: View {
 
     var body: some View {
         ZStack(alignment: .trailing) {
-            Text(text ?? "未知")
+            Text(text ?? "Unknown")
                 .multilineTextAlignment(.trailing)
                 .foregroundStyle(.secondary)
                 .opacity(editing ? 0 : 1)

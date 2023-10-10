@@ -15,34 +15,30 @@ private struct InfoRow: View {
     
     var body: some View {
         HStack {
-            Text(title)
+            Text(LocalizedStringKey(title))
             Spacer()
-            EditableText(content, prompt: "Enter Title" + title, onEditEnd: onEditEnd)
+            EditableText(content, prompt: "Enter \(title)", onEditEnd: onEditEnd)
         }
     }
 }
 
 struct PaperInfo: View {
-    @State var paper: Paper
+    @Bindable var paper: Paper
     
     var body: some View {
         List {
             Section("Tags") {
                 VFlow(alignment: .leading, spacing: 4) {
-                    ForEach(paper.tags ?? [], id: \.self) { tag in
+                    ForEach(paper.tags, id: \.self) { tag in
                         TagView(text: tag) { newValue in
-                            let index = paper.tags!.firstIndex(of: tag)!
-                            paper.tags?[index] = newValue
+                            let index = paper.tags.firstIndex(of: tag)!
+                            paper.tags[index] = newValue
                         } onDelete: {
-                            paper.tags?.removeAll { $0 == tag }
+                            paper.tags.removeAll { $0 == tag }
                         }
                     }
                     AddTagView { newTag in
-                        if paper.tags == nil {
-                            paper.tags = [newTag]
-                        } else {
-                            paper.tags?.append(newTag)
-                        }
+                        paper.tags.append(newTag)
                     }
                 }
             }
@@ -55,7 +51,7 @@ struct PaperInfo: View {
                 InfoRow(title: "Publication", content: paper.publication) { newValue in
                     paper.publication = newValue
                 }
-                InfoRow(title: "Publication Date", content: paper.publicationYear) { newValue in
+                InfoRow(title: "Publication Year", content: paper.publicationYear) { newValue in
                     paper.publicationYear = newValue
                 }
                 InfoRow(title: "Volume", content: paper.volume) { newValue in
@@ -80,29 +76,26 @@ struct PaperInfo: View {
             
             Section("Keywords") {
                 VFlow(alignment: .leading, spacing: 4) {
-                    ForEach(paper.keywords ?? [], id: \.self) { keyword in
+                    ForEach(paper.keywords, id: \.self) { keyword in
                         TagView(text: keyword) { newValue in
-                            let index = paper.keywords!.firstIndex(of: keyword)!
-                            paper.keywords?[index] = newValue
+                            let index = paper.keywords.firstIndex(of: keyword)!
+                            paper.keywords[index] = newValue
                         } onDelete: {
-                            paper.keywords?.removeAll { $0 == keyword }
+                            paper.keywords.removeAll { $0 == keyword }
                         }
                     }
                     AddTagView { newTag in
-                        if paper.keywords == nil {
-                            paper.keywords = [newTag]
-                        } else {
-                            paper.keywords?.append(newTag)
-                        }
+                        paper.keywords.append(newTag)
                     }
                 }
             }
             .listRowSeparator(.hidden)
             
             Section("Abstract") {
-                TextEditor(text: .constant(paper.abstract ?? "Not available."))
+                TextEditor(text: Binding { paper.abstract ?? "" } set: { paper.abstract = $0 })
                     .font(.body)
                     .disabled(true)
+                    .frame(minHeight: 150)
             }
         }
 #if !os(macOS)
@@ -113,4 +106,5 @@ struct PaperInfo: View {
 
 #Preview {
     PaperInfo(paper: ModelData.paper1)
+        .modelContainer(previewContainer)
 }

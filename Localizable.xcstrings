@@ -101,12 +101,33 @@
         }
       }
     },
+    "Enter %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入 %@"
+          }
+        }
+      }
+    },
     "Info" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "基本信息"
+          }
+        }
+      }
+    },
+    "Issue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "期号"
           }
         }
       }
@@ -204,6 +225,17 @@
         }
       }
     },
+    "Pages" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "页码"
+          }
+        }
+      }
+    },
     "Paper Reader" : {
       "localizations" : {
         "zh-Hans" : {
@@ -231,6 +263,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "手机号"
+          }
+        }
+      }
+    },
+    "Please type" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入内容"
           }
         }
       }
@@ -265,12 +308,12 @@
         }
       }
     },
-    "Publication Date" : {
+    "Publication Year" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "出版日期"
+            "value" : "出版年份"
           }
         }
       }
@@ -325,13 +368,24 @@
         }
       }
     },
-    "Username" : {
-      "extractionState" : "stale",
+    "Unknown" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用户名"
+            "value" : "未知"
+          }
+        }
+      }
+    },
+    "Volume" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "卷号"
           }
         }
       }

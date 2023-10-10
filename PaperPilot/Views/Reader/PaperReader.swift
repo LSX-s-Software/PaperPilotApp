@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PaperReader: View {
-    let paper: Paper
+    @Bindable var paper: Paper
     
     enum SidebarContent: String, Identifiable, CaseIterable {
         case info = "信息"
@@ -77,5 +77,7 @@ struct PaperReader: View {
 
 #Preview {
     PaperReader(paper: ModelData.paper1)
+#if os(macOS)
         .frame(width: 900, height: 600)
+#endif
 }

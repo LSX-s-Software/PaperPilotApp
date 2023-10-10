@@ -6,9 +6,20 @@
 //
 
 import Foundation
+import SwiftData
+import SimpleCodable
 
-struct Project: Hashable, Codable, Identifiable {
-    var id: Int
+/// 项目
+@Model
+@Codable
+class Project: Hashable, Codable, Identifiable {
+    @Attribute(.unique) var id: Int
     var name: String
     var papers: [Paper]
+    
+    init(id: Int, name: String, papers: [Paper]) {
+        self.id = id
+        self.name = name
+        self.papers = papers
+    }
 }

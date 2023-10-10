@@ -36,9 +36,7 @@ struct LoginSheet: View {
                             .foregroundStyle(.secondary)
                         TextField("Phone", text: $phone)
                             .textFieldStyle(.plain)
-#if !os(macOS)
                             .textContentType(.telephoneNumber)
-#endif
                             .padding(8)
                             .background()
                             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -50,9 +48,7 @@ struct LoginSheet: View {
                             .foregroundStyle(.secondary)
                         SecureField("Password", text: $password)
                             .textFieldStyle(.plain)
-#if !os(macOS)
                             .textContentType(.password)
-#endif
                             .padding(8)
                             .background()
                             .clipShape(RoundedRectangle(cornerRadius: 8))

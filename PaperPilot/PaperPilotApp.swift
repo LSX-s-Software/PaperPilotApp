@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 enum AppWindow: String, Identifiable {
     case main
@@ -18,24 +19,34 @@ enum AppWindow: String, Identifiable {
 
 @main
 struct PaperPilotApp: App {
-    @StateObject private var modelData = ModelData()
+    let modelContainer: ModelContainer
+    
+    init() {
+        do {
+            modelContainer = try ModelContainer(for: Paper.self, Project.self)
+        } catch {
+            fatalError("Could not initialize ModelContainer")
+        }
+    }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .frame(minWidth: 500, idealWidth: 1000, maxWidth: .infinity,
                        minHeight: 300, idealHeight: 800, maxHeight: .infinity)
-                .environmentObject(modelData)
         }
+        .modelContainer(modelContainer)
         .commands {
             SidebarCommands()
         }
         
         WindowGroup("Paper Reader", id: AppWindow.reader.id, for: Paper.self) { $paper in
             PaperReader(paper: paper ?? Paper(id: 0, title: "Loading"))
+                .navigationTitle(paper?.title ?? "Paper Reader")
                 .frame(minWidth: 500, idealWidth: 1200, maxWidth: .infinity,
                        minHeight: 300, idealHeight: 900, maxHeight: .infinity)
         }
+        .modelContainer(modelContainer)
         .commands {
             CommandGroup(replacing: .newItem, addition: { })
         }

@@ -8,8 +8,9 @@
 // swiftlint:disable line_length
 
 import Foundation
+import SwiftData
 
-class ModelData: ObservableObject {
+class ModelData {
     static var paper1 = Paper(id: 1,
                               title: "A Study of Machine Learning Techniques for Sentiment Analysis",
                               abstract: "In this paper, we explore various machine learning techniques for sentiment analysis, including support vector machines, decision trees, and neural networks.",
@@ -27,7 +28,7 @@ class ModelData: ObservableObject {
     static var paper2 = Paper(id: 2,
                               title: "An Introduction to Swift Programming",
                               abstract: nil,
-                              keywords: nil,
+                              keywords: [],
                               authors: ["John Smith"],
                               tags: ["Swift", "Programming"],
                               publicationYear: "2020",
@@ -47,8 +48,18 @@ class ModelData: ObservableObject {
                               file: Bundle.main.url(forResource: "frames", withExtension: "pdf"))
     static var project1 = Project(id: 1, name: "test", papers: [paper1, paper2, paper3])
     static var project2 = Project(id: 2, name: "test2", papers: [paper2, paper3])
-
-    @Published var projects = [project1, project2]
 }
 
 // swiftlint:enable line_length
+
+@MainActor
+let previewContainer: ModelContainer = {
+    do {
+        let container = try ModelContainer(for: Paper.self, Project.self,
+                                           configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        container.mainContext.insert(ModelData.project1)
+        return container
+    } catch {
+        fatalError("Failed to create container")
+    }
+}()
