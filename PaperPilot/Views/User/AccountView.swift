@@ -10,8 +10,12 @@ import SwiftUI
 struct AccountView: View {
     @Environment(\.dismiss) var dismiss
     
-    var username = "User"
-    var email = "user@example.com"
+    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
+    private var loggedIn = false
+    
+    @State var username = "User"
+    @State var email = "user@example.com"
+    @State var isShowingLogoutConfirmation = false
 
     var body: some View {
         NavigationStack {
@@ -26,9 +30,16 @@ struct AccountView: View {
                             .font(.headline)
                         Text(email)
                     }
-                    Spacer()
-                    Button("Logout", role: .destructive) {
-                        
+                    
+                    Spacer(minLength: 50)
+                    
+                    Button("Logout") {
+                        isShowingLogoutConfirmation.toggle()
+                    }
+                    .confirmationDialog("Are you sure to logout?", isPresented: $isShowingLogoutConfirmation) {
+                        Button("Confirm", role: .destructive) {
+                            loggedIn = false
+                        }
                     }
                 }
             }

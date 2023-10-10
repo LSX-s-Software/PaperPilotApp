@@ -42,6 +42,16 @@
         }
       }
     },
+    "Are you sure to logout?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要退出登录吗？"
+          }
+        }
+      }
+    },
     "Authors" : {
       "localizations" : {
         "zh-Hans" : {
@@ -70,6 +80,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关闭"
+          }
+        }
+      }
+    },
+    "Confirm" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认"
           }
         }
       }

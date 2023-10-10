@@ -13,6 +13,9 @@ struct LoginSheet: View {
     @State private var phone = ""
     @State private var password = ""
     
+    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
+    private var loggedIn = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -69,7 +72,7 @@ struct LoginSheet: View {
                     Spacer()
                         .frame(maxWidth: 40)
                     Button {
-                        
+                        loggedIn = true
                     } label: {
                         Text("Login")
                             .padding(.horizontal, 20)

@@ -18,7 +18,7 @@ struct PaperReader: View {
             self
         }
     }
-    @AppStorage("reader.sidebarContent")
+    @AppStorage(AppStorageKey.Reader.sidebarContent.rawValue)
     var sidebarContent = SidebarContent.info
     
     @State var note = ""
