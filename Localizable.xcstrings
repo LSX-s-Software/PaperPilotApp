@@ -42,8 +42,65 @@
         }
       }
     },
+    "Add Paper" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加论文"
+          }
+        }
+      }
+    },
+    "Add Paper By File" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过文件添加论文"
+          }
+        }
+      }
+    },
+    "Add Paper By URL/DOI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过URL/DOI添加论文"
+          }
+        }
+      }
+    },
+    "Add paper from a URL or DOI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过URL/DOI添加论文"
+          }
+        }
+      }
+    },
+    "Add paper from local file" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从本地文件添加论文"
+          }
+        }
+      }
+    },
     "Are you sure to delete this project?" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除这个项目吗？"
+          }
+        }
+      }
     },
     "Are you sure to logout?" : {
       "localizations" : {
@@ -72,6 +129,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        }
+      }
+    },
+    "Choose file" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择文件"
           }
         }
       }
@@ -137,6 +204,16 @@
         }
       }
     },
+    "DOI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DOI"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "zh-Hans" : {
@@ -174,6 +251,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入 %@"
+          }
+        }
+      }
+    },
+    "From file" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来自文件"
+          }
+        }
+      }
+    },
+    "From URL/DOI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来自URL/DOI"
           }
         }
       }
@@ -345,6 +442,16 @@
         }
       }
     },
+    "Please Enter URL/DOI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入URL/DOI"
+          }
+        }
+      }
+    },
     "Please type" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -487,6 +594,16 @@
         }
       }
     },
+    "URL" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL"
+          }
+        }
+      }
+    },
     "Volume" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -494,6 +611,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "卷号"
+          }
+        }
+      }
+    },
+    "You can also search paper using Sci-Hub supported format." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你还可以使用Sci-Hub支持的格式来查找论文"
           }
         }
       }

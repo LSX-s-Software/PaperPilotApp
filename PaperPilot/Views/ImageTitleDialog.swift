@@ -11,6 +11,7 @@ struct ImageTitleDialog<Content: View>: View {
     @Environment(\.dismiss) private var dismiss
     
     var title: LocalizedStringKey
+    var subtitle: LocalizedStringKey?
     var systemImage: String
     @ViewBuilder var content: () -> Content
     
@@ -27,7 +28,15 @@ struct ImageTitleDialog<Content: View>: View {
                 .fontWeight(.medium)
                 .padding(.bottom)
             
+            if let subtitle = subtitle {
+                Text(subtitle)
+                    .font(.title2)
+                    .foregroundStyle(.secondary)
+                    .padding(.bottom)
+            }
+            
             content()
+                .frame(maxHeight: .infinity)
         }
         .padding()
         .frame(minWidth: 350)

@@ -41,7 +41,7 @@ struct PaperPilotApp: App {
         }
         
         WindowGroup("Paper Reader", id: AppWindow.reader.id, for: Paper.self) { $paper in
-            PaperReader(paper: paper ?? Paper(id: 0, title: "Loading"))
+            PaperReader(paper: paper ?? Paper(title: "Loading"))
                 .navigationTitle(paper?.title ?? "Paper Reader")
                 .frame(minWidth: 500, idealWidth: 1200, maxWidth: .infinity,
                        minHeight: 300, idealHeight: 900, maxHeight: .infinity)

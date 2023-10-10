@@ -12,7 +12,8 @@ import SimpleCodable
 /// 论文
 @Model
 class Paper: Hashable, Codable, Identifiable {
-    @Attribute(.unique) var id: Int
+    @Attribute(.unique) var id: UUID = UUID()
+    var remoteId: Int?
     /// 标题
     var title: String
     /// 摘要
@@ -51,7 +52,8 @@ class Paper: Hashable, Codable, Identifiable {
     /// 已读
     var read: Bool
     
-    init(id: Int,
+    init(id: UUID = UUID(),
+         remoteId: Int? = nil,
          title: String,
          abstract: String? = nil,
          keywords: [String] = [],
@@ -68,6 +70,7 @@ class Paper: Hashable, Codable, Identifiable {
          createTime: Date = Date.now,
          read: Bool = false) {
         self.id = id
+        self.remoteId = remoteId
         self.title = title
         self.abstract = abstract
         self.keywords = keywords
@@ -87,6 +90,7 @@ class Paper: Hashable, Codable, Identifiable {
     
     enum CodingKeys: String, CodingKey {
         case id
+        case remoteId
         case title
         case abstract
         case keywords
@@ -108,7 +112,8 @@ class Paper: Hashable, Codable, Identifiable {
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(Int.self, forKey: .id)
+        self.id = try container.decode(UUID.self, forKey: .id)
+        self.remoteId = try container.decodeIfPresent(Int.self, forKey: .remoteId)
         self.title = try container.decode(String.self, forKey: .title)
         self.abstract = try container.decodeIfPresent(String.self, forKey: .abstract)
         self.keywords = try container.decode([String].self, forKey: .keywords)
@@ -129,6 +134,7 @@ class Paper: Hashable, Codable, Identifiable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
+        try container.encode(remoteId, forKey: .remoteId)
         try container.encode(title, forKey: .title)
         try container.encode(abstract, forKey: .abstract)
         try container.encode(keywords, forKey: .keywords)

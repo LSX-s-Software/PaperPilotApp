@@ -16,6 +16,7 @@ struct ProjectDetail: View {
     @State private var selection = Set<Paper.ID>()
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime)]
     @State private var isShowingEditProjectSheet = false
+    @State private var isShowingAddPaperSheet = false
     
     var body: some View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
@@ -88,7 +89,10 @@ struct ProjectDetail: View {
                 }
                 
                 Button("Add Document", systemImage: "plus") {
-                    project.papers.append(Paper(id: 4, title: "New Paper"))
+                    isShowingAddPaperSheet.toggle()
+                }
+                .sheet(isPresented: $isShowingAddPaperSheet) {
+                    AddPaperView(project: project)
                 }
             }
 #if !os(macOS)
@@ -102,6 +106,7 @@ struct ProjectDetail: View {
 
 #Preview {
     ProjectDetail(project: ModelData.project1)
+        .modelContainer(previewContainer)
 #if os(macOS)
         .frame(width: 800, height: 600)
 #endif

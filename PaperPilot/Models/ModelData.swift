@@ -11,8 +11,7 @@ import Foundation
 import SwiftData
 
 class ModelData {
-    static var paper1 = Paper(id: 1,
-                              title: "A Study of Machine Learning Techniques for Sentiment Analysis",
+    static var paper1 = Paper(title: "A Study of Machine Learning Techniques for Sentiment Analysis",
                               abstract: "In this paper, we explore various machine learning techniques for sentiment analysis, including support vector machines, decision trees, and neural networks.",
                               keywords: ["machine learning", "sentiment analysis", "support vector machines", "decision trees", "neural networks"],
                               authors: ["John Smith", "Jane Doe"],
@@ -25,8 +24,7 @@ class ModelData {
                               url: "https://www.jmlr.org/papers/v42/Smith21a.html",
                               doi: "10.5555/123456789",
                               file: Bundle.main.url(forResource: "frames", withExtension: "pdf"))
-    static var paper2 = Paper(id: 2,
-                              title: "An Introduction to Swift Programming",
+    static var paper2 = Paper(title: "An Introduction to Swift Programming",
                               abstract: nil,
                               keywords: [],
                               authors: ["John Smith"],
@@ -35,8 +33,7 @@ class ModelData {
                               publication: "ACM Transactions on Programming Languages and Systems",
                               volume: nil,
                               issue: nil)
-    static var paper3 = Paper(id: 3,
-                              title: "A Comprehensive Study of Natural Language Processing Techniques",
+    static var paper3 = Paper(title: "A Comprehensive Study of Natural Language Processing Techniques",
                               abstract: "In this paper, we present a comprehensive study of natural language processing techniques, including tokenization, part-of-speech tagging, named entity recognition, and sentiment analysis. We evaluate the performance of these techniques on several benchmark datasets and provide recommendations for future research.",
                               keywords: ["natural language processing", "tokenization", "part-of-speech tagging", "named entity recognition", "sentiment analysis"],
                               authors: ["John Smith", "Jane Doe", "Bob Johnson"],
