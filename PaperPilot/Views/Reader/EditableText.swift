@@ -46,7 +46,9 @@ struct EditableText: View {
                 editing = true
             }
         }
+#if os(macOS)
         .onExitCommand(perform: cancelEdit)
+#endif
     }
     
     func cancelEdit() {

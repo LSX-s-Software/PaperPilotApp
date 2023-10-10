@@ -75,6 +75,9 @@ struct ProjectDetail: View {
             }
         }
         .navigationTitle($project.name)
+#if os(macOS)
+        .navigationSubtitle(project.desc)
+#endif
         .toolbar {
             ToolbarItemGroup {
                 Button("Project Settings", systemImage: "folder.badge.gear") {
