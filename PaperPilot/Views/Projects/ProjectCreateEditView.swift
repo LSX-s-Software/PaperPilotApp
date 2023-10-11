@@ -16,6 +16,9 @@ struct ProjectCreateEditView: View {
     @Bindable var project: Project = Project(name: "", desc: "")
     @State private var isShowingDeleteConfirm = false
     
+    var onCreate: ((Project) -> Void)?
+    var onDelete: (() -> Void)?
+    
     var body: some View {
         NavigationStack {
             ImageTitleDialog(
@@ -61,11 +64,15 @@ struct ProjectCreateEditView: View {
     
     func handleCreateEditProject() {
         modelContext.insert(project)
+        if !edit {
+            onCreate?(project)
+        }
         dismiss()
     }
     
     func handleDeleteProject() {
         modelContext.delete(project)
+        onDelete?()
         dismiss()
     }
 }

@@ -27,12 +27,14 @@ struct ContentView: View {
                 Section("Local Projects") {
                     ForEach(projects) { project in
                         NavigationLink(project.name, value: project)
-                    }
-                    .contextMenu {
-                        Button("Delete") {
-                            modelContext.delete(selectedProject!)
-                            selectedProject = nil
-                        }
+                            .contextMenu {
+                                Button("Delete") {
+                                    modelContext.delete(project)
+                                    if selectedProject != nil && selectedProject!.id == project.id {
+                                        selectedProject = nil
+                                    }
+                                }
+                            }
                     }
                 }
             }
@@ -52,7 +54,9 @@ struct ContentView: View {
             // MARK: - 项目详情
             Group {
                 if let project = selectedProject {
-                    ProjectDetail(project: project)
+                    ProjectDetail(project: project) {
+                        selectedProject = nil
+                    }
                 } else {
                     Text("Select a project from the left sidebar.")
                         .font(.title)
