@@ -13,6 +13,7 @@ struct AddPaperView: View {
     @Bindable var project: Project
     @State private var newPaper = Paper(title: "")
     @State private var filePath: URL?
+    @State private var isImporting = false
     @State private var shouldGoNext = false
     @State private var shouldClose = false
     
@@ -40,16 +41,7 @@ struct AddPaperView: View {
                     }
                     
                     Button {
-                        let openFilePanel = NSOpenPanel()
-                        openFilePanel.allowedContentTypes = [.pdf]
-                        if openFilePanel.runModal() == .OK {
-                            if let url = openFilePanel.url {
-                                filePath = url
-                                newPaper.title = url.deletingPathExtension().lastPathComponent
-                                newPaper.url = url.path
-                                shouldGoNext = true
-                            }
-                        }
+                        isImporting = true
                     } label: {
                         HStack {
                             Image(systemName: "doc.badge.arrow.up")
@@ -65,6 +57,20 @@ struct AddPaperView: View {
                         }
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .fileImporter(
+                        isPresented: $isImporting,
+                        allowedContentTypes: [.pdf]
+                    ) { result in
+                        switch result {
+                        case .success(let url):
+                            filePath = url
+                            newPaper.title = url.deletingPathExtension().lastPathComponent
+                            newPaper.url = url.path
+                            shouldGoNext = true
+                        case .failure(let error):
+                            print(error)
+                        }
                     }
                 }
                 .fixedSize(horizontal: true, vertical: false)
