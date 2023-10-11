@@ -133,16 +133,6 @@
         }
       }
     },
-    "Choose file" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择文件"
-          }
-        }
-      }
-    },
     "Close" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -400,6 +390,16 @@
         }
       }
     },
+    "Optional Info" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可选信息"
+          }
+        }
+      }
+    },
     "Pages" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -529,6 +529,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已读"
+          }
+        }
+      }
+    },
+    "Required Info" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必填信息"
           }
         }
       }

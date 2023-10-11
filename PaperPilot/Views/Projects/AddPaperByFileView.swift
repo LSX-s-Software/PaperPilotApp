@@ -11,55 +11,41 @@ struct AddPaperByFileView: View {
     @Environment(\.modelContext) private var modelContext
     
     @Bindable var project: Project
-    
-    @State private var title = ""
-    @State private var abstract = ""
-    @State private var publicationYear = ""
-    @State private var publication = ""
-    @State private var volume = ""
-    @State private var issue = ""
-    @State private var pages = ""
-    @State private var doi = ""
-    @State private var filePath: URL?
+    @State var paper: Paper
+    @Binding var shouldClose: Bool
     
     var body: some View {
         ImageTitleDialog(title: "Add Paper By File", systemImage: "doc.badge.arrow.up") {
             Form {
-                Section("Info") {
-                    TextField("Title", text: $title)
-                    TextField("Abstract", text: $abstract)
-                    TextField("Publication Year", text: $publicationYear)
-                    TextField("Publication", text: $publication)
-                    TextField("Volume", text: $volume)
-                    TextField("Issue", text: $issue)
-                    TextField("Pages", text: $pages)
-                    TextField("DOI", text: $doi)
+                Section("Required Info") {
+                    TextField("Title", text: $paper.title)
                 }
                 
-                Button("Choose file") {
-                    let openFilePanel = NSOpenPanel()
-                    openFilePanel.allowedContentTypes = [.pdf]
-                    if openFilePanel.runModal() == .OK {
-                        if let url = openFilePanel.url {
-                            filePath = url
-                        }
-                    }
+                Section("Optional Info") {
+                    TextField("Publication Year", text: Binding { paper.publicationYear ?? "" } set: { paper.publicationYear = $0.isEmpty ? nil : $0 })
+                    TextField("Publication", text: Binding { paper.publication ?? "" } set: { paper.publication = $0.isEmpty ? nil : $0 })
+                    TextField("Volume", text: Binding { paper.volume ?? "" } set: { paper.volume = $0.isEmpty ? nil : $0 })
+                    TextField("Issue", text: Binding { paper.issue ?? "" } set: { paper.issue = $0.isEmpty ? nil : $0 })
+                    TextField("Pages", text: Binding { paper.pages ?? "" } set: { paper.pages = $0.isEmpty ? nil : $0 })
+                    TextField("DOI", text: Binding { paper.doi ?? "" } set: { paper.doi = $0.isEmpty ? nil : $0 })
+                    TextField("Abstract", text: Binding { paper.abstract ?? "" } set: { paper.abstract = $0.isEmpty ? nil : $0 })
                 }
             }
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Add") {
-                    
+                    project.papers.append(paper)
+                    shouldClose = true
                 }
                 .keyboardShortcut(.defaultAction)
-                .disabled(filePath != nil)
+                .disabled(paper.title.isEmpty)
             }
         }
     }
 }
 
 #Preview {
-    AddPaperByFileView(project: ModelData.project1)
+    AddPaperByFileView(project: ModelData.project1, paper: ModelData.paper1, shouldClose: .constant(false))
         .modelContainer(previewContainer)
 }

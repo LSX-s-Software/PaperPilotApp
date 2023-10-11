@@ -98,7 +98,7 @@ struct PaperInfo: View {
                     .frame(minHeight: 150)
             }
         }
-#if !os(macOS)
+#if os(iOS)
         .listStyle(.insetGrouped)
 #endif
     }

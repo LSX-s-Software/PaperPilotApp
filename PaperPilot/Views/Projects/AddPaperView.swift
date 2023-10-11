@@ -11,6 +11,10 @@ struct AddPaperView: View {
     @Environment(\.dismiss) private var dismiss
     
     @Bindable var project: Project
+    @State private var newPaper = Paper(title: "")
+    @State private var filePath: URL?
+    @State private var shouldGoNext = false
+    @State private var shouldClose = false
     
     var body: some View {
         NavigationStack {
@@ -35,8 +39,17 @@ struct AddPaperView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     
-                    NavigationLink {
-                        AddPaperByFileView(project: project)
+                    Button {
+                        let openFilePanel = NSOpenPanel()
+                        openFilePanel.allowedContentTypes = [.pdf]
+                        if openFilePanel.runModal() == .OK {
+                            if let url = openFilePanel.url {
+                                filePath = url
+                                newPaper.title = url.deletingPathExtension().lastPathComponent
+                                newPaper.url = url.path
+                                shouldGoNext = true
+                            }
+                        }
                     } label: {
                         HStack {
                             Image(systemName: "doc.badge.arrow.up")
@@ -55,6 +68,14 @@ struct AddPaperView: View {
                     }
                 }
                 .fixedSize(horizontal: true, vertical: false)
+            }
+            .navigationDestination(isPresented: $shouldGoNext) {
+                AddPaperByFileView(project: project, paper: newPaper, shouldClose: $shouldClose)
+            }
+        }
+        .onChange(of: shouldClose) {
+            if shouldClose {
+                dismiss()
             }
         }
     }
