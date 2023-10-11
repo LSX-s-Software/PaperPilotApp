@@ -28,56 +28,58 @@ struct PaperReader: View {
     @State private var note = ""
     
     var body: some View {
-        GeometryReader { proxy in
-            HSplitView {
-                Group {
-                    if loadingPDF {
-                        ProgressView()
-                    } else if let pdf = pdf {
-                        PDFKitView(pdf: pdf)
-                    } else {
-                        VStack(spacing: 6) {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                                .symbolRenderingMode(.hierarchical)
-                                .foregroundStyle(.red)
-                                .font(.title)
-                            Text(LocalizedStringKey(errorDescription ?? "Unknown error"))
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-                VStack(alignment: .leading) {
-                    VStack(alignment: .leading) {
-                        Group {
-                            Text(paper.title)
-                                .font(.title)
-                            Text(paper.formattedAuthors)
-                                .foregroundStyle(.secondary)
-                        }
-                        .multilineTextAlignment(.leading)
-                        
-                        Picker("Sidebar Content", selection: $sidebarContent) {
-                            ForEach(SidebarContent.allCases) { content in
-                                Text(LocalizedStringKey(content.rawValue)).tag(content)
+        NavigationStack {
+            GeometryReader { proxy in
+                HSplitView {
+                    Group {
+                        if loadingPDF {
+                            ProgressView()
+                        } else if let pdf = pdf {
+                            PDFReader(pdf: pdf)
+                        } else {
+                            VStack(spacing: 6) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .symbolRenderingMode(.hierarchical)
+                                    .foregroundStyle(.red)
+                                    .font(.title)
+                                Text(LocalizedStringKey(errorDescription ?? "Unknown error"))
+                                    .foregroundStyle(.secondary)
                             }
                         }
-                        .pickerStyle(.segmented)
-                        .labelsHidden()
                     }
-                    .padding([.horizontal, .top])
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
-                    if sidebarContent == .info {
-                        PaperInfo(paper: paper)
-                    } else {
-                        TextEditor(text: $note)
+                    VStack(alignment: .leading) {
+                        VStack(alignment: .leading) {
+                            Group {
+                                Text(paper.title)
+                                    .font(.title)
+                                Text(paper.formattedAuthors)
+                                    .foregroundStyle(.secondary)
+                            }
+                            .multilineTextAlignment(.leading)
+                            
+                            Picker("Sidebar Content", selection: $sidebarContent) {
+                                ForEach(SidebarContent.allCases) { content in
+                                    Text(LocalizedStringKey(content.rawValue)).tag(content)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .labelsHidden()
+                        }
+                        .padding([.horizontal, .top])
+                        
+                        if sidebarContent == .info {
+                            PaperInfo(paper: paper)
+                        } else {
+                            TextEditor(text: $note)
+                        }
                     }
+                    .frame(minWidth: 100, idealWidth: proxy.size.width / 4, maxWidth: proxy.size.width / 3)
                 }
-                .frame(minWidth: 100, idealWidth: proxy.size.width / 4, maxWidth: proxy.size.width / 3)
-            }
-            .onAppear {
-                loadPDF()
+                .onAppear {
+                    loadPDF()
+                }
             }
         }
     }

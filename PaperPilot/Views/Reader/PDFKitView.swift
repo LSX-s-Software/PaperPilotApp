@@ -11,9 +11,9 @@ import PDFKit
 #if os(macOS)
 struct PDFKitView: NSViewRepresentable {
     let pdf: PDFDocument
+    @Binding var pdfView: PDFView
     
     func makeNSView(context: NSViewRepresentableContext<PDFKitView>) -> PDFView {
-        let pdfView = PDFView()
         pdfView.document = pdf
         pdfView.autoScales = true
         return pdfView

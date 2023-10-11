@@ -276,6 +276,17 @@
         }
       }
     },
+    "Hide TOC" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏目录"
+          }
+        }
+      }
+    },
     "Info" : {
       "localizations" : {
         "zh-Hans" : {
@@ -408,6 +419,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "可选信息"
+          }
+        }
+      }
+    },
+    "Outline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大纲"
           }
         }
       }
@@ -575,6 +597,16 @@
         }
       }
     },
+    "Table of Contents" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录"
+          }
+        }
+      }
+    },
     "Tags" : {
       "localizations" : {
         "zh-Hans" : {
@@ -591,6 +623,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "此操作不能撤销"
+          }
+        }
+      }
+    },
+    "Thumbnail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缩略图"
           }
         }
       }
@@ -612,6 +655,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知"
+          }
+        }
+      }
+    },
+    "Unknown error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知错误"
           }
         }
       }
