@@ -23,7 +23,7 @@ class ModelData {
                               pages: "123-135",
                               url: "https://www.jmlr.org/papers/v42/Smith21a.html",
                               doi: "10.5555/123456789",
-                              file: Bundle.main.url(forResource: "frames", withExtension: "pdf"))
+                              file: try! Bundle.main.url(forResource: "frames", withExtension: "pdf")?.bookmarkData())
     static var paper2 = Paper(title: "An Introduction to Swift Programming",
                               abstract: nil,
                               keywords: [],
@@ -42,7 +42,7 @@ class ModelData {
                               publication: "IEEE Transactions on Natural Language Processing",
                               volume: "10",
                               issue: "2",
-                              file: Bundle.main.url(forResource: "frames", withExtension: "pdf"))
+                              file: try! Bundle.main.url(forResource: "frames", withExtension: "pdf")?.bookmarkData())
     static var project1 = Project(name: "Demo project", desc: "CVPR24 Project", papers: [paper1, paper2, paper3])
     static var project2 = Project(name: "test2", desc: "", papers: [paper2, paper3])
 }

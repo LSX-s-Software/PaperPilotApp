@@ -10,11 +10,11 @@ import PDFKit
 
 #if os(macOS)
 struct PDFKitView: NSViewRepresentable {
-    let url: URL
+    let pdf: PDFDocument
     
     func makeNSView(context: NSViewRepresentableContext<PDFKitView>) -> PDFView {
         let pdfView = PDFView()
-        pdfView.document = PDFDocument(url: self.url)
+        pdfView.document = pdf
         pdfView.autoScales = true
         return pdfView
     }
@@ -23,11 +23,11 @@ struct PDFKitView: NSViewRepresentable {
 }
 #else
 struct PDFKitView: UIViewRepresentable {
-    let url: URL
+    let pdf: PDFDocument
     
     func makeUIView(context: UIViewRepresentableContext<PDFKitView>) -> PDFView {
         let pdfView = PDFView()
-        pdfView.document = PDFDocument(url: self.url)
+        pdfView.document = pdf
         pdfView.autoScales = true
         return pdfView
     }

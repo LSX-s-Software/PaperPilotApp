@@ -42,7 +42,7 @@ class Paper: Hashable, Codable, Identifiable {
     var doi: String?
     
     /// 文件 url
-    var file: URL?
+    var file: Data?
     
     var createTime: Date
     var formattedCreateTime: String {
@@ -66,7 +66,7 @@ class Paper: Hashable, Codable, Identifiable {
          pages: String? = nil,
          url: String? = nil,
          doi: String? = nil,
-         file: URL? = nil,
+         file: Data? = nil,
          createTime: Date = Date.now,
          read: Bool = false) {
         self.id = id
@@ -126,7 +126,7 @@ class Paper: Hashable, Codable, Identifiable {
         self.pages = try container.decodeIfPresent(String.self, forKey: .pages)
         self.url = try container.decodeIfPresent(String.self, forKey: .url)
         self.doi = try container.decodeIfPresent(String.self, forKey: .doi)
-        self.file = try container.decodeIfPresent(URL.self, forKey: .file)
+        self.file = try container.decodeIfPresent(Data.self, forKey: .file)
         self.createTime = try container.decode(Date.self, forKey: .createTime)
         self.read = try container.decode(Bool.self, forKey: .read)
     }

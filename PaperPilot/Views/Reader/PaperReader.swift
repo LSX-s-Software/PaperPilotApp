@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 struct PaperReader: View {
     @Bindable var paper: Paper
@@ -21,27 +22,31 @@ struct PaperReader: View {
     @AppStorage(AppStorageKey.Reader.sidebarContent.rawValue)
     var sidebarContent = SidebarContent.info
     
-    @State var note = ""
+    @State private var loadingPDF = true
+    @State private var errorDescription: String?
+    @State private var pdf: PDFDocument?
+    @State private var note = ""
     
     var body: some View {
         GeometryReader { proxy in
             HSplitView {
                 Group {
-                    if let url = paper.file {
-                        PDFKitView(url: url)
-                            .frame(maxWidth: .infinity)
+                    if loadingPDF {
+                        ProgressView()
+                    } else if let pdf = pdf {
+                        PDFKitView(pdf: pdf)
                     } else {
                         VStack(spacing: 6) {
                             Image(systemName: "exclamationmark.triangle.fill")
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundStyle(.red)
                                 .font(.title)
-                            Text("No Document")
+                            Text(errorDescription ?? "Unknown error")
                                 .foregroundStyle(.secondary)
                         }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 VStack(alignment: .leading) {
                     VStack(alignment: .leading) {
@@ -71,6 +76,41 @@ struct PaperReader: View {
                 }
                 .frame(minWidth: 100, idealWidth: proxy.size.width / 4, maxWidth: proxy.size.width / 3)
             }
+            .onAppear {
+                loadPDF()
+            }
+        }
+    }
+    
+    func loadPDF() {
+        guard let bookmark = paper.file else {
+            loadingPDF = false
+            return
+        }
+        var bookmarkStale = false
+        defer { loadingPDF = false }
+        do {
+            let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
+                                      options: .withSecurityScope,
+                                      relativeTo: nil,
+                                      bookmarkDataIsStale: &bookmarkStale)
+            let didStartAccessing = resolvedUrl.startAccessingSecurityScopedResource()
+            defer {
+                resolvedUrl.stopAccessingSecurityScopedResource()
+            }
+            
+            if bookmarkStale {
+                errorDescription = "Bookmark is stale. Please reimport the paper."
+                return
+            }
+            if !didStartAccessing {
+                errorDescription = "Failed to access the file"
+                return
+            }
+            
+            pdf = PDFDocument(url: resolvedUrl)
+        } catch {
+            errorDescription = error.localizedDescription
         }
     }
 }

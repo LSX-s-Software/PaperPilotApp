@@ -60,18 +60,9 @@ struct AddPaperView: View {
                     }
                     .fileImporter(
                         isPresented: $isImporting,
-                        allowedContentTypes: [.pdf]
-                    ) { result in
-                        switch result {
-                        case .success(let url):
-                            filePath = url
-                            newPaper.title = url.deletingPathExtension().lastPathComponent
-                            newPaper.url = url.path
-                            shouldGoNext = true
-                        case .failure(let error):
-                            print(error)
-                        }
-                    }
+                        allowedContentTypes: [.pdf],
+                        onCompletion: handleImportFile
+                    )
                 }
                 .fixedSize(horizontal: true, vertical: false)
             }
@@ -83,6 +74,29 @@ struct AddPaperView: View {
             if shouldClose {
                 dismiss()
             }
+        }
+    }
+    
+    func handleImportFile(result: Result<URL, Error>) {
+        do {
+            switch result {
+            case .success(let url):
+                filePath = url
+                newPaper.title = url.deletingPathExtension().lastPathComponent
+                newPaper.url = url.path
+                let didStartAccessing = url.startAccessingSecurityScopedResource()
+                defer {
+                    url.stopAccessingSecurityScopedResource()
+                }
+                if didStartAccessing {
+                    newPaper.file = try url.bookmarkData(options: .withSecurityScope)
+                    shouldGoNext = true
+                }
+            case .failure(let error):
+                throw error
+            }
+        } catch {
+            print(error)
         }
     }
 }

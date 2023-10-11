@@ -381,6 +381,7 @@
       }
     },
     "No Document" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
