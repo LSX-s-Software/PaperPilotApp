@@ -44,7 +44,7 @@ struct PaperInfo: View {
             }
             .listRowSeparator(.hidden)
             
-            Section("Info") {
+            Section("Basic Info") {
                 InfoRow(title: "DOI", content: paper.doi) { newValue in
                     paper.doi = newValue
                 }

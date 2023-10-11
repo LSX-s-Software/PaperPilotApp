@@ -12,8 +12,8 @@ struct PaperReader: View {
     @Bindable var paper: Paper
     
     enum SidebarContent: String, Identifiable, CaseIterable {
-        case info = "信息"
-        case note = "笔记"
+        case info = "Info"
+        case note = "Note"
         
         var id: Self {
             self
@@ -41,7 +41,7 @@ struct PaperReader: View {
                                 .symbolRenderingMode(.hierarchical)
                                 .foregroundStyle(.red)
                                 .font(.title)
-                            Text(errorDescription ?? "Unknown error")
+                            Text(LocalizedStringKey(errorDescription ?? "Unknown error"))
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -60,7 +60,7 @@ struct PaperReader: View {
                         
                         Picker("Sidebar Content", selection: $sidebarContent) {
                             ForEach(SidebarContent.allCases) { content in
-                                Text(content.rawValue).tag(content)
+                                Text(LocalizedStringKey(content.rawValue)).tag(content)
                             }
                         }
                         .pickerStyle(.segmented)

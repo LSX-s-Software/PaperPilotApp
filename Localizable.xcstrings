@@ -122,6 +122,17 @@
         }
       }
     },
+    "Basic Info" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基本信息"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -270,7 +281,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "基本信息"
+            "value" : "信息"
           }
         }
       }
@@ -380,13 +391,13 @@
         }
       }
     },
-    "No Document" : {
-      "extractionState" : "stale",
+    "Note" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "没有文档"
+            "value" : "笔记"
           }
         }
       }
