@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		272423D32AD677F9001748AC /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272423D22AD677F9001748AC /* Api.swift */; };
 		279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */; };
 		279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */; };
 		279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2D002AC8276600FEA9D8 /* protoc-gen-swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		272423D22AD677F9001748AC /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		27293A652AD2CE2500A98E13 /* team.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = team.xcconfig; sourceTree = "<group>"; };
 		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
@@ -94,6 +96,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		272423CF2AD677A8001748AC /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				272423D22AD677F9001748AC /* Api.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
 		279F2D1F2AC8364500FEA9D8 /* proto */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +173,7 @@
 		F5EBC0B02ABFD98E00B2B4A3 /* PaperPilot */ = {
 			isa = PBXGroup;
 			children = (
+				272423CF2AD677A8001748AC /* Api */,
 				F53D814C2AC1506C00865B80 /* frames.pdf */,
 				F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */,
 				F5D8EEFB2AD4F60B00501B0E /* Constants */,
@@ -322,6 +333,7 @@
 				F53D81402AC02A7A00865B80 /* Project.swift in Sources */,
 				F5145E7F2AD58275001860E0 /* AddPaperByURLView.swift in Sources */,
 				F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */,
+				272423D32AD677F9001748AC /* Api.swift in Sources */,
 				F53D81442AC02C6500865B80 /* ModelData.swift in Sources */,
 				F5D8EF012AD4F62E00501B0E /* AppStorageKey.swift in Sources */,
 				F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */,
