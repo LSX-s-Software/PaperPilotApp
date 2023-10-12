@@ -20,6 +20,7 @@ enum AppWindow: String, Identifiable {
 @main
 struct PaperPilotApp: App {
     let modelContainer: ModelContainer
+    @StateObject var appState = AppState()
     
     init() {
         do {
@@ -47,8 +48,21 @@ struct PaperPilotApp: App {
                        minHeight: 300, idealHeight: 900, maxHeight: .infinity)
         }
         .modelContainer(modelContainer)
+        .environmentObject(appState)
         .commands {
             CommandGroup(replacing: .newItem, addition: { })
+            
+            CommandGroup(after: .textEditing) {
+                Button(appState.findingInPDF ? "Stop Finding" : "Find in PDF") {
+                    appState.findInPDFHandler?(!appState.findingInPDF)
+                }
+                .keyboardShortcut("f")
+            }
         }
     }
+}
+
+class AppState: ObservableObject {
+    @Published var findingInPDF = false
+    var findInPDFHandler: ((Bool) -> Void)?
 }

@@ -9,6 +9,8 @@ import SwiftUI
 import PDFKit
 
 struct PDFReader: View {
+    @EnvironmentObject var appState: AppState
+    
     let pdf: PDFDocument
     
     enum TOCContentType: String, Identifiable, CaseIterable {
@@ -69,6 +71,10 @@ struct PDFReader: View {
                         .padding()
                         .background(.regularMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                    } else if findResult.isEmpty {
+                        Text("No Results")
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 .animation(.easeInOut, value: finding)
@@ -129,6 +135,21 @@ struct PDFReader: View {
                 }
             }
         }
+        .onAppear {
+            appState.findInPDFHandler = findInPDFHandler(_:)
+        }
+    }
+    
+    func findInPDFHandler(_ shouldFind: Bool) {
+        if shouldFind {
+            searchBarPresented = true
+        } else {
+            searchBarPresented = false
+            findText = ""
+            finding = false
+            findResult.removeAll()
+            appState.findingInPDF = false
+        }
     }
     
     func performFind() {
@@ -137,11 +158,12 @@ struct PDFReader: View {
             return
         }
         finding = true
+        appState.findingInPDF = true
         Task {
             findResult = pdf.findString(findText, withOptions: findOptions)
             finding = false
             if !findResult.isEmpty {
-                await pdfView.setCurrentSelection(findResult.first!, animate: true)
+                pdfView.setCurrentSelection(findResult.first!, animate: true)
             }
         }
     }
