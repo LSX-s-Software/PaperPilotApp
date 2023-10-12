@@ -144,6 +144,16 @@
         }
       }
     },
+    "Case Sensitive" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "区分大小写"
+          }
+        }
+      }
+    },
     "Close" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -252,6 +262,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入 %@"
+          }
+        }
+      }
+    },
+    "Find in PDF" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在PDF中查找"
+          }
+        }
+      }
+    },
+    "Find Options" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查找选项"
+          }
+        }
+      }
+    },
+    "Finding..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查找中…"
           }
         }
       }
@@ -440,6 +480,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "大纲"
+          }
+        }
+      }
+    },
+    "Page %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "页面 %@"
           }
         }
       }
