@@ -23,6 +23,7 @@ struct PDFReader: View {
     @State private var tocContent: TOCContentType = .outline
     
     @State private var pdfView = PDFView()
+    @State private var currentPage: String? = "1"
     @State private var findText = ""
     @State private var searchBarPresented = false
     @State private var caseSensitive = false
@@ -108,8 +109,12 @@ struct PDFReader: View {
                 .onChange(of: findText) {
                     performFind()
                 }
+                .onReceive(NotificationCenter.default.publisher(for: Notification.Name.PDFViewPageChanged)) { _ in
+                    currentPage = pdfView.currentPage?.label
+                }
         }
         .animation(.easeInOut, value: tocContent)
+        .navigationSubtitle("Page: \(currentPage ?? "Unknown")/\(pdf.pageCount)")
         // MARK: - 工具栏
         .toolbar {
             ToolbarItem(placement: .navigation) {
@@ -181,4 +186,6 @@ struct PDFReader: View {
 
 #Preview {
     PDFReader(pdf: PDFDocument(url: Bundle.main.url(forResource: "sample", withExtension: "pdf")!)!)
+        .frame(width: 800)
+        .environmentObject(AppState())
 }
