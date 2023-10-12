@@ -5,7 +5,7 @@
 //  Created by 林思行 on 2023/9/24.
 //
 
-// swiftlint:disable line_length
+// swiftlint:disable line_length force_try
 
 import Foundation
 import SwiftData
@@ -47,7 +47,7 @@ class ModelData {
     static var project2 = Project(name: "test2", desc: "", papers: [paper2, paper3])
 }
 
-// swiftlint:enable line_length
+// swiftlint:enable line_length force_try
 
 @MainActor
 let previewContainer: ModelContainer = {

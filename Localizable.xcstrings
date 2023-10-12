@@ -402,6 +402,16 @@
         }
       }
     },
+    "No Outline" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有大纲"
+          }
+        }
+      }
+    },
     "Note" : {
       "extractionState" : "manual",
       "localizations" : {

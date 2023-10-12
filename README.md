@@ -20,10 +20,10 @@
 
 ## 支持的平台
 
-- macOS 13.0+
-- iPadOS 16.0+
+- macOS 14.0+
+- iPadOS 17.0+
 
 ## 开发要求
 
-- macOS 13.0+
+- macOS 14.0+
 - Xcode 15.0+

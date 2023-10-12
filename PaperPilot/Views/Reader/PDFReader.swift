@@ -18,7 +18,7 @@ struct PDFReader: View {
         
         var id: Self { self }
     }
-    @State private var tocContent: TOCContentType = .thumbnail
+    @State private var tocContent: TOCContentType = .outline
     
     @State private var pdfView = PDFView()
     
@@ -29,7 +29,18 @@ struct PDFReader: View {
             case .none:
                 EmptyView()
             case .outline:
-                EmptyView()
+                Group {
+                    if let root = pdf.outlineRoot {
+                        PDFOutlineView(root: root) { page in
+                            pdfView.go(to: page)
+                        }
+                    } else {
+                        Text("No Outline")
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(width: 175)
             case .thumbnail:
                 PDFKitThumbnailView(pdfView: $pdfView, thumbnailWidth: 100)
                     .frame(width: 150)
@@ -38,7 +49,6 @@ struct PDFReader: View {
             PDFKitView(pdf: pdf, pdfView: $pdfView)
         }
         .animation(.easeInOut, value: tocContent)
-        
         // MARK: - 工具栏
         .toolbar {
             ToolbarItem(placement: .navigation) {
