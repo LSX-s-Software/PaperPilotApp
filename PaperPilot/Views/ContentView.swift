@@ -67,11 +67,10 @@ struct ContentView: View {
         // MARK: - Toolbar
         .toolbar {
             ToolbarItem {
-                if let _ = user {
+                if user != nil {
                     Button("Account", systemImage: "person.crop.circle") {
                         isShowingAccountView.toggle()
                     }
-
                     .sheet(isPresented: $isShowingAccountView) {
                         AccountView()
                     }

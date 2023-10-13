@@ -31,7 +31,7 @@ struct LoginSheet: View {
                 Text("Log in to collaborate with your teammates")
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                Picker("", selection: $viewModel.isRegistering) {
+                Picker("Log in/Register", selection: $viewModel.isRegistering) {
                     Text("Log In").tag(false)
                     Text("Register").tag(true)
                 }
@@ -49,7 +49,7 @@ struct LoginSheet: View {
                         .textContentType(.password)
                         .textFieldStyle(InputTextFieldStyle(title: "Password"))
                     if viewModel.isRegistering {
-                        TextField("", text: $viewModel.verificationCode)
+                        TextField("Verification Code", text: $viewModel.verificationCode)
                             .textContentType(.oneTimeCode)
                             .textFieldStyle(
                                 InputTextFieldWithButtonStyle(

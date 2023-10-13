@@ -95,6 +95,16 @@
         }
       }
     },
+    "Add to bookmark" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加到书签"
+          }
+        }
+      }
+    },
     "Are you sure to delete this project?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -132,6 +142,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "基本信息"
+          }
+        }
+      }
+    },
+    "Black" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "黑色"
+          }
+        }
+      }
+    },
+    "Blue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝色"
           }
         }
       }
@@ -319,6 +351,17 @@
         }
       }
     },
+    "Green" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "绿色"
+          }
+        }
+      }
+    },
     "Hide TOC" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -326,6 +369,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "隐藏目录"
+          }
+        }
+      }
+    },
+    "Highlight" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高亮"
+          }
+        }
+      }
+    },
+    "Highlighter Color" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高亮颜色"
           }
         }
       }
@@ -387,6 +450,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "登录之后即可开始协作"
+          }
+        }
+      }
+    },
+    "Log in/Register" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录/注册"
           }
         }
       }
@@ -595,6 +668,17 @@
         }
       }
     },
+    "Pink" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "粉色"
+          }
+        }
+      }
+    },
     "Please Enter URL/DOI" : {
       "localizations" : {
         "zh-Hans" : {
@@ -672,6 +756,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "出版年份"
+          }
+        }
+      }
+    },
+    "Purple" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "紫色"
           }
         }
       }
@@ -797,6 +892,16 @@
         }
       }
     },
+    "Underline" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下划线"
+          }
+        }
+      }
+    },
     "Unknown" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -856,6 +961,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "卷号"
+          }
+        }
+      }
+    },
+    "Yellow" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "黄色"
           }
         }
       }

@@ -8,21 +8,49 @@
 import SwiftUI
 import PDFKit
 
+private enum TOCContentType: String, Identifiable, CaseIterable {
+    case none = "Hide TOC"
+    case outline = "Outline"
+    case thumbnail = "Thumbnail"
+    
+    var id: Self { self }
+}
+
+private enum HighlighterColor: String, CaseIterable, Identifiable {
+    case yellow = "Yellow"
+    case green = "Green"
+    case blue = "Blue"
+    case pink = "Pink"
+    case purple = "Purple"
+    case black = "Black"
+    
+    var id: Self { self }
+    
+    var color: NSColor {
+        switch self {
+        case .yellow:
+            NSColor(red: 249 / 255.0, green: 205 / 255.0, blue: 110 / 255.0, alpha: 1)
+        case .green:
+            NSColor(red: 142 / 255.0, green: 197 / 255.0, blue: 115 / 255.0, alpha: 1)
+        case .blue:
+            NSColor(red: 121 / 255.0, green: 175 / 255.0, blue: 235 / 255.0, alpha: 1)
+        case .pink:
+            NSColor(red: 233 / 255.0, green: 103 / 255.0, blue: 138 / 255.0, alpha: 1)
+        case .purple:
+            NSColor(red: 191 / 255.0, green: 136 / 255.0, blue: 214 / 255.0, alpha: 1)
+        case .black:
+            NSColor.black
+        }
+    }
+}
+
 struct PDFReader: View {
     @EnvironmentObject var appState: AppState
     
     let pdf: PDFDocument
     
-    enum TOCContentType: String, Identifiable, CaseIterable {
-        case none = "Hide TOC"
-        case outline = "Outline"
-        case thumbnail = "Thumbnail"
-        
-        var id: Self { self }
-    }
-    @State private var tocContent: TOCContentType = .outline
-    
     @State private var pdfView = PDFView()
+    @State private var tocContent: TOCContentType = .outline
     @State private var currentPage: String? = "1"
     @State private var findText = ""
     @State private var searchBarPresented = false
@@ -36,6 +64,8 @@ struct PDFReader: View {
         }
         return options
     }
+    
+    @State private var annotationColor = HighlighterColor.yellow
     
     var body: some View {
         HStack {
@@ -106,11 +136,12 @@ struct PDFReader: View {
             // MARK: - 阅读器
             PDFKitView(pdf: pdf, pdfView: $pdfView)
                 .searchable(text: $findText, isPresented: $searchBarPresented, prompt: Text("Find in PDF"))
-                .onChange(of: findText) {
-                    performFind()
-                }
-                .onReceive(NotificationCenter.default.publisher(for: Notification.Name.PDFViewPageChanged)) { _ in
+                .onChange(of: findText, performFind)
+                .onReceive(NotificationCenter.default.publisher(for: .PDFViewPageChanged)) { _ in
                     currentPage = pdfView.currentPage?.label
+                }
+                .onReceive(NotificationCenter.default.publisher(for: .PDFViewAnnotationHit)) { userInfo in
+                    print(userInfo)
                 }
         }
         .animation(.easeInOut, value: tocContent)
@@ -130,12 +161,31 @@ struct PDFReader: View {
                 }
             }
             if searchBarPresented {
-                ToolbarItemGroup {
+                ToolbarItem {
                     Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
                         Toggle("Case Sensitive", systemImage: "textformat", isOn: $caseSensitive)
                     }
-                    .onChange(of: findOptions) {
-                        performFind()
+                    .onChange(of: findOptions, performFind)
+                }
+            }
+            ToolbarItemGroup(placement: .principal) {
+                ControlGroup {
+                    Picker("Highlighter Color", selection: $annotationColor) {
+                        ForEach(HighlighterColor.allCases) { color in
+                            HStack {
+                                Image(systemName: "largecircle.fill.circle")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(Color(color.color))
+                                Text(LocalizedStringKey(color.rawValue))
+                            }
+                            .tag(color)
+                        }
+                    }
+                    Button("Highlight", systemImage: "highlighter") {
+                        handleAddAnnotation(.highlight)
+                    }
+                    Button("Underline", systemImage: "underline") {
+                        handleAddAnnotation(.underline)
                     }
                 }
             }
@@ -144,7 +194,10 @@ struct PDFReader: View {
             appState.findInPDFHandler = findInPDFHandler(_:)
         }
     }
+}
     
+// MARK: - PDF查找
+extension PDFReader {
     func findInPDFHandler(_ shouldFind: Bool) {
         if shouldFind {
             searchBarPresented = true
@@ -157,7 +210,7 @@ struct PDFReader: View {
         }
     }
     
-    func performFind() {
+    private func performFind() {
         if finding || findText.isEmpty {
             finding = false
             return
@@ -173,7 +226,7 @@ struct PDFReader: View {
         }
     }
     
-    func findResultText(for selection: PDFSelection) -> AttributedString {
+    private func findResultText(for selection: PDFSelection) -> AttributedString {
         guard let extendSelection = selection.copy() as? PDFSelection else { return "" }
         extendSelection.extendForLineBoundaries()
         var attributedString = AttributedString(extendSelection.string ?? "")
@@ -181,6 +234,24 @@ struct PDFReader: View {
         attributedString[range].inlinePresentationIntent = .stronglyEmphasized
         attributedString[range].foregroundColor = .yellow
         return attributedString
+    }
+}
+
+// MARK: - PDF标注
+extension PDFReader {
+    func handleAddAnnotation(_ type: PDFAnnotationSubtype) {
+        let select = pdfView.currentSelection?.selectionsByLine()
+        guard let page = select?.first?.pages.first else { return }
+        
+        select?.forEach { selection in
+            let bounds = selection.bounds(for: page)
+            let highlight = PDFAnnotation(bounds: bounds,
+                                          forType: type,
+                                          withProperties: nil)
+            highlight.color = annotationColor.color
+            
+            page.addAnnotation(highlight)
+        }
     }
 }
 
