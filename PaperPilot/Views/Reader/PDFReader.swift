@@ -12,6 +12,7 @@ private enum TOCContentType: String, Identifiable, CaseIterable {
     case none = "Hide TOC"
     case outline = "Outline"
     case thumbnail = "Thumbnail"
+    case bookmark = "Bookmark"
     
     var id: Self { self }
 }
@@ -50,8 +51,8 @@ struct PDFReader: View {
     let pdf: PDFDocument
     
     @State private var pdfView = PDFView()
-    @State private var tocContent: TOCContentType = .outline
-    @State private var currentPage: String? = "1"
+    @State private var tocContent: TOCContentType = .bookmark
+    @State private var currentPageLabel: String? = "1"
     @State private var findText = ""
     @State private var searchBarPresented = false
     @State private var caseSensitive = false
@@ -66,6 +67,10 @@ struct PDFReader: View {
     }
     
     @State private var annotationColor = HighlighterColor.yellow
+    @State private var bookmarks = [PDFPage]()
+    private var currentPageBookmarked: Bool {
+        bookmarks.contains { $0.label == currentPageLabel }
+    }
     
     var body: some View {
         HStack {
@@ -130,6 +135,27 @@ struct PDFReader: View {
                 case .thumbnail:
                     PDFKitThumbnailView(pdfView: $pdfView, thumbnailWidth: 100)
                         .frame(width: 150)
+                case .bookmark:
+                    List(bookmarks, id: \.label) { bookmark in
+                        Button {
+                            pdfView.go(to: bookmark)
+                        } label: {
+                            Image(nsImage: bookmark.thumbnail(of: NSSize(width: 180, height: 360), for: .trimBox))
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                                .frame(maxWidth: 60, maxHeight: 120)
+                            Spacer()
+                            if let label = bookmark.label {
+                                Text(label)
+                                    .fontWeight(.medium)
+                            }
+                        }
+                        .buttonStyle(.link)
+                    }
+                    .listStyle(.sidebar)
+                    .listRowInsets(.none)
+                    .frame(width: 150)
                 }
             }
             
@@ -138,14 +164,14 @@ struct PDFReader: View {
                 .searchable(text: $findText, isPresented: $searchBarPresented, prompt: Text("Find in PDF"))
                 .onChange(of: findText, performFind)
                 .onReceive(NotificationCenter.default.publisher(for: .PDFViewPageChanged)) { _ in
-                    currentPage = pdfView.currentPage?.label
+                    currentPageLabel = pdfView.currentPage?.label
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .PDFViewAnnotationHit)) { userInfo in
                     print(userInfo)
                 }
         }
         .animation(.easeInOut, value: tocContent)
-        .navigationSubtitle("Page: \(currentPage ?? "Unknown")/\(pdf.pageCount)")
+        .navigationSubtitle("Page: \(currentPageLabel ?? "Unknown")/\(pdf.pageCount)")
         // MARK: - 工具栏
         .toolbar {
             ToolbarItem(placement: .navigation) {
@@ -186,6 +212,13 @@ struct PDFReader: View {
                     }
                     Button("Underline", systemImage: "underline") {
                         handleAddAnnotation(.underline)
+                    }
+                }
+                Button("Add to bookmark", systemImage: "bookmark\(currentPageBookmarked ? ".fill" : "")") {
+                    if currentPageBookmarked {
+                        handleRemoveBookmark()
+                    } else {
+                        handleAddBookmark()
                     }
                 }
             }
@@ -252,6 +285,19 @@ extension PDFReader {
             
             page.addAnnotation(highlight)
         }
+    }
+    
+    func handleAddBookmark() {
+        if let currentPage = pdfView.currentPage {
+            if bookmarks.contains(where: { $0.label == currentPage.label }) {
+                return
+            }
+            bookmarks.append(currentPage)
+        }
+    }
+    
+    func handleRemoveBookmark() {
+        bookmarks.removeAll { $0.label == pdfView.currentPage?.label }
     }
 }
 
