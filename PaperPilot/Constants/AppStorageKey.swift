@@ -10,8 +10,9 @@ import Foundation
 enum AppStorageKey {
     enum User: String {
         case loggedIn = "user.loggedIn"
+        case user = "user.user"
     }
-    
+
     enum Reader: String {
         case sidebarContent = "reader.sidebarContent"
     }
