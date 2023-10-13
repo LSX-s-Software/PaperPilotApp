@@ -196,12 +196,12 @@
 		F5EBC0B02ABFD98E00B2B4A3 /* PaperPilot */ = {
 			isa = PBXGroup;
 			children = (
-				76C15CB92AD82A9500614902 /* ViewModel */,
 				F578D8242AD7B1F800322819 /* Info.plist */,
 				272423CF2AD677A8001748AC /* Api */,
 				F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */,
 				F5D8EEFB2AD4F60B00501B0E /* Constants */,
 				F53D813E2AC02A6B00865B80 /* Models */,
+				76C15CB92AD82A9500614902 /* ViewModel */,
 				F5EBC0C22ABFDF5500B2B4A3 /* Views */,
 				F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */,
 				F51A90C02AC19A5A00C26598 /* PaperPilot.entitlements */,

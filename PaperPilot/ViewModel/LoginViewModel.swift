@@ -26,7 +26,9 @@ class LoginViewModel: ObservableObject {
     @AppStorage(AppStorageKey.User.user.rawValue)
     private var user: User?
     func sendVerificationCode() {
-        self.isSendingVerificationCode = true
+        withAnimation {
+            self.isSendingVerificationCode = true
+        }
         Task {
             do {
                 let result = try await
@@ -43,13 +45,17 @@ class LoginViewModel: ObservableObject {
                 print(error)
             }
             DispatchQueue.main.async {
-                self.isSendingVerificationCode = false
+                withAnimation {
+                    self.isSendingVerificationCode = false
+                }
             }
         }
     }
 
     func submit() {
-        self.isSubmitting = true
+        withAnimation {
+            self.isSubmitting = true
+        }
         Task {
             do {
                 let result: Auth_LoginResponse
@@ -79,7 +85,9 @@ class LoginViewModel: ObservableObject {
                 print(error)
             }
             DispatchQueue.main.async {
-                self.isSubmitting = false
+                withAnimation {
+                    self.isSubmitting = false
+                }
             }
         }
     }

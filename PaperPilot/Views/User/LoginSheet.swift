@@ -58,9 +58,9 @@ struct LoginSheet: View {
                                             viewModel.sendVerificationCode()
                                         } label: {
                                             Group {
-                                                if viewModel.isSubmitting {
+                                                if viewModel.isSendingVerificationCode {
                                                     ProgressView()
-                                                        .font(.body)
+                                                        .controlSize(.small)
                                                 } else {
                                                     Text("Send")
                                                 }
@@ -89,6 +89,7 @@ struct LoginSheet: View {
                         Group {
                             if viewModel.isSubmitting {
                                 ProgressView()
+                                    .controlSize(.small)
                             } else if !viewModel.isRegistering {
                                 Text("Login")
                             } else {
