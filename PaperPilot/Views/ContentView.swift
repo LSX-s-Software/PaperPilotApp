@@ -17,8 +17,8 @@ struct ContentView: View {
     @State private var isShowingAccountView = false
     @State private var isShowingNewProjectSheet = false
     
-    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
-    private var loggedIn = false
+    @AppStorage(AppStorageKey.User.user.rawValue)
+    private var user: User?
     
     var body: some View {
         NavigationSplitView {
@@ -67,25 +67,25 @@ struct ContentView: View {
         // MARK: - Toolbar
         .toolbar {
             ToolbarItem {
-                if !loggedIn {
+                if let _ = user {
+                    Button("Account", systemImage: "person.crop.circle") {
+                        isShowingAccountView.toggle()
+                    }
+
+                    .sheet(isPresented: $isShowingAccountView) {
+                        AccountView()
+                    }
+                } else {
                     Button {
                         isShowingLoginSheet.toggle()
                     } label: {
                         HStack {
                             Image(systemName: "person.crop.circle")
-                            Text("Login")
+                            Text("Log In")
                         }
                     }
                     .sheet(isPresented: $isShowingLoginSheet) {
                         LoginSheet()
-                    }
-                } else {
-                    Button("Account", systemImage: "person.crop.circle") {
-                        isShowingAccountView.toggle()
-                    }
-                    
-                    .sheet(isPresented: $isShowingAccountView) {
-                        AccountView()
                     }
                 }
             }

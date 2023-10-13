@@ -12,6 +12,7 @@ struct LoginSheet: View {
     
     @State private var phone = ""
     @State private var password = ""
+    @ObservedObject var viewModel = LoginViewModel()
     
     @AppStorage(AppStorageKey.User.loggedIn.rawValue)
     private var loggedIn = false
@@ -23,43 +24,54 @@ struct LoginSheet: View {
                     .font(.system(size: 80))
                     .foregroundStyle(.blue)
                     .symbolRenderingMode(.hierarchical)
-                Text("Login")
+                Text("PaperPilot Account")
                     .font(.largeTitle)
                     .fontWeight(.medium)
                     .padding(.bottom, 1)
-                Text("Login to collaborate with your teammates")
+                Text("Log in to collaborate with your teammates")
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                Spacer()
-                    .frame(height: 24)
+                Picker("", selection: $viewModel.isRegistering) {
+                    Text("Log In").tag(false)
+                    Text("Register").tag(true)
+                }
+                .pickerStyle(.segmented)
                 Group {
-                    VStack(alignment: .leading) {
-                        Text("Phone")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        TextField("Phone", text: $phone)
-                            .textFieldStyle(.plain)
-                            .textContentType(.telephoneNumber)
-                            .padding(8)
-                            .background()
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    if viewModel.isRegistering {
+                        TextField("Username", text: $viewModel.username)
+                            .textContentType(.username)
+                            .textFieldStyle(InputTextFieldStyle(title: "Username"))
                     }
-                    .padding(.bottom, 4)
-                    VStack(alignment: .leading) {
-                        Text("Password")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        SecureField("Password", text: $password)
-                            .textFieldStyle(.plain)
-                            .textContentType(.password)
-                            .padding(8)
-                            .background()
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    TextField("Phone", text: $viewModel.phone)
+                        .textContentType(.telephoneNumber)
+                        .textFieldStyle(InputTextFieldStyle(title: "Phone"))
+                    SecureField("Password", text: $viewModel.password)
+                        .textContentType(.password)
+                        .textFieldStyle(InputTextFieldStyle(title: "Password"))
+                    if viewModel.isRegistering {
+                        TextField("", text: $viewModel.verificationCode)
+                            .textContentType(.oneTimeCode)
+                            .textFieldStyle(
+                                InputTextFieldWithButtonStyle(
+                                    title: "Verification Code") {
+                                        Button {
+                                            viewModel.sendVerificationCode()
+                                        } label: {
+                                            Group {
+                                                if viewModel.isSubmitting {
+                                                    ProgressView()
+                                                        .font(.body)
+                                                } else {
+                                                    Text("Send")
+                                                }
+                                            }
+                                            .padding(.vertical, 6)
+                                        }
+                                        .disabled(viewModel.phone.isEmpty || viewModel.isSendingVerificationCode)
+                            })
                     }
                 }
-                .frame(width: 300)
-                Spacer()
-                    .frame(height: 24)
+                .padding(.bottom, 8)
                 HStack {
                     Button {
                         dismiss()
@@ -72,11 +84,19 @@ struct LoginSheet: View {
                     Spacer()
                         .frame(maxWidth: 40)
                     Button {
-                        loggedIn = true
+                        viewModel.submit()
                     } label: {
-                        Text("Login")
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 6)
+                        Group {
+                            if viewModel.isSubmitting {
+                                ProgressView()
+                            } else if !viewModel.isRegistering {
+                                Text("Login")
+                            } else {
+                                Text("Register")
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 6)
                     }
                     .buttonStyle(.borderedProminent)
                     .keyboardShortcut(.defaultAction)
@@ -84,10 +104,54 @@ struct LoginSheet: View {
                 .padding(.horizontal)
             }
             .padding()
+            .frame(width: 325)
+        }
+        .alert(viewModel.errorMsg, isPresented: $viewModel.hasFailed) { }
+    }
+}
+
+struct InputTextFieldStyle: TextFieldStyle {
+    var title: LocalizedStringKey
+
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            configuration
+                .textFieldStyle(.plain)
+                .padding(8)
+                .background(.regularMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
+    }
+}
+
+struct InputTextFieldWithButtonStyle<Content: View>: TextFieldStyle {
+    var title: LocalizedStringKey
+    @ViewBuilder var view: () -> Content
+
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            HStack {
+                configuration
+                    .textFieldStyle(.plain)
+                    .padding(8)
+                    .background(.regularMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                view()
+            }
         }
     }
 }
 
 #Preview {
     LoginSheet()
+        .background()
 }

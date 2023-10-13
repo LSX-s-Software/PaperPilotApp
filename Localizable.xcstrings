@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "Abstract" : {
       "localizations" : {
         "zh-Hans" : {
@@ -368,6 +371,26 @@
         }
       }
     },
+    "Log In" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录"
+          }
+        }
+      }
+    },
+    "Log in to collaborate with your teammates" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录之后即可开始协作"
+          }
+        }
+      }
+    },
     "Login" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -515,6 +538,16 @@
         }
       }
     },
+    "PaperPilot Account" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PaperPilot 账号"
+          }
+        }
+      }
+    },
     "Password" : {
       "localizations" : {
         "zh-Hans" : {
@@ -627,6 +660,16 @@
         }
       }
     },
+    "Register" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注册"
+          }
+        }
+      }
+    },
     "Required Info" : {
       "localizations" : {
         "zh-Hans" : {
@@ -643,6 +686,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请从左侧边栏选择项目。"
+          }
+        }
+      }
+    },
+    "Send" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送"
           }
         }
       }
@@ -736,6 +789,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "URL"
+          }
+        }
+      }
+    },
+    "Username" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用户名"
+          }
+        }
+      }
+    },
+    "Verification Code" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "验证码"
           }
         }
       }
