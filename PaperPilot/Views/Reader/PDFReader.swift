@@ -53,6 +53,7 @@ struct PDFReader: View {
     @State private var pdfView = PDFView()
     @State private var tocContent: TOCContentType = .outline
     @State private var currentPage = PDFPage()
+    @State private var currentSelection = PDFSelection()
     @State private var findText = ""
     @State private var searchBarPresented = false
     @State private var caseSensitive = false
@@ -76,13 +77,13 @@ struct PDFReader: View {
         HStack(spacing: 0) {
             // MARK: - 侧边栏
             if searchBarPresented && !findText.isEmpty {
-                List(findResult, id: \.self) { selection in
-                    Button {
-                        if let page = selection.pages.first {
-                            pdfView.go(to: page)
-                        }
-                        pdfView.setCurrentSelection(selection, animate: true)
-                    } label: {
+                List(findResult, id: \.self, selection: Binding { currentSelection } set: { selection in
+                    if let page = selection?.pages.first {
+                        pdfView.go(to: page)
+                    }
+                    pdfView.setCurrentSelection(selection, animate: true)
+                }) { selection in
+                    HStack {
                         VStack(alignment: .leading) {
                             if let page = selection.pages.first?.label {
                                 Text("Page \(page)")
@@ -92,10 +93,12 @@ struct PDFReader: View {
                                 .multilineTextAlignment(.leading)
                         }
                     }
-                    .buttonStyle(.link)
                     .padding(.bottom, 8)
+                    .tag(selection)
                 }
                 .listStyle(.sidebar)
+                .animation(.easeInOut, value: finding)
+                .frame(width: 175)
                 .overlay {
                     if finding {
                         VStack(spacing: 8) {
@@ -113,8 +116,6 @@ struct PDFReader: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                .animation(.easeInOut, value: finding)
-                .frame(width: 175)
             } else {
                 switch tocContent {
                 case .none:
@@ -158,9 +159,25 @@ struct PDFReader: View {
             PDFKitView(pdf: pdf, pdfView: $pdfView)
                 .searchable(text: $findText, isPresented: $searchBarPresented, prompt: Text("Find in PDF"))
                 .onChange(of: findText, performFind)
+                .onSubmit(of: .search) {
+                    if findResult.isEmpty {
+                        performFind()
+                    } else if let selectionIndex = findResult.firstIndex(of: currentSelection) {
+                        let nextIndex = (selectionIndex + 1) % findResult.count
+                        currentSelection = findResult[nextIndex]
+                        pdfView.go(to: currentSelection)
+                        pdfView.setCurrentSelection(currentSelection, animate: true)
+                    }
+                }
                 .onReceive(NotificationCenter.default.publisher(for: .PDFViewPageChanged)) { _ in
                     if let page = pdfView.currentPage {
                         currentPage = page
+                    }
+                }
+                .onReceive(NotificationCenter.default.publisher(for: .PDFViewSelectionChanged)) { _ in
+                    if !searchBarPresented || findText.isEmpty,
+                       let selection = pdfView.currentSelection {
+                        currentSelection = selection
                     }
                 }
         }
@@ -247,8 +264,9 @@ extension PDFReader {
         Task {
             findResult = pdf.findString(findText, withOptions: findOptions)
             finding = false
-            if !findResult.isEmpty {
-                pdfView.setCurrentSelection(findResult.first!, animate: true)
+            if let firstResult = findResult.first {
+                pdfView.setCurrentSelection(firstResult, animate: true)
+                currentSelection = firstResult
             }
         }
     }
