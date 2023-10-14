@@ -36,6 +36,7 @@ struct LoginSheet: View {
                     Text("Register").tag(true)
                 }
                 .pickerStyle(.segmented)
+                .labelsHidden()
                 Group {
                     if viewModel.isRegistering {
                         TextField("Username", text: $viewModel.username)
