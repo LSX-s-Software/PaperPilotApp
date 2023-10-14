@@ -51,7 +51,7 @@ struct PDFReader: View {
     let pdf: PDFDocument
     
     @State private var pdfView = PDFView()
-    @State private var tocContent: TOCContentType = .bookmark
+    @State private var tocContent: TOCContentType = .outline
     @State private var currentPageLabel: String? = "1"
     @State private var findText = ""
     @State private var searchBarPresented = false
@@ -73,7 +73,7 @@ struct PDFReader: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             // MARK: - 侧边栏
             if searchBarPresented && !findText.isEmpty {
                 List(findResult, id: \.self) { selection in
@@ -133,8 +133,8 @@ struct PDFReader: View {
                     }
                     .frame(width: 175)
                 case .thumbnail:
-                    PDFKitThumbnailView(pdfView: $pdfView, thumbnailWidth: 100)
-                        .frame(width: 150)
+                    PDFKitThumbnailView(pdfView: $pdfView, thumbnailWidth: 125)
+                        .frame(width: 175)
                 case .bookmark:
                     List(bookmarks, id: \.label) { bookmark in
                         Button {
