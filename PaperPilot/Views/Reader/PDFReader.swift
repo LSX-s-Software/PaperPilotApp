@@ -236,6 +236,9 @@ struct PDFReader: View {
         }
         .onAppear {
             appState.findInPDFHandler = findInPDFHandler(_:)
+            if let page = pdfView.currentPage {
+                currentPage = page
+            }
         }
     }
 }
