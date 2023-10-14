@@ -312,6 +312,26 @@
         }
       }
     },
+    "Failed to save PDF" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDF保存失败"
+          }
+        }
+      }
+    },
+    "Failed to write PDF." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法写入PDF。"
+          }
+        }
+      }
+    },
     "Find in PDF" : {
       "localizations" : {
         "zh-Hans" : {
@@ -812,6 +832,16 @@
         }
       }
     },
+    "Saving" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存中"
+          }
+        }
+      }
+    },
     "Select a project from the left sidebar." : {
       "localizations" : {
         "zh-Hans" : {
@@ -993,6 +1023,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你还可以使用Sci-Hub支持的格式来查找论文"
+          }
+        }
+      }
+    },
+    "You don't have access to the PDF." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你没有访问此PDF的权限。"
           }
         }
       }

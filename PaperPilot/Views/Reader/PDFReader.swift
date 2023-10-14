@@ -73,90 +73,129 @@ struct PDFReader: View {
         bookmarks.contains(currentPage)
     }
     
+    @State private var savingPDF = false
+    @State private var saveErrorMsg: LocalizedStringKey?
+    @State private var isShowingSaveErrorDetail = false
+    
     var body: some View {
         HStack(spacing: 0) {
             // MARK: - 侧边栏
-            if searchBarPresented && !findText.isEmpty {
-                List(findResult, id: \.self, selection: Binding { currentSelection } set: { selection in
-                    if let page = selection?.pages.first {
-                        pdfView.go(to: page)
-                    }
-                    pdfView.setCurrentSelection(selection, animate: true)
-                }) { selection in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            if let page = selection.pages.first?.label {
-                                Text("Page \(page)")
-                                    .font(.caption)
+            VStack(spacing: 0) {
+                if searchBarPresented && !findText.isEmpty {
+                    List(findResult, id: \.self, selection: Binding { currentSelection } set: { selection in
+                        if let page = selection?.pages.first {
+                            pdfView.go(to: page)
+                        }
+                        pdfView.setCurrentSelection(selection, animate: true)
+                    }) { selection in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                if let page = selection.pages.first?.label {
+                                    Text("Page \(page)")
+                                        .font(.caption)
+                                }
+                                Text(findResultText(for: selection))
+                                    .multilineTextAlignment(.leading)
                             }
-                            Text(findResultText(for: selection))
-                                .multilineTextAlignment(.leading)
                         }
+                        .padding(.bottom, 8)
+                        .tag(selection)
                     }
-                    .padding(.bottom, 8)
-                    .tag(selection)
-                }
-                .listStyle(.sidebar)
-                .animation(.easeInOut, value: finding)
-                .frame(width: 175)
-                .overlay {
-                    if finding {
-                        VStack(spacing: 8) {
-                            ProgressView()
-                            Text("Finding...")
-                                .font(.title3)
-                                .foregroundStyle(.secondary)
-                        }
-                        .padding()
-                        .background(.regularMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                    } else if findResult.isEmpty {
-                        Text("No Results")
-                            .font(.title2)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            } else {
-                switch tocContent {
-                case .none:
-                    EmptyView()
-                case .outline:
-                    Group {
-                        if let root = pdf.outlineRoot {
-                            PDFOutlineView(root: root, selection: Binding { currentPage } set: { pdfView.go(to: $0) })
-                        } else {
-                            Text("No Outline")
+                    .listStyle(.sidebar)
+                    .animation(.easeInOut, value: finding)
+                    .frame(width: 175)
+                    .overlay {
+                        if finding {
+                            VStack(spacing: 8) {
+                                ProgressView()
+                                Text("Finding...")
+                                    .font(.title3)
+                                    .foregroundStyle(.secondary)
+                            }
+                            .padding()
+                            .background(.regularMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        } else if findResult.isEmpty {
+                            Text("No Results")
                                 .font(.title2)
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    .frame(width: 175)
-                case .thumbnail:
-                    PDFKitThumbnailView(pdfView: $pdfView, thumbnailWidth: 125)
-                        .frame(width: 175)
-                case .bookmark:
-                    List(bookmarks, id: \.label, selection: Binding { currentPage } set: { pdfView.go(to: $0) }) { bookmark in
-                        HStack {
-                            Image(nsImage: bookmark.thumbnail(of: NSSize(width: 180, height: 360), for: .trimBox))
-                                .resizable()
-                                .scaledToFit()
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
-                                .frame(maxWidth: 60, maxHeight: 120)
-                                .overlay(alignment: .topTrailing) {
-                                    Image(systemName: "bookmark.fill")
-                                        .foregroundStyle(Color.accentColor)
-                                }
-                            Spacer()
-                            if let label = bookmark.label {
-                                Text("Page \(label)")
-                                    .fontWeight(.medium)
+                } else {
+                    switch tocContent {
+                    case .none:
+                        EmptyView()
+                    case .outline:
+                        Group {
+                            if let root = pdf.outlineRoot {
+                                PDFOutlineView(root: root, selection: Binding { currentPage } set: { pdfView.go(to: $0) })
+                            } else {
+                                Text("No Outline")
+                                    .font(.title2)
+                                    .foregroundStyle(.secondary)
                             }
                         }
-                        .tag(bookmark)
+                        .frame(width: 175)
+                    case .thumbnail:
+                        PDFKitThumbnailView(pdfView: $pdfView, thumbnailWidth: 125)
+                            .frame(width: 175)
+                    case .bookmark:
+                        List(bookmarks, id: \.label, selection: Binding { currentPage } set: { pdfView.go(to: $0) }) { bookmark in
+                            HStack {
+                                Image(nsImage: bookmark.thumbnail(of: NSSize(width: 180, height: 360), for: .trimBox))
+                                    .resizable()
+                                    .scaledToFit()
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                    .frame(maxWidth: 60, maxHeight: 120)
+                                    .overlay(alignment: .topTrailing) {
+                                        Image(systemName: "bookmark.fill")
+                                            .foregroundStyle(Color.accentColor)
+                                    }
+                                Spacer()
+                                if let label = bookmark.label {
+                                    Text("Page \(label)")
+                                        .fontWeight(.medium)
+                                }
+                            }
+                            .tag(bookmark)
+                        }
+                        .listStyle(.sidebar)
+                        .frame(width: 150)
                     }
-                    .listStyle(.sidebar)
-                    .frame(width: 150)
                 }
+                
+                Group {
+                    if savingPDF {
+                        HStack(spacing: 6) {
+                            ProgressView()
+                                .controlSize(.mini)
+                            Text("Saving")
+                                .foregroundStyle(.secondary)
+                        }
+                    } else if let errorMsg = saveErrorMsg {
+                        HStack(spacing: 6) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .foregroundStyle(.red)
+                            Text("Failed to save PDF")
+                        }
+                        .onTapGesture {
+                            isShowingSaveErrorDetail.toggle()
+                        }
+                        .popover(isPresented: $isShowingSaveErrorDetail) {
+                            HStack {
+                                Text(errorMsg)
+                                Button {
+                                    saveErrorMsg = nil
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            .padding()
+                        }
+                    }
+                }
+                .padding(.vertical, 8)
             }
             
             // MARK: - 阅读器
@@ -303,6 +342,26 @@ extension PDFReader {
             highlight.color = annotationColor.color
             
             page.addAnnotation(highlight)
+        }
+        
+        withAnimation {
+            savingPDF = true
+        }
+        Task {
+            if let url = pdf.documentURL,
+               url.startAccessingSecurityScopedResource() {
+                if !pdf.write(to: url) {
+                    saveErrorMsg = "Failed to write PDF."
+                }
+                url.stopAccessingSecurityScopedResource()
+            } else {
+                saveErrorMsg = "You don't have access to the PDF."
+            }
+            DispatchQueue.main.async {
+                withAnimation {
+                    savingPDF = false
+                }
+            }
         }
     }
 }
