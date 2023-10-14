@@ -101,8 +101,7 @@ struct PaperReader: View {
             }
             
             if bookmarkStale {
-                errorDescription = "Bookmark is stale. Please reimport the paper."
-                return
+                paper.file = try resolvedUrl.bookmarkData(options: .withSecurityScope)
             }
             if !didStartAccessing {
                 errorDescription = "Failed to access the file"
