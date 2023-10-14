@@ -53,7 +53,7 @@ struct PDFReader: View {
     @State private var pdfView = PDFView()
     @State private var tocContent: TOCContentType = .outline
     @State private var currentPage = PDFPage()
-    @State private var currentSelection = PDFSelection()
+    @State private var currentSelection: PDFSelection?
     @State private var findText = ""
     @State private var searchBarPresented = false
     @State private var caseSensitive = false
@@ -162,11 +162,12 @@ struct PDFReader: View {
                 .onSubmit(of: .search) {
                     if findResult.isEmpty {
                         performFind()
-                    } else if let selectionIndex = findResult.firstIndex(of: currentSelection) {
+                    } else if let selection = currentSelection,
+                              let selectionIndex = findResult.firstIndex(of: selection) {
                         let nextIndex = (selectionIndex + 1) % findResult.count
                         currentSelection = findResult[nextIndex]
-                        pdfView.go(to: currentSelection)
-                        pdfView.setCurrentSelection(currentSelection, animate: true)
+                        pdfView.go(to: selection)
+                        pdfView.setCurrentSelection(selection, animate: true)
                     }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .PDFViewPageChanged)) { _ in
@@ -175,9 +176,8 @@ struct PDFReader: View {
                     }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .PDFViewSelectionChanged)) { _ in
-                    if !searchBarPresented || findText.isEmpty,
-                       let selection = pdfView.currentSelection {
-                        currentSelection = selection
+                    if !searchBarPresented || findText.isEmpty {
+                        currentSelection = pdfView.currentSelection
                     }
                 }
         }
