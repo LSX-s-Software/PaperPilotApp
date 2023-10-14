@@ -52,6 +52,9 @@ class Paper: Hashable, Codable, Identifiable {
     /// 已读
     var read: Bool
     
+    /// 笔记
+    var note: String = ""
+    
     init(id: UUID = UUID(),
          remoteId: Int? = nil,
          title: String,
@@ -68,7 +71,8 @@ class Paper: Hashable, Codable, Identifiable {
          doi: String? = nil,
          file: Data? = nil,
          createTime: Date = Date.now,
-         read: Bool = false) {
+         read: Bool = false,
+         note: String = "") {
         self.id = id
         self.remoteId = remoteId
         self.title = title
@@ -86,6 +90,7 @@ class Paper: Hashable, Codable, Identifiable {
         self.file = file
         self.createTime = createTime
         self.read = read
+        self.note = note
     }
     
     enum CodingKeys: String, CodingKey {
@@ -95,7 +100,6 @@ class Paper: Hashable, Codable, Identifiable {
         case abstract
         case keywords
         case authors
-        case formattedAuthors
         case tags
         case publicationYear
         case publication
@@ -106,8 +110,8 @@ class Paper: Hashable, Codable, Identifiable {
         case doi
         case file
         case createTime
-        case formattedCreateTime
         case read
+        case note
     }
 
     public required init(from decoder: Decoder) throws {
@@ -129,6 +133,7 @@ class Paper: Hashable, Codable, Identifiable {
         self.file = try container.decodeIfPresent(Data.self, forKey: .file)
         self.createTime = try container.decode(Date.self, forKey: .createTime)
         self.read = try container.decode(Bool.self, forKey: .read)
+        self.note = try container.decode(String.self, forKey: .note)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -150,5 +155,6 @@ class Paper: Hashable, Codable, Identifiable {
         try container.encode(file, forKey: .file)
         try container.encode(createTime, forKey: .createTime)
         try container.encode(read, forKey: .read)
+        try container.encode(note, forKey: .note)
     }
 }

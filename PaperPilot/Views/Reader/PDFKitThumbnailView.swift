@@ -24,11 +24,13 @@ struct PDFKitThumbnailView: NSViewRepresentable {
 }
 #else
 struct PDFKitThumbnailView: UIViewRepresentable {
-    let pdfView: PDFView
+    @Binding var pdfView: PDFView
+    var thumbnailWidth = 100
     
     func makeUIView(context: UIViewRepresentableContext<PDFKitThumbnailView>) -> PDFThumbnailView {
         let thumbnailView = PDFThumbnailView()
         thumbnailView.pdfView = pdfView
+        thumbnailView.thumbnailSize = CGSize(width: Double(thumbnailWidth), height: Double(thumbnailWidth) / 21.0 * 29.7)
         return thumbnailView
     }
     

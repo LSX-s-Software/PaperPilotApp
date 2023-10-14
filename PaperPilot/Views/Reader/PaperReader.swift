@@ -25,7 +25,6 @@ struct PaperReader: View {
     @State private var loadingPDF = true
     @State private var errorDescription: String?
     @State private var pdf: PDFDocument?
-    @State private var note = ""
     
     var body: some View {
         NavigationStack {
@@ -72,7 +71,7 @@ struct PaperReader: View {
                         if sidebarContent == .info {
                             PaperInfo(paper: paper)
                         } else {
-                            TextEditor(text: $note)
+                            TextEditor(text: $paper.note)
                         }
                     }
                     .frame(minWidth: 100, idealWidth: proxy.size.width / 4, maxWidth: proxy.size.width / 3)
