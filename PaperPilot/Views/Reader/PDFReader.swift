@@ -142,9 +142,13 @@ struct PDFReader: View {
                                 .scaledToFit()
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                                 .frame(maxWidth: 60, maxHeight: 120)
+                                .overlay(alignment: .topTrailing) {
+                                    Image(systemName: "bookmark.fill")
+                                        .foregroundStyle(Color.accentColor)
+                                }
                             Spacer()
                             if let label = bookmark.label {
-                                Text(label)
+                                Text("Page \(label)")
                                     .fontWeight(.medium)
                             }
                         }
