@@ -52,7 +52,7 @@ class ModelData {
 @MainActor
 let previewContainer: ModelContainer = {
     do {
-        let container = try ModelContainer(for: Paper.self, Project.self,
+        let container = try ModelContainer(for: Paper.self, Project.self, Bookmark.self,
                                            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         container.mainContext.insert(ModelData.project1)
         return container

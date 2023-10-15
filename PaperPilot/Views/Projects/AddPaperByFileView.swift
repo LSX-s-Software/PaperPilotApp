@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct AddPaperByFileView: View {
-    @Environment(\.modelContext) private var modelContext
-    
     @Bindable var project: Project
     @State var paper: Paper
     @Binding var shouldClose: Bool

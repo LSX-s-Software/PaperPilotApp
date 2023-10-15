@@ -631,6 +631,16 @@
         }
       }
     },
+    "Page %lld" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "页面 %lld"
+          }
+        }
+      }
+    },
     "Page: %@/%lld" : {
       "localizations" : {
         "en" : {

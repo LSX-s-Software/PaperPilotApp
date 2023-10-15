@@ -24,7 +24,7 @@ struct PaperPilotApp: App {
     
     init() {
         do {
-            modelContainer = try ModelContainer(for: Paper.self, Project.self)
+            modelContainer = try ModelContainer(for: Paper.self, Project.self, Bookmark.self)
         } catch {
             fatalError("Could not initialize ModelContainer: \(error.localizedDescription)")
         }

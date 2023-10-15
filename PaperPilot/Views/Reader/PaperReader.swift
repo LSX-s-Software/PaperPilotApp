@@ -34,7 +34,7 @@ struct PaperReader: View {
                         if loadingPDF {
                             ProgressView()
                         } else if let pdf = pdf {
-                            PDFReader(pdf: pdf)
+                            PDFReader(paper: paper, pdf: pdf)
                         } else {
                             VStack(spacing: 6) {
                                 Image(systemName: "exclamationmark.triangle.fill")

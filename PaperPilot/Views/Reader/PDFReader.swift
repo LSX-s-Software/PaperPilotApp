@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 import PDFKit
 
 private enum TOCContentType: String, Identifiable, CaseIterable {
@@ -47,7 +48,9 @@ private enum HighlighterColor: String, CaseIterable, Identifiable {
 
 struct PDFReader: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.modelContext) var modelContext
     
+    @Bindable var paper: Paper
     let pdf: PDFDocument
     
     @State private var pdfView = PDFView()
@@ -68,14 +71,27 @@ struct PDFReader: View {
     }
     
     @State private var annotationColor = HighlighterColor.yellow
-    @State private var bookmarks = [PDFPage]()
+    @Query(sort: \Bookmark.page) private var bookmarks: [Bookmark]
     private var currentPageBookmarked: Bool {
-        bookmarks.contains(currentPage)
+        let page = pdf.index(for: currentPage)
+        let paperId = paper.id
+        let predicate = #Predicate<Bookmark> { $0.paperId == paperId && $0.page == page }
+        let fetchDescriptor = FetchDescriptor<Bookmark>(predicate: predicate)
+        return (try? modelContext.fetchCount(fetchDescriptor) > 0) ?? false
     }
     
     @State private var savingPDF = false
     @State private var saveErrorMsg: LocalizedStringKey?
     @State private var isShowingSaveErrorDetail = false
+    @State private var shouldUpdate = false
+    
+    init(paper: Paper, pdf: PDFDocument) {
+        self.paper = paper
+        self.pdf = pdf
+        let paperId = paper.id
+        let predicate = #Predicate<Bookmark> { $0.paperId == paperId }
+        self._bookmarks = Query(filter: predicate, sort: \Bookmark.page)
+    }
     
     var body: some View {
         HStack(spacing: 0) {
@@ -140,22 +156,28 @@ struct PDFReader: View {
                         PDFKitThumbnailView(pdfView: $pdfView, thumbnailWidth: 125)
                             .frame(width: 175)
                     case .bookmark:
-                        List(bookmarks, id: \.label, selection: Binding { currentPage } set: { pdfView.go(to: $0) }) { bookmark in
+                        List(
+                            bookmarks, id: \.page, selection: Binding {
+                                pdf.index(for: currentPage)
+                            } set: {
+                                pdfView.go(to: pdf.page(at: $0!)!)
+                            }
+                        ) { bookmark in
                             HStack {
-                                Image(nsImage: bookmark.thumbnail(of: NSSize(width: 180, height: 360), for: .trimBox))
-                                    .resizable()
-                                    .scaledToFit()
-                                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                                    .frame(maxWidth: 60, maxHeight: 120)
-                                    .overlay(alignment: .topTrailing) {
-                                        Image(systemName: "bookmark.fill")
-                                            .foregroundStyle(Color.accentColor)
-                                    }
-                                Spacer()
-                                if let label = bookmark.label {
-                                    Text("Page \(label)")
-                                        .fontWeight(.medium)
+                                if let page = pdf.page(at: bookmark.page) {
+                                    Image(nsImage: page.thumbnail(of: NSSize(width: 180, height: 360), for: .trimBox))
+                                        .resizable()
+                                        .scaledToFit()
+                                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                                        .frame(maxWidth: 60, maxHeight: 120)
+                                        .overlay(alignment: .topTrailing) {
+                                            Image(systemName: "bookmark.fill")
+                                                .foregroundStyle(Color.accentColor)
+                                        }
+                                    Spacer()
                                 }
+                                Text("Page \(bookmark.label ?? String(bookmark.page + 1))")
+                                    .fontWeight(.medium)
                             }
                             .tag(bookmark)
                         }
@@ -269,12 +291,9 @@ struct PDFReader: View {
                     }
                 }
                 Button("Add to bookmark", systemImage: "bookmark\(currentPageBookmarked ? ".fill" : "")") {
-                    if currentPageBookmarked {
-                        bookmarks.removeAll { $0 == currentPage }
-                    } else {
-                        bookmarks.append(currentPage)
-                    }
+                    handleToggleBookmark()
                 }
+                .id(shouldUpdate)
             }
         }
         .onAppear {
@@ -364,10 +383,25 @@ extension PDFReader {
             }
         }
     }
+    
+    func handleToggleBookmark() {
+        let page = pdf.index(for: currentPage)
+        if currentPageBookmarked {
+            let paperId = paper.id
+            let predicate = #Predicate<Bookmark> { $0.paperId == paperId && $0.page == page }
+            try? modelContext.delete(model: Bookmark.self, where: predicate)
+        } else {
+            let bookmark = Bookmark(paperId: paper.id, page: page, label: currentPage.label)
+            modelContext.insert(bookmark)
+        }
+        shouldUpdate.toggle()
+    }
 }
 
 #Preview {
-    PDFReader(pdf: PDFDocument(url: Bundle.main.url(forResource: "sample", withExtension: "pdf")!)!)
-        .frame(width: 800)
+    PDFReader(paper: ModelData.paper1,
+              pdf: PDFDocument(url: Bundle.main.url(forResource: "sample", withExtension: "pdf")!)!)
         .environmentObject(AppState())
+        .modelContainer(previewContainer)
+        .frame(width: 800)
 }
