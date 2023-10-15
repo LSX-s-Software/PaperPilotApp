@@ -1,5 +1,5 @@
 //
-//  LoginSheet.swift
+//  LoginView.swift
 //  PaperPilot
 //
 //  Created by 林思行 on 2023/10/9.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct LoginSheet: View {
+struct LoginView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var phone = ""
     @State private var password = ""
-    @ObservedObject var viewModel = LoginViewModel()
+    @StateObject var viewModel = LoginViewModel()
     
     @AppStorage(AppStorageKey.User.loggedIn.rawValue)
     private var loggedIn = false
@@ -47,7 +47,7 @@ struct LoginSheet: View {
                         .textContentType(.telephoneNumber)
                         .textFieldStyle(InputTextFieldStyle(title: "Phone"))
                     SecureField("Password", text: $viewModel.password)
-                        .textContentType(.password)
+                        .textContentType(viewModel.isRegistering ? .newPassword : .password)
                         .textFieldStyle(InputTextFieldStyle(title: "Password"))
                     if viewModel.isRegistering {
                         TextField("Verification Code", text: $viewModel.verificationCode)
@@ -154,6 +154,6 @@ struct InputTextFieldWithButtonStyle<Content: View>: TextFieldStyle {
 }
 
 #Preview {
-    LoginSheet()
+    LoginView()
         .background()
 }

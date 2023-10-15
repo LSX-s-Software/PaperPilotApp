@@ -46,7 +46,7 @@ final class API {
         }
     }
 
-    func set_token(_ accessToken: String) {
+    func setToken(_ accessToken: String) {
         let headers: HPACKHeaders = ["authorization": "Bearer \(accessToken)"]
         user.defaultCallOptions.customMetadata = headers
         project.defaultCallOptions.customMetadata = headers

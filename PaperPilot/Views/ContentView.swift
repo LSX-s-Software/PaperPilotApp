@@ -84,7 +84,7 @@ struct ContentView: View {
                         }
                     }
                     .sheet(isPresented: $isShowingLoginSheet) {
-                        LoginSheet()
+                        LoginView()
                     }
                 }
             }

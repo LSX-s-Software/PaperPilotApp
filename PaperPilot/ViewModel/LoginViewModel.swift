@@ -74,8 +74,8 @@ class LoginViewModel: ObservableObject {
                     }
                     result = try await API.shared.auth.login(request)
                 }
-                self.user = User(accessToken: result.access.value, phone: phone)
-                API.shared.set_token(result.access.value)
+                self.user = User(accessToken: result.access.value, phone: self.phone)
+                API.shared.setToken(result.access.value)
             } catch let error as GRPCStatus {
                 DispatchQueue.main.async {
                     self.errorMsg = error.message ?? "Unknown error"
