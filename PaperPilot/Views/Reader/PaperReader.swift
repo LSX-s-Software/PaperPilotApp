@@ -22,16 +22,17 @@ struct PaperReader: View {
     @AppStorage(AppStorageKey.Reader.sidebarContent.rawValue)
     var sidebarContent = SidebarContent.info
     
-    @State private var loadingPDF = true
+    @State private var loading = true
     @State private var errorDescription: String?
     @State private var pdf: PDFDocument?
+    @State private var isImporting = false
     
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
                 HSplitView {
                     Group {
-                        if loadingPDF {
+                        if loading {
                             ProgressView()
                         } else if let pdf = pdf {
                             PDFReader(paper: paper, pdf: pdf)
@@ -41,8 +42,21 @@ struct PaperReader: View {
                                     .symbolRenderingMode(.hierarchical)
                                     .foregroundStyle(.red)
                                     .font(.title)
-                                Text(LocalizedStringKey(errorDescription ?? "Unknown error"))
-                                    .foregroundStyle(.secondary)
+                                if paper.file == nil {
+                                    Text("This paper has no PDF file attached.")
+                                        .foregroundStyle(.secondary)
+                                    Button("Add PDF File") {
+                                        isImporting.toggle()
+                                    }
+                                    .fileImporter(
+                                        isPresented: $isImporting,
+                                        allowedContentTypes: [.pdf],
+                                        onCompletion: handleImportFile
+                                    )
+                                } else {
+                                    Text(LocalizedStringKey(errorDescription ?? "Unknown error"))
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                         }
                     }
@@ -84,12 +98,10 @@ struct PaperReader: View {
     }
     
     func loadPDF() {
-        guard let bookmark = paper.file else {
-            loadingPDF = false
-            return
-        }
+        loading = true
+        defer { loading = false }
+        guard let bookmark = paper.file else { return }
         var bookmarkStale = false
-        defer { loadingPDF = false }
         do {
             let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
                                       options: .withSecurityScope,
@@ -111,6 +123,33 @@ struct PaperReader: View {
             pdf = PDFDocument(url: resolvedUrl)
         } catch {
             errorDescription = error.localizedDescription
+        }
+    }
+    
+    func handleImportFile(result: Result<URL, Error>) {
+        loading = true
+        Task {
+            do {
+                switch result {
+                case .success(let url):
+                    if paper.url == nil {
+                        paper.url = url.path
+                    }
+                    let didStartAccessing = url.startAccessingSecurityScopedResource()
+                    defer { url.stopAccessingSecurityScopedResource() }
+                    if didStartAccessing {
+                        paper.file = try url.bookmarkData(options: .withSecurityScope)
+                        errorDescription = nil
+                    } else {
+                        errorDescription = "Failed to access the file"
+                    }
+                case .failure(let error):
+                    throw error
+                }
+            } catch {
+                errorDescription = error.localizedDescription
+            }
+            loading = false
         }
     }
 }

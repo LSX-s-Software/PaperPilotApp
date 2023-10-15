@@ -95,6 +95,16 @@
         }
       }
     },
+    "Add PDF File" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加PDF文件"
+          }
+        }
+      }
+    },
     "Add to bookmark" : {
       "localizations" : {
         "zh-Hans" : {
@@ -918,6 +928,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "此操作不能撤销"
+          }
+        }
+      }
+    },
+    "This paper has no PDF file attached." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这篇论文没有PDF文件"
           }
         }
       }
