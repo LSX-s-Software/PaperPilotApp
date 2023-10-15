@@ -23,11 +23,17 @@ struct PaperPilotApp: App {
     let modelContainer: ModelContainer
     @StateObject var appState = AppState()
     
+    @AppStorage(AppStorageKey.User.accessToken.rawValue)
+    private var accessToken: String?
+
     init() {
         do {
             modelContainer = try ModelContainer(for: Paper.self, Project.self, Bookmark.self)
         } catch {
             fatalError("Could not initialize ModelContainer: \(error.localizedDescription)")
+        }
+        if let accessToken = self.accessToken {
+            API.shared.setToken(accessToken)
         }
     }
     

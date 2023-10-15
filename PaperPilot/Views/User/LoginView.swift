@@ -12,9 +12,6 @@ struct LoginView: View {
     @State private var password = ""
     @StateObject var viewModel: LoginViewModel
     
-    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
-    private var loggedIn = false
-    
     var body: some View {
         NavigationStack {
             VStack {
