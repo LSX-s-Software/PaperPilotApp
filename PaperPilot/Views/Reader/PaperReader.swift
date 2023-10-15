@@ -99,30 +99,32 @@ struct PaperReader: View {
     
     func loadPDF() {
         loading = true
-        defer { loading = false }
-        guard let bookmark = paper.file else { return }
-        var bookmarkStale = false
-        do {
-            let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
-                                      options: .withSecurityScope,
-                                      relativeTo: nil,
-                                      bookmarkDataIsStale: &bookmarkStale)
-            let didStartAccessing = resolvedUrl.startAccessingSecurityScopedResource()
-            defer {
-                resolvedUrl.stopAccessingSecurityScopedResource()
+        Task {
+            defer { loading = false }
+            guard let bookmark = paper.file else { return }
+            var bookmarkStale = false
+            do {
+                let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
+                                          options: .withSecurityScope,
+                                          relativeTo: nil,
+                                          bookmarkDataIsStale: &bookmarkStale)
+                let didStartAccessing = resolvedUrl.startAccessingSecurityScopedResource()
+                defer {
+                    resolvedUrl.stopAccessingSecurityScopedResource()
+                }
+                
+                if bookmarkStale {
+                    paper.file = try resolvedUrl.bookmarkData(options: .withSecurityScope)
+                }
+                if !didStartAccessing {
+                    errorDescription = "Failed to access the file"
+                    return
+                }
+                
+                pdf = PDFDocument(url: resolvedUrl)
+            } catch {
+                errorDescription = error.localizedDescription
             }
-            
-            if bookmarkStale {
-                paper.file = try resolvedUrl.bookmarkData(options: .withSecurityScope)
-            }
-            if !didStartAccessing {
-                errorDescription = "Failed to access the file"
-                return
-            }
-            
-            pdf = PDFDocument(url: resolvedUrl)
-        } catch {
-            errorDescription = error.localizedDescription
         }
     }
     

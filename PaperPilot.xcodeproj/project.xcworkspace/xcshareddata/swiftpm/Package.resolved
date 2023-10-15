@@ -154,6 +154,15 @@
       }
     },
     {
+      "identity" : "swiftui-windowmanagement",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Wouter01/SwiftUI-WindowManagement.git",
+      "state" : {
+        "revision" : "adbebf5d7df325f3d7bf07dc832e5e162a9003f5",
+        "version" : "2.1.1"
+      }
+    },
+    {
       "identity" : "swiftuiflow",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ciaranrobrien/SwiftUIFlow.git",

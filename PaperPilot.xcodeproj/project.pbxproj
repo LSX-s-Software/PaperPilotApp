@@ -36,6 +36,7 @@
 		F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379012AC41EDA00C88C94 /* GRPC */; };
 		F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */; };
 		F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C379082AC44BFF00C88C94 /* PaperInfo.swift */; };
+		F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */ = {isa = PBXBuildFile; productRef = F5CF43332ADC1FB6004F1A16 /* WindowManagement */; };
 		F5D8EEED2AD42D5100501B0E /* LoginSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* LoginSheet.swift */; };
 		F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */ = {isa = PBXBuildFile; productRef = F5D8EEF32AD4559300501B0E /* SimpleCodable */; };
 		F5D8EF012AD4F62E00501B0E /* AppStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EF002AD4F62E00501B0E /* AppStorageKey.swift */; };
@@ -98,6 +99,7 @@
 				279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */,
 				F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */,
 				F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */,
+				F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */,
 				F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */,
 				F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */,
 				279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */,
@@ -278,6 +280,7 @@
 				279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */,
 				279F2D002AC8276600FEA9D8 /* protoc-gen-swift */,
 				F5D8EEF32AD4559300501B0E /* SimpleCodable */,
+				F5CF43332ADC1FB6004F1A16 /* WindowManagement */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -314,6 +317,7 @@
 				279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */,
+				F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -659,6 +663,14 @@
 				minimumVersion = 1.19.1;
 			};
 		};
+		F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Wouter01/SwiftUI-WindowManagement.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 		F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint";
@@ -732,6 +744,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
 			productName = "protoc-gen-grpc-swift";
+		};
+		F5CF43332ADC1FB6004F1A16 /* WindowManagement */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */;
+			productName = WindowManagement;
 		};
 		F5D825272ACC61330031F00D /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
