@@ -17,8 +17,8 @@ struct ContentView: View {
     @State private var isShowingAccountView = false
     @State private var isShowingNewProjectSheet = false
     
-    @AppStorage(AppStorageKey.User.user.rawValue)
-    private var user: User?
+    @AppStorage(AppStorageKey.User.username.rawValue)
+    private var username: String?
     
     var body: some View {
         NavigationSplitView {
@@ -67,7 +67,7 @@ struct ContentView: View {
         // MARK: - Toolbar
         .toolbar {
             ToolbarItem {
-                if user != nil {
+                if username != nil {
                     Button("Account", systemImage: "person.crop.circle") {
                         isShowingAccountView.toggle()
                     }
@@ -84,7 +84,7 @@ struct ContentView: View {
                         }
                     }
                     .sheet(isPresented: $isShowingLoginSheet) {
-                        LoginView()
+                        LoginView(viewModel: LoginViewModel(isShowingLoginSheet: $isShowingLoginSheet))
                     }
                 }
             }

@@ -11,6 +11,11 @@ enum AppStorageKey {
     enum User: String {
         case loggedIn = "user.loggedIn"
         case user = "user.user"
+        case accessToken = "user.accessToken"
+        case id = "user.id"
+        case phone = "user.phone"
+        case avatar = "user.avatar"
+        case username = "user.username"
     }
 
     enum Reader: String {

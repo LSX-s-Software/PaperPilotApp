@@ -15,7 +15,6 @@
 		279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */; };
 		279F2D272AC8398A00FEA9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
 		27ED7C7A2AD3B6540069F24C /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ED7C792AD3B6540069F24C /* AccountView.swift */; };
-		76989BAF2AD914DB00A82651 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76989BAE2AD914DB00A82651 /* User.swift */; };
 		76C15CBF2AD82AB300614902 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C15CBE2AD82AB300614902 /* LoginViewModel.swift */; };
 		F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */; };
 		F5145E7B2AD57863001860E0 /* AddPaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E7A2AD57863001860E0 /* AddPaperView.swift */; };
@@ -58,7 +57,6 @@
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		27ED7C792AD3B6540069F24C /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		76989BAE2AD914DB00A82651 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76C15CBE2AD82AB300614902 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreateEditView.swift; sourceTree = "<group>"; };
 		F5145E7A2AD57863001860E0 /* AddPaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaperView.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 				F53D81412AC02AF800865B80 /* Paper.swift */,
 				F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */,
 				F53D81432AC02C6500865B80 /* ModelData.swift */,
-				76989BAE2AD914DB00A82651 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -349,7 +346,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76989BAF2AD914DB00A82651 /* User.swift in Sources */,
 				F5EBC0C52ABFE19600B2B4A3 /* ProjectDetail.swift in Sources */,
 				F5FDF8E72AD6D968001D9460 /* PDFKitThumbnailView.swift in Sources */,
 				F53D814B2AC1385300865B80 /* PaperReader.swift in Sources */,

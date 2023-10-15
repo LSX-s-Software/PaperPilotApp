@@ -23,8 +23,23 @@ class LoginViewModel: ObservableObject {
     @Published var hasFailed = false
     @Published var errorMsg = ""
 
-    @AppStorage(AppStorageKey.User.user.rawValue)
-    private var user: User?
+    @AppStorage(AppStorageKey.User.accessToken.rawValue)
+    private var accessToken: String?
+    @AppStorage(AppStorageKey.User.id.rawValue)
+    private var id: String?
+    @AppStorage(AppStorageKey.User.phone.rawValue)
+    private var phoneStored: String?
+    @AppStorage(AppStorageKey.User.avatar.rawValue)
+    private var avatar: String?
+    @AppStorage(AppStorageKey.User.username.rawValue)
+    private var usernameStored: String?
+
+    @Binding var isShowingLoginSheet: Bool
+
+    init(isShowingLoginSheet: Binding<Bool>) {
+        self._isShowingLoginSheet = isShowingLoginSheet
+    }
+
     func sendVerificationCode() {
         withAnimation {
             self.isSendingVerificationCode = true
@@ -74,8 +89,16 @@ class LoginViewModel: ObservableObject {
                     }
                     result = try await API.shared.auth.login(request)
                 }
-                self.user = User(accessToken: result.access.value, phone: self.phone)
-                API.shared.setToken(result.access.value)
+                print(result)
+                DispatchQueue.main.async {
+                    self.accessToken = result.access.value
+                    self.id = result.user.id
+                    API.shared.setToken(result.access.value)
+                    self.avatar = result.user.avatar
+                    self.phoneStored = self.phone
+                    self.isShowingLoginSheet = false
+                    self.usernameStored = result.user.username
+                }
             } catch let error as GRPCStatus {
                 DispatchQueue.main.async {
                     self.errorMsg = error.message ?? "Unknown error"

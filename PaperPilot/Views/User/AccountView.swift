@@ -13,22 +13,30 @@ struct AccountView: View {
     @AppStorage(AppStorageKey.User.loggedIn.rawValue)
     private var loggedIn = false
     
-    @State var username = "User"
-    @State var email = "user@example.com"
     @State var isShowingLogoutConfirmation = false
+    @AppStorage(AppStorageKey.User.phone.rawValue)
+    private var phone: String?
+    @AppStorage(AppStorageKey.User.avatar.rawValue)
+    private var avatar: String?
+    @AppStorage(AppStorageKey.User.username.rawValue)
+    private var username: String?
 
     var body: some View {
         NavigationStack {
             VStack {
                 HStack {
-                    Image(systemName: "person.crop.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
+                    AsyncImage(url: URL(string: avatar!)) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(width: 40, height: 40)
                     VStack(alignment: .leading) {
-                        Text(username)
+                        Text(username!)
                             .font(.headline)
-                        Text(email)
+                        Text(phone!)
                     }
                     
                     Spacer(minLength: 50)

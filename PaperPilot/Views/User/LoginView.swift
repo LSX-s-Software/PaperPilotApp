@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    @Environment(\.dismiss) var dismiss
-    
     @State private var phone = ""
     @State private var password = ""
-    @StateObject var viewModel = LoginViewModel()
+    @StateObject var viewModel: LoginViewModel
     
     @AppStorage(AppStorageKey.User.loggedIn.rawValue)
     private var loggedIn = false
@@ -75,7 +73,7 @@ struct LoginView: View {
                 .padding(.bottom, 8)
                 HStack {
                     Button {
-                        dismiss()
+                        viewModel.isShowingLoginSheet = false
                     } label: {
                         Text("Cancel")
                             .padding(.horizontal, 20)
@@ -154,6 +152,10 @@ struct InputTextFieldWithButtonStyle<Content: View>: TextFieldStyle {
 }
 
 #Preview {
-    LoginView()
-        .background()
+    LoginView(
+        viewModel: LoginViewModel(
+            isShowingLoginSheet: Binding(get: { true }, set: { _ in })
+        )
+    )
+    .background()
 }
