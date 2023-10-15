@@ -126,6 +126,17 @@
       }
     },
     "Are you sure to logout?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要退出登录吗？"
+          }
+        }
+      }
+    },
+    "Are you sure you want to log out?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

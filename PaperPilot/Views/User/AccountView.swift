@@ -10,12 +10,11 @@ import SwiftUI
 struct AccountView: View {
     @Environment(\.dismiss) var dismiss
     
-    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
-    private var loggedIn = false
-    
     @State var isShowingLogoutConfirmation = false
     @AppStorage(AppStorageKey.User.phone.rawValue)
     private var phone: String?
+    @AppStorage(AppStorageKey.User.accessToken.rawValue)
+    private var accessToken: String?
     @AppStorage(AppStorageKey.User.avatar.rawValue)
     private var avatar: String?
     @AppStorage(AppStorageKey.User.username.rawValue)
@@ -25,7 +24,7 @@ struct AccountView: View {
         NavigationStack {
             VStack {
                 HStack {
-                    AsyncImage(url: URL(string: avatar!)) { image in
+                    AsyncImage(url: URL(string: avatar ?? "")) { image in
                         image
                             .resizable()
                             .scaledToFit()
@@ -34,9 +33,9 @@ struct AccountView: View {
                     }
                     .frame(width: 40, height: 40)
                     VStack(alignment: .leading) {
-                        Text(username!)
+                        Text(username ?? "Logged Out")
                             .font(.headline)
-                        Text(phone!)
+                        Text(phone ?? "Logged Out")
                     }
                     
                     Spacer(minLength: 50)
@@ -44,10 +43,8 @@ struct AccountView: View {
                     Button("Logout") {
                         isShowingLogoutConfirmation.toggle()
                     }
-                    .confirmationDialog("Are you sure to logout?", isPresented: $isShowingLogoutConfirmation) {
-                        Button("Confirm", role: .destructive) {
-                            loggedIn = false
-                        }
+                    .confirmationDialog("Are you sure you want to log out?", isPresented: $isShowingLogoutConfirmation) {
+                        Button("Confirm", role: .destructive, action: logOut)
                     }
                 }
             }
@@ -61,6 +58,12 @@ struct AccountView: View {
                 }
             }
         }
+    }
+
+    func logOut() {
+        dismiss()
+        self.accessToken = nil
+        self.username = nil
     }
 }
 
