@@ -23,7 +23,7 @@ class Paper: Hashable, Codable, Identifiable {
     /// 作者列表
     var authors: [String]
     var formattedAuthors: String {
-        ListFormatter.localizedString(byJoining: authors)
+        authors.isEmpty ? String(localized: "Authors unknown") : ListFormatter.localizedString(byJoining: authors)
     }
     /// tag列表
     var tags: [String]

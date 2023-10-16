@@ -35,6 +35,16 @@
         }
       }
     },
+    "Add author" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加作者"
+          }
+        }
+      }
+    },
     "Add Document" : {
       "localizations" : {
         "zh-Hans" : {
@@ -125,17 +135,6 @@
         }
       }
     },
-    "Are you sure to logout?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "确定要退出登录吗？"
-          }
-        }
-      }
-    },
     "Are you sure you want to log out?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -152,6 +151,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "作者"
+          }
+        }
+      }
+    },
+    "Authors unknown" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知作者"
           }
         }
       }
@@ -329,6 +338,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入 %@"
+          }
+        }
+      }
+    },
+    "Enter title" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入标题"
           }
         }
       }
@@ -565,6 +584,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标为未读"
+          }
+        }
+      }
+    },
+    "New author" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新作者"
           }
         }
       }
