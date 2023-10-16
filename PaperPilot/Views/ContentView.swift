@@ -67,9 +67,14 @@ struct ContentView: View {
         // MARK: - Toolbar
         .toolbar {
             ToolbarItem {
-                if username != nil {
-                    Button("Account", systemImage: "person.crop.circle") {
+                if let username = username {
+                    Button {
                         isShowingAccountView.toggle()
+                    } label: {
+                        HStack {
+                            AvatarView(size: 20)
+                            Text(username)
+                        }
                     }
                     .sheet(isPresented: $isShowingAccountView) {
                         AccountView()

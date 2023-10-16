@@ -150,9 +150,7 @@ struct InputTextFieldWithButtonStyle<Content: View>: TextFieldStyle {
 
 #Preview {
     LoginView(
-        viewModel: LoginViewModel(
-            isShowingLoginSheet: Binding(get: { true }, set: { _ in })
-        )
+        viewModel: LoginViewModel(isShowingLoginSheet: .constant(true))
     )
     .background()
 }

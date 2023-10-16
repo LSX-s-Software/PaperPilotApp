@@ -16,6 +16,7 @@
 		279F2D272AC8398A00FEA9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
 		27ED7C7A2AD3B6540069F24C /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ED7C792AD3B6540069F24C /* AccountView.swift */; };
 		76C15CBF2AD82AB300614902 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C15CBE2AD82AB300614902 /* LoginViewModel.swift */; };
+		F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */; };
 		F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */; };
 		F5145E7B2AD57863001860E0 /* AddPaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E7A2AD57863001860E0 /* AddPaperView.swift */; };
 		F5145E7F2AD58275001860E0 /* AddPaperByURLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E7E2AD58275001860E0 /* AddPaperByURLView.swift */; };
@@ -58,6 +59,7 @@
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		27ED7C792AD3B6540069F24C /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		76C15CBE2AD82AB300614902 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreateEditView.swift; sourceTree = "<group>"; };
 		F5145E7A2AD57863001860E0 /* AddPaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaperView.swift; sourceTree = "<group>"; };
 		F5145E7E2AD58275001860E0 /* AddPaperByURLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaperByURLView.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				27ED7C792AD3B6540069F24C /* AccountView.swift */,
+				F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */,
 				F5D8EEEC2AD42D5100501B0E /* LoginView.swift */,
 			);
 			path = User;
@@ -353,6 +356,7 @@
 				F578D8212AD78ABE00322819 /* PDFOutlineView.swift in Sources */,
 				F5FDF8E32AD6CA08001D9460 /* PDFReader.swift in Sources */,
 				F5145E7B2AD57863001860E0 /* AddPaperView.swift in Sources */,
+				F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */,
 				F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */,
 				F5D8EEED2AD42D5100501B0E /* LoginView.swift in Sources */,
 				F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */,

@@ -30,8 +30,10 @@ struct AccountView: View {
                             .scaledToFit()
                     } placeholder: {
                         ProgressView()
+                            .controlSize(.small)
                     }
                     .frame(width: 40, height: 40)
+                    .clipShape(Circle())
                     VStack(alignment: .leading) {
                         Text(username ?? "Logged Out")
                             .font(.headline)
