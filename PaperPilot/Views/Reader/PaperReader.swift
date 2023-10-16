@@ -8,24 +8,34 @@
 import SwiftUI
 import PDFKit
 
+private enum SidebarContent: String, Identifiable, CaseIterable {
+    case info = "Info"
+    case note = "Note"
+    
+    var id: Self {
+        self
+    }
+}
+
+private enum EditableContent {
+    case none
+    case title
+    case author
+}
+
 struct PaperReader: View {
     @Bindable var paper: Paper
     
-    enum SidebarContent: String, Identifiable, CaseIterable {
-        case info = "Info"
-        case note = "Note"
-        
-        var id: Self {
-            self
-        }
-    }
     @AppStorage(AppStorageKey.Reader.sidebarContent.rawValue)
-    var sidebarContent = SidebarContent.info
+    private var sidebarContent = SidebarContent.info
     
     @State private var loading = true
     @State private var errorDescription: String?
     @State private var pdf: PDFDocument?
     @State private var isImporting = false
+    @State private var isShowingEditButton = EditableContent.none
+    @State private var editing = EditableContent.none
+    @State private var newAuthor = ""
     
     var body: some View {
         NavigationStack {
@@ -54,7 +64,7 @@ struct PaperReader: View {
                                         onCompletion: handleImportFile
                                     )
                                 } else {
-                                    Text(LocalizedStringKey(errorDescription ?? "Unknown error"))
+                                    Text(errorDescription ?? String(localized: "Unknown error"))
                                         .foregroundStyle(.secondary)
                                 }
                             }
@@ -67,8 +77,63 @@ struct PaperReader: View {
                             Group {
                                 Text(paper.title)
                                     .font(.title)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .overlay(alignment: .trailing) {
+                                        if isShowingEditButton == .title {
+                                            Button {
+                                                editing = .title
+                                            } label: {
+                                                Image(systemName: "pencil")
+                                            }
+                                        }
+                                    }
+                                    .onHover { hover in
+                                        isShowingEditButton = hover ? .title : .none
+                                    }
+                                    .popover(
+                                        isPresented: Binding { editing == .title } set: { _ in editing = .none },
+                                        arrowEdge: .bottom
+                                    ) {
+                                        TextField("Enter title", text: $paper.title)
+                                            .padding()
+                                            .onSubmit {
+                                                editing = .none
+                                            }
+                                    }
                                 Text(paper.formattedAuthors)
                                     .foregroundStyle(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .overlay(alignment: .trailing) {
+                                        if isShowingEditButton == .author {
+                                            Button {
+                                                editing = .author
+                                            } label: {
+                                                Image(systemName: "pencil")
+                                            }
+                                        }
+                                    }
+                                    .onHover { hover in
+                                        isShowingEditButton = hover ? .author : .none
+                                    }
+                                    .popover(
+                                        isPresented: Binding { editing == .author } set: { _ in editing = .none },
+                                        arrowEdge: .bottom
+                                    ) {
+                                        List {
+                                            ForEach(paper.authors, id: \.self) { author in
+                                                Text(author)
+                                            }
+                                            .onDelete { paper.authors.remove(atOffsets: $0) }
+                                            Section("Add author") {
+                                                TextField("New author", text: $newAuthor)
+                                                Button("Add") {
+                                                    paper.authors.append(newAuthor)
+                                                    newAuthor = ""
+                                                }
+                                                .keyboardShortcut(.defaultAction)
+                                            }
+                                        }
+                                    }
                             }
                             .multilineTextAlignment(.leading)
                             

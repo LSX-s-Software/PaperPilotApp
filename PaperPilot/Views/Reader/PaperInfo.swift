@@ -106,5 +106,4 @@ struct PaperInfo: View {
 
 #Preview {
     PaperInfo(paper: ModelData.paper1)
-        .modelContainer(previewContainer)
 }
