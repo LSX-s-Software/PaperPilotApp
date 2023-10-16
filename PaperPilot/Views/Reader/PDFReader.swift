@@ -18,34 +18,6 @@ private enum TOCContentType: String, Identifiable, CaseIterable {
     var id: Self { self }
 }
 
-private enum HighlighterColor: String, CaseIterable, Identifiable {
-    case yellow = "Yellow"
-    case green = "Green"
-    case blue = "Blue"
-    case pink = "Pink"
-    case purple = "Purple"
-    case black = "Black"
-    
-    var id: Self { self }
-    
-    var color: NSColor {
-        switch self {
-        case .yellow:
-            NSColor(red: 249 / 255.0, green: 205 / 255.0, blue: 110 / 255.0, alpha: 1)
-        case .green:
-            NSColor(red: 142 / 255.0, green: 197 / 255.0, blue: 115 / 255.0, alpha: 1)
-        case .blue:
-            NSColor(red: 121 / 255.0, green: 175 / 255.0, blue: 235 / 255.0, alpha: 1)
-        case .pink:
-            NSColor(red: 233 / 255.0, green: 103 / 255.0, blue: 138 / 255.0, alpha: 1)
-        case .purple:
-            NSColor(red: 191 / 255.0, green: 136 / 255.0, blue: 214 / 255.0, alpha: 1)
-        case .black:
-            NSColor.black
-        }
-    }
-}
-
 struct PDFReader: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.modelContext) var modelContext
@@ -71,27 +43,15 @@ struct PDFReader: View {
     }
     
     @State private var annotationColor = HighlighterColor.yellow
-    @Query(sort: \Bookmark.page) private var bookmarks: [Bookmark]
     private var currentPageBookmarked: Bool {
         let page = pdf.index(for: currentPage)
-        let paperId = paper.id
-        let predicate = #Predicate<Bookmark> { $0.paperId == paperId && $0.page == page }
-        let fetchDescriptor = FetchDescriptor<Bookmark>(predicate: predicate)
-        return (try? modelContext.fetchCount(fetchDescriptor) > 0) ?? false
+        return paper.bookmarks.contains { $0.page == page }
     }
     
     @State private var savingPDF = false
     @State private var saveErrorMsg: LocalizedStringKey?
     @State private var isShowingSaveErrorDetail = false
     @State private var shouldUpdate = false
-    
-    init(paper: Paper, pdf: PDFDocument) {
-        self.paper = paper
-        self.pdf = pdf
-        let paperId = paper.id
-        let predicate = #Predicate<Bookmark> { $0.paperId == paperId }
-        self._bookmarks = Query(filter: predicate, sort: \Bookmark.page)
-    }
     
     var body: some View {
         HStack(spacing: 0) {
@@ -157,7 +117,7 @@ struct PDFReader: View {
                             .frame(width: 175)
                     case .bookmark:
                         List(
-                            bookmarks, id: \.page, selection: Binding {
+                            paper.bookmarks, id: \.page, selection: Binding {
                                 pdf.index(for: currentPage)
                             } set: {
                                 pdfView.go(to: pdf.page(at: $0!)!)
@@ -280,7 +240,7 @@ struct PDFReader: View {
                             HStack {
                                 Image(systemName: "largecircle.fill.circle")
                                     .symbolRenderingMode(.palette)
-                                    .foregroundStyle(Color(color.color))
+                                    .foregroundStyle(color.color)
                                 Text(LocalizedStringKey(color.rawValue))
                             }
                             .tag(color)
@@ -365,7 +325,7 @@ extension PDFReader {
                 let highlight = PDFAnnotation(bounds: bounds,
                                               forType: type,
                                               withProperties: nil)
-                highlight.color = annotationColor.color
+                highlight.color = NSColor(annotationColor.color)
                 
                 page.addAnnotation(highlight)
             }
@@ -395,12 +355,10 @@ extension PDFReader {
     func handleToggleBookmark() {
         let page = pdf.index(for: currentPage)
         if currentPageBookmarked {
-            let paperId = paper.id
-            let predicate = #Predicate<Bookmark> { $0.paperId == paperId && $0.page == page }
-            try? modelContext.delete(model: Bookmark.self, where: predicate)
+            paper.bookmarks.removeAll { $0.page == page }
         } else {
-            let bookmark = Bookmark(paperId: paper.id, page: page, label: currentPage.label)
-            modelContext.insert(bookmark)
+            let bookmark = Bookmark(page: page, label: currentPage.label)
+            paper.bookmarks.append(bookmark)
         }
         shouldUpdate.toggle()
     }

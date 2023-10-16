@@ -17,6 +17,7 @@ class Project: Hashable, Codable, Identifiable {
     var remoteId: Int?
     var name: String
     @Attribute(originalName: "description") var desc: String
+    @Relationship(deleteRule: .cascade)
     var papers: [Paper]
     
     init(uuid: UUID = UUID(), remoteId: Int? = nil, name: String, desc: String, papers: [Paper] = []) {

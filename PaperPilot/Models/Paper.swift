@@ -54,6 +54,9 @@ class Paper: Hashable, Codable, Identifiable {
     
     /// 笔记
     var note: String = ""
+    /// 书签
+    @Relationship(deleteRule: .cascade)
+    var bookmarks = [Bookmark]()
     
     init(id: UUID = UUID(),
          remoteId: Int? = nil,
@@ -72,7 +75,8 @@ class Paper: Hashable, Codable, Identifiable {
          file: Data? = nil,
          createTime: Date = Date.now,
          read: Bool = false,
-         note: String = "") {
+         note: String = "",
+         bookmark: [Bookmark] = []) {
         self.id = id
         self.remoteId = remoteId
         self.title = title

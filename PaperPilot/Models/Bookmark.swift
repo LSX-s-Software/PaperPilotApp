@@ -17,12 +17,9 @@ class Bookmark: Hashable, Identifiable {
     var page: Int
     /// 标签
     var label: String?
-    /// 所属论文
-    var paperId: Paper.ID
     
-    init(paperId: Paper.ID, page: Int, label: String?) {
+    init(page: Int, label: String?) {
         self.page = page
-        self.paperId = paperId
         self.label = label
     }
 }

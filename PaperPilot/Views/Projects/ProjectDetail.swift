@@ -66,8 +66,6 @@ struct ProjectDetail: View {
                 }
                 Button("Delete", systemImage: "trash", role: .destructive) {
                     for paperId in selectedPapers {
-                        let predicate = #Predicate<Bookmark> { $0.paperId == paperId }
-                        try? modelContext.delete(model: Bookmark.self, where: predicate)
                         project.papers.removeAll { $0.id == paperId }
                     }
                 }
