@@ -351,16 +351,16 @@ extension PDFReader {
 extension PDFReader {
     func handleAddAnnotation(_ type: PDFAnnotationSubtype) {
         let select = pdfView.currentSelection?.selectionsByLine()
-        guard let page = select?.first?.pages.first else { return }
-        
         select?.forEach { selection in
-            let bounds = selection.bounds(for: page)
-            let highlight = PDFAnnotation(bounds: bounds,
-                                          forType: type,
-                                          withProperties: nil)
-            highlight.color = annotationColor.color
-            
-            page.addAnnotation(highlight)
+            if let page = selection.pages.first {
+                let bounds = selection.bounds(for: page)
+                let highlight = PDFAnnotation(bounds: bounds,
+                                              forType: type,
+                                              withProperties: nil)
+                highlight.color = annotationColor.color
+                
+                page.addAnnotation(highlight)
+            }
         }
         
         withAnimation {
