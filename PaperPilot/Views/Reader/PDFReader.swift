@@ -250,6 +250,7 @@ struct PDFReader: View {
         .navigationSubtitle("Page: \(currentPage.label ?? "Unknown")/\(pdf.pageCount)")
         // MARK: - 工具栏
         .toolbar {
+            // MARK: 目录
             ToolbarItem(placement: .navigation) {
                 Menu {
                     Picker("Table of Contents", selection: $tocContent) {
@@ -262,6 +263,7 @@ struct PDFReader: View {
                     Label("Table of Contents", systemImage: "sidebar.squares.left")
                 }
             }
+            // MARK: 搜索选项
             if searchBarPresented {
                 ToolbarItem {
                     Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
@@ -271,6 +273,7 @@ struct PDFReader: View {
                 }
             }
             ToolbarItemGroup(placement: .principal) {
+                // MARK: 标注
                 ControlGroup {
                     Picker("Highlighter Color", selection: $annotationColor) {
                         ForEach(HighlighterColor.allCases) { color in
@@ -294,6 +297,11 @@ struct PDFReader: View {
                     handleToggleBookmark()
                 }
                 .id(shouldUpdate)
+                
+                Spacer()
+                
+                // MARK: 计时器
+                TimerView()
             }
         }
         .onAppear {
