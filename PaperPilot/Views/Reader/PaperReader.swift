@@ -206,6 +206,7 @@ struct PaperReader: View {
                     defer { url.stopAccessingSecurityScopedResource() }
                     if didStartAccessing {
                         paper.file = try url.bookmarkData(options: .withSecurityScope)
+                        pdf = PDFDocument(url: url)
                         errorDescription = nil
                     } else {
                         errorDescription = "Failed to access the file"
