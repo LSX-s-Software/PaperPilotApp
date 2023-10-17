@@ -992,6 +992,16 @@
         }
       }
     },
+    "Source" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来源"
+          }
+        }
+      }
+    },
     "Stop Finding" : {
       "localizations" : {
         "zh-Hans" : {
