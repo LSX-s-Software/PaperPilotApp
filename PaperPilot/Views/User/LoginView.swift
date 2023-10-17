@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var phone = ""
-    @State private var password = ""
     @StateObject var viewModel: LoginViewModel
     
     var body: some View {
@@ -57,13 +55,17 @@ struct LoginView: View {
                                                 if viewModel.isSendingVerificationCode {
                                                     ProgressView()
                                                         .controlSize(.small)
+                                                } else if viewModel.waitingForTimer {
+                                                    Text("Retry after \(viewModel.secRemaining)s")
                                                 } else {
                                                     Text("Send")
                                                 }
                                             }
                                             .padding(.vertical, 6)
                                         }
-                                        .disabled(viewModel.phone.isEmpty || viewModel.isSendingVerificationCode)
+                                        .disabled(
+                                            !viewModel.canSendVerification
+                                        )
                             })
                     }
                 }

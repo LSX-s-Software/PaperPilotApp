@@ -23,6 +23,16 @@ class LoginViewModel: ObservableObject {
     @Published var hasFailed = false
     @Published var errorMsg = ""
 
+    @Published var secRemaining = 0
+    var waitingForTimer: Bool {
+        secRemaining > 0
+    }
+    var canSendVerification: Bool {
+        return !phone.isEmpty &&
+        !isSendingVerificationCode &&
+        !waitingForTimer
+    }
+
     @AppStorage(AppStorageKey.User.accessToken.rawValue)
     private var accessToken: String?
     @AppStorage(AppStorageKey.User.id.rawValue)
@@ -62,6 +72,14 @@ class LoginViewModel: ObservableObject {
             DispatchQueue.main.async {
                 withAnimation {
                     self.isSendingVerificationCode = false
+                }
+                self.secRemaining = 60
+                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                    if self.secRemaining == 0 {
+                        timer.invalidate()
+                    } else {
+                        self.secRemaining -= 1
+                    }
                 }
             }
         }
