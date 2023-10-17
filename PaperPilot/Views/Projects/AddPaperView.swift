@@ -22,7 +22,7 @@ struct AddPaperView: View {
             ImageTitleDialog(title: "Add Paper", systemImage: "doc.fill.badge.plus") {
                 VStack {
                     NavigationLink {
-                        AddPaperByURLView(project: project)
+                        AddPaperByURLView(project: project, shouldClose: $shouldClose)
                     } label: {
                         HStack {
                             Image(systemName: "link")
@@ -67,7 +67,7 @@ struct AddPaperView: View {
                 .fixedSize(horizontal: true, vertical: false)
             }
             .navigationDestination(isPresented: $shouldGoNext) {
-                AddPaperByFileView(project: project, paper: newPaper, shouldClose: $shouldClose)
+                NewPaperInfoView(project: project, paper: newPaper, shouldClose: $shouldClose)
             }
         }
         .onChange(of: shouldClose) {

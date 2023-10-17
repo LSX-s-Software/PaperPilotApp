@@ -11,30 +11,76 @@ struct AddPaperByURLView: View {
     @Environment(\.modelContext) private var modelContext
     
     @Bindable var project: Project
+    @Binding var shouldClose: Bool
+    
     @State private var url = ""
+    @State private var isDoi = true
+    @State private var paper: Paper?
+    @State private var loading = false
+    @State private var errorMsg: String?
+    @State private var shouldGoNext = false
     
     var body: some View {
         ImageTitleDialog(title: "Add Paper By URL/DOI", systemImage: "link") {
-            TextField("Please Enter URL/DOI", text: $url)
+            Picker("Type", selection: $isDoi) {
+                Text("DOI").tag(true)
+                Text("URL").tag(false)
+            }
+            .labelsHidden()
+            .pickerStyle(.segmented)
+            
+            TextField("Please enter \(isDoi ? "DOI" : "URL")", text: $url)
                 .textFieldStyle(.roundedBorder)
+                .disabled(loading)
                 
             Text("You can also search paper using Sci-Hub supported format.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Add") {
-                    
+            if !shouldGoNext {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        handleResolutePaper()
+                    } label: {
+                        if loading {
+                            ProgressView()
+                                .controlSize(.mini)
+                        } else {
+                            Text("Resolute")
+                        }
+                    }
+                    .keyboardShortcut(.defaultAction)
+                    .disabled(url.isEmpty || loading)
                 }
-                .keyboardShortcut(.defaultAction)
-                .disabled(url.isEmpty)
             }
+        }
+        .navigationDestination(isPresented: $shouldGoNext) {
+            NewPaperInfoView(project: project,
+                             paper: paper ?? Paper(title: ""),
+                             shouldClose: $shouldClose)
+        }
+        .alert(errorMsg ?? "", isPresented: Binding { errorMsg != nil } set: { _ in errorMsg = nil}) {}
+    }
+    
+    func handleResolutePaper() {
+        loading = true
+        Task {
+            do {
+                paper = try await Paper(doi: url)
+                shouldGoNext = true
+            } catch NetworkingError.notFound, NetworkingError.dataFormatError {
+                errorMsg = String(localized: "Relevant paper info not found")
+            } catch {
+                errorMsg = error.localizedDescription
+            }
+            loading = false
         }
     }
 }
 
 #Preview {
-    AddPaperByURLView(project: ModelData.project1)
+    AddPaperByURLView(project: ModelData.project1, shouldClose: .constant(true))
         .modelContainer(previewContainer)
+        .frame(width: 400)
 }

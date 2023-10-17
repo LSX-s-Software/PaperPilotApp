@@ -65,16 +65,6 @@
         }
       }
     },
-    "Add Paper By File" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通过文件添加论文"
-          }
-        }
-      }
-    },
     "Add Paper By URL/DOI" : {
       "localizations" : {
         "zh-Hans" : {
@@ -267,6 +257,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "创建新项目"
+          }
+        }
+      }
+    },
+    "Data format error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据格式错误"
           }
         }
       }
@@ -474,6 +474,16 @@
         }
       }
     },
+    "Invalid URL" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无效的URL"
+          }
+        }
+      }
+    },
     "Issue" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -639,6 +649,16 @@
         }
       }
     },
+    "Not found" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找不到相关信息"
+          }
+        }
+      }
+    },
     "Note" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -770,12 +790,12 @@
         }
       }
     },
-    "Please Enter URL/DOI" : {
+    "Please enter %@" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请输入URL/DOI"
+            "value" : "请输入%@"
           }
         }
       }
@@ -882,12 +902,32 @@
         }
       }
     },
+    "Relevant paper info not found" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找不到对应的论文信息"
+          }
+        }
+      }
+    },
     "Required Info" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "必填信息"
+          }
+        }
+      }
+    },
+    "Resolute" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解析"
           }
         }
       }
@@ -938,6 +978,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "停止查找"
+          }
+        }
+      }
+    },
+    "Supplement Information" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "补充信息"
           }
         }
       }
@@ -1009,6 +1059,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标题"
+          }
+        }
+      }
+    },
+    "Type" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类型"
           }
         }
       }

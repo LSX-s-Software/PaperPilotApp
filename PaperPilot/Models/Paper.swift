@@ -11,7 +11,7 @@ import SimpleCodable
 
 /// 论文
 @Model
-class Paper: Hashable, Codable, Identifiable {
+class Paper: Hashable, Identifiable {
     @Attribute(.unique) var id: UUID = UUID()
     var remoteId: Int?
     /// 标题
@@ -76,7 +76,7 @@ class Paper: Hashable, Codable, Identifiable {
          createTime: Date = Date.now,
          read: Bool = false,
          note: String = "",
-         bookmark: [Bookmark] = []) {
+         bookmarks: [Bookmark] = []) {
         self.id = id
         self.remoteId = remoteId
         self.title = title
@@ -95,29 +95,9 @@ class Paper: Hashable, Codable, Identifiable {
         self.createTime = createTime
         self.read = read
         self.note = note
+        self.bookmarks = bookmarks
     }
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case remoteId
-        case title
-        case abstract
-        case keywords
-        case authors
-        case tags
-        case publicationYear
-        case publication
-        case volume
-        case issue
-        case pages
-        case url
-        case doi
-        case file
-        case createTime
-        case read
-        case note
-    }
-
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)
@@ -139,7 +119,30 @@ class Paper: Hashable, Codable, Identifiable {
         self.read = try container.decode(Bool.self, forKey: .read)
         self.note = try container.decode(String.self, forKey: .note)
     }
+}
 
+extension Paper: Codable {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case remoteId
+        case title
+        case abstract
+        case keywords
+        case authors
+        case tags
+        case publicationYear
+        case publication
+        case volume
+        case issue
+        case pages
+        case url
+        case doi
+        case file
+        case createTime
+        case read
+        case note
+    }
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -160,5 +163,66 @@ class Paper: Hashable, Codable, Identifiable {
         try container.encode(createTime, forKey: .createTime)
         try container.encode(read, forKey: .read)
         try container.encode(note, forKey: .note)
+    }
+}
+
+extension Paper {
+    /// 通过DOI获取论文信息
+    /// - Parameter doi: 论文DOI
+    /// - Throws: NetworkingError
+    /// - Returns: 解析后的论文
+    convenience init(doi: String) async throws {
+        guard let url = URL(string: "https://api.crossref.org/works/\(doi)") else {
+            throw NetworkingError.invalidURL
+        }
+
+        let data: Data, response: URLResponse
+        do {
+            (data, response) = try await URLSession.shared.data(from: url)
+        } catch {
+            throw NetworkingError.networkError(error)
+        }
+        
+        if let httpResponse = response as? HTTPURLResponse,
+           httpResponse.statusCode == 404 {
+            throw NetworkingError.notFound
+        }
+        
+        let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        guard let message = json?["message"] as? [String: Any],
+              let title = message["title"] as? [String] else {
+            throw NetworkingError.dataFormatError
+        }
+        
+        // 解析论文信息
+        self.init(title: title.joined(), doi: doi)
+        if let subtitle = message["subtitle"] as? [String] {
+            self.title += ": " + subtitle.joined()
+        }
+        // 解析作者
+        if let authors = message["author"] as? [[String: Any]] {
+            self.authors = authors.compactMap { author in
+                let fullName = [author["given"] as? String, author["family"] as? String]
+                    .compactMap { $0 }
+                    .joined(separator: " ")
+                return fullName.isEmpty ? nil : fullName
+            }
+        }
+        // 解析出版日期
+        if let published = message["published"] as? [String: Any],
+           let dateParts = published["date-parts"] as? [[Int]],
+           let datePart = dateParts.first,
+           datePart.count > 0 {
+            self.publicationYear = String(datePart[0])
+        }
+        // 解析出版方
+        if let event = message["event"] as? [String: Any],
+           let eventName = event["name"] as? String {
+            self.publication = eventName
+        }
+        // 解析URL
+        if let url = message["URL"] as? String {
+            self.url = url
+        }
     }
 }
