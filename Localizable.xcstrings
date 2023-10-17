@@ -241,6 +241,16 @@
         }
       }
     },
+    "Copy Information" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拷贝信息"
+          }
+        }
+      }
+    },
     "Create" : {
       "localizations" : {
         "zh-Hans" : {

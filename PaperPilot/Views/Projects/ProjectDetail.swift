@@ -12,6 +12,11 @@ struct ProjectDetail: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.modelContext) private var modelContext
     
+    private let copiableProperties: [(String, PartialKeyPath)] = [("Title", \Paper.title),
+                                                                  ("Abstract", \Paper.abstract),
+                                                                  ("URL", \Paper.url),
+                                                                  ("DOI", \Paper.doi)]
+    
     @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime, order: .reverse)]
@@ -50,6 +55,21 @@ struct ProjectDetail: View {
         }
         .contextMenu(forSelectionType: Paper.ID.self) { selectedPapers in
             if !selectedPapers.isEmpty {
+                if selectedPapers.count == 1,
+                   let paperId = selectedPapers.first,
+                   let paper = project.papers.first(where: { $0.id == paperId }) {
+                    Menu("Copy Information", systemImage: "doc.on.doc") {
+                        ForEach(copiableProperties, id: \.0) { name, keypath in
+                            Button(LocalizedStringKey(name)) {
+                                NSPasteboard.general.clearContents()
+                                if let value = paper[keyPath: keypath] as? String {
+                                    NSPasteboard.general.setString(value, forType: .string)
+                                }
+                            }
+                        }
+                    }
+                }
+                Divider()
                 Button("Mark as Read", systemImage: "checkmark.circle.fill") {
                     for paperId in selectedPapers {
                         if let index = project.papers.firstIndex(where: { $0.id == paperId }) {
@@ -64,6 +84,7 @@ struct ProjectDetail: View {
                         }
                     }
                 }
+                Divider()
                 Button("Delete", systemImage: "trash", role: .destructive) {
                     for paperId in selectedPapers {
                         project.papers.removeAll { $0.id == paperId }
