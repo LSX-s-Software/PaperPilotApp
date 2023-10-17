@@ -42,7 +42,9 @@ class Paper: Hashable, Identifiable {
     var doi: String?
     
     /// 文件 url
-    var file: Data?
+    var file: String?
+    /// 文件书签
+    var fileBookmark: Data?
     
     var createTime: Date
     var formattedCreateTime: String {
@@ -72,7 +74,8 @@ class Paper: Hashable, Identifiable {
          pages: String? = nil,
          url: String? = nil,
          doi: String? = nil,
-         file: Data? = nil,
+         file: String? = nil,
+         fileBookmark: Data? = nil,
          createTime: Date = Date.now,
          read: Bool = false,
          note: String = "",
@@ -92,6 +95,7 @@ class Paper: Hashable, Identifiable {
         self.url = url
         self.doi = doi
         self.file = file
+        self.fileBookmark = fileBookmark
         self.createTime = createTime
         self.read = read
         self.note = note
@@ -114,7 +118,8 @@ class Paper: Hashable, Identifiable {
         self.pages = try container.decodeIfPresent(String.self, forKey: .pages)
         self.url = try container.decodeIfPresent(String.self, forKey: .url)
         self.doi = try container.decodeIfPresent(String.self, forKey: .doi)
-        self.file = try container.decodeIfPresent(Data.self, forKey: .file)
+        self.file = try container.decodeIfPresent(String.self, forKey: .file)
+        self.fileBookmark = try container.decodeIfPresent(Data.self, forKey: .fileBookmark)
         self.createTime = try container.decode(Date.self, forKey: .createTime)
         self.read = try container.decode(Bool.self, forKey: .read)
         self.note = try container.decode(String.self, forKey: .note)
@@ -138,6 +143,7 @@ extension Paper: Codable {
         case url
         case doi
         case file
+        case fileBookmark
         case createTime
         case read
         case note
@@ -160,6 +166,7 @@ extension Paper: Codable {
         try container.encode(url, forKey: .url)
         try container.encode(doi, forKey: .doi)
         try container.encode(file, forKey: .file)
+        try container.encode(fileBookmark, forKey: .fileBookmark)
         try container.encode(createTime, forKey: .createTime)
         try container.encode(read, forKey: .read)
         try container.encode(note, forKey: .note)
@@ -254,7 +261,7 @@ extension Paper {
         try await self.init(doi: String(doiMatch.1))
         
         if let pdfMatch = htmlString.firstMatch(of: /<iframe src="(.+)" id="pdf/) {
-            print(pdfMatch.1)
+            self.file = String(pdfMatch.1)
         }
     }
 }

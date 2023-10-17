@@ -52,7 +52,7 @@ struct PaperReader: View {
                                     .symbolRenderingMode(.hierarchical)
                                     .foregroundStyle(.red)
                                     .font(.title)
-                                if paper.file == nil {
+                                if paper.fileBookmark == nil {
                                     Text("This paper has no PDF file attached.")
                                         .foregroundStyle(.secondary)
                                     Button("Add PDF File") {
@@ -166,7 +166,7 @@ struct PaperReader: View {
         loading = true
         Task {
             defer { loading = false }
-            guard let bookmark = paper.file else { return }
+            guard let bookmark = paper.fileBookmark else { return }
             var bookmarkStale = false
             do {
                 let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
@@ -179,7 +179,7 @@ struct PaperReader: View {
                 }
                 
                 if bookmarkStale {
-                    paper.file = try resolvedUrl.bookmarkData(options: .withSecurityScope)
+                    paper.fileBookmark = try resolvedUrl.bookmarkData(options: .withSecurityScope)
                 }
                 if !didStartAccessing {
                     errorDescription = "Failed to access the file"
@@ -205,7 +205,7 @@ struct PaperReader: View {
                     let didStartAccessing = url.startAccessingSecurityScopedResource()
                     defer { url.stopAccessingSecurityScopedResource() }
                     if didStartAccessing {
-                        paper.file = try url.bookmarkData(options: .withSecurityScope)
+                        paper.fileBookmark = try url.bookmarkData(options: .withSecurityScope)
                         pdf = PDFDocument(url: url)
                         errorDescription = nil
                     } else {

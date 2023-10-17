@@ -5,7 +5,7 @@
 //  Created by 林思行 on 2023/9/24.
 //
 
-// swiftlint:disable line_length force_try
+// swiftlint:disable line_length
 
 import Foundation
 import SwiftData
@@ -23,7 +23,7 @@ class ModelData {
                               pages: "123-135",
                               url: "https://www.jmlr.org/papers/v42/Smith21a.html",
                               doi: "10.5555/123456789",
-                              file: try! Bundle.main.url(forResource: "sample", withExtension: "pdf")?.bookmarkData())
+                              fileBookmark: try? Bundle.main.url(forResource: "sample", withExtension: "pdf")?.bookmarkData())
     static var paper2 = Paper(title: "An Introduction to Swift Programming",
                               abstract: nil,
                               keywords: [],
@@ -42,12 +42,12 @@ class ModelData {
                               publication: "IEEE Transactions on Natural Language Processing",
                               volume: "10",
                               issue: "2",
-                              file: try! Bundle.main.url(forResource: "sample", withExtension: "pdf")?.bookmarkData())
+                              fileBookmark: try? Bundle.main.url(forResource: "sample", withExtension: "pdf")?.bookmarkData())
     static var project1 = Project(name: "Demo project", desc: "CVPR24 Project", papers: [paper1, paper2, paper3])
     static var project2 = Project(name: "test2", desc: "", papers: [paper2, paper3])
 }
 
-// swiftlint:enable line_length force_try
+// swiftlint:enable line_length
 
 @MainActor
 let previewContainer: ModelContainer = {

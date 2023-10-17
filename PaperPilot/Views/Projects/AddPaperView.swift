@@ -83,13 +83,13 @@ struct AddPaperView: View {
             case .success(let url):
                 filePath = url
                 newPaper.title = url.deletingPathExtension().lastPathComponent
-                newPaper.url = url.path
+                newPaper.file = url.path
                 let didStartAccessing = url.startAccessingSecurityScopedResource()
                 defer {
                     url.stopAccessingSecurityScopedResource()
                 }
                 if didStartAccessing {
-                    newPaper.file = try url.bookmarkData(options: .withSecurityScope)
+                    newPaper.fileBookmark = try url.bookmarkData(options: .withSecurityScope)
                     shouldGoNext = true
                 }
             case .failure(let error):
