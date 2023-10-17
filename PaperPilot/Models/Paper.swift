@@ -37,13 +37,11 @@ class Paper: Hashable, Identifiable {
     var issue: String?
     /// 页码
     var pages: String?
-    /// 来源
-    var source: String?
     
     var url: String?
     var doi: String?
     
-    /// 文件书签
+    /// 文件 url
     var file: Data?
     
     var createTime: Date
@@ -223,7 +221,7 @@ extension Paper {
         }
         // 解析URL
         if let url = message["URL"] as? String {
-            self.source = url
+            self.url = url
         }
     }
     
@@ -247,7 +245,6 @@ extension Paper {
             throw NetworkingError.networkError(error)
         }
         
-        // 解析DOI
         guard let htmlString = String(data: data, encoding: .utf8) else {
             throw NetworkingError.dataFormatError
         }
@@ -256,9 +253,8 @@ extension Paper {
         }
         try await self.init(doi: String(doiMatch.1))
         
-        // 解析文件地址
         if let pdfMatch = htmlString.firstMatch(of: /<iframe src="(.+)" id="pdf/) {
-            self.url = String(pdfMatch.1)
+            print(pdfMatch.1)
         }
     }
 }

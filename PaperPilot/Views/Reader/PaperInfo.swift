@@ -63,8 +63,8 @@ struct PaperInfo: View {
                 InfoRow(title: "Pages", content: paper.pages) { newValue in
                     paper.pages = newValue
                 }
-                InfoRow(title: "Source", content: paper.source) { newValue in
-                    paper.source = newValue
+                InfoRow(title: "URL", content: paper.url) { newValue in
+                    paper.url = newValue
                 }
                 HStack {
                     Text("Date Added")
