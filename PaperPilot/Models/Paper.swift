@@ -170,7 +170,6 @@ extension Paper {
     /// 通过DOI获取论文信息
     /// - Parameter doi: 论文DOI
     /// - Throws: NetworkingError
-    /// - Returns: 解析后的论文
     convenience init(doi: String) async throws {
         guard let url = URL(string: "https://api.crossref.org/works/\(doi)") else {
             throw NetworkingError.invalidURL
@@ -223,6 +222,39 @@ extension Paper {
         // 解析URL
         if let url = message["URL"] as? String {
             self.url = url
+        }
+    }
+    
+    /// 通过URL获取论文信息
+    /// - Parameter query: URL
+    /// - Throws: NetworkingError
+    convenience init(query: String) async throws {
+        var urlComp = URLComponents(string: "https://sci-hub.wf/")
+        urlComp?.queryItems = [URLQueryItem(name: "sci-hub-plugin-check", value: nil),
+                               URLQueryItem(name: "request", value: query)]
+        guard let url = urlComp?.url else {
+            throw NetworkingError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let data: Data
+        do {
+            (data, _) = try await URLSession.shared.data(for: request)
+        } catch {
+            throw NetworkingError.networkError(error)
+        }
+        
+        guard let htmlString = String(data: data, encoding: .utf8) else {
+            throw NetworkingError.dataFormatError
+        }
+        guard let doiMatch = htmlString.firstMatch(of: /doi:(.+)&nbsp;/) else {
+            throw NetworkingError.notFound
+        }
+        try await self.init(doi: String(doiMatch.1))
+        
+        if let pdfMatch = htmlString.firstMatch(of: /<iframe src="(.+)" id="pdf/) {
+            print(pdfMatch.1)
         }
     }
 }

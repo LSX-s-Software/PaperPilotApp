@@ -33,21 +33,23 @@ struct AddPaperByURLView: View {
                 .textFieldStyle(.roundedBorder)
                 .disabled(loading)
                 
-            Text("You can also search paper using Sci-Hub supported format.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            if !isDoi {
+                Text("You can also search paper using Sci-Hub supported format.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
         .toolbar {
             if !shouldGoNext {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        handleResolutePaper()
+                        handleResolvePaper()
                     } label: {
                         if loading {
                             ProgressView()
                                 .controlSize(.mini)
                         } else {
-                            Text("Resolute")
+                            Text("Retrieve")
                         }
                     }
                     .keyboardShortcut(.defaultAction)
@@ -63,11 +65,11 @@ struct AddPaperByURLView: View {
         .alert(errorMsg ?? "", isPresented: Binding { errorMsg != nil } set: { _ in errorMsg = nil}) {}
     }
     
-    func handleResolutePaper() {
+    func handleResolvePaper() {
         loading = true
         Task {
             do {
-                paper = try await Paper(doi: url)
+                paper = isDoi ? try await Paper(doi: url) : try await Paper(query: url)
                 shouldGoNext = true
             } catch NetworkingError.notFound, NetworkingError.dataFormatError {
                 errorMsg = String(localized: "Relevant paper info not found")
