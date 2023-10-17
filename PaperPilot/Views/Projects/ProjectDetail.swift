@@ -14,7 +14,7 @@ struct ProjectDetail: View {
     
     @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
-    @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime)]
+    @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime, order: .reverse)]
     @State private var isShowingEditProjectSheet = false
     @State private var isShowingAddPaperSheet = false
     
