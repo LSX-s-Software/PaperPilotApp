@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GRPC
 
 struct ProjectCreateEditView: View {
     var edit = false
@@ -15,6 +16,12 @@ struct ProjectCreateEditView: View {
     
     @Bindable var project: Project = Project(name: "", desc: "")
     @State private var isShowingDeleteConfirm = false
+    @State private var isRemoteProject = false
+    @State private var submitting = false
+    @State private var submitError = false
+    @State private var deleting = false
+    @State private var deleteError = false
+    @State private var errorMsg = ""
     
     var onCreate: ((Project) -> Void)?
     var onDelete: (() -> Void)?
@@ -26,6 +33,17 @@ struct ProjectCreateEditView: View {
                 systemImage: "folder.fill.badge.\(edit ? "gearshape" : "plus")"
             ) {
                 Form {
+                    if !edit {
+                        Section("Project Type") {
+                            Picker("Project Type", selection: $isRemoteProject) {
+                                Text("Local").tag(false)
+                                Text("Remote").tag(true)
+                            }
+                            .pickerStyle(.segmented)
+                            .labelsHidden()
+                        }
+                    }
+                    
                     Section("Project Name") {
                         TextField("Project Name", text: $project.name)
                             .labelsHidden()
@@ -37,12 +55,25 @@ struct ProjectCreateEditView: View {
                             .frame(minHeight: 100)
                     }
                 }
+                .alert(edit ? "Failed to edit project" : "Failed to create project", isPresented: $submitError) {} message: {
+                    Text(errorMsg)
+                }
+                .alert("Failed to delete project", isPresented: $deleteError) {} message: {
+                    Text(errorMsg)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(edit ? "Edit" : "Create") {
+                    Button {
                         handleCreateEditProject()
+                    } label: {
+                        if submitting {
+                            ProgressView().controlSize(.mini)
+                        } else {
+                            Text(edit ? "Edit" : "Create")
+                        }
                     }
+                    .disabled(submitting)
                 }
                 if edit {
                     ToolbarItem(placement: .destructiveAction) {
@@ -63,17 +94,71 @@ struct ProjectCreateEditView: View {
     }
     
     func handleCreateEditProject() {
-        modelContext.insert(project)
-        if !edit {
-            onCreate?(project)
+        submitting = true
+        if isRemoteProject || project.remoteId != nil {
+            Task {
+                do {
+                    if edit {
+                        _ = try await API.shared.project.updateProjectInfo(.with {
+                            $0.id = project.remoteId!
+                            $0.name = project.name
+                            $0.description_p = project.desc
+                        })
+                    } else {
+                        let result = try await API.shared.project.createProject(.with {
+                            $0.name = project.name
+                            $0.description_p = project.desc
+                        })
+                        project.remoteId = result.id
+                        project.inviteCode = result.inviteCode
+                    }
+                    modelContext.insert(project)
+                    dismiss()
+                } catch let error as GRPCStatus {
+                    submitError = true
+                    errorMsg = error.message ?? String(localized: "Unknown error")
+                } catch {
+                    submitError = true
+                    errorMsg = error.localizedDescription
+                }
+                submitting = false
+            }
+        } else {
+            modelContext.insert(project)
+            if !edit {
+                onCreate?(project)
+            }
+            submitting = false
+            dismiss()
         }
-        dismiss()
     }
     
     func handleDeleteProject() {
-        modelContext.delete(project)
-        onDelete?()
-        dismiss()
+        deleting = true
+        if isRemoteProject || project.remoteId != nil {
+            Task {
+                do {
+                    _ = try await API.shared.project.deleteProject(.with {
+                        $0.id = project.remoteId!
+                    })
+                    modelContext.delete(project)
+                    onDelete?()
+                    dismiss()
+                } catch let error as GRPCStatus {
+                    deleteError = true
+                    errorMsg = error.message ?? String(localized: "Unknown error")
+                } catch {
+                    deleteError = true
+                    errorMsg = error.localizedDescription
+                }
+                deleting = false
+            }
+        } else {
+            modelContext.delete(project)
+            onDelete?()
+            deleting = false
+            dismiss()
+        }
     }
 }
 

@@ -372,12 +372,42 @@
         }
       }
     },
+    "Failed to create project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目创建失败"
+          }
+        }
+      }
+    },
+    "Failed to delete project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目删除失败"
+          }
+        }
+      }
+    },
     "Failed to download PDF: " : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PDF下载失败："
+          }
+        }
+      }
+    },
+    "Failed to edit project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目编辑失败"
           }
         }
       }
@@ -535,6 +565,16 @@
         }
       }
     },
+    "Local" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地"
+          }
+        }
+      }
+    },
     "Local Projects" : {
       "localizations" : {
         "zh-Hans" : {
@@ -638,16 +678,6 @@
         }
       }
     },
-    "New Project" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "新建项目"
-          }
-        }
-      }
-    },
     "New Tag" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -665,6 +695,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "没有大纲"
+          }
+        }
+      }
+    },
+    "No Project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有项目"
           }
         }
       }
@@ -901,6 +941,16 @@
         }
       }
     },
+    "Project Type" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目类型"
+          }
+        }
+      }
+    },
     "Projects" : {
       "localizations" : {
         "zh-Hans" : {
@@ -968,6 +1018,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "找不到对应的论文信息"
+          }
+        }
+      }
+    },
+    "Remote" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "远程"
+          }
+        }
+      }
+    },
+    "Remote Projects" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "远程项目"
           }
         }
       }

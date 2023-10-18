@@ -7,15 +7,19 @@
 
 import SwiftUI
 import SwiftData
+import GRPC
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     
-    @Query private var projects: [Project]
+    @Query(filter: #Predicate<Project> { $0.remoteId == nil }) private var localProjects: [Project]
+    @Query(filter: #Predicate<Project> { $0.remoteId != nil }) private var remoteProjects: [Project]
     @State private var selectedProject: Project?
     @State private var isShowingLoginSheet = false
     @State private var isShowingAccountView = false
     @State private var isShowingNewProjectSheet = false
+    @State private var hasError = false
+    @State private var errorMsg: String?
     
     @AppStorage(AppStorageKey.User.username.rawValue)
     private var username: String?
@@ -24,31 +28,74 @@ struct ContentView: View {
         NavigationSplitView {
             // MARK: - 项目列表
             List(selection: $selectedProject) {
-                Section("Local Projects") {
-                    ForEach(projects) { project in
-                        NavigationLink(project.name, value: project)
-                            .contextMenu {
-                                Button("Delete") {
-                                    modelContext.delete(project)
-                                    if selectedProject != nil && selectedProject!.id == project.id {
-                                        selectedProject = nil
-                                    }
-                                }
-                            }
+                if !localProjects.isEmpty {
+                    Section("Local Projects") {
+                        ForEach(localProjects) { project in
+                            NavigationLink(project.name, value: project)
+                        }
+                    }
+                }
+                
+                if !remoteProjects.isEmpty {
+                    Section("Remote Projects") {
+                        ForEach(remoteProjects) { project in
+                            NavigationLink(project.name, value: project)
+                        }
                     }
                 }
             }
             .navigationTitle("Projects")
             .frame(minWidth: 180)
+            .overlay {
+                if localProjects.isEmpty && remoteProjects.isEmpty {
+                    ContentUnavailableView {
+                        Label("No Project", systemImage: "folder")
+                    } actions: {
+                        Button("Create New Project") {
+                            isShowingNewProjectSheet.toggle()
+                        }
+                    }
+                }
+            }
+            // MARK: 项目列表工具栏
             .toolbar {
                 ToolbarItem {
-                    Button("New Project", systemImage: "folder.badge.plus") {
+                    Button("Create New Project", systemImage: "folder.badge.plus") {
                         isShowingNewProjectSheet.toggle()
                     }
                     .sheet(isPresented: $isShowingNewProjectSheet) {
                         ProjectCreateEditView()
                     }
                 }
+            }
+            // MARK: 项目列表右键菜单
+            .contextMenu(forSelectionType: Project.self) { projects in
+                Button("Delete") {
+                    if selectedProject != nil && projects.contains(selectedProject!) {
+                        selectedProject = nil
+                    }
+                    Task {
+                        do {
+                            for project in projects {
+                                if let remoteId = project.remoteId {
+                                    _ = try await API.shared.project.deleteProject(.with {
+                                        $0.id = remoteId
+                                    })
+                                }
+                                modelContext.delete(project)
+                            }
+                        } catch let error as GRPCStatus {
+                            hasError = true
+                            errorMsg = error.message
+                        } catch {
+                            hasError = true
+                            errorMsg = error.localizedDescription
+                        }
+                    }
+                }
+            }
+            .alert("Failed to delete project", isPresented: $hasError) {} message: {
+                Text(errorMsg ?? String(localized: "Unknown error"))
             }
         } detail: {
             // MARK: - 项目详情
@@ -64,7 +111,7 @@ struct ContentView: View {
                 }
             }
         }
-        // MARK: - Toolbar
+        // MARK: - 用户信息工具栏
         .toolbar {
             ToolbarItem {
                 if let username = username {

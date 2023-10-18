@@ -13,7 +13,7 @@ import SimpleCodable
 @Model
 class Paper: Hashable, Identifiable {
     @Attribute(.unique) var id: UUID = UUID()
-    var remoteId: Int?
+    var remoteId: String?
     /// 标题
     var title: String
     /// 摘要
@@ -61,7 +61,7 @@ class Paper: Hashable, Identifiable {
     var bookmarks = [Bookmark]()
     
     init(id: UUID = UUID(),
-         remoteId: Int? = nil,
+         remoteId: String? = nil,
          title: String,
          abstract: String? = nil,
          keywords: [String] = [],
@@ -105,7 +105,7 @@ class Paper: Hashable, Identifiable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)
-        self.remoteId = try container.decodeIfPresent(Int.self, forKey: .remoteId)
+        self.remoteId = try container.decodeIfPresent(String.self, forKey: .remoteId)
         self.title = try container.decode(String.self, forKey: .title)
         self.abstract = try container.decodeIfPresent(String.self, forKey: .abstract)
         self.keywords = try container.decode([String].self, forKey: .keywords)
