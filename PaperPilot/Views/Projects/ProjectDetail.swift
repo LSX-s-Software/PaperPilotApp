@@ -85,9 +85,15 @@ struct ProjectDetail: View {
                     }
                 }
                 Divider()
-                Button("Delete", systemImage: "trash", role: .destructive) {
-                    for paperId in selectedPapers {
-                        project.papers.removeAll { $0.id == paperId }
+                Menu("Delete", systemImage: "trash") {
+                    Button("Paper and PDF file", role: .destructive) {
+                        handleDeletePaper(papers: selectedPapers, paper: true, pdf: true)
+                    }
+                    Button("Paper only", role: .destructive) {
+                        handleDeletePaper(papers: selectedPapers, paper: true, pdf: false)
+                    }
+                    Button("PDF file only", role: .destructive) {
+                        handleDeletePaper(papers: selectedPapers, paper: false, pdf: true)
                     }
                 }
             }
@@ -123,6 +129,30 @@ struct ProjectDetail: View {
                 EditButton()
             }
 #endif
+        }
+    }
+    
+    func handleDeletePaper(papers: Set<Paper.ID>, paper: Bool, pdf: Bool) {
+        if pdf {
+            var bookmarkStale = false
+            do {
+                for paperId in papers {
+                    if let paper = project.papers.first(where: { $0.id == paperId }),
+                       let bookmark = paper.fileBookmark,
+                       let url = try? URL(resolvingBookmarkData: bookmark,
+                                          options: .withSecurityScope,
+                                          relativeTo: nil,
+                                          bookmarkDataIsStale: &bookmarkStale) {
+                        try FileManager.default.removeItem(at: url)
+                        paper.fileBookmark = nil
+                    }
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        if paper {
+            project.papers.removeAll { papers.contains($0.id) }
         }
     }
 }
