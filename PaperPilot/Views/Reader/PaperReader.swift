@@ -36,11 +36,13 @@ struct PaperReader: View {
     @State private var isShowingEditButton = EditableContent.none
     @State private var editing = EditableContent.none
     @State private var newAuthor = ""
+    @StateObject private var downloadVM = DownloadViewModel()
     
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
                 HSplitView {
+                    // MARK: - 左侧内容
                     Group {
                         if loading {
                             ProgressView()
@@ -48,12 +50,16 @@ struct PaperReader: View {
                             PDFReader(paper: paper, pdf: pdf)
                         } else {
                             VStack(spacing: 6) {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .symbolRenderingMode(.hierarchical)
-                                    .foregroundStyle(.red)
-                                    .font(.title)
-                                if paper.fileBookmark == nil {
+                                Image(
+                                    systemName: downloadVM.downloading ?
+                                    "arrow.down.circle.fill" : "exclamationmark.triangle.fill"
+                                )
+                                .symbolRenderingMode(.hierarchical)
+                                .foregroundStyle(.red)
+                                .font(.title)
+                                if paper.file == nil {
                                     Text("This paper has no PDF file attached.")
+                                        .font(.title)
                                         .foregroundStyle(.secondary)
                                     Button("Add PDF File") {
                                         isImporting.toggle()
@@ -63,15 +69,31 @@ struct PaperReader: View {
                                         allowedContentTypes: [.pdf],
                                         onCompletion: handleImportFile
                                     )
+                                } else if downloadVM.downloading {
+                                    Text("Downloading PDF...")
+                                        .font(.title)
+                                    Group {
+                                        if let progress = downloadVM.downloadProgress {
+                                            ProgressView(value: progress.fractionCompleted)
+                                        } else {
+                                            ProgressView()
+                                        }
+                                    }
+                                    .progressViewStyle(.linear)
+                                    .padding(.horizontal)
+                                    .frame(maxWidth: 350)
                                 } else {
                                     Text(errorDescription ?? String(localized: "Unknown error"))
+                                        .font(.title)
                                         .foregroundStyle(.secondary)
+                                        .padding(.horizontal)
                                 }
                             }
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
+                    // MARK: - 右侧内容
                     VStack(alignment: .leading) {
                         VStack(alignment: .leading) {
                             Group {
@@ -164,31 +186,56 @@ struct PaperReader: View {
     
     func loadPDF() {
         loading = true
-        Task {
-            defer { loading = false }
-            guard let bookmark = paper.fileBookmark else { return }
-            var bookmarkStale = false
-            do {
-                let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
-                                          options: .withSecurityScope,
-                                          relativeTo: nil,
-                                          bookmarkDataIsStale: &bookmarkStale)
-                let didStartAccessing = resolvedUrl.startAccessingSecurityScopedResource()
-                defer {
-                    resolvedUrl.stopAccessingSecurityScopedResource()
+        // 从本地文件加载
+        if let bookmark = paper.fileBookmark {
+            Task {
+                defer { loading = false }
+                var bookmarkStale = false
+                do {
+                    let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
+                                              options: .withSecurityScope,
+                                              relativeTo: nil,
+                                              bookmarkDataIsStale: &bookmarkStale)
+                    let didStartAccessing = resolvedUrl.startAccessingSecurityScopedResource()
+                    defer {
+                        resolvedUrl.stopAccessingSecurityScopedResource()
+                    }
+                    
+                    if bookmarkStale {
+                        paper.fileBookmark = try resolvedUrl.bookmarkData(options: .withSecurityScope)
+                    }
+                    if !didStartAccessing {
+                        errorDescription = "Failed to access the file"
+                        return
+                    }
+                    
+                    pdf = PDFDocument(url: resolvedUrl)
+                } catch {
+                    errorDescription = error.localizedDescription
                 }
-                
-                if bookmarkStale {
-                    paper.fileBookmark = try resolvedUrl.bookmarkData(options: .withSecurityScope)
+            }
+            return
+        }
+        loading = false
+        // 下载
+        if let urlStr = paper.file, let url = URL(string: urlStr) {
+            Task {
+                do {
+                    let localURL = try await downloadVM.downloadFile(from: url)
+                    loading = true
+                    let documentsURL = try FileManager.default.url(for: .documentDirectory,
+                                                                   in: .userDomainMask,
+                                                                   appropriateFor: nil,
+                                                                   create: false)
+                    let savedURL = documentsURL.appendingPathComponent("\(paper.id.uuidString).pdf")
+                    try FileManager.default.moveItem(at: localURL, to: savedURL)
+                    paper.fileBookmark = try savedURL.bookmarkData(options: .withSecurityScope)
+                    pdf = PDFDocument(url: savedURL)
+                    errorDescription = nil
+                } catch {
+                    errorDescription = String(localized: "Failed to download PDF: ") + error.localizedDescription
                 }
-                if !didStartAccessing {
-                    errorDescription = "Failed to access the file"
-                    return
-                }
-                
-                pdf = PDFDocument(url: resolvedUrl)
-            } catch {
-                errorDescription = error.localizedDescription
+                loading = false
             }
         }
     }
@@ -199,9 +246,7 @@ struct PaperReader: View {
             do {
                 switch result {
                 case .success(let url):
-                    if paper.url == nil {
-                        paper.url = url.path
-                    }
+                    paper.file = url.path
                     let didStartAccessing = url.startAccessingSecurityScopedResource()
                     defer { url.stopAccessingSecurityScopedResource() }
                     if didStartAccessing {
@@ -223,7 +268,7 @@ struct PaperReader: View {
 }
 
 #Preview {
-    PaperReader(paper: ModelData.paper1)
+    PaperReader(paper: ModelData.paper2)
 #if os(macOS)
         .frame(width: 900, height: 600)
 #endif

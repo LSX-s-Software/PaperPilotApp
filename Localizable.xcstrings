@@ -321,6 +321,16 @@
         }
       }
     },
+    "Downloading PDF..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在下载PDF…"
+          }
+        }
+      }
+    },
     "Edit" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -358,6 +368,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入标题"
+          }
+        }
+      }
+    },
+    "Failed to download PDF: " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDF下载失败："
           }
         }
       }
@@ -748,6 +768,26 @@
         }
       }
     },
+    "Paper and PDF file" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "论文和PDF"
+          }
+        }
+      }
+    },
+    "Paper only" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅论文"
+          }
+        }
+      }
+    },
     "Paper Reader" : {
       "localizations" : {
         "zh-Hans" : {
@@ -774,6 +814,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "密码"
+          }
+        }
+      }
+    },
+    "PDF file only" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅PDF"
           }
         }
       }

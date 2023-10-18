@@ -31,8 +31,7 @@ class ModelData {
                               tags: ["Swift", "Programming"],
                               publicationYear: "2020",
                               publication: "ACM Transactions on Programming Languages and Systems",
-                              volume: nil,
-                              issue: nil)
+                              file: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf")
     static var paper3 = Paper(title: "A Comprehensive Study of Natural Language Processing Techniques",
                               abstract: "In this paper, we present a comprehensive study of natural language processing techniques, including tokenization, part-of-speech tagging, named entity recognition, and sentiment analysis. We evaluate the performance of these techniques on several benchmark datasets and provide recommendations for future research.",
                               keywords: ["natural language processing", "tokenization", "part-of-speech tagging", "named entity recognition", "sentiment analysis"],
