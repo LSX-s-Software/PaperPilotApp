@@ -73,7 +73,7 @@ struct ProjectCreateEditView: View {
                             Text(edit ? "Edit" : "Create")
                         }
                     }
-                    .disabled(submitting)
+                    .disabled(project.name.isEmpty || submitting)
                 }
                 if edit {
                     ToolbarItem(placement: .destructiveAction) {
