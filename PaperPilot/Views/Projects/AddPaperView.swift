@@ -89,7 +89,7 @@ struct AddPaperView: View {
                     url.stopAccessingSecurityScopedResource()
                 }
                 if didStartAccessing {
-                    newPaper.fileBookmark = try url.bookmarkData(options: .withSecurityScope)
+                    newPaper.fileBookmark = try url.bookmarkData(options: bookmarkCreationOptions)
                     shouldGoNext = true
                 }
             case .failure(let error):

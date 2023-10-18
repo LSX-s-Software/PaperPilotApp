@@ -61,9 +61,8 @@ struct ProjectDetail: View {
                     Menu("Copy Information", systemImage: "doc.on.doc") {
                         ForEach(copiableProperties, id: \.0) { name, keypath in
                             Button(LocalizedStringKey(name)) {
-                                NSPasteboard.general.clearContents()
                                 if let value = paper[keyPath: keypath] as? String {
-                                    NSPasteboard.general.setString(value, forType: .string)
+                                    setPasteboard(value)
                                 }
                             }
                         }
@@ -140,7 +139,7 @@ struct ProjectDetail: View {
                     if let paper = project.papers.first(where: { $0.id == paperId }),
                        let bookmark = paper.fileBookmark,
                        let url = try? URL(resolvingBookmarkData: bookmark,
-                                          options: .withSecurityScope,
+                                          options: bookmarkResOptions,
                                           relativeTo: nil,
                                           bookmarkDataIsStale: &bookmarkStale) {
                         try FileManager.default.removeItem(at: url)

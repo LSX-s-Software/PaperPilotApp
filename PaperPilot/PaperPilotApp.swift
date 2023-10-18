@@ -7,7 +7,9 @@
 
 import SwiftUI
 import SwiftData
+#if os(macOS)
 import WindowManagement
+#endif
 
 enum AppWindow: String, Identifiable {
     case main
@@ -54,8 +56,10 @@ struct PaperPilotApp: App {
                 .frame(minWidth: 600, idealWidth: 1200, maxWidth: .infinity,
                        minHeight: 400, idealHeight: 900, maxHeight: .infinity)
         }
+#if os(macOS)
         .register(AppWindow.reader.id)
         .disableRestoreOnLaunch()
+#endif
         .modelContainer(modelContainer)
         .environmentObject(appState)
         .commands {

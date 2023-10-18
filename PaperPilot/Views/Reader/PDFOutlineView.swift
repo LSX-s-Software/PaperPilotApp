@@ -31,25 +31,27 @@ struct PDFOutlineView: View {
     let root: PDFOutline
     
     @State private var outline: PDFOutlineItem
-    @Binding private var selection: PDFPage
+    @Binding private var selection: PDFPage?
     
-    init(root: PDFOutline, selection: Binding<PDFPage>) {
+    init(root: PDFOutline, selection: Binding<PDFPage?>) {
         self.root = root
         self._outline = State(initialValue: processOutline(root: root))
         self._selection = selection
     }
     
     var body: some View {
-        List(outline.children ?? [], children: \.children, selection: $selection) { item in
-            HStack {
-                Text(item.outline.label ?? "")
-                Spacer()
-                if let label = item.outline.destination?.page?.label {
-                    Text(label)
-                        .foregroundStyle(.secondary)
+        List(selection: $selection) {
+            OutlineGroup(outline.children ?? [], children: \.children) { item in
+                HStack {
+                    Text(item.outline.label ?? "")
+                    Spacer()
+                    if let label = item.outline.destination?.page?.label {
+                        Text(label)
+                            .foregroundStyle(.secondary)
+                    }
                 }
+                .tag(item.outline.destination?.page ?? PDFPage())
             }
-            .tag(item.outline.destination?.page ?? PDFPage())
         }
         .listStyle(.sidebar)
     }

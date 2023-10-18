@@ -104,7 +104,13 @@ struct PDFReader: View {
                     case .outline:
                         Group {
                             if let root = pdf.outlineRoot {
-                                PDFOutlineView(root: root, selection: Binding { currentPage } set: { pdfView.go(to: $0) })
+                                PDFOutlineView(root: root, selection: Binding {
+                                    currentPage
+                                } set: {
+                                    if let page = $0 {
+                                        pdfView.go(to: page)
+                                    }
+                                })
                             } else {
                                 Text("No Outline")
                                     .font(.title2)
@@ -125,6 +131,7 @@ struct PDFReader: View {
                         ) { bookmark in
                             HStack {
                                 if let page = pdf.page(at: bookmark.page) {
+#if os(macOS)
                                     Image(nsImage: page.thumbnail(of: NSSize(width: 180, height: 360), for: .trimBox))
                                         .resizable()
                                         .scaledToFit()
@@ -134,6 +141,18 @@ struct PDFReader: View {
                                             Image(systemName: "bookmark.fill")
                                                 .foregroundStyle(Color.accentColor)
                                         }
+#else
+                                    Image(uiImage: page.thumbnail(of: CGSize(width: 180, height: 360), for: .trimBox))
+                                        .resizable()
+                                        .scaledToFit()
+                                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                                        .frame(maxWidth: 60, maxHeight: 120)
+                                        .overlay(alignment: .topTrailing) {
+                                            Image(systemName: "bookmark.fill")
+                                                .foregroundStyle(Color.accentColor)
+                                        }
+
+#endif
                                     Spacer()
                                 }
                                 Text("Page \(bookmark.label ?? String(bookmark.page + 1))")
@@ -207,7 +226,9 @@ struct PDFReader: View {
                 }
         }
         .animation(.easeInOut, value: tocContent)
+#if os(macOS)
         .navigationSubtitle("Page: \(currentPage.label ?? "Unknown")/\(pdf.pageCount)")
+#endif
         // MARK: - 工具栏
         .toolbar {
             // MARK: 目录
@@ -325,8 +346,11 @@ extension PDFReader {
                 let highlight = PDFAnnotation(bounds: bounds,
                                               forType: type,
                                               withProperties: nil)
+#if os(macOS)
                 highlight.color = NSColor(annotationColor.color)
-                
+#else
+                highlight.color = UIColor(annotationColor.color)
+#endif
                 page.addAnnotation(highlight)
             }
         }

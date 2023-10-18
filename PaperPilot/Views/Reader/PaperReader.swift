@@ -41,7 +41,7 @@ struct PaperReader: View {
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
-                HSplitView {
+                HSplitViewLayout {
                     // MARK: - 左侧内容
                     Group {
                         if loading {
@@ -92,7 +92,7 @@ struct PaperReader: View {
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
+                } right: {
                     // MARK: - 右侧内容
                     VStack(alignment: .leading) {
                         VStack(alignment: .leading) {
@@ -193,7 +193,7 @@ struct PaperReader: View {
                 var bookmarkStale = false
                 do {
                     let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
-                                              options: .withSecurityScope,
+                                              options: bookmarkResOptions,
                                               relativeTo: nil,
                                               bookmarkDataIsStale: &bookmarkStale)
                     let didStartAccessing = resolvedUrl.startAccessingSecurityScopedResource()
@@ -202,7 +202,7 @@ struct PaperReader: View {
                     }
                     
                     if bookmarkStale {
-                        paper.fileBookmark = try resolvedUrl.bookmarkData(options: .withSecurityScope)
+                        paper.fileBookmark = try resolvedUrl.bookmarkData(options: bookmarkCreationOptions)
                     }
                     if !didStartAccessing {
                         errorDescription = "Failed to access the file"
@@ -229,7 +229,7 @@ struct PaperReader: View {
                                                                    create: false)
                     let savedURL = documentsURL.appendingPathComponent("\(paper.id.uuidString).pdf")
                     try FileManager.default.moveItem(at: localURL, to: savedURL)
-                    paper.fileBookmark = try savedURL.bookmarkData(options: .withSecurityScope)
+                    paper.fileBookmark = try savedURL.bookmarkData(options: bookmarkCreationOptions)
                     pdf = PDFDocument(url: savedURL)
                     errorDescription = nil
                 } catch {
@@ -250,7 +250,7 @@ struct PaperReader: View {
                     let didStartAccessing = url.startAccessingSecurityScopedResource()
                     defer { url.stopAccessingSecurityScopedResource() }
                     if didStartAccessing {
-                        paper.fileBookmark = try url.bookmarkData(options: .withSecurityScope)
+                        paper.fileBookmark = try url.bookmarkData(options: bookmarkCreationOptions)
                         pdf = PDFDocument(url: url)
                         errorDescription = nil
                     } else {

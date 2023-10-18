@@ -6,7 +6,11 @@
 //
 
 import GRPC
+#if os(macOS)
 import AppKit
+#else
+import UIKit
+#endif
 import NIOHPACK
 
 final class API {
@@ -32,12 +36,16 @@ final class API {
         self.project = Project_ProjectPublicServiceAsyncClient(channel: channel)
         self.paper = Paper_PaperPublicServiceAsyncClient(channel: channel)
 
+#if os(macOS)
+        let notification = NSApplication.willTerminateNotification
+#else
+        let notification = UIApplication.willTerminateNotification
+#endif
         NotificationCenter.default.addObserver(
-            forName: NSApplication.willTerminateNotification,
+            forName: notification,
             object: nil,
             queue: .main
         ) { _ in
-            print("close connection")
             do {
                 try self.channel.close().wait()
             } catch {
