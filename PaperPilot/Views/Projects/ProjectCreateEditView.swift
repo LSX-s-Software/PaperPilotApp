@@ -99,7 +99,7 @@ struct ProjectCreateEditView: View {
                         $0.description_p = project.desc
                     })
                     project.remoteId = result.id
-                    project.inviteCode = result.inviteCode
+                    project.invitationCode = result.inviteCode
                 }
                 modelContext.insert(project)
                 dismiss()

@@ -20,7 +20,7 @@ class Project: Hashable, Codable, Identifiable {
     /// 描述
     @Attribute(originalName: "description") var desc: String
     /// 邀请码
-    var inviteCode: String?
+    var invitationCode: String?
     // TODO: 成员列表
 //    /// 成员列表
 //    @Relationship(deleteRule: .cascade)
@@ -29,11 +29,17 @@ class Project: Hashable, Codable, Identifiable {
     @Relationship(deleteRule: .cascade)
     var papers: [Paper]
     
-    init(uuid: UUID = UUID(), remoteId: String? = nil, name: String, desc: String, papers: [Paper] = []) {
+    init(uuid: UUID = UUID(),
+         remoteId: String? = nil,
+         name: String,
+         desc: String,
+         invitationCode: String? = nil,
+         papers: [Paper] = []) {
         self.id = uuid
         self.remoteId = remoteId
         self.name = name
         self.desc = desc
+        self.invitationCode = invitationCode
         self.papers = papers
     }
 }

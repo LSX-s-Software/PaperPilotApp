@@ -52,7 +52,7 @@ struct ImageTitleDialog<Content: View>: View {
         .frame(minWidth: 350)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
+                Button("Cancel", role: .cancel) {
                     dismiss()
                 }
             }

@@ -46,6 +46,7 @@
 		F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = F5CF43332ADC1FB6004F1A16 /* WindowManagement */; settings = {ATTRIBUTES = (Required, ); }; };
 		F5CF43402ADC4361004F1A16 /* PaperReaderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF433F2ADC4361004F1A16 /* PaperReaderContent.swift */; };
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
+		F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */; };
 		F5D8EEED2AD42D5100501B0E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* LoginView.swift */; };
 		F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */ = {isa = PBXBuildFile; productRef = F5D8EEF32AD4559300501B0E /* SimpleCodable */; };
 		F5D8EF012AD4F62E00501B0E /* AppStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EF002AD4F62E00501B0E /* AppStorageKey.swift */; };
@@ -95,6 +96,7 @@
 		F5C379082AC44BFF00C88C94 /* PaperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperInfo.swift; sourceTree = "<group>"; };
 		F5CF433F2ADC4361004F1A16 /* PaperReaderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperReaderContent.swift; sourceTree = "<group>"; };
 		F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
+		F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinProjectView.swift; sourceTree = "<group>"; };
 		F5D8EEEC2AD42D5100501B0E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		F5D8EF002AD4F62E00501B0E /* AppStorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKey.swift; sourceTree = "<group>"; };
 		F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			children = (
 				F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */,
 				F5EBC0C42ABFE19600B2B4A3 /* ProjectDetail.swift */,
+				F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */,
 				F5145E7A2AD57863001860E0 /* AddPaperView.swift */,
 				F5145E7E2AD58275001860E0 /* AddPaperByURLView.swift */,
 				F5145E842AD59172001860E0 /* NewPaperInfoView.swift */,
@@ -403,6 +406,7 @@
 			files = (
 				F5EBC0C52ABFE19600B2B4A3 /* ProjectDetail.swift in Sources */,
 				F5FDF8E72AD6D968001D9460 /* PDFKitThumbnailView.swift in Sources */,
+				F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */,
 				F53D814B2AC1385300865B80 /* PaperReader.swift in Sources */,
 				F5145E852AD59172001860E0 /* NewPaperInfoView.swift in Sources */,
 				F578D8212AD78ABE00322819 /* PDFOutlineView.swift in Sources */,

@@ -33,7 +33,7 @@ struct AddPaperByURLView: View {
                 
             if !isDoi {
                 Text("You can also search paper using Sci-Hub supported format.")
-                    .font(.caption)
+                    .font(.footnote)
                     .foregroundStyle(.secondary)
             }
         }

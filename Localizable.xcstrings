@@ -121,6 +121,16 @@
         }
       }
     },
+    "Add Project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加项目"
+          }
+        }
+      }
+    },
     "Add to bookmark" : {
       "localizations" : {
         "zh-Hans" : {
@@ -438,6 +448,16 @@
         }
       }
     },
+    "Failed to join project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加入项目失败"
+          }
+        }
+      }
+    },
     "Failed to save PDF" : {
       "localizations" : {
         "zh-Hans" : {
@@ -617,6 +637,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "期号"
+          }
+        }
+      }
+    },
+    "Join" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加入"
+          }
+        }
+      }
+    },
+    "Join Project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加入项目"
           }
         }
       }
@@ -1351,6 +1391,16 @@
         }
       }
     },
+    "Use invitation code to join project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用邀请码加入项目"
+          }
+        }
+      }
+    },
     "Username" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1403,12 +1453,22 @@
         }
       }
     },
+    "You can get invitation code from any member of the project." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你可以从任何一个项目成员处获取邀请码"
+          }
+        }
+      }
+    },
     "You don't have access to the PDF." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你没有访问此PDF的权限。"
+            "value" : "你没有访问此PDF的权限"
           }
         }
       }

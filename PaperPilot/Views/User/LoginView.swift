@@ -71,7 +71,7 @@ struct LoginView: View {
                 }
                 .padding(.bottom, 8)
                 HStack {
-                    Button {
+                    Button(role: .cancel) {
                         viewModel.isShowingLoginSheet = false
                     } label: {
                         Text("Cancel")

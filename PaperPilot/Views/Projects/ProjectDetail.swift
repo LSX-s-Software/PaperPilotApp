@@ -131,12 +131,12 @@ struct ProjectDetail: View {
                                     Text("Invitation Code")
                                         .font(.caption)
                                     HStack {
-                                        TextField("Invitation Code", text: .constant(project.inviteCode ?? ""))
+                                        TextField("Invitation Code", text: .constant(project.invitationCode ?? ""))
                                             .textFieldStyle(.roundedBorder)
                                             .disabled(true)
                                             .frame(minWidth: 100)
                                         Button("Copy") {
-                                            if let inviteCode = project.inviteCode {
+                                            if let inviteCode = project.invitationCode {
                                                 setPasteboard(inviteCode)
                                             }
                                         }
@@ -144,12 +144,12 @@ struct ProjectDetail: View {
                                 }
                                 ShareLink(
                                     "Send Invitation",
-                                    item: URL(string: "paperpilot://project/\(project.inviteCode ?? "123")")!,
+                                    item: URL(string: "paperpilot://project/\(project.invitationCode ?? "123")")!,
                                     subject: Text(project.name),
                                     message: Text("\(username ?? String(localized: "I")) invites you to join the project \"\(project.name)\" on Paper Pilot.")
                                 )
                             }
-                            .disabled(project.inviteCode == nil || project.inviteCode!.isEmpty)
+                            .disabled(project.invitationCode == nil || project.invitationCode!.isEmpty)
                         }
                         .padding()
                     }

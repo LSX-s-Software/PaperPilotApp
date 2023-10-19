@@ -18,6 +18,7 @@ struct ContentView: View {
     @State private var isShowingLoginSheet = false
     @State private var isShowingAccountView = false
     @State private var isShowingNewProjectSheet = false
+    @State private var isShowingJoinProjectSheet = false
     @State private var hasError = false
     @State private var errorMsg: String?
     
@@ -45,7 +46,7 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Projects")
-            .frame(minWidth: 180)
+            .frame(minWidth: 200)
             .overlay {
                 if localProjects.isEmpty && remoteProjects.isEmpty {
                     ContentUnavailableView {
@@ -60,11 +61,21 @@ struct ContentView: View {
             // MARK: 项目列表工具栏
             .toolbar {
                 ToolbarItem {
-                    Button("Create New Project", systemImage: "folder.badge.plus") {
-                        isShowingNewProjectSheet.toggle()
+                    Menu("Add Project", systemImage: "folder.badge.plus") {
+                        Button("Create New Project", systemImage: "folder.badge.plus") {
+                            isShowingNewProjectSheet.toggle()
+                        }
+                        
+                        Button("Join Project", systemImage: "folder.badge.person.crop") {
+                            isShowingJoinProjectSheet.toggle()
+                        }
                     }
+                    .menuStyle(.button)
                     .sheet(isPresented: $isShowingNewProjectSheet) {
                         ProjectCreateEditView()
+                    }
+                    .sheet(isPresented: $isShowingJoinProjectSheet) {
+                        JoinProjectView()
                     }
                 }
             }
