@@ -15,7 +15,7 @@ struct LoginView: View {
             VStack {
                 Image(systemName: "person.crop.circle.fill")
                     .font(.system(size: 80))
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(Color.accentColor)
                     .symbolRenderingMode(.hierarchical)
                 Text("PaperPilot Account")
                     .font(.largeTitle)

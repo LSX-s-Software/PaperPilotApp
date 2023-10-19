@@ -29,7 +29,7 @@ struct ImageTitleDialog<Content: View>: View {
         VStack {
             Image(systemName: systemImage)
                 .symbolRenderingMode(.hierarchical)
-                .foregroundStyle(.blue)
+                .foregroundStyle(Color.accentColor)
                 .font(.system(size: 48))
                 .padding(.vertical)
             

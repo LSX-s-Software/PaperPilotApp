@@ -22,6 +22,7 @@ struct ProjectDetail: View {
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime, order: .reverse)]
     @State private var isShowingEditProjectSheet = false
     @State private var isShowingAddPaperSheet = false
+    @State private var isShowingSharePopover = false
     
     var onDelete: (() -> Void)?
     
@@ -109,6 +110,39 @@ struct ProjectDetail: View {
 #endif
         .toolbar {
             ToolbarItemGroup {
+                if project.remoteId != nil {
+                    Button("Share", systemImage: "square.and.arrow.up") {
+                        isShowingSharePopover.toggle()
+                    }
+                    .popover(isPresented: $isShowingSharePopover, arrowEdge: .bottom) {
+                        VStack {
+                            Image(systemName: "person.3.fill")
+                                .symbolRenderingMode(.hierarchical)
+                                .font(.title)
+                                .foregroundStyle(Color.accentColor)
+                            Text("Invite Others")
+                                .font(.title2)
+                                .fontWeight(.medium)
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text("Invitation Code")
+                                    .font(.caption)
+                                HStack {
+                                    TextField("Invitation Code", text: .constant(project.inviteCode ?? ""))
+                                        .textFieldStyle(.roundedBorder)
+                                        .disabled(true)
+                                    Button("Copy") {
+                                        if let inviteCode = project.inviteCode {
+                                            setPasteboard(inviteCode)
+                                        }
+                                    }
+                                    .disabled(project.inviteCode == nil || project.inviteCode!.isEmpty)
+                                }
+                            }
+                        }
+                        .padding()
+                    }
+                }
+                
                 Button("Project Settings", systemImage: "folder.badge.gear") {
                     isShowingEditProjectSheet.toggle()
                 }

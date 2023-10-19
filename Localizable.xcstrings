@@ -241,6 +241,16 @@
         }
       }
     },
+    "Copy" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拷贝"
+          }
+        }
+      }
+    },
     "Copy Information" : {
       "localizations" : {
         "zh-Hans" : {
@@ -550,6 +560,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无效的URL"
+          }
+        }
+      }
+    },
+    "Invitation Code" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邀请码"
+          }
+        }
+      }
+    },
+    "Invite Others" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邀请其他人"
           }
         }
       }
@@ -1123,7 +1153,14 @@
       }
     },
     "Share" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共享"
+          }
+        }
+      }
     },
     "Sidebar Content" : {
       "localizations" : {
