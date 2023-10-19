@@ -42,8 +42,7 @@ struct PaperPilotApp: App {
     var body: some Scene {
         WindowGroup("Paper Pilot", id: AppWindow.main.id) {
             ContentView()
-                .frame(minWidth: 600, idealWidth: 1000, maxWidth: .infinity,
-                       minHeight: 400, idealHeight: 800, maxHeight: .infinity)
+                .frame(minWidth: 600, minHeight: 400)
                 .sheet(isPresented: $appState.isShowingJoinProjectView) {
                     if let url = appState.incomingURL {
                         JoinProjectView(invitationURL: url)
@@ -66,6 +65,9 @@ struct PaperPilotApp: App {
                     }
                 }
         }
+#if os(macOS)
+        .defaultSize(width: 1000, height: 600)
+#endif
         .handlesExternalEvents(matching: ["*"])
         .modelContainer(modelContainer)
         .commands {
@@ -75,12 +77,12 @@ struct PaperPilotApp: App {
         WindowGroup("Paper Reader", id: AppWindow.reader.id, for: Paper.self) { $paper in
             PaperReader(paper: paper ?? Paper(title: "Loading"))
                 .navigationTitle(paper?.title ?? "Paper Reader")
-                .frame(minWidth: 600, idealWidth: 1200, maxWidth: .infinity,
-                       minHeight: 400, idealHeight: 900, maxHeight: .infinity)
+                .frame(minWidth: 600, minHeight: 400)
         }
 #if os(macOS)
         .register(AppWindow.reader.id)
         .disableRestoreOnLaunch()
+        .defaultSize(width: 1200, height: 800)
 #endif
         .modelContainer(modelContainer)
         .environmentObject(appState)
