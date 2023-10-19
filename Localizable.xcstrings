@@ -524,6 +524,16 @@
         }
       }
     },
+    "Import" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入"
+          }
+        }
+      }
+    },
     "Info" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1082,6 +1092,16 @@
         }
       }
     },
+    "Select a PDF file to import" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择一个PDF文件来导入"
+          }
+        }
+      }
+    },
     "Select a project from the left sidebar." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1101,6 +1121,9 @@
           }
         }
       }
+    },
+    "Share" : {
+
     },
     "Sidebar Content" : {
       "localizations" : {

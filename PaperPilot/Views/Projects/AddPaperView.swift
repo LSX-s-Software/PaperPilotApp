@@ -63,6 +63,8 @@ struct AddPaperView: View {
                         allowedContentTypes: [.pdf],
                         onCompletion: handleImportFile
                     )
+                    .fileDialogMessage("Select a PDF file to import")
+                    .fileDialogConfirmationLabel("Import")
                 }
                 .fixedSize(horizontal: true, vertical: false)
             }

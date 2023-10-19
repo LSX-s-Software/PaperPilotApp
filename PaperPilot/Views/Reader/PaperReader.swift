@@ -69,6 +69,8 @@ struct PaperReader: View {
                                         allowedContentTypes: [.pdf],
                                         onCompletion: handleImportFile
                                     )
+                                    .fileDialogMessage("Select a PDF file to import")
+                                    .fileDialogConfirmationLabel("Import")
                                 } else if downloadVM.downloading {
                                     Text("Downloading PDF...")
                                         .font(.title)
