@@ -144,7 +144,7 @@ struct ProjectDetail: View {
                                 }
                                 ShareLink(
                                     "Send Invitation",
-                                    item: URL(string: "paperpilot://project/\(project.invitationCode ?? "123")")!,
+                                    item: URL(string: "paperpilot://project?invitation=\(project.invitationCode ?? "123")")!,
                                     subject: Text(project.name),
                                     message: Text("\(username ?? String(localized: "I")) invites you to join the project \"\(project.name)\" on Paper Pilot.")
                                 )

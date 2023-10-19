@@ -24,7 +24,7 @@ enum AppWindow: String, Identifiable {
 struct PaperPilotApp: App {
     let modelContainer: ModelContainer
     @StateObject var appState = AppState()
-    
+
     @AppStorage(AppStorageKey.User.accessToken.rawValue)
     private var accessToken: String?
 
@@ -40,11 +40,33 @@ struct PaperPilotApp: App {
     }
     
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("Paper Pilot", id: AppWindow.main.id) {
             ContentView()
                 .frame(minWidth: 600, idealWidth: 1000, maxWidth: .infinity,
                        minHeight: 400, idealHeight: 800, maxHeight: .infinity)
+                .sheet(isPresented: $appState.isShowingJoinProjectView) {
+                    if let url = appState.incomingURL {
+                        JoinProjectView(invitationURL: url)
+                    } else {
+                        ProgressView()
+                            .padding()
+                    }
+                }
+                .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { userActivity in
+                    guard let url = userActivity.webpageURL else { return }
+                    appState.incomingURL = url
+                    if url.scheme == "paperpilot" && url.host == "project" {
+                        appState.isShowingJoinProjectView = true
+                    }
+                }
+                .onOpenURL { url in
+                    appState.incomingURL = url
+                    if url.scheme == "paperpilot" && url.host == "project" {
+                        appState.isShowingJoinProjectView = true
+                    }
+                }
         }
+        .handlesExternalEvents(matching: ["*"])
         .modelContainer(modelContainer)
         .commands {
             SidebarCommands()
@@ -73,9 +95,4 @@ struct PaperPilotApp: App {
             }
         }
     }
-}
-
-class AppState: ObservableObject {
-    @Published var findingInPDF = false
-    var findInPDFHandler: ((Bool) -> Void)?
 }

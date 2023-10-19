@@ -994,6 +994,16 @@
         }
       }
     },
+    "Paper Pilot" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paper Pilot"
+          }
+        }
+      }
+    },
     "Paper Reader" : {
       "localizations" : {
         "zh-Hans" : {

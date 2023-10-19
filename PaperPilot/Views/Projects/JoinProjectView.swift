@@ -16,6 +16,16 @@ struct JoinProjectView: View {
     @State private var hasError = false
     @State private var errorMsg: String?
     
+    init() {}
+    
+    init(invitationURL: URL) {
+        if let components = URLComponents(url: invitationURL, resolvingAgainstBaseURL: false),
+           let queryItems = components.queryItems,
+           let code = queryItems.first(where: { $0.name == "invitation" })?.value {
+            self._invitationCode = State(initialValue: code)
+        }
+    }
+    
     var body: some View {
         ImageTitleDialog(
             "Join Project",
