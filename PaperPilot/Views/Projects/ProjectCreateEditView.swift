@@ -29,7 +29,7 @@ struct ProjectCreateEditView: View {
     var body: some View {
         NavigationStack {
             ImageTitleDialog(
-                title: edit ? "Edit Project" : "Create New Project",
+                edit ? "Edit Project" : "Create New Project",
                 systemImage: "folder.fill.badge.\(edit ? "gearshape" : "plus")"
             ) {
                 Form {

@@ -21,7 +21,7 @@ struct AddPaperByURLView: View {
     @State private var shouldGoNext = false
     
     var body: some View {
-        ImageTitleDialog(title: "Add Paper By URL/DOI", systemImage: "link") {
+        ImageTitleDialog("Add Paper By URL/DOI", systemImage: "link") {
             Picker("Type", selection: $isDoi) {
                 Text("DOI").tag(true)
                 Text("URL").tag(false)

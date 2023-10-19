@@ -13,7 +13,17 @@ struct ImageTitleDialog<Content: View>: View {
     var title: LocalizedStringKey
     var subtitle: LocalizedStringKey?
     var systemImage: String
-    @ViewBuilder var content: () -> Content
+    var content: () -> Content
+    
+    init(_ title: LocalizedStringKey,
+         subtitle: LocalizedStringKey? = nil,
+         systemImage: String,
+         @ViewBuilder content: @escaping () -> Content) {
+        self.title = title
+        self.subtitle = subtitle
+        self.systemImage = systemImage
+        self.content = content
+    }
     
     var body: some View {
         VStack {

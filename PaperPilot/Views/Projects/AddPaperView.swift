@@ -19,7 +19,7 @@ struct AddPaperView: View {
     
     var body: some View {
         NavigationStack {
-            ImageTitleDialog(title: "Add Paper", systemImage: "doc.fill.badge.plus") {
+            ImageTitleDialog("Add Paper", systemImage: "doc.fill.badge.plus") {
                 VStack {
                     NavigationLink {
                         AddPaperByURLView(project: project, shouldClose: $shouldClose)

@@ -13,7 +13,7 @@ struct NewPaperInfoView: View {
     @Binding var shouldClose: Bool
     
     var body: some View {
-        ImageTitleDialog(title: "Supplement Information", systemImage: "doc.badge.ellipsis") {
+        ImageTitleDialog("Supplement Information", systemImage: "doc.badge.ellipsis") {
             Form {
                 Section("Required Info") {
                     TextField("Title", text: $paper.title)
