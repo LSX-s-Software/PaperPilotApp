@@ -16,7 +16,6 @@ struct AddPaperByURLView: View {
     @State private var url = ""
     @State private var isDoi = true
     @State private var paper: Paper?
-    @State private var loading = false
     @State private var errorMsg: String?
     @State private var shouldGoNext = false
     
@@ -31,7 +30,6 @@ struct AddPaperByURLView: View {
             
             TextField("Please enter \(isDoi ? "DOI" : "URL")", text: $url)
                 .textFieldStyle(.roundedBorder)
-                .disabled(loading)
                 
             if !isDoi {
                 Text("You can also search paper using Sci-Hub supported format.")
@@ -42,18 +40,10 @@ struct AddPaperByURLView: View {
         .toolbar {
             if !shouldGoNext {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        handleResolvePaper()
-                    } label: {
-                        if loading {
-                            ProgressView()
-                                .controlSize(.mini)
-                        } else {
-                            Text("Retrieve")
-                        }
+                    AsyncButton("Resolve", disabled: url.isEmpty) {
+                        await handleResolvePaper()
                     }
                     .keyboardShortcut(.defaultAction)
-                    .disabled(url.isEmpty || loading)
                 }
             }
         }
@@ -65,18 +55,14 @@ struct AddPaperByURLView: View {
         .alert(errorMsg ?? "", isPresented: Binding { errorMsg != nil } set: { _ in errorMsg = nil}) {}
     }
     
-    func handleResolvePaper() {
-        loading = true
-        Task {
-            do {
-                paper = isDoi ? try await Paper(doi: url) : try await Paper(query: url)
-                shouldGoNext = true
-            } catch NetworkingError.notFound, NetworkingError.dataFormatError {
-                errorMsg = String(localized: "Relevant paper info not found")
-            } catch {
-                errorMsg = error.localizedDescription
-            }
-            loading = false
+    func handleResolvePaper() async {
+        do {
+            paper = isDoi ? try await Paper(doi: url) : try await Paper(query: url)
+            shouldGoNext = true
+        } catch NetworkingError.notFound, NetworkingError.dataFormatError {
+            errorMsg = String(localized: "Relevant paper info not found")
+        } catch {
+            errorMsg = error.localizedDescription
         }
     }
 }

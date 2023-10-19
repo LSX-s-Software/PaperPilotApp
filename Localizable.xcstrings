@@ -1118,7 +1118,7 @@
         }
       }
     },
-    "Retrieve" : {
+    "Resolve" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

@@ -17,9 +17,7 @@ struct ProjectCreateEditView: View {
     @Bindable var project: Project = Project(name: "", desc: "")
     @State private var isShowingDeleteConfirm = false
     @State private var isRemoteProject = false
-    @State private var submitting = false
     @State private var submitError = false
-    @State private var deleting = false
     @State private var deleteError = false
     @State private var errorMsg = ""
     
@@ -64,16 +62,9 @@ struct ProjectCreateEditView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        handleCreateEditProject()
-                    } label: {
-                        if submitting {
-                            ProgressView().controlSize(.mini)
-                        } else {
-                            Text(edit ? "Edit" : "Create")
-                        }
+                    AsyncButton(edit ? "Edit" : "Create", disabled: project.name.isEmpty) {
+                        await handleCreateEditProject()
                     }
-                    .disabled(project.name.isEmpty || submitting)
                 }
                 if edit {
                     ToolbarItem(placement: .destructiveAction) {
@@ -81,8 +72,8 @@ struct ProjectCreateEditView: View {
                             isShowingDeleteConfirm.toggle()
                         }
                         .confirmationDialog("Are you sure to delete this project?", isPresented: $isShowingDeleteConfirm) {
-                            Button("Delete", role: .destructive) {
-                                handleDeleteProject()
+                            AsyncButton("Delete", role: .destructive) {
+                                await handleDeleteProject()
                             }
                         } message: {
                             Text("This action cannot be undone.")
@@ -93,70 +84,60 @@ struct ProjectCreateEditView: View {
         }
     }
     
-    func handleCreateEditProject() {
-        submitting = true
+    func handleCreateEditProject() async {
         if isRemoteProject || project.remoteId != nil {
-            Task {
-                do {
-                    if edit {
-                        _ = try await API.shared.project.updateProjectInfo(.with {
-                            $0.id = project.remoteId!
-                            $0.name = project.name
-                            $0.description_p = project.desc
-                        })
-                    } else {
-                        let result = try await API.shared.project.createProject(.with {
-                            $0.name = project.name
-                            $0.description_p = project.desc
-                        })
-                        project.remoteId = result.id
-                        project.inviteCode = result.inviteCode
-                    }
-                    modelContext.insert(project)
-                    dismiss()
-                } catch let error as GRPCStatus {
-                    submitError = true
-                    errorMsg = error.message ?? String(localized: "Unknown error")
-                } catch {
-                    submitError = true
-                    errorMsg = error.localizedDescription
+            do {
+                if edit {
+                    _ = try await API.shared.project.updateProjectInfo(.with {
+                        $0.id = project.remoteId!
+                        $0.name = project.name
+                        $0.description_p = project.desc
+                    })
+                } else {
+                    let result = try await API.shared.project.createProject(.with {
+                        $0.name = project.name
+                        $0.description_p = project.desc
+                    })
+                    project.remoteId = result.id
+                    project.inviteCode = result.inviteCode
                 }
-                submitting = false
+                modelContext.insert(project)
+                dismiss()
+            } catch let error as GRPCStatus {
+                submitError = true
+                errorMsg = error.message ?? String(localized: "Unknown error")
+            } catch {
+                submitError = true
+                errorMsg = error.localizedDescription
             }
         } else {
             modelContext.insert(project)
             if !edit {
                 onCreate?(project)
             }
-            submitting = false
             dismiss()
         }
     }
     
-    func handleDeleteProject() {
-        deleting = true
+    func handleDeleteProject() async {
         if isRemoteProject || project.remoteId != nil {
-            Task {
-                do {
-                    _ = try await API.shared.project.deleteProject(.with {
-                        $0.id = project.remoteId!
-                    })
-                    modelContext.delete(project)
-                    onDelete?()
-                    dismiss()
-                } catch let error as GRPCStatus {
-                    deleteError = true
-                    errorMsg = error.message ?? String(localized: "Unknown error")
-                } catch {
-                    deleteError = true
-                    errorMsg = error.localizedDescription
-                }
-                deleting = false
+            do {
+                _ = try await API.shared.project.deleteProject(.with {
+                    $0.id = project.remoteId!
+                })
+                modelContext.delete(project)
+                onDelete?()
+                dismiss()
+            } catch let error as GRPCStatus {
+                deleteError = true
+                errorMsg = error.message ?? String(localized: "Unknown error")
+            } catch {
+                deleteError = true
+                errorMsg = error.localizedDescription
             }
         } else {
             modelContext.delete(project)
             onDelete?()
-            deleting = false
             dismiss()
         }
     }
