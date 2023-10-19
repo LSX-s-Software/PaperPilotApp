@@ -147,7 +147,7 @@ struct ContentView: View {
                         }
                     }
                     .sheet(isPresented: $isShowingLoginSheet) {
-                        LoginView(viewModel: LoginViewModel(isShowingLoginSheet: $isShowingLoginSheet))
+                        LoginView()
                     }
                 }
             }

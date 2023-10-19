@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var viewModel: LoginViewModel
+    @Environment(\.dismiss) private var dismiss
+    
+    @StateObject private var viewModel = LoginViewModel()
     
     var body: some View {
         NavigationStack {
@@ -48,31 +50,19 @@ struct LoginView: View {
                             .textFieldStyle(
                                 InputTextFieldWithButtonStyle(
                                     title: "Verification Code") {
-                                        Button {
-                                            viewModel.sendVerificationCode()
+                                        AsyncButton(controlSize: .small, disabled: !viewModel.canSendVerification) {
+                                            await viewModel.sendVerificationCode()
                                         } label: {
-                                            Group {
-                                                if viewModel.isSendingVerificationCode {
-                                                    ProgressView()
-                                                        .controlSize(.small)
-                                                } else if viewModel.waitingForTimer {
-                                                    Text("Retry after \(viewModel.secRemaining)s")
-                                                } else {
-                                                    Text("Send")
-                                                }
-                                            }
-                                            .padding(.vertical, 6)
+                                            Text(viewModel.waitingForTimer ? "Retry after \(viewModel.secRemaining)s" : "Send")
+                                                .padding(.vertical, 6)
                                         }
-                                        .disabled(
-                                            !viewModel.canSendVerification
-                                        )
                             })
                     }
                 }
                 .padding(.bottom, 8)
                 HStack {
                     Button(role: .cancel) {
-                        viewModel.isShowingLoginSheet = false
+                        dismiss()
                     } label: {
                         Text("Cancel")
                             .padding(.horizontal, 20)
@@ -81,21 +71,12 @@ struct LoginView: View {
                     .keyboardShortcut(.cancelAction)
                     Spacer()
                         .frame(maxWidth: 40)
-                    Button {
-                        viewModel.submit()
+                    AsyncButton(controlSize: .small) {
+                        await viewModel.submit()
                     } label: {
-                        Group {
-                            if viewModel.isSubmitting {
-                                ProgressView()
-                                    .controlSize(.small)
-                            } else if !viewModel.isRegistering {
-                                Text("Login")
-                            } else {
-                                Text("Register")
-                            }
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 6)
+                        Text(viewModel.isRegistering ? "Register" : "Login")
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 6)
                     }
                     .buttonStyle(.borderedProminent)
                     .keyboardShortcut(.defaultAction)
@@ -151,8 +132,6 @@ struct InputTextFieldWithButtonStyle<Content: View>: TextFieldStyle {
 }
 
 #Preview {
-    LoginView(
-        viewModel: LoginViewModel(isShowingLoginSheet: .constant(true))
-    )
-    .background()
+    LoginView()
+        .background()
 }

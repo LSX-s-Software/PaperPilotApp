@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct AsyncButton: View {
-    let title: LocalizedStringKey
+struct AsyncButton<Content: View>: View {
+    let title: () -> Content
     let role: ButtonRole?
     let controlSize: ControlSize
     let disabled: Bool
@@ -16,17 +16,31 @@ struct AsyncButton: View {
     
     @State private var loading = false
     
-    init(_ title: LocalizedStringKey,
-         role: ButtonRole? = nil,
+    init(role: ButtonRole? = nil,
          controlSize: ControlSize = .mini,
          disabled: Bool = false,
-         action: @escaping () async -> Void) {
-        self.title = title
+         action: @escaping () async -> Void,
+         @ViewBuilder label: @escaping () -> Content) {
+        self.title = label
         self.role = role
         self.controlSize = controlSize
         self.disabled = disabled
         self.action = action
-        self.loading = loading
+    }
+    
+    init(_ title: LocalizedStringKey,
+         role: ButtonRole? = nil,
+         controlSize: ControlSize = .mini,
+         disabled: Bool = false,
+         action: @escaping () async -> Void) where Content == Text {
+        self.init(
+            role: role,
+            controlSize: controlSize,
+            disabled: disabled,
+            action: action
+        ) {
+            Text(title)
+        }
     }
     
     var body: some View {
@@ -37,7 +51,7 @@ struct AsyncButton: View {
                 loading = false
             }
         } label: {
-            Text(title)
+            title()
                 .opacity(loading ? 0 : 1)
         }
         .overlay {
