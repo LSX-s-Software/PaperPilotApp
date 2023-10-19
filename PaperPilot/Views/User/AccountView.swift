@@ -9,8 +9,10 @@ import SwiftUI
 
 struct AccountView: View {
     @Environment(\.dismiss) var dismiss
-    
+
     @State var isShowingLogoutConfirmation = false
+    @State var isEditing = false
+
     @AppStorage(AppStorageKey.User.phone.rawValue)
     private var phone: String?
     @AppStorage(AppStorageKey.User.accessToken.rawValue)
@@ -39,9 +41,9 @@ struct AccountView: View {
                             .font(.headline)
                         Text(phone ?? "Logged Out")
                     }
-                    
+
                     Spacer(minLength: 50)
-                    
+
                     Button("Logout") {
                         isShowingLogoutConfirmation.toggle()
                     }
@@ -56,6 +58,17 @@ struct AccountView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
                         dismiss()
+                    }
+                }
+                ToolbarItem {
+                    if !isEditing {
+                        Button("Edit") {
+                            isEditing = true
+                        }
+                    } else {
+                        Button("Cancel") {
+                            isEditing = false
+                        }
                     }
                 }
             }

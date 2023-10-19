@@ -127,15 +127,12 @@ struct ContentView: View {
             ToolbarItem {
                 if let username = username {
                     Button {
-                        isShowingAccountView.toggle()
+                        isShowingLoginSheet.toggle()
                     } label: {
                         HStack {
                             AvatarView(size: 20)
                             Text(username)
                         }
-                    }
-                    .sheet(isPresented: $isShowingAccountView) {
-                        AccountView()
                     }
                 } else {
                     Button {
@@ -146,11 +143,11 @@ struct ContentView: View {
                             Text("Log In")
                         }
                     }
-                    .sheet(isPresented: $isShowingLoginSheet) {
-                        LoginView()
-                    }
                 }
             }
+        }
+        .sheet(isPresented: $isShowingLoginSheet) {
+            LoginView()
         }
     }
 }

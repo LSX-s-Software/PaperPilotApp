@@ -784,6 +784,26 @@
         }
       }
     },
+    "New Password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新密码"
+          }
+        }
+      }
+    },
+    "New Phone Numer" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新手机号"
+          }
+        }
+      }
+    },
     "New Tag" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -791,6 +811,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新标签"
+          }
+        }
+      }
+    },
+    "New Username" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新用户名"
           }
         }
       }
@@ -842,6 +872,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "笔记"
+          }
+        }
+      }
+    },
+    "Ok" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好"
+          }
+        }
+      }
+    },
+    "Old Password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧密码"
+          }
+        }
+      }
+    },
+    "Only required when changing the phone number." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只在更改手机号时需要填写。"
           }
         }
       }
@@ -976,6 +1036,16 @@
     },
     "Phone" : {
       "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手机号"
+          }
+        }
+      }
+    },
+    "Phone Number" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {

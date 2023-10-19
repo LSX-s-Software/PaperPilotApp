@@ -11,12 +11,20 @@ import SwiftUI
 import SwiftData
 
 class LoginViewModel: ObservableObject {
-    @Published var phone: String = ""
+    @Published var phoneInput: String = ""
     @Published var password: String = ""
-    @Published var username: String = ""
+    @Published var usernameInput: String = ""
     @Published var verificationCode: String = ""
 
     @Published var isRegistering = true
+    var hasLoggedIn: Bool {
+        accessToken != nil
+    }
+    @Published var isEditing = false
+
+    var newPrefix: String {
+        isEditing ? "New " : ""
+    }
 
     @Published var hasFailed = false
     @Published var errorMsg = ""
@@ -26,7 +34,7 @@ class LoginViewModel: ObservableObject {
         secRemaining > 0
     }
     var canSendVerification: Bool {
-        !phone.isEmpty && !waitingForTimer
+        !phoneInput.isEmpty && !waitingForTimer
     }
 
     @AppStorage(AppStorageKey.User.accessToken.rawValue)
@@ -34,16 +42,16 @@ class LoginViewModel: ObservableObject {
     @AppStorage(AppStorageKey.User.id.rawValue)
     private var id: String?
     @AppStorage(AppStorageKey.User.phone.rawValue)
-    private var phoneStored: String?
+    var phoneStored: String?
     @AppStorage(AppStorageKey.User.avatar.rawValue)
     private var avatar: String?
     @AppStorage(AppStorageKey.User.username.rawValue)
-    private var usernameStored: String?
+    var usernameStored: String?
 
     func sendVerificationCode() async {
         do {
             let result = try await API.shared.auth.sendSmsCode(.with {
-                $0.phone = phone
+                $0.phone = phoneInput
             })
             print(result)
         } catch let error as GRPCStatus {
@@ -71,14 +79,14 @@ class LoginViewModel: ObservableObject {
             let result: Auth_LoginResponse
             if self.isRegistering {
                 result = try await API.shared.auth.register(.with {
-                    $0.phone = self.phone
+                    $0.phone = self.phoneInput
                     $0.password = self.password
                     $0.code = self.verificationCode
-                    $0.username = self.username
+                    $0.username = self.usernameInput
                 })
             } else {
                 result = try await API.shared.auth.login(.with {
-                    $0.phone = self.phone
+                    $0.phone = self.phoneInput
                     $0.password = self.password
                 })
             }
@@ -87,7 +95,7 @@ class LoginViewModel: ObservableObject {
                 self.id = result.user.id
                 API.shared.setToken(result.access.value)
                 self.avatar = result.user.avatar
-                self.phoneStored = self.phone
+                self.phoneStored = self.phoneInput
                 self.usernameStored = result.user.username
             }
         } catch let error as GRPCStatus {
