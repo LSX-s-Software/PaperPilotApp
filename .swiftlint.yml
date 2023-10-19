@@ -17,6 +17,9 @@ excluded: # 执行 linting 时忽略的路径。 优先级比 `included` 更高�
 force_try:
   severity: warning # 显式
 # 同时有警告和错误等级的规则，可以只设置它的警告等级
-line_length: 130
+line_length:
+  warning: 130
+  ignores_interpolated_strings: true
+  ignores_urls: true
 file_length: 400
 reporter: "xcode" # 报告类型 (xcode, json, csv, checkstyle, codeclimate, junit, html, emoji, sonarqube, markdown, github-actions-logging)

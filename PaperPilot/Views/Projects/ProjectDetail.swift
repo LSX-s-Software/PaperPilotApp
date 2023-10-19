@@ -23,6 +23,8 @@ struct ProjectDetail: View {
     @State private var isShowingEditProjectSheet = false
     @State private var isShowingAddPaperSheet = false
     @State private var isShowingSharePopover = false
+    @AppStorage(AppStorageKey.User.username.rawValue)
+    private var username: String?
     
     var onDelete: (() -> Void)?
     
@@ -110,7 +112,7 @@ struct ProjectDetail: View {
 #endif
         .toolbar {
             ToolbarItemGroup {
-                if project.remoteId != nil {
+                if project.remoteId == nil {
                     Button("Share", systemImage: "square.and.arrow.up") {
                         isShowingSharePopover.toggle()
                     }
@@ -123,21 +125,31 @@ struct ProjectDetail: View {
                             Text("Invite Others")
                                 .font(.title2)
                                 .fontWeight(.medium)
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("Invitation Code")
-                                    .font(.caption)
-                                HStack {
-                                    TextField("Invitation Code", text: .constant(project.inviteCode ?? ""))
-                                        .textFieldStyle(.roundedBorder)
-                                        .disabled(true)
-                                    Button("Copy") {
-                                        if let inviteCode = project.inviteCode {
-                                            setPasteboard(inviteCode)
+                            
+                            Group {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text("Invitation Code")
+                                        .font(.caption)
+                                    HStack {
+                                        TextField("Invitation Code", text: .constant(project.inviteCode ?? ""))
+                                            .textFieldStyle(.roundedBorder)
+                                            .disabled(true)
+                                            .frame(minWidth: 100)
+                                        Button("Copy") {
+                                            if let inviteCode = project.inviteCode {
+                                                setPasteboard(inviteCode)
+                                            }
                                         }
                                     }
-                                    .disabled(project.inviteCode == nil || project.inviteCode!.isEmpty)
                                 }
+                                ShareLink(
+                                    "Send Invitation",
+                                    item: URL(string: "paperpilot://project/\(project.inviteCode ?? "123")")!,
+                                    subject: Text(project.name),
+                                    message: Text("\(username ?? String(localized: "I")) invites you to join the project \"\(project.name)\" on Paper Pilot.")
+                                )
                             }
+                            .disabled(project.inviteCode == nil || project.inviteCode!.isEmpty)
                         }
                         .padding()
                     }

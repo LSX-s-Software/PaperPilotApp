@@ -4,6 +4,22 @@
     "" : {
 
     },
+    "%@ invites you to join the project \"%@\" on Paper Pilot." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ invites you to join the project \"%2$@\" on Paper Pilot."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@邀请你在Paper Pilot加入“%2$@”项目"
+          }
+        }
+      }
+    },
     "Abstract" : {
       "localizations" : {
         "zh-Hans" : {
@@ -530,6 +546,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "高亮颜色"
+          }
+        }
+      }
+    },
+    "I" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我"
           }
         }
       }
@@ -1148,6 +1174,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "发送"
+          }
+        }
+      }
+    },
+    "Send Invitation" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送邀请"
           }
         }
       }
