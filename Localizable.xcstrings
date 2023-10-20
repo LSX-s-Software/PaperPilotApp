@@ -1328,6 +1328,9 @@
         }
       }
     },
+    "Show Inspector" : {
+
+    },
     "Sidebar Content" : {
       "localizations" : {
         "zh-Hans" : {

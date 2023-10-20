@@ -46,7 +46,7 @@
 		F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */; };
 		F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C379082AC44BFF00C88C94 /* PaperInfo.swift */; };
 		F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = F5CF43332ADC1FB6004F1A16 /* WindowManagement */; settings = {ATTRIBUTES = (Required, ); }; };
-		F5CF43402ADC4361004F1A16 /* PaperReaderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF433F2ADC4361004F1A16 /* PaperReaderContent.swift */; };
+		F5CF43402ADC4361004F1A16 /* HSplitViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */; };
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
 		F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */; };
 		F5D8EEED2AD42D5100501B0E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* LoginView.swift */; };
@@ -98,7 +98,7 @@
 		F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		F5C379082AC44BFF00C88C94 /* PaperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperInfo.swift; sourceTree = "<group>"; };
-		F5CF433F2ADC4361004F1A16 /* PaperReaderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperReaderContent.swift; sourceTree = "<group>"; };
+		F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSplitViewLayout.swift; sourceTree = "<group>"; };
 		F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinProjectView.swift; sourceTree = "<group>"; };
 		F5D8EEEC2AD42D5100501B0E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -179,7 +179,6 @@
 				F547D0E52AC56F89006D2216 /* EditableText.swift */,
 				F5C379082AC44BFF00C88C94 /* PaperInfo.swift */,
 				F53D814A2AC1385300865B80 /* PaperReader.swift */,
-				F5CF433F2ADC4361004F1A16 /* PaperReaderContent.swift */,
 				F5FDF8E62AD6D968001D9460 /* PDFKitThumbnailView.swift */,
 				F53D81482AC1369200865B80 /* PDFKitView.swift */,
 				F578D8202AD78ABE00322819 /* PDFOutlineView.swift */,
@@ -213,6 +212,7 @@
 				F53D81452AC038A700865B80 /* TagView.swift */,
 				F59AD1022ACB0CA200DFABCC /* AddTagView.swift */,
 				F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */,
+				F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -424,7 +424,7 @@
 				F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */,
 				F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */,
 				F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */,
-				F5CF43402ADC4361004F1A16 /* PaperReaderContent.swift in Sources */,
+				F5CF43402ADC4361004F1A16 /* HSplitViewLayout.swift in Sources */,
 				F5D8EEED2AD42D5100501B0E /* LoginView.swift in Sources */,
 				F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */,
 				F53D81422AC02AF800865B80 /* Paper.swift in Sources */,

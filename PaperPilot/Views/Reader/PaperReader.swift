@@ -28,7 +28,9 @@ struct PaperReader: View {
     
     @AppStorage(AppStorageKey.Reader.sidebarContent.rawValue)
     private var sidebarContent = SidebarContent.info
-    
+    @AppStorage(AppStorageKey.Reader.isShowingInspector.rawValue)
+    private var isShowingInspector = true
+
     @State private var loading = true
     @State private var errorDescription: String?
     @State private var pdf: PDFDocument?
@@ -40,146 +42,151 @@ struct PaperReader: View {
     
     var body: some View {
         NavigationStack {
-            GeometryReader { proxy in
-                HSplitViewLayout {
-                    // MARK: - 左侧内容
-                    Group {
-                        if loading {
-                            ProgressView()
-                        } else if let pdf = pdf {
-                            PDFReader(paper: paper, pdf: pdf)
-                        } else {
-                            VStack(spacing: 6) {
-                                Image(
-                                    systemName: downloadVM.downloading ?
-                                    "arrow.down.circle.fill" : "exclamationmark.triangle.fill"
-                                )
-                                .symbolRenderingMode(.hierarchical)
-                                .foregroundStyle(.red)
-                                .font(.title)
-                                if paper.file == nil {
-                                    Text("This paper has no PDF file attached.")
-                                        .font(.title)
-                                        .foregroundStyle(.secondary)
-                                    Button("Add PDF File") {
-                                        isImporting.toggle()
-                                    }
-                                    .fileImporter(
-                                        isPresented: $isImporting,
-                                        allowedContentTypes: [.pdf],
-                                        onCompletion: handleImportFile
-                                    )
-                                    .fileDialogMessage("Select a PDF file to import")
-                                    .fileDialogConfirmationLabel("Import")
-                                } else if downloadVM.downloading {
-                                    Text("Downloading PDF...")
-                                        .font(.title)
-                                    Group {
-                                        if let progress = downloadVM.downloadProgress {
-                                            ProgressView(value: progress.fractionCompleted)
-                                        } else {
-                                            ProgressView()
-                                        }
-                                    }
-                                    .progressViewStyle(.linear)
-                                    .padding(.horizontal)
-                                    .frame(maxWidth: 350)
-                                } else {
-                                    Text(errorDescription ?? String(localized: "Unknown error"))
-                                        .font(.title)
-                                        .foregroundStyle(.secondary)
-                                        .padding(.horizontal)
-                                }
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } right: {
-                    // MARK: - 右侧内容
-                    VStack(alignment: .leading) {
-                        VStack(alignment: .leading) {
-                            Group {
-                                Text(paper.title)
+            // MARK: - 左侧内容
+            HStack {
+                Group {
+                    if loading {
+                        ProgressView()
+                    } else if let pdf = pdf {
+                        PDFReader(paper: paper, pdf: pdf)
+                    } else {
+                        VStack(spacing: 6) {
+                            Image(
+                                systemName: downloadVM.downloading ?
+                                "arrow.down.circle.fill" : "exclamationmark.triangle.fill"
+                            )
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundStyle(.red)
+                            .font(.title)
+                            if paper.file == nil {
+                                Text("This paper has no PDF file attached.")
                                     .font(.title)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .overlay(alignment: .trailing) {
-                                        if isShowingEditButton == .title {
-                                            Button("Edit", systemImage: "pencil") {
-                                                editing = .title
-                                            }
-                                            .labelStyle(.iconOnly)
-                                        }
-                                    }
-                                    .onHover { hover in
-                                        isShowingEditButton = hover ? .title : .none
-                                    }
-                                    .popover(
-                                        isPresented: Binding { editing == .title } set: { _ in editing = .none },
-                                        arrowEdge: .bottom
-                                    ) {
-                                        TextField("Enter title", text: $paper.title)
-                                            .padding()
-                                            .onSubmit {
-                                                editing = .none
-                                            }
-                                    }
-                                Text(paper.formattedAuthors)
                                     .foregroundStyle(.secondary)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .overlay(alignment: .trailing) {
-                                        if isShowingEditButton == .author {
-                                            Button("Edit", systemImage: "pencil") {
-                                                editing = .author
-                                            }
-                                            .labelStyle(.iconOnly)
-                                        }
-                                    }
-                                    .onHover { hover in
-                                        isShowingEditButton = hover ? .author : .none
-                                    }
-                                    .popover(
-                                        isPresented: Binding { editing == .author } set: { _ in editing = .none },
-                                        arrowEdge: .bottom
-                                    ) {
-                                        List {
-                                            ForEach(paper.authors, id: \.self) { author in
-                                                Text(author)
-                                            }
-                                            .onDelete { paper.authors.remove(atOffsets: $0) }
-                                            Section("Add author") {
-                                                TextField("New author", text: $newAuthor)
-                                                Button("Add") {
-                                                    paper.authors.append(newAuthor)
-                                                    newAuthor = ""
-                                                }
-                                                .keyboardShortcut(.defaultAction)
-                                            }
-                                        }
-                                    }
-                            }
-                            .multilineTextAlignment(.leading)
-                            
-                            Picker("Sidebar Content", selection: $sidebarContent) {
-                                ForEach(SidebarContent.allCases) { content in
-                                    Text(LocalizedStringKey(content.rawValue)).tag(content)
+                                Button("Add PDF File") {
+                                    isImporting.toggle()
                                 }
+                                .fileImporter(
+                                    isPresented: $isImporting,
+                                    allowedContentTypes: [.pdf],
+                                    onCompletion: handleImportFile
+                                )
+                                .fileDialogMessage("Select a PDF file to import")
+                                .fileDialogConfirmationLabel("Import")
+                            } else if downloadVM.downloading {
+                                Text("Downloading PDF...")
+                                    .font(.title)
+                                Group {
+                                    if let progress = downloadVM.downloadProgress {
+                                        ProgressView(value: progress.fractionCompleted)
+                                    } else {
+                                        ProgressView()
+                                    }
+                                }
+                                .progressViewStyle(.linear)
+                                .padding(.horizontal)
+                                .frame(maxWidth: 350)
+                            } else {
+                                Text(errorDescription ?? String(localized: "Unknown error"))
+                                    .font(.title)
+                                    .foregroundStyle(.secondary)
+                                    .padding(.horizontal)
                             }
-                            .pickerStyle(.segmented)
-                            .labelsHidden()
-                        }
-                        .padding([.horizontal, .top])
-                        
-                        if sidebarContent == .info {
-                            PaperInfo(paper: paper)
-                        } else {
-                            TextEditor(text: $paper.note)
                         }
                     }
-                    .frame(minWidth: 100, idealWidth: proxy.size.width / 4, maxWidth: proxy.size.width / 3)
                 }
-                .onAppear {
-                    loadPDF()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            // MARK: - 右侧内容
+            .inspector(isPresented: $isShowingInspector) {
+                VStack(alignment: .leading) {
+                    VStack(alignment: .leading) {
+                        Group {
+                            Text(paper.title)
+                                .font(.title)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .overlay(alignment: .trailing) {
+                                    if isShowingEditButton == .title {
+                                        Button("Edit", systemImage: "pencil") {
+                                            editing = .title
+                                        }
+                                        .labelStyle(.iconOnly)
+                                    }
+                                }
+                                .onHover { hover in
+                                    isShowingEditButton = hover ? .title : .none
+                                }
+                                .popover(
+                                    isPresented: Binding { editing == .title } set: { _ in editing = .none },
+                                    arrowEdge: .bottom
+                                ) {
+                                    TextField("Enter title", text: $paper.title)
+                                        .padding()
+                                        .onSubmit {
+                                            editing = .none
+                                        }
+                                }
+                            Text(paper.formattedAuthors)
+                                .foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .overlay(alignment: .trailing) {
+                                    if isShowingEditButton == .author {
+                                        Button("Edit", systemImage: "pencil") {
+                                            editing = .author
+                                        }
+                                        .labelStyle(.iconOnly)
+                                    }
+                                }
+                                .onHover { hover in
+                                    isShowingEditButton = hover ? .author : .none
+                                }
+                                .popover(
+                                    isPresented: Binding { editing == .author } set: { _ in editing = .none },
+                                    arrowEdge: .bottom
+                                ) {
+                                    List {
+                                        ForEach(paper.authors, id: \.self) { author in
+                                            Text(author)
+                                        }
+                                        .onDelete { paper.authors.remove(atOffsets: $0) }
+                                        Section("Add author") {
+                                            TextField("New author", text: $newAuthor)
+                                            Button("Add") {
+                                                paper.authors.append(newAuthor)
+                                                newAuthor = ""
+                                            }
+                                            .keyboardShortcut(.defaultAction)
+                                        }
+                                    }
+                                }
+                        }
+                        .multilineTextAlignment(.leading)
+
+                        Picker("Sidebar Content", selection: $sidebarContent) {
+                            ForEach(SidebarContent.allCases) { content in
+                                Text(LocalizedStringKey(content.rawValue)).tag(content)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .labelsHidden()
+                    }
+                    .padding([.horizontal, .top])
+
+                    if sidebarContent == .info {
+                        PaperInfo(paper: paper)
+                    } else {
+                        TextEditor(text: $paper.note)
+                    }
                 }
+                .inspectorColumnWidth(ideal: 200)
+                .toolbar {
+                    Spacer()
+                    Button("Show Inspector", systemImage: "sidebar.right") {
+                        isShowingInspector.toggle()
+                    }
+                }
+            }
+            .onAppear {
+                loadPDF()
             }
         }
     }
@@ -268,7 +275,7 @@ struct PaperReader: View {
 }
 
 #Preview {
-    PaperReader(paper: ModelData.paper2)
+    PaperReader(paper: ModelData.paper1)
 #if os(macOS)
         .frame(width: 900, height: 600)
 #endif

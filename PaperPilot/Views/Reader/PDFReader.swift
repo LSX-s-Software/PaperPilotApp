@@ -202,6 +202,7 @@ struct PDFReader: View {
             // MARK: - 阅读器
             PDFKitView(pdf: pdf, pdfView: $pdfView)
                 .searchable(text: $findText, isPresented: $searchBarPresented, prompt: Text("Find in PDF"))
+                .navigationDocument(pdf.documentURL!)
                 .onChange(of: findText, performFind)
                 .onSubmit(of: .search) {
                     if findResult.isEmpty {

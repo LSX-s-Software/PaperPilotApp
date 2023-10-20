@@ -1,5 +1,5 @@
 //
-//  PaperReader.swift
+//  HSplitViewLayout.swift
 //  PaperPilot
 //
 //  Created by 林思行 on 2023/9/25.

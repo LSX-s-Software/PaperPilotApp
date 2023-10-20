@@ -74,6 +74,8 @@ struct PaperPilotApp: App {
         .modelContainer(modelContainer)
         .environmentObject(appState)
         .commands {
+            InspectorCommands()
+
             CommandGroup(replacing: .newItem, addition: { })
             
             CommandGroup(after: .textEditing) {
