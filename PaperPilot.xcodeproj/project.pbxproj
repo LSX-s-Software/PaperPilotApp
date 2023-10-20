@@ -36,6 +36,7 @@
 		F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */ = {isa = PBXBuildFile; productRef = F547D0DC2AC52A6F006D2216 /* SwiftUIFlow */; };
 		F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F547D0E52AC56F89006D2216 /* EditableText.swift */; };
 		F578D8212AD78ABE00322819 /* PDFOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F578D8202AD78ABE00322819 /* PDFOutlineView.swift */; };
+		F58DF0232AE21963001D4D68 /* AppURLScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0222AE21963001D4D68 /* AppURLScheme.swift */; };
 		F59367F72AE193CE009230AF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59367F62AE193CE009230AF /* AppState.swift */; };
 		F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59AD1022ACB0CA200DFABCC /* AddTagView.swift */; };
 		F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */; };
@@ -91,6 +92,7 @@
 		F547D0E52AC56F89006D2216 /* EditableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableText.swift; sourceTree = "<group>"; };
 		F578D8202AD78ABE00322819 /* PDFOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFOutlineView.swift; sourceTree = "<group>"; };
 		F578D8242AD7B1F800322819 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F58DF0222AE21963001D4D68 /* AppURLScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppURLScheme.swift; sourceTree = "<group>"; };
 		F59367F62AE193CE009230AF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		F59AD1022ACB0CA200DFABCC /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
 		F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 		F5D8EEFB2AD4F60B00501B0E /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				F58DF0222AE21963001D4D68 /* AppURLScheme.swift */,
 				F5D8EF002AD4F62E00501B0E /* AppStorageKey.swift */,
 				F51710102ADD78AC002E2D79 /* HighlighterColor.swift */,
 			);
@@ -414,6 +417,7 @@
 				F5145E852AD59172001860E0 /* NewPaperInfoView.swift in Sources */,
 				F578D8212AD78ABE00322819 /* PDFOutlineView.swift in Sources */,
 				F5FDF8E32AD6CA08001D9460 /* PDFReader.swift in Sources */,
+				F58DF0232AE21963001D4D68 /* AppURLScheme.swift in Sources */,
 				F5145E7B2AD57863001860E0 /* AddPaperView.swift in Sources */,
 				F53EA7102ADFCEC300B97EB0 /* URL.swift in Sources */,
 				F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */,

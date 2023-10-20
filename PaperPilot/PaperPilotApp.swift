@@ -40,9 +40,9 @@ struct PaperPilotApp: App {
     }
     
     var body: some Scene {
-        WindowGroup("Paper Pilot", id: AppWindow.main.id) {
+        Window("Paper Pilot", id: AppWindow.main.id) {
             ContentView()
-                .frame(minWidth: 600, minHeight: 400)
+                .frame(minWidth: 600, minHeight: 300)
                 .sheet(isPresented: $appState.isShowingJoinProjectView) {
                     if let url = appState.incomingURL {
                         JoinProjectView(invitationURL: url)
@@ -51,24 +51,11 @@ struct PaperPilotApp: App {
                             .padding()
                     }
                 }
-                .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { userActivity in
-                    guard let url = userActivity.webpageURL else { return }
-                    appState.incomingURL = url
-                    if url.scheme == "paperpilot" && url.host == "project" {
-                        appState.isShowingJoinProjectView = true
-                    }
-                }
-                .onOpenURL { url in
-                    appState.incomingURL = url
-                    if url.scheme == "paperpilot" && url.host == "project" {
-                        appState.isShowingJoinProjectView = true
-                    }
-                }
+                .onOpenURL(perform: appState.handleIncomingURL(url:))
         }
 #if os(macOS)
         .defaultSize(width: 1000, height: 600)
 #endif
-        .handlesExternalEvents(matching: ["*"])
         .modelContainer(modelContainer)
         .commands {
             SidebarCommands()

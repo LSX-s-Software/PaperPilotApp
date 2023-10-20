@@ -21,7 +21,7 @@ struct JoinProjectView: View {
     init(invitationURL: URL) {
         if let components = URLComponents(url: invitationURL, resolvingAgainstBaseURL: false),
            let queryItems = components.queryItems,
-           let code = queryItems.first(where: { $0.name == "invitation" })?.value {
+           let code = queryItems.first(where: { $0.name == AppURLScheme.QueryKeys.Project.invitation.rawValue })?.value {
             self._invitationCode = State(initialValue: code)
         }
     }
