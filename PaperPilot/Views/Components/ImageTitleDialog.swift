@@ -26,7 +26,7 @@ struct ImageTitleDialog<Content: View>: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Image(systemName: systemImage)
                 .symbolRenderingMode(.hierarchical)
                 .foregroundStyle(Color.accentColor)
@@ -36,20 +36,20 @@ struct ImageTitleDialog<Content: View>: View {
             Text(title)
                 .font(.title)
                 .fontWeight(.medium)
-                .padding(.bottom)
             
             if let subtitle = subtitle {
                 Text(subtitle)
                     .font(.title2)
                     .foregroundStyle(.secondary)
-                    .padding(.bottom)
+                    .padding(.top, 6)
             }
             
             content()
-                .frame(maxHeight: .infinity)
+                .padding(.top)
         }
         .padding()
         .frame(minWidth: 350)
+        .fixedSize(horizontal: false, vertical: true)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel", role: .cancel) {
@@ -58,4 +58,29 @@ struct ImageTitleDialog<Content: View>: View {
             }
         }
     }
+}
+
+#Preview {
+    ImageTitleDialog(
+        "Create New Project",
+        subtitle: "Create New Project",
+        systemImage: "folder.fill.badge.plus"
+    ) {
+        TextField("Project Name", text: .constant(""))
+            .textFieldStyle(.roundedBorder)
+    }
+    .fixedSize()
+    .previewDisplayName("Title and Subtitle")
+}
+
+#Preview {
+    ImageTitleDialog(
+        "Create New Project",
+        systemImage: "folder.fill.badge.plus"
+    ) {
+        TextField("Project Name", text: .constant(""))
+            .textFieldStyle(.roundedBorder)
+    }
+    .fixedSize()
+    .previewDisplayName("Title only")
 }

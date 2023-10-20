@@ -32,12 +32,23 @@ struct JoinProjectView: View {
             subtitle: "Use invitation code to join project",
             systemImage: "folder.fill.badge.person.crop"
         ) {
-            TextField("Invitation Code", text: $invitationCode)
-                .textFieldStyle(.roundedBorder)
-            Text("You can get invitation code from any member of the project.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading) {
+                HStack {
+                    TextField("Invitation Code", text: $invitationCode)
+                        .textFieldStyle(.roundedBorder)
+                        .lineLimit(1)
+                    PasteButton(payloadType: String.self) { payload in
+                        if let code = payload.first {
+                            invitationCode = code
+                        }
+                    }
+                }
+
+                Text("You can get invitation code from any member of the project.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .frame(maxHeight: .infinity, alignment: .top)
+            }
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {

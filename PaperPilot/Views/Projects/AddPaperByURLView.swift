@@ -28,19 +28,22 @@ struct AddPaperByURLView: View {
             .labelsHidden()
             .pickerStyle(.segmented)
             
-            TextField("Please enter \(isDoi ? "DOI" : "URL")", text: $url)
-                .textFieldStyle(.roundedBorder)
-                
-            if !isDoi {
-                Text("You can also search paper using Sci-Hub supported format.")
+            VStack(alignment: .leading) {
+                TextField("Please enter \(isDoi ? "DOI" : "URL")", text: $url)
+                    .textFieldStyle(.roundedBorder)
+
+                Text(isDoi
+                     ? "DOI's format looks like \"10.xxxx/yyyy\""
+                     : "You can also search paper using Sci-Hub supported format.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+                    .frame(height: 20, alignment: .top)
             }
         }
         .toolbar {
             if !shouldGoNext {
                 ToolbarItem(placement: .confirmationAction) {
-                    AsyncButton("Resolve", disabled: url.isEmpty) {
+                    AsyncButton("Resolve", disabled: url.isEmpty || isDoi && !url.hasPrefix("10.")) {
                         await handleResolvePaper()
                     }
                     .keyboardShortcut(.defaultAction)

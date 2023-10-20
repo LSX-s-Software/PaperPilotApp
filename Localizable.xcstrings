@@ -347,6 +347,16 @@
         }
       }
     },
+    "DOI's format looks like \"10.xxxx/yyyy\"" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DOI的格式形如“10.xxxx/yyyy”"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "zh-Hans" : {
