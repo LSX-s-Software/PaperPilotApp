@@ -233,15 +233,13 @@ struct PDFReader: View {
         .toolbar {
             // MARK: 目录
             ToolbarItem(placement: .navigation) {
-                Menu {
+                Menu("Table of Contents", systemImage: "sidebar.squares.left") {
                     Picker("Table of Contents", selection: $tocContent) {
                         ForEach(TOCContentType.allCases) { type in
                             Text(LocalizedStringKey(type.rawValue)).tag(type)
                         }
                     }
                     .pickerStyle(.inline)
-                } label: {
-                    Label("Table of Contents", systemImage: "sidebar.squares.left")
                 }
             }
             // MARK: 搜索选项

@@ -107,8 +107,8 @@ struct LoginView: View {
                                 Text("Cancel")
                             }
                         }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 6)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 6)
                     }
                     .keyboardShortcut(.cancelAction)
 

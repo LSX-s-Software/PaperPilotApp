@@ -104,11 +104,10 @@ struct PaperReader: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .overlay(alignment: .trailing) {
                                         if isShowingEditButton == .title {
-                                            Button {
+                                            Button("Edit", systemImage: "pencil") {
                                                 editing = .title
-                                            } label: {
-                                                Image(systemName: "pencil")
                                             }
+                                            .labelStyle(.iconOnly)
                                         }
                                     }
                                     .onHover { hover in
@@ -129,11 +128,10 @@ struct PaperReader: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .overlay(alignment: .trailing) {
                                         if isShowingEditButton == .author {
-                                            Button {
+                                            Button("Edit", systemImage: "pencil") {
                                                 editing = .author
-                                            } label: {
-                                                Image(systemName: "pencil")
                                             }
+                                            .labelStyle(.iconOnly)
                                         }
                                     }
                                     .onHover { hover in

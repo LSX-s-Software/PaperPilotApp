@@ -135,14 +135,10 @@ struct ContentView: View {
                         }
                     }
                 } else {
-                    Button {
+                    Button("Log In", systemImage: "person.crop.circle") {
                         isShowingLoginSheet.toggle()
-                    } label: {
-                        HStack {
-                            Image(systemName: "person.crop.circle")
-                            Text("Log In")
-                        }
                     }
+                    .labelStyle(.titleAndIcon)
                 }
             }
         }
