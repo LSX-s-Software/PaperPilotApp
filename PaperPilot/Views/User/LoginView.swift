@@ -80,7 +80,7 @@ struct LoginView: View {
                                 .textFieldStyle(
                                     InputTextFieldWithButtonStyle(
                                         title: "Verification Code") {
-                                            AsyncButton(controlSize: .small, disabled: !viewModel.canSendVerification) {
+                                            AsyncButton(disabled: !viewModel.canSendVerification) {
                                                 await viewModel.sendVerificationCode()
                                             } label: {
                                                 Text(viewModel.waitingForTimer ? "Retry after \(viewModel.secRemaining)s" : "Send")
@@ -97,18 +97,8 @@ struct LoginView: View {
                     .padding(.bottom, 8)
                 }
                 HStack {
-                    Button(role: .cancel) {
+                    Button(viewModel.hasLoggedIn && !viewModel.isEditing ? "OK" : "Cancel", role: .cancel) {
                         dismiss()
-                    } label: {
-                        Group {
-                            if viewModel.hasLoggedIn && !viewModel.isEditing {
-                                Text("Ok")
-                            } else {
-                                Text("Cancel")
-                            }
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 6)
                     }
                     .keyboardShortcut(.cancelAction)
 
@@ -116,26 +106,19 @@ struct LoginView: View {
                         .frame(maxWidth: 40)
 
                     if !viewModel.hasLoggedIn || viewModel.isEditing {
-                        AsyncButton(controlSize: .small) {
+                        AsyncButton(viewModel.isRegistering ? "Register" : "Login") {
                             await viewModel.submit()
-                        } label: {
-                            Text(viewModel.isRegistering ? "Register" : "Login")
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 6)
                         }
                         .buttonStyle(.borderedProminent)
                         .keyboardShortcut(.defaultAction)
                     } else {
-                        Button {
+                        Button("Edit") {
                             viewModel.isEditing = true
-                        } label: {
-                            Text("Edit")
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 6)
                         }
                         .buttonStyle(.borderedProminent)
                     }
                 }
+                .controlSize(.large)
                 .padding(.horizontal)
             }
             .padding()

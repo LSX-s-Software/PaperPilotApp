@@ -886,7 +886,7 @@
         }
       }
     },
-    "Ok" : {
+    "OK" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -1329,7 +1329,14 @@
       }
     },
     "Show Inspector" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示详细信息"
+          }
+        }
+      }
     },
     "Sidebar Content" : {
       "localizations" : {
