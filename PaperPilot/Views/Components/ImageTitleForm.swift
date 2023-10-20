@@ -1,20 +1,20 @@
 //
-//  ImageTitleDialog.swift
+//  ImageTitleForm.swift
 //  PaperPilot
 //
-//  Created by 林思行 on 2023/10/10.
+//  Created by 林思行 on 2023/10/20.
 //
 
 import SwiftUI
 
-struct ImageTitleDialog<Content: View>: View {
+struct ImageTitleForm<Content: View>: View {
     @Environment(\.dismiss) private var dismiss
-    
+
     var title: LocalizedStringKey
     var subtitle: LocalizedStringKey?
     var systemImage: String
     var content: () -> Content
-    
+
     init(_ title: LocalizedStringKey,
          subtitle: LocalizedStringKey? = nil,
          systemImage: String,
@@ -24,17 +24,31 @@ struct ImageTitleDialog<Content: View>: View {
         self.systemImage = systemImage
         self.content = content
     }
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            ImageTitle(title, subtitle: subtitle, systemImage: systemImage)
 
-            content()
-                .padding(.top)
+    var body: some View {
+        Group {
+#if os(macOS)
+            VStack(spacing: 0) {
+                ImageTitle(title, subtitle: subtitle, systemImage: systemImage)
+
+                Form {
+                    content()
+                }
+                .formStyle(.grouped)
+            }
+            .frame(idealWidth: 350)
+#else
+            Form {
+                VStack(spacing: 0) {
+                    ImageTitle(title, subtitle: subtitle, systemImage: systemImage)
+                }
+                .frame(maxWidth: .infinity)
+
+                content()
+            }
+            .frame(minWidth: 350)
+#endif
         }
-        .padding()
-        .frame(minWidth: 350)
-        .fixedSize(horizontal: false, vertical: true)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel", role: .cancel) {
@@ -46,25 +60,23 @@ struct ImageTitleDialog<Content: View>: View {
 }
 
 #Preview {
-    ImageTitleDialog(
+    ImageTitleForm(
         "Create New Project",
         subtitle: "Create New Project",
         systemImage: "folder.fill.badge.plus"
     ) {
         TextField("Project Name", text: .constant(""))
-            .textFieldStyle(.roundedBorder)
     }
     .fixedSize()
     .previewDisplayName("Title and Subtitle")
 }
 
 #Preview {
-    ImageTitleDialog(
+    ImageTitleForm(
         "Create New Project",
         systemImage: "folder.fill.badge.plus"
     ) {
         TextField("Project Name", text: .constant(""))
-            .textFieldStyle(.roundedBorder)
     }
     .fixedSize()
     .previewDisplayName("Title only")

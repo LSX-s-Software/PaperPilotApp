@@ -26,39 +26,31 @@ struct ProjectCreateEditView: View {
     
     var body: some View {
         NavigationStack {
-            ImageTitleDialog(
+            ImageTitleForm(
                 edit ? "Edit Project" : "Create New Project",
                 systemImage: "folder.fill.badge.\(edit ? "gearshape" : "plus")"
             ) {
-                Form {
+                    TextField("Project Name", text: $project.name)
+
                     if !edit {
-                        Section("Project Type") {
-                            Picker("Project Type", selection: $isRemoteProject) {
-                                Text("Local").tag(false)
-                                Text("Remote").tag(true)
-                            }
-                            .pickerStyle(.segmented)
-                            .labelsHidden()
+                        Picker("Project Type", selection: $isRemoteProject) {
+                            Text("Local").tag(false)
+                            Text("Remote").tag(true)
                         }
+                        .pickerStyle(.segmented)
                     }
-                    
-                    Section("Project Name") {
-                        TextField("Project Name", text: $project.name)
-                            .labelsHidden()
-                    }
-                    
+
                     Section("Project Description") {
                         TextEditor(text: $project.desc)
                             .font(.body)
                             .frame(minHeight: 100)
                     }
-                }
-                .alert(edit ? "Failed to edit project" : "Failed to create project", isPresented: $submitError) {} message: {
-                    Text(errorMsg)
-                }
-                .alert("Failed to delete project", isPresented: $deleteError) {} message: {
-                    Text(errorMsg)
-                }
+            }
+            .alert(edit ? "Failed to edit project" : "Failed to create project", isPresented: $submitError) {} message: {
+                Text(errorMsg)
+            }
+            .alert("Failed to delete project", isPresented: $deleteError) {} message: {
+                Text(errorMsg)
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {

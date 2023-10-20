@@ -40,6 +40,7 @@ struct PaperPilotApp: App {
     }
     
     var body: some Scene {
+#if os(macOS)
         Window("Paper Pilot", id: AppWindow.main.id) {
             ContentView()
                 .frame(minWidth: 600, minHeight: 300)
@@ -53,13 +54,27 @@ struct PaperPilotApp: App {
                 }
                 .onOpenURL(perform: appState.handleIncomingURL(url:))
         }
-#if os(macOS)
         .defaultSize(width: 1000, height: 600)
-#endif
         .modelContainer(modelContainer)
         .commands {
             SidebarCommands()
         }
+#else
+        WindowGroup("Paper Pilot", id: AppWindow.main.id) {
+            ContentView()
+                .frame(minWidth: 600, minHeight: 300)
+                .sheet(isPresented: $appState.isShowingJoinProjectView) {
+                    if let url = appState.incomingURL {
+                        JoinProjectView(invitationURL: url)
+                    } else {
+                        ProgressView()
+                            .padding()
+                    }
+                }
+                .onOpenURL(perform: appState.handleIncomingURL(url:))
+        }
+        .modelContainer(modelContainer)
+#endif
         
         WindowGroup("Paper Reader", id: AppWindow.reader.id, for: Paper.self) { $paper in
             PaperReader(paper: paper ?? Paper(title: "Loading"))
