@@ -468,6 +468,9 @@
         }
       }
     },
+    "Error" : {
+
+    },
     "Failed to save PDF" : {
       "localizations" : {
         "zh-Hans" : {

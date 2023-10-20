@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		272423D32AD677F9001748AC /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272423D22AD677F9001748AC /* API.swift */; };
+		27428DE12AE2F86C00BBACFB /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */; };
 		279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */; };
 		279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */; };
 		279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2D002AC8276600FEA9D8 /* protoc-gen-swift */; };
@@ -68,6 +69,7 @@
 /* Begin PBXFileReference section */
 		272423D22AD677F9001748AC /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		27293A652AD2CE2500A98E13 /* team.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = team.xcconfig; sourceTree = "<group>"; };
+		27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
 		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 		F5D2BC562AE124A2008DCDE6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */,
 				F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */,
 				F5145E822AD58332001860E0 /* ImageTitleDialog.swift */,
 				F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */,
@@ -426,6 +429,7 @@
 				F58DF0232AE21963001D4D68 /* AppURLScheme.swift in Sources */,
 				F5145E7B2AD57863001860E0 /* AddPaperView.swift in Sources */,
 				F58DF0292AE2A60C001D4D68 /* ImageTitleForm.swift in Sources */,
+				27428DE12AE2F86C00BBACFB /* CachedAsyncImage.swift in Sources */,
 				F53EA7102ADFCEC300B97EB0 /* URL.swift in Sources */,
 				F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */,
 				F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */,

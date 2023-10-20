@@ -26,16 +26,7 @@ struct AccountView: View {
         NavigationStack {
             VStack {
                 HStack {
-                    AsyncImage(url: URL(string: avatar ?? "")) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                    } placeholder: {
-                        ProgressView()
-                            .controlSize(.small)
-                    }
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
+                    AvatarView()
                     VStack(alignment: .leading) {
                         Text(username ?? "Logged Out")
                             .font(.headline)

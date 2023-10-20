@@ -27,7 +27,7 @@ struct AvatarView: View {
     }
     
     var body: some View {
-        AsyncImage(url: URL(string: avatar ?? "")) { image in
+        CachedAsyncImage(url: avatar.flatMap({URL(string: $0)})) { image in
             image
                 .resizable()
                 .scaledToFit()
