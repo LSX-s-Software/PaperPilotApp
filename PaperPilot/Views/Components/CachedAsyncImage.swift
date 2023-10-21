@@ -19,7 +19,7 @@ enum AsyncImageError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .dataNotImage:
-            "Data downloaded cannot be converted to an NSImage."
+            String(localized: "Data downloaded cannot be converted to an NSImage.")
         }
     }
 }
@@ -87,6 +87,30 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View {
             content: { $0 },
             placeholder: placeholder,
             failure: { _ in Text("Error") }
+        )
+    }
+
+    public init(
+        url: URL?,
+        cache: URLCache = .shared
+    ) where F == Text, I == Image, P == ProgressView<EmptyView, EmptyView> {
+        self.init(
+            url: url,
+            cache: cache,
+            placeholder: { ProgressView() }
+        )
+    }
+
+    public init(
+        url: URL?,
+        @ViewBuilder content: @escaping (Image) -> I,
+        cache: URLCache = .shared
+    ) where F == Text, P == ProgressView<EmptyView, EmptyView> {
+        self.init(
+            url: url,
+            cache: cache,
+            content: content,
+            placeholder: { ProgressView() }
         )
     }
 
