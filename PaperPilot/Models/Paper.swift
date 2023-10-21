@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import SimpleCodable
+import UniformTypeIdentifiers
 
 /// 论文
 @Model
@@ -133,53 +134,67 @@ class Paper: Hashable, Identifiable {
     }
 }
 
-extension Paper: Codable {
-    enum CodingKeys: String, CodingKey {
-        case id
-        case remoteId
-        case title
-        case abstract
-        case keywords
-        case authors
-        case tags
-        case publicationYear
-        case publication
-        case volume
-        case issue
-        case pages
-        case url
-        case doi
-        case file
-        case fileBookmark
-        case createTime
-        case read
-        case note
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(remoteId, forKey: .remoteId)
-        try container.encode(title, forKey: .title)
-        try container.encode(abstract, forKey: .abstract)
-        try container.encode(keywords, forKey: .keywords)
-        try container.encode(authors, forKey: .authors)
-        try container.encode(tags, forKey: .tags)
-        try container.encode(publicationYear, forKey: .publicationYear)
-        try container.encode(publication, forKey: .publication)
-        try container.encode(volume, forKey: .volume)
-        try container.encode(issue, forKey: .issue)
-        try container.encode(pages, forKey: .pages)
-        try container.encode(url, forKey: .url)
-        try container.encode(doi, forKey: .doi)
-        try container.encode(file, forKey: .file)
-        try container.encode(fileBookmark, forKey: .fileBookmark)
-        try container.encode(createTime, forKey: .createTime)
-        try container.encode(read, forKey: .read)
-        try container.encode(note, forKey: .note)
+// MARK: - Paper相关操作
+extension Paper {
+    func upload(to project: Project, parseMetadata: Bool = false) async throws {
+        guard remoteId != nil, let projectId = project.remoteId else { return }
+        // 上传基本信息
+        let result = try await API.shared.paper.createPaper(.with {
+            $0.projectID = projectId
+            $0.paper.title = title
+            if let abstract = abstract { $0.paper.abstract = abstract }
+            $0.paper.keywords = keywords
+            $0.paper.authors = authors
+            $0.paper.tags = tags
+            if let publicationYear = publicationYear,
+               let year = Int32(publicationYear) { $0.paper.publicationDate.year = year }
+            if let publication = publication { $0.paper.publication = publication }
+            if let volume = volume { $0.paper.volume = volume }
+            if let issue = issue { $0.paper.issue = issue }
+            if let pages = pages { $0.paper.pages = pages }
+            if let url = url { $0.paper.url = url }
+            if let doi = doi { $0.paper.doi = doi }
+        })
+        remoteId = result.id
+        createTime = result.createTime.date
+        // 读取本地文件
+        var bookmarkStale = false
+        guard let bookmark = fileBookmark else { return }
+        let fileURL = try URL(resolvingBookmarkData: bookmark,
+                              options: bookmarkResOptions,
+                              relativeTo: nil,
+                              bookmarkDataIsStale: &bookmarkStale)
+        guard fileURL.startAccessingSecurityScopedResource() else {
+            print("Cannot access file.")
+            return
+        }
+        defer { fileURL.stopAccessingSecurityScopedResource() }
+        if bookmarkStale {
+            fileBookmark = try fileURL.bookmarkData(options: bookmarkCreationOptions)
+        }
+        let fileData = try Data(contentsOf: fileURL)
+        // 获取、解析OSS直传Token
+        let token = try await API.shared.paper.uploadAttachment(.with {
+            $0.paperID = result.id
+            $0.fetchMetadata = parseMetadata
+        }).token
+        // 上传文件
+        guard let request = OSSRequest(token: token, fileName: fileURL.lastPathComponent, fileData: fileData) else {
+            throw NetworkingError.responseFormatError
+        }
+        let (data, response) = try await URLSession.shared.data(for: request.urlRequest)
+        if let response = response as? HTTPURLResponse,
+           !(200...299).contains(response.statusCode) {
+            let responseXML = try? XMLDocument(data: data).rootElement()
+            let message = responseXML?.children?.compactMap { $0.name == "Code" || $0.name == "Message" ? $0.stringValue : nil }
+            throw NetworkingError.requestError(code: response.statusCode,
+                                               message: message?.joined(separator: ": ") ?? String(localized: "Unknown error"))
+        }
+        // TODO: 上传书签和标注
     }
 }
 
+// MARK: - Paper扩展构造函数
 extension Paper {
     /// 通过DOI获取论文信息
     /// - Parameter doi: 论文DOI
@@ -204,7 +219,7 @@ extension Paper {
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         guard let message = json?["message"] as? [String: Any],
               let title = message["title"] as? [String] else {
-            throw NetworkingError.dataFormatError
+            throw NetworkingError.responseFormatError
         }
         
         // 解析论文信息
@@ -260,7 +275,7 @@ extension Paper {
         }
         
         guard let htmlString = String(data: data, encoding: .utf8) else {
-            throw NetworkingError.dataFormatError
+            throw NetworkingError.responseFormatError
         }
         guard let doiMatch = htmlString.firstMatch(of: /doi:(.+)&nbsp;/) else {
             throw NetworkingError.notFound
@@ -270,5 +285,52 @@ extension Paper {
         if let pdfMatch = htmlString.firstMatch(of: /<iframe src="(.+)" id="pdf/) {
             self.file = String(pdfMatch.1)
         }
+    }
+}
+
+extension Paper: Codable {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case remoteId
+        case title
+        case abstract
+        case keywords
+        case authors
+        case tags
+        case publicationYear
+        case publication
+        case volume
+        case issue
+        case pages
+        case url
+        case doi
+        case file
+        case fileBookmark
+        case createTime
+        case read
+        case note
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(remoteId, forKey: .remoteId)
+        try container.encode(title, forKey: .title)
+        try container.encode(abstract, forKey: .abstract)
+        try container.encode(keywords, forKey: .keywords)
+        try container.encode(authors, forKey: .authors)
+        try container.encode(tags, forKey: .tags)
+        try container.encode(publicationYear, forKey: .publicationYear)
+        try container.encode(publication, forKey: .publication)
+        try container.encode(volume, forKey: .volume)
+        try container.encode(issue, forKey: .issue)
+        try container.encode(pages, forKey: .pages)
+        try container.encode(url, forKey: .url)
+        try container.encode(doi, forKey: .doi)
+        try container.encode(file, forKey: .file)
+        try container.encode(fileBookmark, forKey: .fileBookmark)
+        try container.encode(createTime, forKey: .createTime)
+        try container.encode(read, forKey: .read)
+        try container.encode(note, forKey: .note)
     }
 }

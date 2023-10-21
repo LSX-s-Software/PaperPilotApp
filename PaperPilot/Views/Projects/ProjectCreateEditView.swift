@@ -44,6 +44,7 @@ struct ProjectCreateEditView: View {
                         TextEditor(text: $project.desc)
                             .font(.body)
                             .frame(minHeight: 100)
+                            .scrollContentBackground(.hidden)
                     }
             }
             .alert(edit ? "Failed to edit project" : "Failed to create project", isPresented: $submitError) {} message: {

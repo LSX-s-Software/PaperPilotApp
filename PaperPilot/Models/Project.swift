@@ -22,13 +22,13 @@ class Project: Hashable, Codable, Identifiable {
     /// 邀请码
     var invitationCode: String?
     // TODO: 成员列表
-//    /// 成员列表
-//    @Relationship(deleteRule: .cascade)
-//    var members: [User]
+    //    /// 成员列表
+    //    @Relationship(deleteRule: .cascade)
+    //    var members: [User]
     /// 论文列表
     @Relationship(deleteRule: .cascade)
     var papers: [Paper]
-    
+
     init(uuid: UUID = UUID(),
          remoteId: String? = nil,
          name: String,
@@ -41,5 +41,23 @@ class Project: Hashable, Codable, Identifiable {
         self.desc = desc
         self.invitationCode = invitationCode
         self.papers = papers
+    }
+}
+
+// MARK: - Project相关操作
+extension Project {
+    func upload() async throws {
+        // 创建项目
+        let result = try await API.shared.project.createProject(.with {
+            $0.name = name
+            $0.description_p = desc
+        })
+        remoteId = result.id
+        invitationCode = result.inviteCode
+        // 迁移论文
+        for paper in papers {
+            try await paper.upload(to: self)
+        }
+        try modelContext?.save()
     }
 }

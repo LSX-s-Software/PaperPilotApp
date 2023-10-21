@@ -256,6 +256,16 @@
         }
       }
     },
+    "Cannot invite others to join local projects." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法邀请他人加入此项目"
+          }
+        }
+      }
+    },
     "Case Sensitive" : {
       "localizations" : {
         "zh-Hans" : {
@@ -293,6 +303,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "确认"
+          }
+        }
+      }
+    },
+    "Convert to remote project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "转换为远程项目"
           }
         }
       }
@@ -337,12 +357,12 @@
         }
       }
     },
-    "Data format error" : {
+    "Data downloaded cannot be converted to an NSImage." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "数据格式错误"
+            "value" : "下载的数据不是图像"
           }
         }
       }
@@ -1384,6 +1404,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "解析"
+          }
+        }
+      }
+    },
+    "Response format error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "响应数据格式错误"
           }
         }
       }

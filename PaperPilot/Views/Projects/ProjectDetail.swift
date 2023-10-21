@@ -11,12 +11,12 @@ import SwiftUIFlow
 struct ProjectDetail: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.modelContext) private var modelContext
-    
+
     private let copiableProperties: [(String, PartialKeyPath)] = [("Title", \Paper.title),
                                                                   ("Abstract", \Paper.abstract),
                                                                   ("URL", \Paper.url),
                                                                   ("DOI", \Paper.doi)]
-    
+
     @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime, order: .reverse)]
@@ -31,7 +31,7 @@ struct ProjectDetail: View {
     }
 
     var onDelete: (() -> Void)?
-    
+
     var body: some View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
             TableColumn("Title", value: \.title)
@@ -116,20 +116,20 @@ struct ProjectDetail: View {
 #endif
         .toolbar {
             ToolbarItemGroup {
-                if project.remoteId == nil {
-                    Button("Share", systemImage: "square.and.arrow.up") {
-                        isShowingSharePopover.toggle()
-                    }
-                    .popover(isPresented: $isShowingSharePopover, arrowEdge: .bottom) {
-                        VStack {
-                            Image(systemName: "person.3.fill")
-                                .symbolRenderingMode(.hierarchical)
-                                .font(.title)
-                                .foregroundStyle(Color.accentColor)
-                            Text("Invite Others")
-                                .font(.title2)
-                                .fontWeight(.medium)
-                            
+                Button("Share", systemImage: "square.and.arrow.up") {
+                    isShowingSharePopover.toggle()
+                }
+                .popover(isPresented: $isShowingSharePopover, arrowEdge: .bottom) {
+                    VStack {
+                        Image(systemName: "person.3.fill")
+                            .symbolRenderingMode(.hierarchical)
+                            .font(.title)
+                            .foregroundStyle(Color.accentColor)
+                        Text("Invite Others")
+                            .font(.title2)
+                            .fontWeight(.medium)
+
+                        if project.remoteId != nil {
                             Group {
                                 VStack(alignment: .leading, spacing: 0) {
                                     Text("Invitation Code")
@@ -154,18 +154,32 @@ struct ProjectDetail: View {
                                 )
                             }
                             .disabled(project.invitationCode == nil || project.invitationCode!.isEmpty)
+                        } else {
+                            HStack {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                Text("Cannot invite others to join local projects.")
+                            }
+                            .foregroundStyle(.red)
+
+                            AsyncButton("Convert to remote project") {
+                                do {
+                                    try await project.upload()
+                                } catch {
+                                    print(error)
+                                }
+                            }
                         }
-                        .padding()
                     }
+                    .padding()
                 }
-                
+
                 Button("Project Settings", systemImage: "folder.badge.gear") {
                     isShowingEditProjectSheet.toggle()
                 }
                 .sheet(isPresented: $isShowingEditProjectSheet) {
                     ProjectCreateEditView(edit: true, project: project, onDelete: onDelete)
                 }
-                
+
                 Button("Add Document", systemImage: "plus") {
                     isShowingAddPaperSheet.toggle()
                 }
@@ -180,7 +194,7 @@ struct ProjectDetail: View {
 #endif
         }
     }
-    
+
     func handleDeletePaper(papers: Set<Paper.ID>, paper: Bool, pdf: Bool) {
         if pdf {
             var bookmarkStale = false

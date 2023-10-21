@@ -55,7 +55,7 @@ struct AddPaperByURLView: View {
     func handleResolvePaper() async {
         do {
             paper = isDoi ? try await Paper(doi: url) : try await Paper(query: url)
-        } catch NetworkingError.notFound, NetworkingError.dataFormatError {
+        } catch NetworkingError.notFound, NetworkingError.responseFormatError {
             errorMsg = String(localized: "Relevant paper info not found")
         } catch {
             errorMsg = error.localizedDescription
