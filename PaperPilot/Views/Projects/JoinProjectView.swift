@@ -61,7 +61,8 @@ struct JoinProjectView: View {
                             let newProject = Project(remoteId: result.id,
                                                      name: result.name,
                                                      desc: result.description_p,
-                                                     invitationCode: result.inviteCode)
+                                                     invitationCode: result.inviteCode,
+                                                     isOwner: false)
                             modelContext.insert(newProject)
                         } catch let error as GRPCStatus {
                             hasError = true

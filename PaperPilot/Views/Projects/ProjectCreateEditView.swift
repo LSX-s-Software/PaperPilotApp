@@ -13,14 +13,14 @@ struct ProjectCreateEditView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    
+
     @Bindable var project: Project = Project(name: "", desc: "")
     @State private var isShowingDeleteConfirm = false
     @State private var isRemoteProject = false
     @State private var submitError = false
     @State private var deleteError = false
     @State private var errorMsg = ""
-    
+
     var onCreate: ((Project) -> Void)?
     var onDelete: (() -> Void)?
     
@@ -50,7 +50,7 @@ struct ProjectCreateEditView: View {
             .alert(edit ? "Failed to edit project" : "Failed to create project", isPresented: $submitError) {} message: {
                 Text(errorMsg)
             }
-            .alert("Failed to delete project", isPresented: $deleteError) {} message: {
+            .alert(project.isOwner ? "Failed to delete project" : "Failed to quit project", isPresented: $deleteError) {} message: {
                 Text(errorMsg)
             }
             .toolbar {
@@ -61,7 +61,7 @@ struct ProjectCreateEditView: View {
                 }
                 if edit {
                     ToolbarItem(placement: .destructiveAction) {
-                        Button("Delete", role: .destructive) {
+                        Button(project.isOwner ? "Delete" : "Quit", role: .destructive) {
                             isShowingDeleteConfirm.toggle()
                         }
                         .confirmationDialog("Are you sure to delete this project?", isPresented: $isShowingDeleteConfirm) {
@@ -115,9 +115,12 @@ struct ProjectCreateEditView: View {
     func handleDeleteProject() async {
         if isRemoteProject || project.remoteId != nil {
             do {
-                _ = try await API.shared.project.deleteProject(.with {
-                    $0.id = project.remoteId!
-                })
+                let request = Project_ProjectId.with { $0.id = project.remoteId! }
+                if project.isOwner {
+                    _ = try await API.shared.project.deleteProject(request)
+                } else {
+                    _ = try await API.shared.project.quitProject(request)
+                }
                 modelContext.delete(project)
                 onDelete?()
                 dismiss()

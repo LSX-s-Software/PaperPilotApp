@@ -21,6 +21,8 @@ class Project: Hashable, Codable, Identifiable {
     @Attribute(originalName: "description") var desc: String
     /// 邀请码
     var invitationCode: String?
+    /// 是否是所有者
+    var isOwner: Bool = true
     // TODO: 成员列表
     //    /// 成员列表
     //    @Relationship(deleteRule: .cascade)
@@ -34,12 +36,14 @@ class Project: Hashable, Codable, Identifiable {
          name: String,
          desc: String,
          invitationCode: String? = nil,
+         isOwner: Bool = true,
          papers: [Paper] = []) {
         self.id = uuid
         self.remoteId = remoteId
         self.name = name
         self.desc = desc
         self.invitationCode = invitationCode
+        self.isOwner = isOwner
         self.papers = papers
     }
 }

@@ -88,10 +88,11 @@ struct ContentView: View {
                     Task {
                         do {
                             for project in projects {
-                                if let remoteId = project.remoteId {
-                                    _ = try await API.shared.project.deleteProject(.with {
-                                        $0.id = remoteId
-                                    })
+                                let request = Project_ProjectId.with { $0.id = project.remoteId! }
+                                if project.isOwner {
+                                    _ = try await API.shared.project.deleteProject(request)
+                                } else {
+                                    _ = try await API.shared.project.quitProject(request)
                                 }
                                 modelContext.delete(project)
                             }
