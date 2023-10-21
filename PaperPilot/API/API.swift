@@ -61,3 +61,29 @@ final class API {
         translation.defaultCallOptions.customMetadata = headers
     }
 }
+
+protocol WithApiException {
+    var apiException: Exec_ApiException? { get async }
+}
+
+extension GRPCAsyncUnaryCall: WithApiException {
+    var apiException: Exec_ApiException? {
+        get async {
+            do {
+                return try await self.trailingMetadata.first(name: "grpc-status-details-bin").flatMap {
+                    let padLen = $0.count % 4
+                    let padded = $0.padding(toLength: $0.count + (padLen == 0 ? 0: (4 - padLen)), withPad: "=", startingAt: 0)
+                    return Data(base64Encoded: padded)
+                }.flatMap {
+                    return try Google_Rpc_Status(serializedData: $0)
+                        .details
+                        .first { $0.typeURL == "type.googleapis.com/exec.ApiException" }
+                        .map { try Exec_ApiException(serializedData: $0.value) }
+                }
+            } catch {
+                print("Cannot parse ApiException: \(error)")
+                return nil
+            }
+        }
+    }
+}

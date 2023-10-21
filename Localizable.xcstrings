@@ -362,6 +362,16 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "下载的数据不能转换成NSImage。"
+          }
+        }
+      }
+    },
+    "Data format error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "下载的数据不是图像"
           }
         }
@@ -861,6 +871,9 @@
         }
       }
     },
+    "Log Out" : {
+
+    },
     "Login" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -961,6 +974,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新用户名"
+          }
+        }
+      }
+    },
+    "No detailed error message." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有详细错误信息。"
           }
         }
       }
@@ -1434,6 +1457,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "俄语"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
           }
         }
       }

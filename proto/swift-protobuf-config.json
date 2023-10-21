@@ -8,9 +8,10 @@
                 "paperpilot_common/protobuf/user/auth.proto",
                 "paperpilot_common/protobuf/project/project.proto",
                 "paperpilot_common/protobuf/common/util.proto",
-                "paperpilot_common/protobuf/translation/translation.proto"
-            ],
-            "server": false
+                "paperpilot_common/protobuf/common/exce.proto",
+                "paperpilot_common/protobuf/translation/translation.proto",
+                "google/rpc/status.proto"
+            ]
         }
     ]
 }

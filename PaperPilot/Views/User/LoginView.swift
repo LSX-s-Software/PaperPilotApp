@@ -12,6 +12,8 @@ struct LoginView: View {
     
     @StateObject private var viewModel = LoginViewModel()
 
+    @State private var isShowingLogoutConfirmation = false
+
     private let avatarSize: CGFloat = 80
 
     var body: some View {
@@ -70,7 +72,7 @@ struct LoginView: View {
                             .textContentType(viewModel.isRegistering ? .newPassword : .password)
                             .textFieldStyle(InputTextFieldStyle(title: viewModel.isEditing ? "Old Password" : "Password"))
                         if viewModel.isEditing {
-                            SecureField("New Password", text: $viewModel.password)
+                            SecureField("New Password", text: $viewModel.newPassword)
                                 .textContentType(.newPassword)
                                 .textFieldStyle(InputTextFieldStyle(title: "New Password"))
                         }
@@ -97,6 +99,18 @@ struct LoginView: View {
                     .padding(.bottom, 8)
                 }
                 HStack {
+                    if viewModel.hasLoggedIn {
+                        Button("Log Out", role: .destructive) {
+                            isShowingLogoutConfirmation = true
+                        }
+                        .confirmationDialog("Are you sure you want to log out?", isPresented: $isShowingLogoutConfirmation) {
+                            Button("Confirm", role: .destructive, action: viewModel.logout)
+                        }
+                    }
+
+                    Spacer()
+                        .frame(maxWidth: 40)
+
                     Button(viewModel.hasLoggedIn && !viewModel.isEditing ? "OK" : "Cancel", role: .cancel) {
                         dismiss()
                     }
@@ -106,7 +120,7 @@ struct LoginView: View {
                         .frame(maxWidth: 40)
 
                     if !viewModel.hasLoggedIn || viewModel.isEditing {
-                        AsyncButton(viewModel.isRegistering ? "Register" : "Login") {
+                        AsyncButton(viewModel.isEditing ? "Save" : viewModel.isRegistering ? "Register" : "Login") {
                             await viewModel.submit()
                         }
                         .buttonStyle(.borderedProminent)
@@ -124,7 +138,7 @@ struct LoginView: View {
             .padding()
             .frame(width: 325)
         }
-        .alert(viewModel.errorMsg, isPresented: $viewModel.hasFailed) { }
+        .alert(viewModel.errorMsg, isPresented: $viewModel.hasFailed, actions: { }, message: { Text(viewModel.errorDetail ?? LocalizedStringKey("No detailed error message.")) })
     }
 }
 
