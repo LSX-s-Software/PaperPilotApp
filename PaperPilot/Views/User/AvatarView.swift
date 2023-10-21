@@ -13,7 +13,7 @@ struct AvatarView: View {
     @AppStorage(AppStorageKey.User.avatar.rawValue)
     private var avatar: String?
     
-    var controlSize: ControlSize {
+    private var controlSize: ControlSize {
         switch size {
         case 0...16:
                 .mini

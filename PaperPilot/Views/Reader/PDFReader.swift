@@ -52,7 +52,9 @@ struct PDFReader: View {
     @State private var saveErrorMsg: LocalizedStringKey?
     @State private var isShowingSaveErrorDetail = false
     @State private var shouldUpdate = false
-    
+
+    var onSelection: ((PDFSelection?) -> Void)?
+
     var body: some View {
         HStack(spacing: 0) {
             // MARK: - 侧边栏
@@ -223,6 +225,7 @@ struct PDFReader: View {
                 .onReceive(NotificationCenter.default.publisher(for: .PDFViewSelectionChanged)) { _ in
                     if !searchBarPresented || findText.isEmpty {
                         currentSelection = pdfView.currentSelection
+                        onSelection?(pdfView.currentSelection)
                     }
                 }
         }

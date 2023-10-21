@@ -36,10 +36,14 @@
 		F53EA7142ADFD91C00B97EB0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F53EA7132ADFD91C00B97EB0 /* LaunchScreen.storyboard */; platformFilter = ios; };
 		F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */ = {isa = PBXBuildFile; productRef = F547D0DC2AC52A6F006D2216 /* SwiftUIFlow */; };
 		F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F547D0E52AC56F89006D2216 /* EditableText.swift */; };
+		F5643F2C2AE2D89000186A2F /* TranslatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643F2B2AE2D89000186A2F /* TranslatorViewModel.swift */; };
+		F5643F322AE3662100186A2F /* TranslatorLang.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643F312AE3662100186A2F /* TranslatorLang.swift */; };
+		F5643F372AE37C9C00186A2F /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = F5643F362AE37C9C00186A2F /* Throttler */; };
 		F578D8212AD78ABE00322819 /* PDFOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F578D8202AD78ABE00322819 /* PDFOutlineView.swift */; };
 		F58DF0232AE21963001D4D68 /* AppURLScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0222AE21963001D4D68 /* AppURLScheme.swift */; };
 		F58DF0292AE2A60C001D4D68 /* ImageTitleForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */; };
 		F58DF02D2AE2B743001D4D68 /* ImageTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */; };
+		F58DF0332AE2C5BE001D4D68 /* TranslatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */; };
 		F59367F72AE193CE009230AF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59367F62AE193CE009230AF /* AppState.swift */; };
 		F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59AD1022ACB0CA200DFABCC /* AddTagView.swift */; };
 		F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */; };
@@ -94,11 +98,14 @@
 		F53EA70F2ADFCEC300B97EB0 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		F53EA7132ADFD91C00B97EB0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F547D0E52AC56F89006D2216 /* EditableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableText.swift; sourceTree = "<group>"; };
+		F5643F2B2AE2D89000186A2F /* TranslatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorViewModel.swift; sourceTree = "<group>"; };
+		F5643F312AE3662100186A2F /* TranslatorLang.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorLang.swift; sourceTree = "<group>"; };
 		F578D8202AD78ABE00322819 /* PDFOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFOutlineView.swift; sourceTree = "<group>"; };
 		F578D8242AD7B1F800322819 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F58DF0222AE21963001D4D68 /* AppURLScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppURLScheme.swift; sourceTree = "<group>"; };
 		F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleForm.swift; sourceTree = "<group>"; };
 		F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitle.swift; sourceTree = "<group>"; };
+		F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorView.swift; sourceTree = "<group>"; };
 		F59367F62AE193CE009230AF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		F59AD1022ACB0CA200DFABCC /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
 		F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
@@ -133,6 +140,7 @@
 				F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */,
 				F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */,
 				279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */,
+				F5643F372AE37C9C00186A2F /* Throttler in Frameworks */,
 				F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */,
 				279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */,
 			);
@@ -164,6 +172,7 @@
 				F59367F62AE193CE009230AF /* AppState.swift */,
 				F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */,
 				76C15CBE2AD82AB300614902 /* LoginViewModel.swift */,
+				F5643F2B2AE2D89000186A2F /* TranslatorViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -190,6 +199,7 @@
 				F578D8202AD78ABE00322819 /* PDFOutlineView.swift */,
 				F5FDF8E22AD6CA08001D9460 /* PDFReader.swift */,
 				F517100C2ADD690A002E2D79 /* TimerView.swift */,
+				F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */,
 			);
 			path = Reader;
 			sourceTree = "<group>";
@@ -242,6 +252,7 @@
 				F58DF0222AE21963001D4D68 /* AppURLScheme.swift */,
 				F5D8EF002AD4F62E00501B0E /* AppStorageKey.swift */,
 				F51710102ADD78AC002E2D79 /* HighlighterColor.swift */,
+				F5643F312AE3662100186A2F /* TranslatorLang.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -350,6 +361,7 @@
 				279F2D002AC8276600FEA9D8 /* protoc-gen-swift */,
 				F5D8EEF32AD4559300501B0E /* SimpleCodable */,
 				F5CF43332ADC1FB6004F1A16 /* WindowManagement */,
+				F5643F362AE37C9C00186A2F /* Throttler */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -387,6 +399,7 @@
 				F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */,
 				F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */,
+				F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -440,6 +453,8 @@
 				F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */,
 				F53D81422AC02AF800865B80 /* Paper.swift in Sources */,
 				27ED7C7A2AD3B6540069F24C /* AccountView.swift in Sources */,
+				F5643F2C2AE2D89000186A2F /* TranslatorViewModel.swift in Sources */,
+				F58DF0332AE2C5BE001D4D68 /* TranslatorView.swift in Sources */,
 				F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */,
 				F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */,
 				76C15CBF2AD82AB300614902 /* LoginViewModel.swift in Sources */,
@@ -460,6 +475,7 @@
 				F51710112ADD78AC002E2D79 /* HighlighterColor.swift in Sources */,
 				F5E4B2A82ADB81F000F50EDA /* Bookmark.swift in Sources */,
 				F53EA70E2ADFCDC900B97EB0 /* Pasteboard.swift in Sources */,
+				F5643F322AE3662100186A2F /* TranslatorLang.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,6 +757,14 @@
 				kind = branch;
 			};
 		};
+		F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/boraseoksoon/Throttler.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.3;
+			};
+		};
 		F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/grpc/grpc-swift.git";
@@ -815,6 +839,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */;
 			productName = SwiftUIFlow;
+		};
+		F5643F362AE37C9C00186A2F /* Throttler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */;
+			productName = Throttler;
 		};
 		F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */ = {
 			isa = XCSwiftPackageProductDependency;

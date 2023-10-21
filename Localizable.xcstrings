@@ -141,6 +141,16 @@
         }
       }
     },
+    "Arabic" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "阿拉伯语"
+          }
+        }
+      }
+    },
     "Are you sure to delete this project?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -177,6 +187,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知作者"
+          }
+        }
+      }
+    },
+    "Auto Detect" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动检测"
           }
         }
       }
@@ -242,6 +262,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "区分大小写"
+          }
+        }
+      }
+    },
+    "Chinese" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中文"
           }
         }
       }
@@ -398,6 +428,16 @@
         }
       }
     },
+    "English" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "英语"
+          }
+        }
+      }
+    },
     "Enter %@" : {
       "localizations" : {
         "zh-Hans" : {
@@ -414,6 +454,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入标题"
+          }
+        }
+      }
+    },
+    "Error" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "错误"
           }
         }
       }
@@ -468,9 +518,6 @@
         }
       }
     },
-    "Error" : {
-
-    },
     "Failed to save PDF" : {
       "localizations" : {
         "zh-Hans" : {
@@ -521,6 +568,16 @@
         }
       }
     },
+    "French" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "法语"
+          }
+        }
+      }
+    },
     "From file" : {
       "localizations" : {
         "zh-Hans" : {
@@ -537,6 +594,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "来自URL/DOI"
+          }
+        }
+      }
+    },
+    "German" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "德语"
           }
         }
       }
@@ -654,6 +721,26 @@
         }
       }
     },
+    "Italian" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "意大利语"
+          }
+        }
+      }
+    },
+    "Japanese" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日语"
+          }
+        }
+      }
+    },
     "Join" : {
       "localizations" : {
         "zh-Hans" : {
@@ -680,6 +767,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关键词"
+          }
+        }
+      }
+    },
+    "Korean" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "韩国语"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语言"
           }
         }
       }
@@ -929,6 +1036,16 @@
         }
       }
     },
+    "Original Text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原文"
+          }
+        }
+      }
+    },
     "Outline" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1110,6 +1227,16 @@
         }
       }
     },
+    "Portuguese" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "葡萄牙语"
+          }
+        }
+      }
+    },
     "Project Description" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1271,6 +1398,16 @@
         }
       }
     },
+    "Russian" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "俄语"
+          }
+        }
+      }
+    },
     "Saving" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1347,6 +1484,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "侧栏内容"
+          }
+        }
+      }
+    },
+    "Spanish" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "西班牙语"
           }
         }
       }
@@ -1438,6 +1585,56 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标题"
+          }
+        }
+      }
+    },
+    "Translate" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译"
+          }
+        }
+      }
+    },
+    "Translate by selection" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "划词翻译"
+          }
+        }
+      }
+    },
+    "Translated Text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "译文"
+          }
+        }
+      }
+    },
+    "Translator" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译"
+          }
+        }
+      }
+    },
+    "Trim line breaks" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除换行"
           }
         }
       }

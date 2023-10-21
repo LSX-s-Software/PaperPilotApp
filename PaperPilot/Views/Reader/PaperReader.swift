@@ -7,13 +7,20 @@
 
 import SwiftUI
 import PDFKit
+import Throttler
 
 private enum SidebarContent: String, Identifiable, CaseIterable {
-    case info = "Info"
-    case note = "Note"
-    
-    var id: Self {
-        self
+    case info
+    case note
+    case translator
+
+    var id: Self { self }
+    var localizedStringKey: LocalizedStringKey {
+        switch self {
+        case .info: "Info"
+        case .note: "Note"
+        case .translator: "Translator"
+        }
     }
 }
 
@@ -38,6 +45,7 @@ struct PaperReader: View {
     @State private var isShowingEditButton = EditableContent.none
     @State private var editing = EditableContent.none
     @State private var newAuthor = ""
+    @StateObject private var translatorVM = TranslatorViewModel()
     @StateObject private var downloadVM = DownloadViewModel()
     
     var body: some View {
@@ -48,7 +56,16 @@ struct PaperReader: View {
                     if loading {
                         ProgressView()
                     } else if let pdf = pdf {
-                        PDFReader(paper: paper, pdf: pdf)
+                        PDFReader(paper: paper, pdf: pdf) { selection in
+                            if translatorVM.translateBySelection,
+                               let selection = selection?.string {
+                                debounce {
+                                    translatorVM.originalText = translatorVM.trimNewlines
+                                    ? selection.trimmingCharacters(in: .newlines)
+                                    : selection
+                                }
+                            }
+                        }
                     } else {
                         VStack(spacing: 6) {
                             Image(
@@ -125,6 +142,7 @@ struct PaperReader: View {
                                             editing = .none
                                         }
                                 }
+
                             Text(paper.formattedAuthors)
                                 .foregroundStyle(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -163,7 +181,7 @@ struct PaperReader: View {
 
                         Picker("Sidebar Content", selection: $sidebarContent) {
                             ForEach(SidebarContent.allCases) { content in
-                                Text(LocalizedStringKey(content.rawValue)).tag(content)
+                                Text(content.localizedStringKey).tag(content)
                             }
                         }
                         .pickerStyle(.segmented)
@@ -171,10 +189,13 @@ struct PaperReader: View {
                     }
                     .padding([.horizontal, .top])
 
-                    if sidebarContent == .info {
+                    switch sidebarContent {
+                    case .info:
                         PaperInfo(paper: paper)
-                    } else {
+                    case .note:
                         TextEditor(text: $paper.note)
+                    case .translator:
+                        TranslatorView(viewModel: translatorVM)
                     }
                 }
                 .inspectorColumnWidth(ideal: 200)

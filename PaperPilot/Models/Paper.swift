@@ -38,12 +38,19 @@ class Paper: Hashable, Identifiable {
     /// 页码
     var pages: String?
     
+    /// 来源URL
+    ///
+    /// 论文来源，一般为出版商的官网
     var url: String?
     var doi: String?
     
-    /// 文件 url
+    /// 文件URL
+    ///
+    /// 可下载的PDF文件的URL字符串，当本地文件不可用时可从此处获取
     var file: String?
     /// 文件书签
+    ///
+    /// 本地PDF文件的URL书签，使用前需使用`URL(resolvingBookmarkData:options:relativeTo:bookmarkDataIsStale:)`转换为真正的URL
     var fileBookmark: Data?
     
     var createTime: Date

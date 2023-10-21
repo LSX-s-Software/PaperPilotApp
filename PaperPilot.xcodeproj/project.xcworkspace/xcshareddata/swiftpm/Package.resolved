@@ -190,6 +190,15 @@
       }
     },
     {
+      "identity" : "throttler",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/boraseoksoon/Throttler.git",
+      "state" : {
+        "revision" : "bd0b16eb9c02e992e2c6cefec3abea0e74b90369",
+        "version" : "2.1.3"
+      }
+    },
+    {
       "identity" : "yams",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jpsim/Yams.git",
