@@ -9,9 +9,10 @@ import Foundation
 
 enum NetworkingError: Error {
     case invalidURL
+    case responseFormatError
     case networkError(Error)
     case notFound
-    case dataFormatError
+    case requestError(code: Int, message: String)
 }
 
 extension NetworkingError: LocalizedError {
@@ -19,12 +20,14 @@ extension NetworkingError: LocalizedError {
         switch self {
         case .invalidURL:
             return String(localized: "Invalid URL")
+        case .responseFormatError:
+            return String(localized: "Response format error")
         case .networkError(let error):
             return error.localizedDescription
         case .notFound:
             return String(localized: "Not found")
-        case .dataFormatError:
-            return String(localized: "Data format error")
+        case .requestError(let code, let message):
+            return "\(message)(\(code))"
         }
     }
 }
