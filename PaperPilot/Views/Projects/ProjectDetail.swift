@@ -25,10 +25,6 @@ struct ProjectDetail: View {
     @State private var isShowingSharePopover = false
     @AppStorage(AppStorageKey.User.username.rawValue)
     private var username: String?
-    var shareURL: URL {
-        let queryItems = [URLQueryItem(name: AppURLScheme.QueryKeys.Project.invitation.rawValue, value: project.invitationCode)]
-        return AppURLScheme(host: .project, queryItems: queryItems).url
-    }
 
     var onDelete: (() -> Void)?
 
@@ -148,7 +144,7 @@ struct ProjectDetail: View {
                                 }
                                 ShareLink(
                                     "Send Invitation",
-                                    item: shareURL,
+                                    item: URL(string: "https://paperpilot.ziqiang.net.cn/invite.html?invitation=\(project.invitationCode ?? "")")!,
                                     subject: Text(project.name),
                                     message: Text("\(username ?? String(localized: "I")) invites you to join the project \"\(project.name)\" on Paper Pilot.")
                                 )
