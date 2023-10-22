@@ -276,6 +276,16 @@
         }
       }
     },
+    "Cannot access the file." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法访问文件。"
+          }
+        }
+      }
+    },
     "Cannot invite others to join local projects." : {
       "localizations" : {
         "zh-Hans" : {
@@ -538,6 +548,16 @@
         }
       }
     },
+    "Failed to choose an image file." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择图像失败。"
+          }
+        }
+      }
+    },
     "Failed to create project" : {
       "localizations" : {
         "zh-Hans" : {
@@ -634,6 +654,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PDF保存失败"
+          }
+        }
+      }
+    },
+    "Failed to upload the image." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上传图像失败。"
           }
         }
       }

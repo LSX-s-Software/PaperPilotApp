@@ -12,6 +12,7 @@ import AppKit
 import UIKit
 #endif
 import NIOHPACK
+import SwiftUI
 
 final class API {
     static let eventLoopGroup = PlatformSupport.makeEventLoopGroup(loopCount: 1, networkPreference: .best)
@@ -30,6 +31,17 @@ final class API {
     public var translation: Translation_TranslationPublicServiceAsyncClient
 
     static var shared = API()
+
+    @AppStorage(AppStorageKey.User.accessToken.rawValue)
+    private var accessToken: String?
+    @AppStorage(AppStorageKey.User.id.rawValue)
+    private var id: String?
+    @AppStorage(AppStorageKey.User.phone.rawValue)
+    var phone: String?
+    @AppStorage(AppStorageKey.User.avatar.rawValue)
+    private var avatar: String?
+    @AppStorage(AppStorageKey.User.username.rawValue)
+    var username: String?
 
     init() {
         self.auth = Auth_AuthPublicServiceAsyncClient(channel: channel)
@@ -59,6 +71,23 @@ final class API {
         project.defaultCallOptions.customMetadata = headers
         paper.defaultCallOptions.customMetadata = headers
         translation.defaultCallOptions.customMetadata = headers
+    }
+
+    func refreshUserInfo() async -> (GRPCStatus, Exec_ApiException)? {
+        let call = Self.shared.user.makeGetCurrentUserCall(.init())
+        do {
+            let result = try await call.response
+            id = result.id
+            username = result.username
+            phone = result.phone
+            avatar = result.avatar
+            return nil
+        } catch let error as GRPCStatus {
+            return await call.apiException.map { (error, $0) }
+        } catch {
+            print(error)
+            return nil
+        }
     }
 }
 

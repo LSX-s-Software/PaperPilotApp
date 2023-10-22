@@ -24,16 +24,22 @@ enum AsyncImageError: LocalizedError {
     }
 }
 
-struct CachedAsyncImage<I: View, P: View, F: View>: View {
-    @State private var state: LoadState
+struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
+    @State private var state: LoadState = .empty
+    @Binding private var url: URL?
     private let content: (Image) -> I
     private let placeholder: () -> P
     private let failure: (any Error) -> F
     private let request: URLRequest?
     private let session: URLSession
+    private var isFirstLoad = true
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.url == rhs.url
+    }
 
     public init(
-        url: URL?,
+        url: Binding<URL?>,
         cache: URLCache = .shared,
         @ViewBuilder content: @escaping (Image) -> I,
         @ViewBuilder placeholder: @escaping () -> P,
@@ -47,7 +53,9 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View {
         conf.urlCache = cache
         self.session = URLSession(configuration: conf)
 
-        guard let url = url else {
+        self._url = url
+
+        guard let url = url.wrappedValue else {
             self.request = nil
             self._state = State(initialValue: .empty)
             return
@@ -66,7 +74,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View {
     }
 
     public init(
-        url: URL?,
+        url: Binding<URL?>,
         cache: URLCache = .shared,
         @ViewBuilder content: @escaping (Image) -> I,
         @ViewBuilder placeholder: @escaping () -> P
@@ -77,7 +85,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View {
     }
 
     public init(
-        url: URL?,
+        url: Binding<URL?>,
         cache: URLCache = .shared,
         @ViewBuilder placeholder: @escaping () -> P
     ) where F == Text, I == Image {
@@ -91,7 +99,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View {
     }
 
     public init(
-        url: URL?,
+        url: Binding<URL?>,
         cache: URLCache = .shared
     ) where F == Text, I == Image, P == ProgressView<EmptyView, EmptyView> {
         self.init(
@@ -102,7 +110,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View {
     }
 
     public init(
-        url: URL?,
+        url: Binding<URL?>,
         @ViewBuilder content: @escaping (Image) -> I,
         cache: URLCache = .shared
     ) where F == Text, P == ProgressView<EmptyView, EmptyView> {
@@ -115,7 +123,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View {
     }
 
     var body: some View {
-        Group {
+        return Group {
             switch self.state {
             case .empty:
                 self.placeholder()
@@ -125,7 +133,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View {
                 self.content(image)
             }
         }
-        .task(load)
+        .task(id: url, load)
     }
 
     @Sendable

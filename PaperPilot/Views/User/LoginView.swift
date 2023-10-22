@@ -9,23 +9,44 @@ import SwiftUI
 
 struct LoginView: View {
     @Environment(\.dismiss) private var dismiss
-    
+
     @StateObject private var viewModel = LoginViewModel()
 
     @State private var isShowingLogoutConfirmation = false
+    @State private var isShowingFileImporter = false
 
-    private let avatarSize: CGFloat = 80
+    private static let avatarSize: CGFloat = 80
+    private static let avatarEditButtonOffset: CGFloat = avatarSize / 4 * sqrt(2)
 
     var body: some View {
         NavigationStack {
             VStack {
                 if !viewModel.hasLoggedIn {
                     Image(systemName: "person.crop.circle.fill")
-                        .font(.system(size: 80))
+                        .font(.system(size: Self.avatarSize))
                         .foregroundStyle(Color.accentColor)
                         .symbolRenderingMode(.hierarchical)
                 } else {
-                    AvatarView(size: avatarSize)
+                    AvatarView(size: Self.avatarSize)
+                        .overlay {
+                            AsyncButton(loading: $viewModel.isChangingAvatar, action: {
+                                viewModel.isChangingAvatar = true
+                                isShowingFileImporter = true
+                            }, label: {
+                                Image(systemName: "photo")
+                                    .padding(4)
+                                    .foregroundColor(.white)
+                                    .background(.blue)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 3)
+                            })
+                            .buttonStyle(.plain)
+                            .offset(CGSize(width: Self.avatarEditButtonOffset, height: Self.avatarEditButtonOffset))
+                        }
+                        .fileImporter(
+                            isPresented: $isShowingFileImporter,
+                            allowedContentTypes: [.image],
+                            onCompletion: viewModel.handleAvatarChange)
                 }
 
                 Group {
@@ -138,7 +159,11 @@ struct LoginView: View {
             .padding()
             .frame(width: 325)
         }
-        .alert(viewModel.errorMsg, isPresented: $viewModel.hasFailed, actions: { }, message: { Text(viewModel.errorDetail ?? LocalizedStringKey("No detailed error message.")) })
+        .alert(
+            viewModel.errorMsg,
+            isPresented: $viewModel.hasFailed,
+            actions: { },
+            message: { Text(LocalizedStringKey(viewModel.errorDetail ?? "No detailed error message.")) })
     }
 }
 

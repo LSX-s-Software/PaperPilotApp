@@ -24,46 +24,55 @@ struct AsyncButton<Content: View>: View {
     }
     let disabled: Bool
     let action: () async -> Void
-    
-    @State private var loading = false
-    
+
+    @State private var hasTaskFinished = true
+    @Binding var loading: Bool
+    var done: Bool {
+        !loading && hasTaskFinished
+    }
+
     init(role: ButtonRole? = nil,
          disabled: Bool = false,
+         loading: Binding<Bool> = .constant(false),
          action: @escaping () async -> Void,
-         @ViewBuilder label: @escaping () -> Content) {
+         @ViewBuilder label: @escaping () -> Content
+    ) {
         self.title = label
         self.role = role
         self.disabled = disabled
         self.action = action
+        self._loading = loading
     }
-    
+
     init(_ title: LocalizedStringKey,
          role: ButtonRole? = nil,
          disabled: Bool = false,
-         action: @escaping () async -> Void) where Content == Text {
-        self.init(role: role, disabled: disabled, action: action) {
+         loading: Binding<Bool> = .constant(false),
+         action: @escaping () async -> Void
+    ) where Content == Text {
+        self.init(role: role, disabled: disabled, loading: loading, action: action) {
             Text(title)
         }
     }
-    
+
     var body: some View {
         Button(role: role) {
-            loading = true
+            hasTaskFinished = false
             Task {
                 await action()
-                loading = false
+                hasTaskFinished = true
             }
         } label: {
             title()
-                .opacity(loading ? 0 : 1)
+                .opacity(done ? 1 : 0)
         }
         .overlay {
-            if loading {
+            if !done {
                 ProgressView()
                     .controlSize(progressSize)
             }
         }
-        .disabled(loading || disabled)
+        .disabled(!done)
     }
 }
 

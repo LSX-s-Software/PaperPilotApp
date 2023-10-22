@@ -12,7 +12,6 @@ struct AvatarView: View {
     
     @AppStorage(AppStorageKey.User.avatar.rawValue)
     private var avatar: String?
-    
     private var controlSize: ControlSize {
         switch size {
         case 0...16:
@@ -27,7 +26,7 @@ struct AvatarView: View {
     }
     
     var body: some View {
-        CachedAsyncImage(url: avatar.flatMap({URL(string: $0)})) { image in
+        CachedAsyncImage(url: Binding(get: { avatar.flatMap({URL(string: $0)}) }, set: {_ in })) { image in
             image
                 .resizable()
                 .scaledToFit()

@@ -10,7 +10,7 @@ import Foundation
 struct OSSRequest {
     private var request: MultipartFormDataRequest
 
-    init?(token: Util_OssToken, fileName: String, fileData: Data) {
+    init?(token: Util_OssToken, fileName: String, fileData: Data, mimeType: String) {
         guard let host = URL(string: token.host),
               let policyData = Data(base64Encoded: token.policy),
               let policyObject = try? JSONSerialization.jsonObject(with: policyData) as? [String: Any],
@@ -32,7 +32,7 @@ struct OSSRequest {
         request.addTextField(named: "policy", value: token.policy)
         request.addTextField(named: "signature", value: token.signature)
         request.addTextField(named: "callback", value: token.callbackBody)
-        request.addDataField(named: "file", data: fileData, mimeType: "application/pdf")
+        request.addDataField(named: "file", data: fileData, mimeType: mimeType)
     }
 
     var urlRequest: URLRequest {
