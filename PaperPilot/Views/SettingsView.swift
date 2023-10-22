@@ -15,14 +15,26 @@ struct SettingsView: View {
 
     @Environment(\.modelContext) private var modelContext
 
-    @State private var showingClearFileConfirm = false
+    @State private var isShowingClearFileConfirm = false
+    @State private var isShowingDeleteDataConfirm = false
 
     var body: some View {
         TabView {
             Form {
                 Section("Data") {
-                    Button("Delete All Projects") {
-
+                    Button("Delete All Data") {
+                        isShowingDeleteDataConfirm.toggle()
+                    }
+                    .confirmationDialog(
+                        "Are you sure you want to delete all data?",
+                        isPresented: $isShowingDeleteDataConfirm,
+                        titleVisibility: .visible
+                    ) {
+                        Button("Delete", role: .destructive) {
+                            modelContext.container.deleteAllData()
+                        }
+                    } message: {
+                        Text("This action cannot be undone.")
                     }
                 }
             }
@@ -32,12 +44,22 @@ struct SettingsView: View {
 
             Form {
                 Section("Local Files") {
+                    if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?
+                        .appending(path: FilePath.projectDirectory.rawValue) {
+                        HStack {
+                            TextField("Location", text: .constant(dir.path()))
+                            Button("Show in Finder") {
+                                NSWorkspace.shared.open(dir)
+                            }
+                        }
+                    }
+
                     Button("Delete All Project Files", role: .destructive) {
-                        showingClearFileConfirm.toggle()
+                        isShowingClearFileConfirm.toggle()
                     }
                     .confirmationDialog(
                         "Are you sure you want to delete all project files?",
-                        isPresented: $showingClearFileConfirm,
+                        isPresented: $isShowingClearFileConfirm,
                         titleVisibility: .visible
                     ) {
                         Button("Delete", role: .destructive) {
@@ -61,4 +83,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .frame(width: 500)
 }

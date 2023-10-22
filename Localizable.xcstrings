@@ -161,6 +161,16 @@
         }
       }
     },
+    "Are you sure you want to delete all data?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除所有数据吗？"
+          }
+        }
+      }
+    },
     "Are you sure you want to delete all project files?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -407,22 +417,22 @@
         }
       }
     },
+    "Delete All Data" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有数据"
+          }
+        }
+      }
+    },
     "Delete All Project Files" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除所有项目的文件"
-          }
-        }
-      }
-    },
-    "Delete All Projects" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "删除所有项目"
           }
         }
       }
@@ -937,6 +947,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本地项目"
+          }
+        }
+      }
+    },
+    "Location" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "位置"
           }
         }
       }
@@ -1634,6 +1654,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "共享"
+          }
+        }
+      }
+    },
+    "Show in Finder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在Finder中显示"
           }
         }
       }
