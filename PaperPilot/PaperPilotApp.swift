@@ -100,5 +100,14 @@ struct PaperPilotApp: App {
                 .keyboardShortcut("f")
             }
         }
+
+#if os(macOS)
+        Settings {
+            SettingsView()
+                .frame(minWidth: 500)
+        }
+        .modelContainer(modelContainer)
+        .defaultPosition(.top)
+#endif
     }
 }

@@ -161,6 +161,16 @@
         }
       }
     },
+    "Are you sure you want to delete all project files?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除所有项目的文件吗？"
+          }
+        }
+      }
+    },
     "Are you sure you want to log out?" : {
       "localizations" : {
         "zh-Hans" : {
@@ -357,6 +367,16 @@
         }
       }
     },
+    "Data" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据"
+          }
+        }
+      }
+    },
     "Data downloaded cannot be converted to an NSImage." : {
       "localizations" : {
         "zh-Hans" : {
@@ -383,6 +403,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除"
+          }
+        }
+      }
+    },
+    "Delete All Project Files" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有项目的文件"
+          }
+        }
+      }
+    },
+    "Delete All Projects" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有项目"
           }
         }
       }
@@ -668,6 +708,16 @@
         }
       }
     },
+    "General" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通用"
+          }
+        }
+      }
+    },
     "German" : {
       "localizations" : {
         "zh-Hans" : {
@@ -867,6 +917,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本地"
+          }
+        }
+      }
+    },
+    "Local Files" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地文件"
           }
         }
       }
@@ -1614,6 +1674,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "停止查找"
+          }
+        }
+      }
+    },
+    "Storage Space" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储空间"
           }
         }
       }

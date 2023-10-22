@@ -41,6 +41,7 @@
 		F5643F3B2AE3C63200186A2F /* MultipartFormDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643F3A2AE3C63200186A2F /* MultipartFormDataRequest.swift */; };
 		F5643F3F2AE3CBB800186A2F /* OSSRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643F3E2AE3CBB800186A2F /* OSSRequest.swift */; };
 		F5643F482AE430F600186A2F /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643F472AE430F600186A2F /* Path.swift */; };
+		F5643F4C2AE4E05F00186A2F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643F4B2AE4E05F00186A2F /* SettingsView.swift */; };
 		F578D8212AD78ABE00322819 /* PDFOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F578D8202AD78ABE00322819 /* PDFOutlineView.swift */; };
 		F58DF0232AE21963001D4D68 /* AppURLScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0222AE21963001D4D68 /* AppURLScheme.swift */; };
 		F58DF0292AE2A60C001D4D68 /* ImageTitleForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */; };
@@ -104,6 +105,7 @@
 		F5643F3A2AE3C63200186A2F /* MultipartFormDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataRequest.swift; sourceTree = "<group>"; };
 		F5643F3E2AE3CBB800186A2F /* OSSRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSRequest.swift; sourceTree = "<group>"; };
 		F5643F472AE430F600186A2F /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		F5643F4B2AE4E05F00186A2F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F578D8202AD78ABE00322819 /* PDFOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFOutlineView.swift; sourceTree = "<group>"; };
 		F578D8242AD7B1F800322819 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F58DF0222AE21963001D4D68 /* AppURLScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppURLScheme.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 			children = (
 				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
 				F53EA7132ADFD91C00B97EB0 /* LaunchScreen.storyboard */,
+				F5643F4B2AE4E05F00186A2F /* SettingsView.swift */,
 				F5D2BC562AE124A2008DCDE6 /* Components */,
 				F5EBC0C32ABFE16600B2B4A3 /* Projects */,
 				F53D81472AC1367400865B80 /* Reader */,
@@ -465,6 +468,7 @@
 				F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */,
 				76C15CBF2AD82AB300614902 /* LoginViewModel.swift in Sources */,
 				F5643F3B2AE3C63200186A2F /* MultipartFormDataRequest.swift in Sources */,
+				F5643F4C2AE4E05F00186A2F /* SettingsView.swift in Sources */,
 				F53D81492AC1369200865B80 /* PDFKitView.swift in Sources */,
 				F58DF02D2AE2B743001D4D68 /* ImageTitle.swift in Sources */,
 				F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */,
