@@ -101,6 +101,8 @@ struct ProjectCreateEditView: View {
                         $0.name = newName
                         $0.description_p = newDesc
                     })
+                    project.name = newName
+                    project.desc = newDesc
                 } else {
                     let result = try await API.shared.project.createProject(.with {
                         $0.name = newName
@@ -110,8 +112,8 @@ struct ProjectCreateEditView: View {
                     project.desc = newDesc
                     project.remoteId = result.id
                     project.invitationCode = result.inviteCode
+                    modelContext.insert(project)
                 }
-                modelContext.insert(project)
                 dismiss()
             } catch let error as GRPCStatus {
                 submitError = true
@@ -123,8 +125,8 @@ struct ProjectCreateEditView: View {
         } else {
             project.name = newName
             project.desc = newDesc
-            modelContext.insert(project)
             if !edit {
+                modelContext.insert(project)
                 onCreate?(project)
             }
             dismiss()
@@ -153,7 +155,9 @@ struct ProjectCreateEditView: View {
             try? FileManager.default.removeItem(at: dir)
         }
         onDelete?()
-        modelContext.delete(project)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            modelContext.delete(project)
+        }
         dismiss()
     }
 }

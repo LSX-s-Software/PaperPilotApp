@@ -149,13 +149,13 @@ struct ProjectDetail: View {
                               FileManager.default.fileExists(atPath: dir.path()) {
                         try? FileManager.default.removeItem(at: dir)
                     }
+                    if !pdfOnly {
+                        modelContext.delete(paper)
+                    }
                 }
             }
         } catch {
             print(error.localizedDescription)
-        }
-        if !pdfOnly {
-            project.papers.removeAll { papers.contains($0.id) }
         }
     }
 }
