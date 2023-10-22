@@ -9,28 +9,42 @@ import SwiftUI
 import GRPC
 
 struct ProjectCreateEditView: View {
-    var edit = false
-    
+    var edit: Bool
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
 
-    @Bindable var project: Project = Project(name: "", desc: "")
+    @Bindable var project: Project
     @State private var isShowingDeleteConfirm = false
     @State private var isRemoteProject = false
     @State private var submitError = false
     @State private var deleteError = false
     @State private var errorMsg = ""
+    @State private var newName = ""
+    @State private var newDesc = ""
 
     var onCreate: ((Project) -> Void)?
     var onDelete: (() -> Void)?
-    
+
+    init(edit: Bool = false,
+         project: Project? = nil,
+         onCreate: ((Project) -> Void)? = nil,
+         onDelete: (() -> Void)? = nil) {
+        self.edit = edit
+        self.project = project ?? Project(name: "", desc: "")
+        self._newName = State(initialValue: self.project.name)
+        self._newDesc = State(initialValue: self.project.desc)
+        self.onCreate = onCreate
+        self.onDelete = onDelete
+    }
+
     var body: some View {
         NavigationStack {
             ImageTitleForm(
                 edit ? "Edit Project" : "Create New Project",
                 systemImage: "folder.fill.badge.\(edit ? "gearshape" : "plus")"
             ) {
-                TextField("Project Name", text: $project.name)
+                TextField("Project Name", text: $newName)
 
                 if !edit {
                     Picker("Project Type", selection: $isRemoteProject) {
@@ -41,7 +55,7 @@ struct ProjectCreateEditView: View {
                 }
 
                 Section("Project Description") {
-                    TextEditor(text: $project.desc)
+                    TextEditor(text: $newDesc)
                         .font(.body)
                         .frame(minHeight: 100)
                         .scrollContentBackground(.hidden)
@@ -84,14 +98,16 @@ struct ProjectCreateEditView: View {
                 if edit {
                     _ = try await API.shared.project.updateProjectInfo(.with {
                         $0.id = project.remoteId!
-                        $0.name = project.name
-                        $0.description_p = project.desc
+                        $0.name = newName
+                        $0.description_p = newDesc
                     })
                 } else {
                     let result = try await API.shared.project.createProject(.with {
-                        $0.name = project.name
-                        $0.description_p = project.desc
+                        $0.name = newName
+                        $0.description_p = newDesc
                     })
+                    project.name = newName
+                    project.desc = newDesc
                     project.remoteId = result.id
                     project.invitationCode = result.inviteCode
                 }
@@ -105,6 +121,8 @@ struct ProjectCreateEditView: View {
                 errorMsg = error.localizedDescription
             }
         } else {
+            project.name = newName
+            project.desc = newDesc
             modelContext.insert(project)
             if !edit {
                 onCreate?(project)
