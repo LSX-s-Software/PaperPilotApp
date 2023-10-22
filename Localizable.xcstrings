@@ -30,16 +30,6 @@
         }
       }
     },
-    "Account" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "账号"
-          }
-        }
-      }
-    },
     "Add" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1202,16 +1192,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "笔记"
-          }
-        }
-      }
-    },
-    "OK" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "好"
           }
         }
       }

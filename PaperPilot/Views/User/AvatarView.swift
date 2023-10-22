@@ -26,10 +26,10 @@ struct AvatarView: View {
     }
     
     var body: some View {
-        CachedAsyncImage(url: Binding(get: { avatar.flatMap({URL(string: $0)}) }, set: {_ in })) { image in
+        CachedAsyncImage(url: .constant(avatar.flatMap({URL(string: $0)}))) { image in
             image
                 .resizable()
-                .scaledToFit()
+                .scaledToFill()
         } placeholder: {
             ProgressView()
                 .controlSize(controlSize)
