@@ -66,6 +66,7 @@ struct ShareProjectView: View {
                         Group {
                             if let progress = downloadProgress {
                                 ProgressView(value: progress.fractionCompleted)
+                                    .id(downloadVM.downloadProgress)
                             } else {
                                 ProgressView()
                             }
