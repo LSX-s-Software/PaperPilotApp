@@ -14,15 +14,18 @@ struct ImageTitleForm<Content: View>: View {
     var subtitle: LocalizedStringKey?
     var systemImage: String
     var content: () -> Content
+    var onDismiss: (() -> Void)?
 
     init(_ title: LocalizedStringKey,
          subtitle: LocalizedStringKey? = nil,
          systemImage: String,
-         @ViewBuilder content: @escaping () -> Content) {
+         @ViewBuilder content: @escaping () -> Content,
+         onDismiss: (() -> Void)? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.systemImage = systemImage
         self.content = content
+        self.onDismiss = onDismiss
     }
 
     var body: some View {
@@ -52,6 +55,7 @@ struct ImageTitleForm<Content: View>: View {
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel", role: .cancel) {
+                    onDismiss?()
                     dismiss()
                 }
             }
