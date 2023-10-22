@@ -199,7 +199,7 @@ struct ProjectDetail: View {
                         paper.localFile = nil
                     } else if let dir = try? FilePath.paperDirectory(for: paper),
                               FileManager.default.fileExists(atPath: dir.path()) {
-                        try FileManager.default.removeItem(at: dir)
+                        try? FileManager.default.removeItem(at: dir)
                     }
                 }
             }

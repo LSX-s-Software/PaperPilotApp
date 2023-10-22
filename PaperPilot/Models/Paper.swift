@@ -15,6 +15,8 @@ import UniformTypeIdentifiers
 class Paper: Hashable, Identifiable {
     @Attribute(.unique) var id: UUID = UUID()
     var remoteId: String?
+    /// 所属项目
+    var project: Project?
     /// 标题
     var title: String
     /// 摘要
@@ -70,6 +72,7 @@ class Paper: Hashable, Identifiable {
     
     init(id: UUID = UUID(),
          remoteId: String? = nil,
+         project: Project? = nil,
          title: String,
          abstract: String? = nil,
          keywords: [String] = [],
@@ -90,6 +93,7 @@ class Paper: Hashable, Identifiable {
          bookmarks: [Bookmark] = []) {
         self.id = id
         self.remoteId = remoteId
+        self.project = project
         self.title = title
         self.abstract = abstract
         self.keywords = keywords

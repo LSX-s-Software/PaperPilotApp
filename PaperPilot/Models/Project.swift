@@ -28,7 +28,7 @@ class Project: Hashable, Codable, Identifiable {
     //    @Relationship(deleteRule: .cascade)
     //    var members: [User]
     /// 论文列表
-    @Relationship(deleteRule: .cascade)
+    @Relationship(deleteRule: .cascade, inverse: \Paper.project)
     var papers: [Paper]
 
     init(uuid: UUID = UUID(),

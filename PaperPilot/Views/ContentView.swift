@@ -88,11 +88,17 @@ struct ContentView: View {
                     Task {
                         do {
                             for project in projects {
-                                let request = Project_ProjectId.with { $0.id = project.remoteId! }
-                                if project.isOwner {
-                                    _ = try await API.shared.project.deleteProject(request)
-                                } else {
-                                    _ = try await API.shared.project.quitProject(request)
+                                if let remoteId = project.remoteId {
+                                    let request = Project_ProjectId.with { $0.id = remoteId }
+                                    if project.isOwner {
+                                        _ = try await API.shared.project.deleteProject(request)
+                                    } else {
+                                        _ = try await API.shared.project.quitProject(request)
+                                    }
+                                }
+                                if let dir = try? FilePath.projectDirectory(for: project),
+                                   FileManager.default.fileExists(atPath: dir.path()) {
+                                    try? FileManager.default.removeItem(at: dir)
                                 }
                                 modelContext.delete(project)
                             }

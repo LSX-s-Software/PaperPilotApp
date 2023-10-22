@@ -9,12 +9,12 @@ import SwiftUI
 
 struct AddPaperView: View {
     @Environment(\.dismiss) private var dismiss
-    
+    @Environment(\.modelContext) private var modelContext
+
     @Bindable var project: Project
-    @State private var newPaper = Paper(title: "")
+    @State private var newPaper: Paper?
     @State private var filePath: URL?
     @State private var isImporting = false
-    @State private var shouldGoNext = false
     @State private var shouldClose = false
     @State private var hasError = false
     @State private var errorMsg: String?
@@ -73,7 +73,7 @@ struct AddPaperView: View {
                 }
                 .fixedSize(horizontal: true, vertical: false)
             }
-            .navigationDestination(isPresented: $shouldGoNext) {
+            .sheet(item: $newPaper) { newPaper in
                 NewPaperInfoView(project: project, paper: newPaper, shouldClose: $shouldClose)
             }
         }
@@ -89,19 +89,23 @@ struct AddPaperView: View {
             switch result {
             case .success(let url):
                 filePath = url
-                newPaper.title = url.deletingPathExtension().lastPathComponent
-                let didStartAccessing = url.startAccessingSecurityScopedResource()
-                defer {
-                    url.stopAccessingSecurityScopedResource()
-                }
-                if didStartAccessing {
-                    let savedURL = try FilePath.paperDirectory(for: newPaper, create: true)
-                        .appending(path: url.lastPathComponent)
-                    try FileManager.default.copyItem(at: url, to: savedURL)
-                    newPaper.localFile = savedURL
-                    shouldGoNext = true
-                } else {
-                    errorMsg = String(localized: "You don't have access to the PDF.")
+                try modelContext.transaction {
+                    newPaper = Paper(title: url.deletingPathExtension().lastPathComponent)
+                    newPaper!.project = project
+                    let didStartAccessing = url.startAccessingSecurityScopedResource()
+                    defer {
+                        url.stopAccessingSecurityScopedResource()
+                    }
+                    if didStartAccessing {
+                        let savedURL = try FilePath.paperDirectory(for: newPaper!, create: true)
+                            .appending(path: url.lastPathComponent)
+                        try FileManager.default.copyItem(at: url, to: savedURL)
+                        newPaper!.localFile = savedURL
+                        try? modelContext.save()
+                    } else {
+                        errorMsg = String(localized: "You don't have access to the PDF.")
+                        modelContext.rollback()
+                    }
                 }
             case .failure(let error):
                 throw error

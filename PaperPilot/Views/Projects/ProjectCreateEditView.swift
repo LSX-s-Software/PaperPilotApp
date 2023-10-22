@@ -50,7 +50,8 @@ struct ProjectCreateEditView: View {
             .alert(edit ? "Failed to edit project" : "Failed to create project", isPresented: $submitError) {} message: {
                 Text(errorMsg)
             }
-            .alert(project.isOwner ? "Failed to delete project" : "Failed to quit project", isPresented: $deleteError) {} message: {
+            .alert(project.isOwner ? "Failed to delete project" : "Failed to quit project",
+                   isPresented: $deleteError) {} message: {
                 Text(errorMsg)
             }
             .toolbar {
@@ -121,9 +122,6 @@ struct ProjectCreateEditView: View {
                 } else {
                     _ = try await API.shared.project.quitProject(request)
                 }
-                modelContext.delete(project)
-                onDelete?()
-                dismiss()
             } catch let error as GRPCStatus {
                 deleteError = true
                 errorMsg = error.message ?? String(localized: "Unknown error")
@@ -131,11 +129,14 @@ struct ProjectCreateEditView: View {
                 deleteError = true
                 errorMsg = error.localizedDescription
             }
-        } else {
-            modelContext.delete(project)
-            onDelete?()
-            dismiss()
         }
+        if let dir = try? FilePath.projectDirectory(for: project),
+           FileManager.default.fileExists(atPath: dir.path()) {
+            try? FileManager.default.removeItem(at: dir)
+        }
+        onDelete?()
+        modelContext.delete(project)
+        dismiss()
     }
 }
 
