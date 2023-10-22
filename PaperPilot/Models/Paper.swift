@@ -162,7 +162,6 @@ extension Paper {
         remoteId = result.id
         createTime = result.createTime.date
         // 读取本地文件
-        var bookmarkStale = false
         guard let localFile = localFile,
               FileManager.default.isReadableFile(atPath: localFile.path()) else { return }
         let fileData = try Data(contentsOf: localFile)

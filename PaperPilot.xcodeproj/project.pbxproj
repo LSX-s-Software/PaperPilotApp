@@ -50,6 +50,8 @@
 		F59367F72AE193CE009230AF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59367F62AE193CE009230AF /* AppState.swift */; };
 		F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59AD1022ACB0CA200DFABCC /* AddTagView.swift */; };
 		F59FB3C02AE51B9A0007A76B /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3BF2AE51B9A0007A76B /* FileManager.swift */; };
+		F59FB3C72AE539E50007A76B /* StorageSpaceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3C62AE539E50007A76B /* StorageSpaceSettingsView.swift */; };
+		F59FB3C92AE53B590007A76B /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3C82AE53B590007A76B /* GeneralSettingsView.swift */; };
 		F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */; };
 		F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */; };
 		F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */ = {isa = PBXBuildFile; productRef = F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */; };
@@ -116,6 +118,8 @@
 		F59367F62AE193CE009230AF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		F59AD1022ACB0CA200DFABCC /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
 		F59FB3BF2AE51B9A0007A76B /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		F59FB3C62AE539E50007A76B /* StorageSpaceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSpaceSettingsView.swift; sourceTree = "<group>"; };
+		F59FB3C82AE53B590007A76B /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		F5C379082AC44BFF00C88C94 /* PaperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperInfo.swift; sourceTree = "<group>"; };
@@ -221,6 +225,16 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		F59FB3C52AE5398E0007A76B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F5643F4B2AE4E05F00186A2F /* SettingsView.swift */,
+				F59FB3C62AE539E50007A76B /* StorageSpaceSettingsView.swift */,
+				F59FB3C82AE53B590007A76B /* GeneralSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		F5B2A8942ADE2C110088428C /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,10 +334,10 @@
 			children = (
 				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
 				F53EA7132ADFD91C00B97EB0 /* LaunchScreen.storyboard */,
-				F5643F4B2AE4E05F00186A2F /* SettingsView.swift */,
 				F5D2BC562AE124A2008DCDE6 /* Components */,
 				F5EBC0C32ABFE16600B2B4A3 /* Projects */,
 				F53D81472AC1367400865B80 /* Reader */,
+				F59FB3C52AE5398E0007A76B /* Settings */,
 				F5D8EEE72AD42D3600501B0E /* User */,
 			);
 			path = Views;
@@ -332,12 +346,12 @@
 		F5EBC0C32ABFE16600B2B4A3 /* Projects */ = {
 			isa = PBXGroup;
 			children = (
+				F5145E7E2AD58275001860E0 /* AddPaperByURLView.swift */,
+				F5145E7A2AD57863001860E0 /* AddPaperView.swift */,
+				F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */,
+				F5145E842AD59172001860E0 /* NewPaperInfoView.swift */,
 				F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */,
 				F5EBC0C42ABFE19600B2B4A3 /* ProjectDetail.swift */,
-				F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */,
-				F5145E7A2AD57863001860E0 /* AddPaperView.swift */,
-				F5145E7E2AD58275001860E0 /* AddPaperByURLView.swift */,
-				F5145E842AD59172001860E0 /* NewPaperInfoView.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -470,10 +484,12 @@
 				F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */,
 				F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */,
 				76C15CBF2AD82AB300614902 /* LoginViewModel.swift in Sources */,
+				F59FB3C92AE53B590007A76B /* GeneralSettingsView.swift in Sources */,
 				F5643F3B2AE3C63200186A2F /* MultipartFormDataRequest.swift in Sources */,
 				F5643F4C2AE4E05F00186A2F /* SettingsView.swift in Sources */,
 				F53D81492AC1369200865B80 /* PDFKitView.swift in Sources */,
 				F58DF02D2AE2B743001D4D68 /* ImageTitle.swift in Sources */,
+				F59FB3C72AE539E50007A76B /* StorageSpaceSettingsView.swift in Sources */,
 				F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */,
 				F5145E832AD58332001860E0 /* ImageTitleDialog.swift in Sources */,
 				F53D81402AC02A7A00865B80 /* Project.swift in Sources */,

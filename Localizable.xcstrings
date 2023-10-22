@@ -151,17 +151,7 @@
         }
       }
     },
-    "Are you sure to delete this project?" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "确定要删除这个项目吗？"
-          }
-        }
-      }
-    },
-    "Are you sure you want to delete all data?" : {
+    "Are you sure to delete all data?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -171,12 +161,22 @@
         }
       }
     },
-    "Are you sure you want to delete all project files?" : {
+    "Are you sure to delete all projects' local file?" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "确定要删除所有项目的文件吗？"
+            "value" : "确定要删除所有项目的本地文件吗？"
+          }
+        }
+      }
+    },
+    "Are you sure to delete this project?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除这个项目吗？"
           }
         }
       }
@@ -437,12 +437,12 @@
         }
       }
     },
-    "Delete All Project Files" : {
+    "Delete Projects' Local Files" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "删除所有项目的文件"
+            "value" : "删除所有项目的本地文件"
           }
         }
       }
@@ -544,6 +544,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "错误"
+          }
+        }
+      }
+    },
+    "Failed to calculate" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "计算失败"
           }
         }
       }
@@ -981,12 +991,12 @@
         }
       }
     },
-    "Location" : {
+    "Location:" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "位置"
+            "value" : "位置："
           }
         }
       }
@@ -1783,7 +1793,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此操作不能撤销"
+            "value" : "此操作不能撤销。"
           }
         }
       }
@@ -1825,6 +1835,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标题"
+          }
+        }
+      }
+    },
+    "Total Used Space:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已使用的空间："
           }
         }
       }
@@ -1968,6 +1988,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "卷号"
+          }
+        }
+      }
+    },
+    "Will delete all imported/downloaded PDFs. " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将会删除所有导入/下载的PDF。"
           }
         }
       }

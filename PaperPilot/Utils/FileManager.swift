@@ -23,9 +23,8 @@ extension FileManager {
         var totalSize: UInt64 = 0
 
         if let enumerator = self.enumerator(atPath: path) {
-            for case let fileURL as URL in enumerator {
-                let attributes = try self.attributesOfItem(atPath: fileURL.path)
-                if let fileSize = attributes[.size] as? UInt64 {
+            while enumerator.nextObject() != nil {
+                if let fileSize = enumerator.fileAttributes?[.size] as? UInt64 {
                     totalSize += fileSize
                 }
             }
