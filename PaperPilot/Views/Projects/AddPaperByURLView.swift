@@ -49,7 +49,9 @@ struct AddPaperByURLView: View {
                              paper: paper,
                              shouldClose: $shouldClose)
         }
-        .alert(errorMsg ?? "", isPresented: Binding { errorMsg != nil } set: { _ in errorMsg = nil}) {}
+        .alert("Failed to resolve paper", isPresented: Binding { errorMsg != nil } set: { _ in errorMsg = nil}) {} message: {
+            Text(errorMsg ?? String(localized: "Unknown error"))
+        }
     }
     
     func handleResolvePaper() async {

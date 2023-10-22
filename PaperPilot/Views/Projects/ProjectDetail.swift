@@ -89,13 +89,10 @@ struct ProjectDetail: View {
                 Divider()
                 Menu("Delete", systemImage: "trash") {
                     Button("Paper and PDF file", role: .destructive) {
-                        handleDeletePaper(papers: selectedPapers, paper: true, pdf: true)
-                    }
-                    Button("Paper only", role: .destructive) {
-                        handleDeletePaper(papers: selectedPapers, paper: true, pdf: false)
+                        handleDeletePaper(papers: selectedPapers, pdfOnly: false)
                     }
                     Button("PDF file only", role: .destructive) {
-                        handleDeletePaper(papers: selectedPapers, paper: false, pdf: true)
+                        handleDeletePaper(papers: selectedPapers, pdfOnly: true)
                     }
                 }
             }
@@ -191,26 +188,25 @@ struct ProjectDetail: View {
         }
     }
 
-    func handleDeletePaper(papers: Set<Paper.ID>, paper: Bool, pdf: Bool) {
-        if pdf {
-            var bookmarkStale = false
-            do {
-                for paperId in papers {
-                    if let paper = project.papers.first(where: { $0.id == paperId }),
-                       let bookmark = paper.fileBookmark,
-                       let url = try? URL(resolvingBookmarkData: bookmark,
-                                          options: bookmarkResOptions,
-                                          relativeTo: nil,
-                                          bookmarkDataIsStale: &bookmarkStale) {
+    func handleDeletePaper(papers: Set<Paper.ID>, pdfOnly: Bool) {
+        do {
+            for paperId in papers {
+                if let paper = project.papers.first(where: { $0.id == paperId }) {
+                    if pdfOnly,
+                       let url = paper.localFile,
+                       FileManager.default.fileExists(atPath: url.path()) {
                         try FileManager.default.removeItem(at: url)
-                        paper.fileBookmark = nil
+                        paper.localFile = nil
+                    } else if let dir = try? FilePath.paperDirectory(for: paper),
+                              FileManager.default.fileExists(atPath: dir.path()) {
+                        try FileManager.default.removeItem(at: dir)
                     }
                 }
-            } catch {
-                print(error.localizedDescription)
             }
+        } catch {
+            print(error.localizedDescription)
         }
-        if paper {
+        if !pdfOnly {
             project.papers.removeAll { papers.contains($0.id) }
         }
     }

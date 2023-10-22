@@ -361,12 +361,10 @@ extension PDFReader {
             savingPDF = true
         }
         Task {
-            if let url = pdf.documentURL,
-               url.startAccessingSecurityScopedResource() {
+            if let url = pdf.documentURL {
                 if !pdf.write(to: url) {
                     saveErrorMsg = "Failed to write PDF."
                 }
-                url.stopAccessingSecurityScopedResource()
             } else {
                 saveErrorMsg = "You don't have access to the PDF."
             }

@@ -49,11 +49,11 @@ class Paper: Hashable, Identifiable {
     ///
     /// 可下载的PDF文件的URL字符串，当本地文件不可用时可从此处获取
     var file: String?
-    /// 文件书签
+    /// 本地文件URL
     ///
-    /// 本地PDF文件的URL书签，使用前需使用`URL(resolvingBookmarkData:options:relativeTo:bookmarkDataIsStale:)`转换为真正的URL
-    var fileBookmark: Data?
-    
+    /// 已经移动到Document文件夹的文件URL
+    var localFile: URL?
+
     var createTime: Date
     var formattedCreateTime: String {
         createTime.formatted(date: .numeric, time: .omitted)
@@ -83,7 +83,7 @@ class Paper: Hashable, Identifiable {
          url: String? = nil,
          doi: String? = nil,
          file: String? = nil,
-         fileBookmark: Data? = nil,
+         localFile: URL? = nil,
          createTime: Date = Date.now,
          read: Bool = false,
          note: String = "",
@@ -103,7 +103,7 @@ class Paper: Hashable, Identifiable {
         self.url = url
         self.doi = doi
         self.file = file
-        self.fileBookmark = fileBookmark
+        self.localFile = localFile
         self.createTime = createTime
         self.read = read
         self.note = note
@@ -127,7 +127,7 @@ class Paper: Hashable, Identifiable {
         self.url = try container.decodeIfPresent(String.self, forKey: .url)
         self.doi = try container.decodeIfPresent(String.self, forKey: .doi)
         self.file = try container.decodeIfPresent(String.self, forKey: .file)
-        self.fileBookmark = try container.decodeIfPresent(Data.self, forKey: .fileBookmark)
+        self.localFile = try container.decodeIfPresent(URL.self, forKey: .localFile)
         self.createTime = try container.decode(Date.self, forKey: .createTime)
         self.read = try container.decode(Bool.self, forKey: .read)
         self.note = try container.decode(String.self, forKey: .note)
@@ -159,27 +159,16 @@ extension Paper {
         createTime = result.createTime.date
         // 读取本地文件
         var bookmarkStale = false
-        guard let bookmark = fileBookmark else { return }
-        let fileURL = try URL(resolvingBookmarkData: bookmark,
-                              options: bookmarkResOptions,
-                              relativeTo: nil,
-                              bookmarkDataIsStale: &bookmarkStale)
-        guard fileURL.startAccessingSecurityScopedResource() else {
-            print("Cannot access file.")
-            return
-        }
-        defer { fileURL.stopAccessingSecurityScopedResource() }
-        if bookmarkStale {
-            fileBookmark = try fileURL.bookmarkData(options: bookmarkCreationOptions)
-        }
-        let fileData = try Data(contentsOf: fileURL)
+        guard let localFile = localFile,
+              FileManager.default.isReadableFile(atPath: localFile.path()) else { return }
+        let fileData = try Data(contentsOf: localFile)
         // 获取、解析OSS直传Token
         let token = try await API.shared.paper.uploadAttachment(.with {
             $0.paperID = result.id
             $0.fetchMetadata = parseMetadata
         }).token
         // 上传文件
-        guard let request = OSSRequest(token: token, fileName: fileURL.lastPathComponent, fileData: fileData) else {
+        guard let request = OSSRequest(token: token, fileName: localFile.lastPathComponent, fileData: fileData) else {
             throw NetworkingError.responseFormatError
         }
         let (data, response) = try await URLSession.shared.data(for: request.urlRequest)
@@ -305,7 +294,7 @@ extension Paper: Codable {
         case url
         case doi
         case file
-        case fileBookmark
+        case localFile
         case createTime
         case read
         case note
@@ -328,7 +317,7 @@ extension Paper: Codable {
         try container.encode(url, forKey: .url)
         try container.encode(doi, forKey: .doi)
         try container.encode(file, forKey: .file)
-        try container.encode(fileBookmark, forKey: .fileBookmark)
+        try container.encode(localFile, forKey: .localFile)
         try container.encode(createTime, forKey: .createTime)
         try container.encode(read, forKey: .read)
         try container.encode(note, forKey: .note)

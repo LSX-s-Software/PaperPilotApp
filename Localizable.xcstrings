@@ -367,16 +367,6 @@
         }
       }
     },
-    "Data format error" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "下载的数据不是图像"
-          }
-        }
-      }
-    },
     "Date Added" : {
       "localizations" : {
         "zh-Hans" : {
@@ -538,6 +528,16 @@
         }
       }
     },
+    "Failed to import this file" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入文件失败"
+          }
+        }
+      }
+    },
     "Failed to join project" : {
       "localizations" : {
         "zh-Hans" : {
@@ -548,12 +548,32 @@
         }
       }
     },
+    "Failed to load PDF: " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法加载PDF："
+          }
+        }
+      }
+    },
     "Failed to quit project" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "退出项目失败"
+          }
+        }
+      }
+    },
+    "Failed to resolve paper" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解析论文信息失败"
           }
         }
       }
@@ -574,6 +594,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法写入PDF。"
+          }
+        }
+      }
+    },
+    "File not found" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找不到文件"
           }
         }
       }
@@ -882,7 +912,14 @@
       }
     },
     "Log Out" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出登录"
+          }
+        }
+      }
     },
     "Login" : {
       "extractionState" : "manual",
@@ -1163,16 +1200,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "论文和PDF"
-          }
-        }
-      }
-    },
-    "Paper only" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仅论文"
           }
         }
       }

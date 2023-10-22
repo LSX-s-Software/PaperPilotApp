@@ -206,64 +206,38 @@ struct PaperReader: View {
                     }
                 }
             }
-            .onAppear {
-                loadPDF()
+            .task(id: paper.id) {
+                await loadPDF()
             }
         }
     }
     
-    func loadPDF() {
+    func loadPDF() async {
         loading = true
+        defer { loading = false }
         // 从本地文件加载
-        if let bookmark = paper.fileBookmark {
-            Task {
-                defer { loading = false }
-                var bookmarkStale = false
-                do {
-                    let resolvedUrl = try URL(resolvingBookmarkData: bookmark,
-                                              options: bookmarkResOptions,
-                                              relativeTo: nil,
-                                              bookmarkDataIsStale: &bookmarkStale)
-                    let didStartAccessing = resolvedUrl.startAccessingSecurityScopedResource()
-                    defer {
-                        resolvedUrl.stopAccessingSecurityScopedResource()
-                    }
-                    
-                    if bookmarkStale {
-                        paper.fileBookmark = try resolvedUrl.bookmarkData(options: bookmarkCreationOptions)
-                    }
-                    if !didStartAccessing {
-                        errorDescription = "Failed to access the file"
-                        return
-                    }
-                    
-                    pdf = PDFDocument(url: resolvedUrl)
-                } catch {
-                    errorDescription = error.localizedDescription
-                }
+        if let url = paper.localFile {
+            if FileManager.default.isReadableFile(atPath: url.path()) {
+                pdf = PDFDocument(url: url)
+            } else {
+                errorDescription = String(localized: "Failed to load PDF: ") + String(localized: "File not found")
             }
             return
         }
         loading = false
         // 下载
         if let urlStr = paper.file, let url = URL(string: urlStr) {
-            Task {
-                do {
-                    let localURL = try await downloadVM.downloadFile(from: url)
-                    loading = true
-                    let documentsURL = try FileManager.default.url(for: .documentDirectory,
-                                                                   in: .userDomainMask,
-                                                                   appropriateFor: nil,
-                                                                   create: false)
-                    let savedURL = documentsURL.appendingPathComponent("\(paper.id.uuidString).pdf")
-                    try FileManager.default.moveItem(at: localURL, to: savedURL)
-                    paper.fileBookmark = try savedURL.bookmarkData(options: bookmarkCreationOptions)
-                    pdf = PDFDocument(url: savedURL)
-                    errorDescription = nil
-                } catch {
-                    errorDescription = String(localized: "Failed to download PDF: ") + error.localizedDescription
-                }
-                loading = false
+            do {
+                let localURL = try await downloadVM.downloadFile(from: url)
+                loading = true
+                let savedURL = try FilePath.paperDirectory(for: paper, create: true)
+                    .appending(path: url.lastPathComponent)
+                try FileManager.default.moveItem(at: localURL, to: savedURL)
+                paper.localFile = savedURL
+                pdf = PDFDocument(url: savedURL)
+                errorDescription = nil
+            } catch {
+                errorDescription = String(localized: "Failed to download PDF: ") + error.localizedDescription
             }
         }
     }
@@ -274,15 +248,17 @@ struct PaperReader: View {
             do {
                 switch result {
                 case .success(let url):
-                    paper.file = url.path
                     let didStartAccessing = url.startAccessingSecurityScopedResource()
                     defer { url.stopAccessingSecurityScopedResource() }
                     if didStartAccessing {
-                        paper.fileBookmark = try url.bookmarkData(options: bookmarkCreationOptions)
-                        pdf = PDFDocument(url: url)
+                        let savedURL = try FilePath.paperDirectory(for: paper, create: true)
+                            .appending(path: url.lastPathComponent)
+                        try FileManager.default.copyItem(at: url, to: savedURL)
+                        paper.localFile = savedURL
+                        pdf = PDFDocument(url: savedURL)
                         errorDescription = nil
                     } else {
-                        errorDescription = "Failed to access the file"
+                        errorDescription = String(localized: "You don't have access to the PDF.")
                     }
                 case .failure(let error):
                     throw error

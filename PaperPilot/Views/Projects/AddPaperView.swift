@@ -16,7 +16,9 @@ struct AddPaperView: View {
     @State private var isImporting = false
     @State private var shouldGoNext = false
     @State private var shouldClose = false
-    
+    @State private var hasError = false
+    @State private var errorMsg: String?
+
     var body: some View {
         NavigationStack {
             ImageTitleDialog("Add Paper", systemImage: "doc.fill.badge.plus") {
@@ -65,6 +67,9 @@ struct AddPaperView: View {
                     )
                     .fileDialogMessage("Select a PDF file to import")
                     .fileDialogConfirmationLabel("Import")
+                    .alert("Failed to import this file", isPresented: $hasError) {} message: {
+                        Text(errorMsg ?? String(localized: "Unknown error"))
+                    }
                 }
                 .fixedSize(horizontal: true, vertical: false)
             }
@@ -85,20 +90,24 @@ struct AddPaperView: View {
             case .success(let url):
                 filePath = url
                 newPaper.title = url.deletingPathExtension().lastPathComponent
-                newPaper.file = url.path
                 let didStartAccessing = url.startAccessingSecurityScopedResource()
                 defer {
                     url.stopAccessingSecurityScopedResource()
                 }
                 if didStartAccessing {
-                    newPaper.fileBookmark = try url.bookmarkData(options: bookmarkCreationOptions)
+                    let savedURL = try FilePath.paperDirectory(for: newPaper, create: true)
+                        .appending(path: url.lastPathComponent)
+                    try FileManager.default.copyItem(at: url, to: savedURL)
+                    newPaper.localFile = savedURL
                     shouldGoNext = true
+                } else {
+                    errorMsg = String(localized: "You don't have access to the PDF.")
                 }
             case .failure(let error):
                 throw error
             }
         } catch {
-            print(error)
+            errorMsg = error.localizedDescription
         }
     }
 }
