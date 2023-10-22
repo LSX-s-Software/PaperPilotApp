@@ -38,4 +38,15 @@ struct OSSRequest {
     var urlRequest: URLRequest {
         request.urlRequest
     }
+
+    func upload() async throws {
+        let (data, response) = try await URLSession.shared.data(for: self.urlRequest)
+        if let response = response as? HTTPURLResponse,
+           !(200...299).contains(response.statusCode) {
+            let responseXML = try? XMLDocument(data: data).rootElement()
+            let message = responseXML?.children?.compactMap { $0.name == "Code" || $0.name == "Message" ? $0.stringValue : nil }
+            throw NetworkingError.requestError(code: response.statusCode,
+                                               message: message?.joined(separator: ": ") ?? String(localized: "Unknown error"))
+        }
+    }
 }

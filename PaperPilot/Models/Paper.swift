@@ -171,14 +171,7 @@ extension Paper {
         guard let request = OSSRequest(token: token, fileName: localFile.lastPathComponent, fileData: fileData) else {
             throw NetworkingError.responseFormatError
         }
-        let (data, response) = try await URLSession.shared.data(for: request.urlRequest)
-        if let response = response as? HTTPURLResponse,
-           !(200...299).contains(response.statusCode) {
-            let responseXML = try? XMLDocument(data: data).rootElement()
-            let message = responseXML?.children?.compactMap { $0.name == "Code" || $0.name == "Message" ? $0.stringValue : nil }
-            throw NetworkingError.requestError(code: response.statusCode,
-                                               message: message?.joined(separator: ": ") ?? String(localized: "Unknown error"))
-        }
+        try await request.upload()
         // TODO: 上传书签和标注
     }
 }
