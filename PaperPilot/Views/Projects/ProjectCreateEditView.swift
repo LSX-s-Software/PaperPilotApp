@@ -30,22 +30,22 @@ struct ProjectCreateEditView: View {
                 edit ? "Edit Project" : "Create New Project",
                 systemImage: "folder.fill.badge.\(edit ? "gearshape" : "plus")"
             ) {
-                    TextField("Project Name", text: $project.name)
+                TextField("Project Name", text: $project.name)
 
-                    if !edit {
-                        Picker("Project Type", selection: $isRemoteProject) {
-                            Text("Local").tag(false)
-                            Text("Remote").tag(true)
-                        }
-                        .pickerStyle(.segmented)
+                if !edit {
+                    Picker("Project Type", selection: $isRemoteProject) {
+                        Text("Local").tag(false)
+                        Text("Remote").tag(true)
                     }
+                    .pickerStyle(.segmented)
+                }
 
-                    Section("Project Description") {
-                        TextEditor(text: $project.desc)
-                            .font(.body)
-                            .frame(minHeight: 100)
-                            .scrollContentBackground(.hidden)
-                    }
+                Section("Project Description") {
+                    TextEditor(text: $project.desc)
+                        .font(.body)
+                        .frame(minHeight: 100)
+                        .scrollContentBackground(.hidden)
+                }
             }
             .alert(edit ? "Failed to edit project" : "Failed to create project", isPresented: $submitError) {} message: {
                 Text(errorMsg)

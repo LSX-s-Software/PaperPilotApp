@@ -13,7 +13,10 @@ class DownloadViewModel: ObservableObject {
     private var downloadTask: URLSessionDownloadTask?
     private var observation: NSKeyValueObservation?
 
-    func downloadFile(from url: URL, success: @escaping (URL) -> Void, fail: @escaping (Error) -> Void) {
+    func downloadFile(from url: URL,
+                      parentProgress: Progress? = nil,
+                      success: @escaping (URL) -> Void,
+                      fail: @escaping (Error) -> Void) {
         DispatchQueue.main.async { [weak self] in
             self?.downloading = true
         }
@@ -32,6 +35,9 @@ class DownloadViewModel: ObservableObject {
             success(localURL)
         }
 
+        if let parentProgress = parentProgress {
+            parentProgress.addChild(downloadTask!.progress, withPendingUnitCount: 1)
+        }
         observation = downloadTask!.progress.observe(\.fractionCompleted) { progress, _  in
             DispatchQueue.main.async { [weak self] in
                 self?.downloadProgress = progress
@@ -41,13 +47,13 @@ class DownloadViewModel: ObservableObject {
         downloadTask!.resume()
     }
     
-    func downloadFile(from url: URL) async throws -> URL {
+    func downloadFile(from url: URL, parentProgress: Progress? = nil) async throws -> URL {
         return try await withCheckedThrowingContinuation { continuation in
-            downloadFile(from: url, success: { url in
+            downloadFile(from: url, parentProgress: parentProgress) { url in
                 continuation.resume(returning: url)
-            }, fail: { error in
+            } fail: { error in
                 continuation.resume(throwing: error)
-            })
+            }
         }
     }
     

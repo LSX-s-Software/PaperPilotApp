@@ -14,6 +14,9 @@ struct ShareProjectView: View {
     private var username: String?
 
     @StateObject private var downloadVM = DownloadViewModel()
+    @State private var errorMsg: String?
+    @State private var downloading = false
+    @State private var downloadProgress: Progress?
 
     var body: some View {
         VStack {
@@ -51,22 +54,64 @@ struct ShareProjectView: View {
                 }
                 .disabled(project.invitationCode == nil || project.invitationCode!.isEmpty)
             } else {
-                HStack {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                    Text("Cannot invite others to join local projects.")
-                }
-                .foregroundStyle(.red)
+                Label("Cannot invite others to join local projects.", systemImage: "exclamationmark.triangle.fill")
+                    .foregroundStyle(.red)
 
                 AsyncButton("Convert to remote project") {
-                    do {
-                        try await project.upload()
-                    } catch {
-                        print(error)
+                    await uploadProject()
+                }
+
+                Group {
+                    if downloading {
+                        Group {
+                            if let progress = downloadProgress {
+                                ProgressView(value: progress.fractionCompleted)
+                            } else {
+                                ProgressView()
+                            }
+                        }
+                        .progressViewStyle(.linear)
+                        .padding(.horizontal)
+                        .frame(width: 200)
+                        Text("Downloading PDF...")
+                    }
+
+                    if let errorMsg = errorMsg {
+                        Text("Convert failed: \(errorMsg)")
                     }
                 }
+                .foregroundStyle(.secondary)
             }
         }
         .padding()
+    }
+
+    func uploadProject() async {
+        errorMsg = nil
+        do {
+            downloading = true
+            downloadProgress = Progress(totalUnitCount: Int64(project.papers.count))
+            for paper in project.papers {
+                if let localFile = paper.localFile,
+                   FileManager.default.isReadableFile(atPath: localFile.path()) {
+                    downloadProgress?.completedUnitCount += 1
+                    continue
+                }
+                if let urlStr = paper.file, let url = URL(string: urlStr) {
+                    let localURL = try await downloadVM.downloadFile(from: url, parentProgress: downloadProgress)
+                    let savedURL = try FilePath.paperDirectory(for: paper, create: true)
+                        .appending(path: url.lastPathComponent)
+                    try FileManager.default.moveItem(at: localURL, to: savedURL)
+                    paper.localFile = savedURL
+                } else {
+                    downloadProgress?.completedUnitCount += 1
+                }
+            }
+            downloading = false
+            try await project.upload()
+        } catch {
+            errorMsg = error.localizedDescription
+        }
     }
 }
 
