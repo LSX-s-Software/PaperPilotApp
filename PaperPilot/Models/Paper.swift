@@ -171,15 +171,13 @@ extension Paper {
             $0.fetchMetadata = parseMetadata
         }).token
         // 上传文件
-        guard let request =
-                OSSRequest(
-                    token: token,
-                    fileName: localFile.lastPathComponent,
-                    fileData: fileData,
-                    mimeType: "application/pdf") else {
+        guard let request = OSSRequest(token: token,
+                                       fileName: localFile.lastPathComponent,
+                                       fileData: fileData,
+                                       mimeType: "application/pdf") else {
             throw NetworkingError.responseFormatError
         }
-        try await request.upload()
+        try await URLSession.shared.upload(for: request)
         // TODO: 上传书签和标注
     }
 }

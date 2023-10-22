@@ -53,7 +53,7 @@ class LoginViewModel: ObservableObject {
 
     func sendVerificationCode() async {
         do {
-            let result = try await API.shared.auth.sendSmsCode(.with {
+            _ = try await API.shared.auth.sendSmsCode(.with {
                 $0.phone = phoneInput
             })
         } catch let error as GRPCStatus {
@@ -194,7 +194,7 @@ class LoginViewModel: ObservableObject {
                         print("invalid token \(token)")
                         return
                     }
-                    try await oss.upload()
+                    try await URLSession.shared.upload(for: oss)
                     if let (error, exception) = await API.shared.refreshUserInfo() {
                         fail(message: error.localizedDescription, detail: exception.message)
                     }

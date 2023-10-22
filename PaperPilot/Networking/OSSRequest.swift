@@ -38,9 +38,11 @@ struct OSSRequest {
     var urlRequest: URLRequest {
         request.urlRequest
     }
+}
 
-    func upload() async throws {
-        let (data, response) = try await URLSession.shared.data(for: self.urlRequest)
+extension URLSession {
+    func upload(for request: OSSRequest) async throws {
+        let (data, response) = try await self.upload(for: request.urlRequest, from: request.urlRequest.httpBody!)
         if let response = response as? HTTPURLResponse,
            !(200...299).contains(response.statusCode) {
             let responseXML = try? XMLDocument(data: data).rootElement()
