@@ -24,6 +24,7 @@ enum AppWindow: String, Identifiable {
 struct PaperPilotApp: App {
     let modelContainer: ModelContainer
     @StateObject var appState = AppState()
+    @StateObject var navigationContext = NavigationContext()
 
     @AppStorage(AppStorageKey.User.accessToken.rawValue)
     private var accessToken: String?
@@ -44,6 +45,7 @@ struct PaperPilotApp: App {
         Window("Paper Pilot", id: AppWindow.main.id) {
             ContentView()
                 .frame(minWidth: 600, minHeight: 300)
+                .environmentObject(navigationContext)
                 .sheet(isPresented: $appState.isShowingJoinProjectView) {
                     if let url = appState.incomingURL {
                         JoinProjectView(invitationURL: url)

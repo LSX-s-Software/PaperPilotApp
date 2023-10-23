@@ -62,6 +62,5 @@ extension Project {
         for paper in papers {
             try await paper.upload(to: self)
         }
-        try modelContext?.save()
     }
 }

@@ -24,8 +24,6 @@ struct ProjectDetail: View {
     @State private var isShowingAddPaperSheet = false
     @State private var isShowingSharePopover = false
 
-    var onDelete: (() -> Void)?
-
     var body: some View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
             TableColumn("Title", value: \.title)
@@ -118,7 +116,7 @@ struct ProjectDetail: View {
                     isShowingEditProjectSheet.toggle()
                 }
                 .sheet(isPresented: $isShowingEditProjectSheet) {
-                    ProjectCreateEditView(edit: true, project: project, onDelete: onDelete)
+                    ProjectCreateEditView(edit: true, project: project)
                 }
 
                 Button("Add Document", systemImage: "plus") {

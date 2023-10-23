@@ -141,7 +141,8 @@ class Paper: Hashable, Identifiable {
 // MARK: - Paper相关操作
 extension Paper {
     func upload(to project: Project, parseMetadata: Bool = false) async throws {
-        guard remoteId != nil, let projectId = project.remoteId else { return }
+        guard remoteId == nil, let projectId = project.remoteId else { return }
+        print(title, 1)
         // 上传基本信息
         let result = try await API.shared.paper.createPaper(.with {
             $0.projectID = projectId
@@ -151,7 +152,11 @@ extension Paper {
             $0.paper.authors = authors
             $0.paper.tags = tags
             if let publicationYear = publicationYear,
-               let year = Int32(publicationYear) { $0.paper.publicationDate.year = year }
+               let year = Int32(publicationYear) {
+                $0.paper.publicationDate.year = year
+                $0.paper.publicationDate.month = 1
+                $0.paper.publicationDate.day = 1
+            }
             if let publication = publication { $0.paper.publication = publication }
             if let volume = volume { $0.paper.volume = volume }
             if let issue = issue { $0.paper.issue = issue }
@@ -161,6 +166,7 @@ extension Paper {
         })
         remoteId = result.id
         createTime = result.createTime.date
+        print(title, 2)
         // 读取本地文件
         guard let localFile = localFile,
               FileManager.default.isReadableFile(atPath: localFile.path()) else { return }
@@ -170,6 +176,7 @@ extension Paper {
             $0.paperID = result.id
             $0.fetchMetadata = parseMetadata
         }).token
+        print(title, 3)
         // 上传文件
         guard let request = OSSRequest(token: token,
                                        fileName: localFile.lastPathComponent,
@@ -178,6 +185,7 @@ extension Paper {
             throw NetworkingError.responseFormatError
         }
         try await URLSession.shared.upload(for: request)
+        print(title, 4)
         // TODO: 上传书签和标注
     }
 }

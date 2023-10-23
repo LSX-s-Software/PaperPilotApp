@@ -11,10 +11,10 @@ import GRPC
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    
+    @EnvironmentObject private var navigationContext: NavigationContext
+
     @Query(filter: #Predicate<Project> { $0.remoteId == nil }) private var localProjects: [Project]
     @Query(filter: #Predicate<Project> { $0.remoteId != nil }) private var remoteProjects: [Project]
-    @State private var selectedProject: Project?
     @State private var isShowingLoginSheet = false
     @State private var isShowingAccountView = false
     @State private var isShowingNewProjectSheet = false
@@ -28,7 +28,7 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             // MARK: - 项目列表
-            List(selection: $selectedProject) {
+            List(selection: $navigationContext.selectedProject) {
                 if !localProjects.isEmpty {
                     Section("Local Projects") {
                         ForEach(localProjects) { project in
@@ -82,8 +82,8 @@ struct ContentView: View {
             // MARK: 项目列表右键菜单
             .contextMenu(forSelectionType: Project.self) { projects in
                 Button("Delete") {
-                    if selectedProject != nil && projects.contains(selectedProject!) {
-                        selectedProject = nil
+                    if navigationContext.selectedProject != nil && projects.contains(navigationContext.selectedProject!) {
+                        navigationContext.selectedProject = nil
                     }
                     Task {
                         do {
@@ -118,10 +118,8 @@ struct ContentView: View {
         } detail: {
             // MARK: - 项目详情
             Group {
-                if let project = selectedProject {
-                    ProjectDetail(project: project) {
-                        selectedProject = nil
-                    }
+                if let project = navigationContext.selectedProject {
+                    ProjectDetail(project: project)
                 } else {
                     Text("Select a project from the left sidebar.")
                         .font(.title)

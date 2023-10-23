@@ -347,6 +347,16 @@
         }
       }
     },
+    "Converting project..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在转换项目…"
+          }
+        }
+      }
+    },
     "Copy" : {
       "localizations" : {
         "zh-Hans" : {
@@ -483,6 +493,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在下载PDF…"
+          }
+        }
+      }
+    },
+    "Downloading: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在下载："
           }
         }
       }

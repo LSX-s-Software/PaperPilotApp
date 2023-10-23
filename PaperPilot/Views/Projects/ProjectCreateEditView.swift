@@ -13,6 +13,7 @@ struct ProjectCreateEditView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var navigationContext: NavigationContext
 
     @Bindable var project: Project
     @State private var isShowingDeleteConfirm = false
@@ -127,6 +128,7 @@ struct ProjectCreateEditView: View {
             project.desc = newDesc
             if !edit {
                 modelContext.insert(project)
+                navigationContext.selectedProject = project
                 onCreate?(project)
             }
             dismiss()
@@ -154,6 +156,7 @@ struct ProjectCreateEditView: View {
            FileManager.default.fileExists(atPath: dir.path()) {
             try? FileManager.default.removeItem(at: dir)
         }
+        navigationContext.selectedProject = nil
         onDelete?()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             modelContext.delete(project)

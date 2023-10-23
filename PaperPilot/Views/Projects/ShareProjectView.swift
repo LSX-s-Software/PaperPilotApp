@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct ShareProjectView: View {
+    @EnvironmentObject private var navigationContext: NavigationContext
+
     @Bindable var project: Project
 
     @AppStorage(AppStorageKey.User.username.rawValue)
     private var username: String?
 
     @StateObject private var downloadVM = DownloadViewModel()
-    @State private var errorMsg: String?
+    @State private var promptMsg: String?
     @State private var downloading = false
     @State private var downloadProgress: Progress?
 
@@ -61,38 +63,36 @@ struct ShareProjectView: View {
                     await uploadProject()
                 }
 
-                Group {
-                    if downloading {
-                        Group {
-                            if let progress = downloadProgress {
-                                ProgressView(value: progress.fractionCompleted)
-                                    .id(downloadVM.downloadProgress)
-                            } else {
-                                ProgressView()
-                            }
+                if downloading {
+                    Group {
+                        if let progress = downloadProgress {
+                            ProgressView(value: progress.fractionCompleted)
+                                .id(downloadVM.downloadProgress)
+                        } else {
+                            ProgressView()
                         }
-                        .progressViewStyle(.linear)
-                        .padding(.horizontal)
-                        .frame(width: 200)
-                        Text("Downloading PDF...")
                     }
-
-                    if let errorMsg = errorMsg {
-                        Text("Convert failed: \(errorMsg)")
-                    }
+                    .progressViewStyle(.linear)
+                    .padding(.horizontal)
+                    .frame(width: 200)
                 }
-                .foregroundStyle(.secondary)
+
+                if let prompt = promptMsg {
+                    Text(prompt)
+                        .foregroundStyle(.secondary)
+                }
             }
         }
         .padding()
     }
 
     func uploadProject() async {
-        errorMsg = nil
+        promptMsg = nil
         do {
             downloading = true
             downloadProgress = Progress(totalUnitCount: Int64(project.papers.count))
             for paper in project.papers {
+                promptMsg = String(localized: "Downloading: \(paper.title)")
                 if let localFile = paper.localFile,
                    FileManager.default.isReadableFile(atPath: localFile.path()) {
                     downloadProgress?.completedUnitCount += 1
@@ -109,9 +109,11 @@ struct ShareProjectView: View {
                 }
             }
             downloading = false
+            promptMsg = String(localized: "Converting project...")
             try await project.upload()
         } catch {
-            errorMsg = error.localizedDescription
+            print(error)
+            promptMsg = String(localized: "Convert failed: \(error.localizedDescription)")
         }
     }
 }
