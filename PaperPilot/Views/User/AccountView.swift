@@ -129,23 +129,31 @@ struct AccountView: View {
                             Button("Confirm", role: .destructive, action: viewModel.logout)
                         }
                     }
-                }
 
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(viewModel.isEditing ? "Cancel" : "Edit") {
-                        viewModel.isEditing.toggle()
-                    }
-                }
-
-                ToolbarItem(placement: .confirmationAction) {
-                    if viewModel.isEditing {
-                        AsyncButton(viewModel.isEditing ? "Save" : viewModel.isRegistering ? "Register" : "Login") {
-                            await viewModel.submit()
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(viewModel.isEditing ? "Cancel" : "Edit") {
+                            viewModel.isEditing.toggle()
                         }
-                    } else {
-                        Button(viewModel.hasLoggedIn ? "Done" : "Cancel", role: .cancel) {
+                    }
+
+                    ToolbarItem(placement: .confirmationAction) {
+                        if viewModel.isEditing {
+                            AsyncButton("Save", action: viewModel.submit)
+                        } else {
+                            Button(viewModel.hasLoggedIn ? "Done" : "Cancel", role: .cancel) {
+                                dismiss()
+                            }
+                        }
+                    }
+                } else {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") {
                             dismiss()
                         }
+                    }
+
+                    ToolbarItem(placement: .confirmationAction) {
+                        AsyncButton(viewModel.isRegistering ? "Register" : "Login", action: viewModel.submit)
                     }
                 }
             }
