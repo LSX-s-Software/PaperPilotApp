@@ -153,9 +153,7 @@ extension Paper {
             $0.paper.tags = tags
             if let publicationYear = publicationYear,
                let year = Int32(publicationYear) {
-                $0.paper.publicationDate.year = year
-                $0.paper.publicationDate.month = 1
-                $0.paper.publicationDate.day = 1
+                $0.paper.publicationYear = year
             }
             if let publication = publication { $0.paper.publication = publication }
             if let volume = volume { $0.paper.volume = volume }
