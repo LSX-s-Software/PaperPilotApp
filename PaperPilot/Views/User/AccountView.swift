@@ -50,7 +50,7 @@ struct AccountView: View {
                     if !viewModel.hasLoggedIn {
                         Text("PaperPilot Account")
                     } else {
-                        Text(viewModel.usernameStored ?? "")
+                        Text(verbatim: viewModel.usernameStored ?? "")
                     }
                 }
                 .font(.largeTitle)
@@ -61,7 +61,7 @@ struct AccountView: View {
                     if !viewModel.hasLoggedIn {
                         Text("Log in to collaborate with your teammates")
                     } else {
-                        Text(viewModel.phoneStored ?? "")
+                        Text(verbatim: viewModel.phoneStored ?? "")
                     }
                 }
                 .foregroundStyle(.secondary)
@@ -154,7 +154,7 @@ struct AccountView: View {
             viewModel.errorMsg,
             isPresented: $viewModel.hasFailed,
             actions: { },
-            message: { Text(LocalizedStringKey(viewModel.errorDetail ?? "No detailed error message.")) })
+            message: { Text(viewModel.errorDetail ?? "No detailed error message.") })
     }
 }
 

@@ -63,11 +63,11 @@ struct ProjectCreateEditView: View {
                 }
             }
             .alert(edit ? "Failed to edit project" : "Failed to create project", isPresented: $submitError) {} message: {
-                Text(errorMsg)
+                Text(verbatim: errorMsg)
             }
             .alert(project.isOwner ? "Failed to delete project" : "Failed to quit project",
                    isPresented: $deleteError) {} message: {
-                Text(errorMsg)
+                Text(verbatim: errorMsg)
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {

@@ -29,11 +29,11 @@ struct ProjectDetail: View {
             TableColumn("Title", value: \.title)
             TableColumn("Authors", value: \.formattedAuthors)
             TableColumn("Publication Year") { paper in
-                Text(paper.publicationYear ?? "Unknown")
+                Text(paper.publicationYear ?? String(localized: "Unknown"))
             }
             .width(50)
             TableColumn("Publication") { paper in
-                Text(paper.publication ?? "Unknown")
+                Text(paper.publication ?? String(localized: "Unknown"))
             }
             TableColumn("Date Added", value: \.formattedCreateTime)
                 .width(70)

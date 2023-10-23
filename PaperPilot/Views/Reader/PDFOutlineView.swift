@@ -43,7 +43,7 @@ struct PDFOutlineView: View {
         List(selection: $selection) {
             OutlineGroup(outline.children ?? [], children: \.children) { item in
                 HStack {
-                    Text(item.outline.label ?? "")
+                    Text(verbatim: item.outline.label ?? "")
                     Spacer()
                     if let label = item.outline.destination?.page?.label {
                         Text(label)
