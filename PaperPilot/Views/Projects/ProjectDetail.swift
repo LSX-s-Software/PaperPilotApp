@@ -188,6 +188,7 @@ struct ProjectDetail: View {
     }
 
     func handleDeletePaper(papers: Set<Paper.ID>, pdfOnly: Bool) {
+        // TODO: 删除远程paper
         do {
             for paperId in papers {
                 if let paper = project.papers.first(where: { $0.id == paperId }) {
@@ -196,6 +197,7 @@ struct ProjectDetail: View {
                        FileManager.default.fileExists(atPath: url.path()) {
                         try FileManager.default.removeItem(at: url)
                         paper.localFile = nil
+                        paper.status = ModelStatus.waitingForDownload.rawValue
                     } else if let dir = try? FilePath.paperDirectory(for: paper),
                               FileManager.default.fileExists(atPath: dir.path()) {
                         try? FileManager.default.removeItem(at: dir)

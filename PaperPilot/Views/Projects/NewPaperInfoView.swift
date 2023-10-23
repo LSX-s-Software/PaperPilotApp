@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import GRPC
 
 struct NewPaperInfoView: View {
     @Bindable var project: Project
-    @State var paper: Paper
+    @Bindable var paper: Paper
     @Binding var shouldClose: Bool
-    
+    @State private var hasError = false
+    @State private var errorMsg: String?
+
     var body: some View {
         ImageTitleForm("Supplement Information", systemImage: "doc.badge.ellipsis") {
             Section("Required Info") {
@@ -35,10 +38,37 @@ struct NewPaperInfoView: View {
                 TextField("DOI", text: Binding { paper.doi ?? "" } set: { paper.doi = $0.isEmpty ? nil : $0 })
                 TextField("Abstract", text: Binding { paper.abstract ?? "" } set: { paper.abstract = $0.isEmpty ? nil : $0 })
             }
+        } onDismiss: {
+            // rollback
+            if let remoteId = paper.remoteId {
+                Task {
+                    do {
+                        _ = try await API.shared.paper.deletePaper(.with { $0.id = remoteId })
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+        }
+        .alert("Failed to Add Paper", isPresented: $hasError) {} message: {
+            Text(errorMsg ?? String(localized: "Unknown error"))
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("Add") {
+                AsyncButton("Add") {
+                    if paper.remoteId != nil {
+                        do {
+                            _ = try await API.shared.paper.updatePaper(paper.paperDetail)
+                        } catch let error as GRPCStatus {
+                            hasError = true
+                            errorMsg = error.message
+                            return
+                        } catch {
+                            hasError = true
+                            errorMsg = error.localizedDescription
+                            return
+                        }
+                    }
                     project.papers.append(paper)
                     shouldClose = true
                 }

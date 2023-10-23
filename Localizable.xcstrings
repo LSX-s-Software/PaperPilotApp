@@ -565,6 +565,16 @@
         }
       }
     },
+    "Failed to Add Paper" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加论文失败"
+          }
+        }
+      }
+    },
     "Failed to calculate" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1959,10 +1969,24 @@
       }
     },
     "Update failed: %@" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新失败："
+          }
+        }
+      }
     },
     "Updating..." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在更新…"
+          }
+        }
+      }
     },
     "URL" : {
       "localizations" : {

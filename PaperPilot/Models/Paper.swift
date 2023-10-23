@@ -145,27 +145,17 @@ class Paper: Hashable, Identifiable {
 
 // MARK: - Paper相关操作
 extension Paper {
+    /// 上传到服务器
+    /// - Parameters:
+    ///   - project: 所属项目
+    ///   - parseMetadata: 是否解析元数据
     func upload(to project: Project, parseMetadata: Bool = false) async throws {
         guard let projectId = project.remoteId else { return }
         // 上传基本信息
         if remoteId == nil {
             let result = try await API.shared.paper.createPaper(.with {
                 $0.projectID = projectId
-                $0.paper.title = title
-                if let abstract = abstract { $0.paper.abstract = abstract }
-                $0.paper.keywords = keywords
-                $0.paper.authors = authors
-                $0.paper.tags = tags
-                if let publicationYear = publicationYear,
-                   let year = Int32(publicationYear) {
-                    $0.paper.publicationYear = year
-                }
-                if let publication = publication { $0.paper.publication = publication }
-                if let volume = volume { $0.paper.volume = volume }
-                if let issue = issue { $0.paper.issue = issue }
-                if let pages = pages { $0.paper.pages = pages }
-                if let url = url { $0.paper.url = url }
-                if let doi = doi { $0.paper.doi = doi }
+                $0.paper = self.paperDetail
             })
             remoteId = result.id
             createTime = result.createTime.date
@@ -194,10 +184,56 @@ extension Paper {
         status = ModelStatus.normal.rawValue
         print(title, "file uploaded")
     }
+    
+    /// 使用远端数据更新论文信息
+    /// - Parameter detail: 远端数据
+    func update(with detail: Paper_PaperDetail) {
+        remoteId = detail.id
+        title = detail.title
+        abstract = detail.abstract
+        keywords = detail.keywords
+        authors = detail.authors
+        tags = detail.tags
+        publicationYear = String(format: "%d", detail.publicationYear)
+        publication = detail.publication
+        volume = detail.volume
+        issue = detail.issue
+        pages = detail.pages
+        url = detail.url
+        doi = detail.doi
+        file = detail.file
+        createTime = detail.hasCreateTime ? detail.createTime.date : Date.now
+    }
+
+    var paperDetail: Paper_PaperDetail {
+        Paper_PaperDetail.with {
+            if let remoteId = remoteId { $0.id = remoteId }
+            $0.title = title
+            if let abstract = abstract { $0.abstract = abstract }
+            $0.keywords = keywords
+            $0.authors = authors
+            $0.tags = tags
+            if let publicationYear = publicationYear,
+               let year = Int32(publicationYear) {
+                $0.publicationYear = year
+            }
+            if let publication = publication { $0.publication = publication }
+            if let volume = volume { $0.volume = volume }
+            if let issue = issue { $0.issue = issue }
+            if let pages = pages { $0.pages = pages }
+            if let url = url { $0.url = url }
+            if let doi = doi { $0.doi = doi }
+        }
+    }
 }
 
 // MARK: - Paper扩展构造函数
 extension Paper {
+    convenience init(from detail: Paper_PaperDetail) {
+        self.init(title: detail.title)
+        self.update(with: detail)
+    }
+
     /// 通过DOI获取论文信息
     /// - Parameter doi: 论文DOI
     /// - Throws: NetworkingError

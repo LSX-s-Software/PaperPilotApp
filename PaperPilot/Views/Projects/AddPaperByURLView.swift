@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GRPC
 
 struct AddPaperByURLView: View {
     @Environment(\.modelContext) private var modelContext
@@ -57,9 +58,19 @@ struct AddPaperByURLView: View {
     
     func handleResolvePaper() async {
         do {
-            paper = try await Paper(query: url, ensureDoi: isDoi)
+            if let projectId = project.remoteId {
+                let result = try await API.shared.paper.createPaperByLink(.with {
+                    $0.projectID = projectId
+                    $0.link = url
+                })
+                paper = Paper(from: result)
+            } else {
+                paper = try await Paper(query: url, ensureDoi: isDoi)
+            }
         } catch NetworkingError.notFound, NetworkingError.responseFormatError {
             errorMsg = String(localized: "Relevant paper info not found")
+        } catch let error as GRPCStatus {
+            errorMsg = error.message
         } catch {
             errorMsg = error.localizedDescription
         }
