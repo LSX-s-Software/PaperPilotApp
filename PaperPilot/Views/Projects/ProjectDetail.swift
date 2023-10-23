@@ -130,9 +130,7 @@ struct ProjectDetail: View {
         }
         .task(id: project.papers, priority: .background) {
             guard project.remoteId != nil else { return }
-            withAnimation {
-                updating = true
-            }
+            updating = true
             do {
                 for paper in project.papers {
                     switch paper.status {
@@ -146,9 +144,7 @@ struct ProjectDetail: View {
             } catch {
                 message = String(localized: "Update failed: \(error.localizedDescription)")
             }
-            withAnimation {
-                updating = false
-            }
+            updating = false
         }
         .navigationTitle($project.name)
 #if os(macOS)
@@ -188,10 +184,11 @@ struct ProjectDetail: View {
     }
 
     func handleDeletePaper(papers: Set<Paper.ID>, pdfOnly: Bool) {
-        // TODO: 删除远程paper
-        do {
-            for paperId in papers {
-                if let paper = project.papers.first(where: { $0.id == paperId }) {
+        updating = true
+        Task {
+            do {
+                for paperId in papers {
+                    guard let paper = project.papers.first(where: { $0.id == paperId }) else { continue }
                     if pdfOnly,
                        let url = paper.localFile,
                        FileManager.default.fileExists(atPath: url.path()) {
@@ -203,12 +200,17 @@ struct ProjectDetail: View {
                         try? FileManager.default.removeItem(at: dir)
                     }
                     if !pdfOnly {
+                        if project.remoteId != nil, let remoteId = paper.remoteId {
+                            _ = try await API.shared.paper.deletePaper(.with { $0.id = remoteId })
+                        }
                         modelContext.delete(paper)
                     }
                 }
+                message = nil
+            } catch {
+                message = error.localizedDescription
             }
-        } catch {
-            print(error.localizedDescription)
+            updating = false
         }
     }
 }

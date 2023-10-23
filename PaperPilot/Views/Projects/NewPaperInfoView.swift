@@ -69,7 +69,9 @@ struct NewPaperInfoView: View {
                             return
                         }
                     }
-                    project.papers.append(paper)
+                    if paper.project == nil {
+                        project.papers.append(paper)
+                    }
                     shouldClose = true
                 }
                 .keyboardShortcut(.defaultAction)
