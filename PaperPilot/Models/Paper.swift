@@ -193,7 +193,6 @@ extension Paper {
         try await URLSession.shared.upload(for: request)
         status = ModelStatus.normal.rawValue
         print(title, "file uploaded")
-        // TODO: 上传书签和标注
     }
 }
 
@@ -260,7 +259,7 @@ extension Paper {
     /// 通过URL获取论文信息
     /// - Parameter query: URL
     /// - Throws: NetworkingError
-    convenience init(query: String) async throws {
+    convenience init(query: String, ensureDoi: Bool = false) async throws {
         var urlComp = URLComponents(string: "https://sci-hub.wf/")
         urlComp?.queryItems = [URLQueryItem(name: "sci-hub-plugin-check", value: nil),
                                URLQueryItem(name: "request", value: query)]
@@ -280,13 +279,20 @@ extension Paper {
         guard let htmlString = String(data: data, encoding: .utf8) else {
             throw NetworkingError.responseFormatError
         }
-        guard let doiMatch = htmlString.firstMatch(of: /doi:(.+)&nbsp;/) else {
+
+        let doi: String
+        if ensureDoi {
+            doi = query
+        } else if let doiMatch = htmlString.firstMatch(of: /doi:(.+)&nbsp;/)?.1 {
+            doi = String(doiMatch)
+        } else {
             throw NetworkingError.notFound
         }
-        try await self.init(doi: String(doiMatch.1))
-        
+        try await self.init(doi: doi)
+
         if let pdfMatch = htmlString.firstMatch(of: /<iframe src="(.+)" id="pdf/) {
             self.file = String(pdfMatch.1)
+            self.status = ModelStatus.waitingForDownload.rawValue
         }
     }
 }

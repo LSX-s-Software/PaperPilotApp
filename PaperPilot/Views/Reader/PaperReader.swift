@@ -234,6 +234,7 @@ struct PaperReader: View {
                     .appending(path: url.lastPathComponent)
                 try FileManager.default.moveItem(at: localURL, to: savedURL)
                 paper.localFile = savedURL
+                paper.status = ModelStatus.normal.rawValue
                 pdf = PDFDocument(url: savedURL)
                 errorDescription = nil
             } catch {
@@ -255,6 +256,7 @@ struct PaperReader: View {
                             .appending(path: url.lastPathComponent)
                         try FileManager.default.copyItem(at: url, to: savedURL)
                         paper.localFile = savedURL
+                        paper.status = ModelStatus.normal.rawValue
                         pdf = PDFDocument(url: savedURL)
                         errorDescription = nil
                     } else {
