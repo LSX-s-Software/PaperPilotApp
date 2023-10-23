@@ -257,7 +257,11 @@ struct PaperReader: View {
                             .appending(path: url.lastPathComponent)
                         try FileManager.default.copyItem(at: url, to: savedURL)
                         paper.localFile = savedURL
-                        paper.status = ModelStatus.normal.rawValue
+                        if paper.project?.remoteId == nil {
+                            paper.status = ModelStatus.normal.rawValue
+                        } else {
+                            paper.status = ModelStatus.waitingForUpload.rawValue
+                        }
                         pdf = PDFDocument(url: savedURL)
                         errorDescription = nil
                     } else {

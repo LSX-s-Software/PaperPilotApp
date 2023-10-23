@@ -159,9 +159,9 @@ extension Paper {
             })
             remoteId = result.id
             createTime = result.createTime.date
+            print(title, "basic info uploaded")
         }
         // 读取本地文件
-        print(title, "basic info uploaded")
         guard let localFile = localFile, FileManager.default.isReadableFile(atPath: localFile.path()) else {
             status = ModelStatus.normal.rawValue
             return

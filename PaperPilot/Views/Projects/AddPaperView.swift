@@ -101,7 +101,10 @@ struct AddPaperView: View {
                             .appending(path: url.lastPathComponent)
                         try FileManager.default.copyItem(at: url, to: savedURL)
                         newPaper!.localFile = savedURL
-                        try? modelContext.save()
+                        if project.remoteId != nil {
+                            newPaper!.status = ModelStatus.waitingForUpload.rawValue
+                        }
+                        try modelContext.save()
                     } else {
                         errorMsg = String(localized: "You don't have access to the PDF.")
                         modelContext.rollback()

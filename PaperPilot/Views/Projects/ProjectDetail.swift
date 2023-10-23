@@ -210,7 +210,9 @@ struct ProjectDetail: View {
                        FileManager.default.fileExists(atPath: url.path()) {
                         try FileManager.default.removeItem(at: url)
                         paper.localFile = nil
-                        paper.status = ModelStatus.waitingForDownload.rawValue
+                        if paper.file != nil {
+                            paper.status = ModelStatus.waitingForDownload.rawValue
+                        }
                     } else if let dir = try? FilePath.paperDirectory(for: paper),
                               FileManager.default.fileExists(atPath: dir.path()) {
                         try? FileManager.default.removeItem(at: dir)
