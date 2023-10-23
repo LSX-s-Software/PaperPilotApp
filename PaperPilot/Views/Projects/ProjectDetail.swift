@@ -134,7 +134,7 @@ struct ProjectDetail: View {
                 .transition(.move(edge: .bottom))
             }
         }
-        .task(id: project.papers) {
+        .task(id: project.id) {
             guard project.remoteId != nil else { return }
             withAnimation {
                 updating = true
