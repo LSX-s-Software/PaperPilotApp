@@ -17,15 +17,25 @@ struct ProjectDetail: View {
                                                                   ("URL", \Paper.url),
                                                                   ("DOI", \Paper.doi)]
 
+    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
+    private var loggedIn: Bool = false
+
     @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime, order: .reverse)]
     @State private var isShowingEditProjectSheet = false
     @State private var isShowingAddPaperSheet = false
     @State private var isShowingSharePopover = false
+    @State private var updating = false
+    @State private var message: String?
 
     var body: some View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
+            TableColumn("Status") { paper in
+                (ModelStatus(rawValue: paper.status) ?? ModelStatus.normal).icon
+            }
+            .width(35)
+            .alignment(.center)
             TableColumn("Title", value: \.title)
             TableColumn("Authors", value: \.formattedAuthors)
             TableColumn("Publication Year") { paper in
@@ -51,6 +61,7 @@ struct ProjectDetail: View {
                 }
             }
             .width(35)
+            .alignment(.center)
         }
         .contextMenu(forSelectionType: Paper.ID.self) { selectedPapers in
             if !selectedPapers.isEmpty {
@@ -99,15 +110,57 @@ struct ProjectDetail: View {
                 project.papers[paperIndex].read = true
             }
         }
+        .overlay(alignment: .bottom) {
+            if updating || message != nil {
+                HStack(spacing: 8) {
+                    if updating {
+                        ProgressView().controlSize(.small)
+                        Text("Updating...")
+                            .foregroundStyle(.secondary)
+                    } else if let message = message {
+                        Label(message, systemImage: "exclamationmark.triangle.fill")
+                            .foregroundColor(.red)
+                    }
+                }
+                .padding(8)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.regularMaterial)
+                .transition(.move(edge: .bottom))
+            }
+        }
+        .task(id: project.papers, priority: .background) {
+            guard project.remoteId != nil else { return }
+            withAnimation {
+                updating = true
+            }
+            do {
+                for paper in project.papers {
+                    switch paper.status {
+                    case ModelStatus.waitingForUpload.rawValue:
+                        try await paper.upload(to: project)
+                    default:
+                        break
+                    }
+                }
+                message = nil
+            } catch {
+                message = String(localized: "Update failed: \(error.localizedDescription)")
+            }
+            withAnimation {
+                updating = false
+            }
+        }
         .navigationTitle($project.name)
 #if os(macOS)
         .navigationSubtitle(project.desc)
 #endif
         .toolbar {
             ToolbarItemGroup {
+                Spacer()
                 Button("Share", systemImage: "square.and.arrow.up") {
                     isShowingSharePopover.toggle()
                 }
+                .disabled(!loggedIn)
                 .popover(isPresented: $isShowingSharePopover, arrowEdge: .bottom) {
                     ShareProjectView(project: project)
                 }

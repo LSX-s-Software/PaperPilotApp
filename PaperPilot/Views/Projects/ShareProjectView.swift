@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GRPC
 
 struct ShareProjectView: View {
     @EnvironmentObject private var navigationContext: NavigationContext

@@ -1745,6 +1745,16 @@
         }
       }
     },
+    "Status" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状态"
+          }
+        }
+      }
+    },
     "Stop Finding" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1947,6 +1957,12 @@
           }
         }
       }
+    },
+    "Update failed: %@" : {
+
+    },
+    "Updating..." : {
+
     },
     "URL" : {
       "localizations" : {

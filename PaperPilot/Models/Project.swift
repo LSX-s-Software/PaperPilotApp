@@ -22,7 +22,7 @@ class Project: Hashable, Codable, Identifiable {
     /// 邀请码
     var invitationCode: String?
     /// 是否是所有者
-    var isOwner: Bool = true
+    var isOwner: Bool
     // TODO: 成员列表
     //    /// 成员列表
     //    @Relationship(deleteRule: .cascade)
@@ -58,9 +58,8 @@ extension Project {
         })
         remoteId = result.id
         invitationCode = result.inviteCode
-        // 迁移论文
-        for paper in papers {
-            try await paper.upload(to: self)
+        for paper in self.papers {
+            paper.status = ModelStatus.waitingForUpload.rawValue
         }
     }
 }

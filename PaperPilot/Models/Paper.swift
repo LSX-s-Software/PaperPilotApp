@@ -15,6 +15,8 @@ import UniformTypeIdentifiers
 class Paper: Hashable, Identifiable {
     @Attribute(.unique) var id: UUID = UUID()
     var remoteId: String?
+    /// 状态
+    var status: Int = ModelStatus.normal.rawValue
     /// 所属项目
     var project: Project?
     /// 标题
@@ -72,6 +74,7 @@ class Paper: Hashable, Identifiable {
     
     init(id: UUID = UUID(),
          remoteId: String? = nil,
+         status: ModelStatus = .normal,
          project: Project? = nil,
          title: String,
          abstract: String? = nil,
@@ -93,6 +96,7 @@ class Paper: Hashable, Identifiable {
          bookmarks: [Bookmark] = []) {
         self.id = id
         self.remoteId = remoteId
+        self.status = status.rawValue
         self.project = project
         self.title = title
         self.abstract = abstract
@@ -118,6 +122,7 @@ class Paper: Hashable, Identifiable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(UUID.self, forKey: .id)
         self.remoteId = try container.decodeIfPresent(String.self, forKey: .remoteId)
+        self.status = try container.decode(Int.self, forKey: .status)
         self.title = try container.decode(String.self, forKey: .title)
         self.abstract = try container.decodeIfPresent(String.self, forKey: .abstract)
         self.keywords = try container.decode([String].self, forKey: .keywords)
@@ -141,40 +146,43 @@ class Paper: Hashable, Identifiable {
 // MARK: - Paper相关操作
 extension Paper {
     func upload(to project: Project, parseMetadata: Bool = false) async throws {
-        guard remoteId == nil, let projectId = project.remoteId else { return }
-        print(title, 1)
+        guard let projectId = project.remoteId else { return }
         // 上传基本信息
-        let result = try await API.shared.paper.createPaper(.with {
-            $0.projectID = projectId
-            $0.paper.title = title
-            if let abstract = abstract { $0.paper.abstract = abstract }
-            $0.paper.keywords = keywords
-            $0.paper.authors = authors
-            $0.paper.tags = tags
-            if let publicationYear = publicationYear,
-               let year = Int32(publicationYear) {
-                $0.paper.publicationYear = year
-            }
-            if let publication = publication { $0.paper.publication = publication }
-            if let volume = volume { $0.paper.volume = volume }
-            if let issue = issue { $0.paper.issue = issue }
-            if let pages = pages { $0.paper.pages = pages }
-            if let url = url { $0.paper.url = url }
-            if let doi = doi { $0.paper.doi = doi }
-        })
-        remoteId = result.id
-        createTime = result.createTime.date
-        print(title, 2)
+        if remoteId == nil {
+            let result = try await API.shared.paper.createPaper(.with {
+                $0.projectID = projectId
+                $0.paper.title = title
+                if let abstract = abstract { $0.paper.abstract = abstract }
+                $0.paper.keywords = keywords
+                $0.paper.authors = authors
+                $0.paper.tags = tags
+                if let publicationYear = publicationYear,
+                   let year = Int32(publicationYear) {
+                    $0.paper.publicationYear = year
+                }
+                if let publication = publication { $0.paper.publication = publication }
+                if let volume = volume { $0.paper.volume = volume }
+                if let issue = issue { $0.paper.issue = issue }
+                if let pages = pages { $0.paper.pages = pages }
+                if let url = url { $0.paper.url = url }
+                if let doi = doi { $0.paper.doi = doi }
+            })
+            remoteId = result.id
+            createTime = result.createTime.date
+        }
         // 读取本地文件
-        guard let localFile = localFile,
-              FileManager.default.isReadableFile(atPath: localFile.path()) else { return }
+        print(title, "basic info uploaded")
+        guard let localFile = localFile, FileManager.default.isReadableFile(atPath: localFile.path()) else {
+            status = ModelStatus.normal.rawValue
+            return
+        }
         let fileData = try Data(contentsOf: localFile)
         // 获取、解析OSS直传Token
         let token = try await API.shared.paper.uploadAttachment(.with {
-            $0.paperID = result.id
+            $0.paperID = remoteId!
             $0.fetchMetadata = parseMetadata
         }).token
-        print(title, 3)
+        print(title, "OSS token got")
         // 上传文件
         guard let request = OSSRequest(token: token,
                                        fileName: localFile.lastPathComponent,
@@ -183,7 +191,8 @@ extension Paper {
             throw NetworkingError.responseFormatError
         }
         try await URLSession.shared.upload(for: request)
-        print(title, 4)
+        status = ModelStatus.normal.rawValue
+        print(title, "file uploaded")
         // TODO: 上传书签和标注
     }
 }
@@ -286,6 +295,7 @@ extension Paper: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case remoteId
+        case status
         case title
         case abstract
         case keywords
@@ -309,6 +319,7 @@ extension Paper: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(remoteId, forKey: .remoteId)
+        try container.encode(status, forKey: .status)
         try container.encode(title, forKey: .title)
         try container.encode(abstract, forKey: .abstract)
         try container.encode(keywords, forKey: .keywords)

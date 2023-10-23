@@ -56,7 +56,7 @@ struct PaperPilotApp: App {
                 }
                 .onOpenURL(perform: appState.handleIncomingURL(url:))
         }
-        .defaultSize(width: 1000, height: 600)
+        .defaultSize(width: 1200, height: 700)
         .modelContainer(modelContainer)
         .commands {
             SidebarCommands()
