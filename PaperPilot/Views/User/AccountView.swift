@@ -10,7 +10,7 @@ import SwiftUI
 struct AccountView: View {
     @Environment(\.dismiss) private var dismiss
 
-    @StateObject private var viewModel = LoginViewModel()
+    @StateObject private var viewModel = AccountViewModel()
 
     @State private var isShowingLogoutConfirmation = false
     @State private var isShowingFileImporter = false

@@ -1,5 +1,5 @@
 //
-//  LoginViewModel.swift
+//  AccountViewModel.swift
 //  PaperPilot
 //
 //  Created by ljx on 2023/10/12.
@@ -10,14 +10,14 @@ import GRPC
 import SwiftUI
 import SwiftData
 
-class LoginViewModel: ObservableObject {
+class AccountViewModel: ObservableObject {
     @Published var phoneInput: String = ""
     @Published var password: String = ""
     @Published var newPassword: String = ""
     @Published var usernameInput: String = ""
     @Published var verificationCode: String = ""
 
-    @Published var isRegistering = true
+    @Published var isRegistering = false
     var hasLoggedIn: Bool {
         accessToken != nil
     }
@@ -40,6 +40,8 @@ class LoginViewModel: ObservableObject {
         !phoneInput.isEmpty && !waitingForTimer
     }
 
+    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
+    private var loggedInStored: Bool = false
     @AppStorage(AppStorageKey.User.accessToken.rawValue)
     private var accessToken: String?
     @AppStorage(AppStorageKey.User.id.rawValue)
@@ -117,6 +119,7 @@ class LoginViewModel: ObservableObject {
                 }
                 DispatchQueue.main.async {
                     self.accessToken = result.access.value
+                    self.loggedInStored = true
                     API.shared.setToken(result.access.value)
                     self.id = result.user.id
                     self.avatar = result.user.avatar
