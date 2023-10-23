@@ -183,6 +183,10 @@ extension Paper {
         try await URLSession.shared.upload(for: request)
         status = ModelStatus.normal.rawValue
         print(title, "file uploaded")
+        // 更新文件URL
+        if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = remoteId! }).file {
+            self.file = newFileURL
+        }
     }
     
     /// 使用远端数据更新论文信息
