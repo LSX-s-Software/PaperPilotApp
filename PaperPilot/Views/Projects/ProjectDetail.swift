@@ -27,6 +27,7 @@ struct ProjectDetail: View {
     @State private var isShowingAddPaperSheet = false
     @State private var isShowingSharePopover = false
     @State private var updating = false
+    @State private var progress: Progress?
     @State private var message: String?
 
     var body: some View {
@@ -114,7 +115,11 @@ struct ProjectDetail: View {
             if updating || message != nil {
                 HStack(spacing: 8) {
                     if updating {
-                        ProgressView().controlSize(.small)
+                        if let progress = progress {
+                            ProgressView(value: progress.fractionCompleted)
+                        } else {
+                            ProgressView().controlSize(.small)
+                        }
                         Text("Updating...")
                             .foregroundStyle(.secondary)
                     } else if let message = message {
@@ -128,9 +133,11 @@ struct ProjectDetail: View {
                 .transition(.move(edge: .bottom))
             }
         }
-        .task(id: project.papers, priority: .background) {
+        .task(id: project.papers) {
             guard project.remoteId != nil else { return }
-            updating = true
+            withAnimation {
+                updating = true
+            }
             do {
                 for paper in project.papers {
                     switch paper.status {
@@ -144,7 +151,9 @@ struct ProjectDetail: View {
             } catch {
                 message = String(localized: "Update failed: \(error.localizedDescription)")
             }
-            updating = false
+            withAnimation {
+                updating = false
+            }
         }
         .navigationTitle($project.name)
 #if os(macOS)
@@ -184,11 +193,17 @@ struct ProjectDetail: View {
     }
 
     func handleDeletePaper(papers: Set<Paper.ID>, pdfOnly: Bool) {
-        updating = true
+        withAnimation {
+            updating = true
+        }
+        progress = Progress(totalUnitCount: Int64(papers.count))
         Task {
             do {
                 for paperId in papers {
-                    guard let paper = project.papers.first(where: { $0.id == paperId }) else { continue }
+                    guard let paper = project.papers.first(where: { $0.id == paperId }) else {
+                        progress?.completedUnitCount += 1
+                        continue
+                    }
                     if pdfOnly,
                        let url = paper.localFile,
                        FileManager.default.fileExists(atPath: url.path()) {
@@ -205,12 +220,16 @@ struct ProjectDetail: View {
                         }
                         modelContext.delete(paper)
                     }
+                    progress?.completedUnitCount += 1
                 }
                 message = nil
             } catch {
                 message = error.localizedDescription
             }
-            updating = false
+            withAnimation {
+                updating = false
+            }
+            progress = nil
         }
     }
 }
