@@ -194,7 +194,7 @@ extension Paper {
         keywords = detail.keywords
         authors = detail.authors
         tags = detail.tags
-        publicationYear = String(format: "%d", detail.publicationYear)
+        publicationYear = detail.publicationYear == 0 ? nil : String(format: "%d", detail.publicationYear)
         publication = detail.publication
         volume = detail.volume
         issue = detail.issue

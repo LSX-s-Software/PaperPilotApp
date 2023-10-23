@@ -64,6 +64,7 @@ struct AddPaperByURLView: View {
                     $0.link = url
                 })
                 paper = Paper(from: result)
+                paper?.status = ModelStatus.waitingForDownload.rawValue
             } else {
                 paper = try await Paper(query: url, ensureDoi: isDoi)
             }
