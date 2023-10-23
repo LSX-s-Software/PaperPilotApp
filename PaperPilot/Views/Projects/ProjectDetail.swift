@@ -76,6 +76,7 @@ struct ProjectDetail: View {
                                     setPasteboard(value)
                                 }
                             }
+                            .disabled(!(paper[keyPath: keypath] is String))
                         }
                     }
                 }
