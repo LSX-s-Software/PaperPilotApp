@@ -149,44 +149,47 @@ extension Paper {
     /// - Parameters:
     ///   - project: 所属项目
     ///   - parseMetadata: 是否解析元数据
-    func upload(to project: Project, parseMetadata: Bool = false) async throws {
+    func upload(to project: Project) async throws {
         guard let projectId = project.remoteId else { return }
-        // 上传基本信息
-        if remoteId == nil {
-            let result = try await API.shared.paper.createPaper(.with {
-                $0.projectID = projectId
-                $0.paper = self.paperDetail
-            })
-            remoteId = result.id
-            createTime = result.createTime.date
-            print(title, "basic info uploaded")
+        status = ModelStatus.updating.rawValue
+        do {
+            // 上传基本信息
+            if remoteId == nil {
+                let result = try await API.shared.paper.createPaper(.with {
+                    $0.projectID = projectId
+                    $0.paper = self.paperDetail
+                })
+                remoteId = result.id
+                createTime = result.createTime.date
+                print(title, "basic info uploaded")
+            }
+            // 读取本地文件
+            guard let localFile = localFile, FileManager.default.isReadableFile(atPath: localFile.path()) else {
+                status = ModelStatus.normal.rawValue
+                return
+            }
+            let fileData = try Data(contentsOf: localFile)
+            // 获取、解析OSS直传Token
+            let token = try await API.shared.paper.uploadAttachment(.with { $0.paperID = remoteId! }).token
+            print(title, "OSS token got")
+            // 上传文件
+            guard let request = OSSRequest(token: token,
+                                           fileName: localFile.lastPathComponent,
+                                           fileData: fileData,
+                                           mimeType: "application/pdf") else {
+                throw NetworkingError.responseFormatError
+            }
+            try await URLSession.shared.upload(for: request)
+            print(title, "file uploaded")
+            // 更新文件URL
+            if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = remoteId! }).file {
+                self.file = newFileURL
+            }
+        } catch {
+            status = ModelStatus.waitingForUpload.rawValue
+            throw error
         }
-        // 读取本地文件
-        guard let localFile = localFile, FileManager.default.isReadableFile(atPath: localFile.path()) else {
-            status = ModelStatus.normal.rawValue
-            return
-        }
-        let fileData = try Data(contentsOf: localFile)
-        // 获取、解析OSS直传Token
-        let token = try await API.shared.paper.uploadAttachment(.with {
-            $0.paperID = remoteId!
-            $0.fetchMetadata = parseMetadata
-        }).token
-        print(title, "OSS token got")
-        // 上传文件
-        guard let request = OSSRequest(token: token,
-                                       fileName: localFile.lastPathComponent,
-                                       fileData: fileData,
-                                       mimeType: "application/pdf") else {
-            throw NetworkingError.responseFormatError
-        }
-        try await URLSession.shared.upload(for: request)
         status = ModelStatus.normal.rawValue
-        print(title, "file uploaded")
-        // 更新文件URL
-        if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = remoteId! }).file {
-            self.file = newFileURL
-        }
     }
     
     /// 使用远端数据更新论文信息
