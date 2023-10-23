@@ -220,6 +220,7 @@ struct PaperReader: View {
             if FileManager.default.isReadableFile(atPath: url.path()) {
                 pdf = PDFDocument(url: url)
             } else {
+                paper.localFile = nil
                 errorDescription = String(localized: "Failed to load PDF: ") + String(localized: "File not found")
             }
             return
