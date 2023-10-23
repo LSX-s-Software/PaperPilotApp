@@ -148,9 +148,11 @@ struct ProjectCreateEditView: View {
             } catch let error as GRPCStatus {
                 deleteError = true
                 errorMsg = error.message ?? String(localized: "Unknown error")
+                return
             } catch {
                 deleteError = true
                 errorMsg = error.localizedDescription
+                return
             }
         }
         if let dir = try? FilePath.projectDirectory(for: project),
@@ -158,10 +160,10 @@ struct ProjectCreateEditView: View {
             try? FileManager.default.removeItem(at: dir)
         }
         navigationContext.selectedProject = nil
-        onDelete?()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             modelContext.delete(project)
         }
+        onDelete?()
         dismiss()
     }
 }
