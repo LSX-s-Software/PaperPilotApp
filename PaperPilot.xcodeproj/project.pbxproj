@@ -15,7 +15,7 @@
 		279F2D222AC8364500FEA9D8 /* grpc-swift-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */; };
 		279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */; };
 		279F2D272AC8398A00FEA9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
-		76C15CBF2AD82AB300614902 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C15CBE2AD82AB300614902 /* LoginViewModel.swift */; };
+		76C15CBF2AD82AB300614902 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C15CBE2AD82AB300614902 /* AccountViewModel.swift */; };
 		F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */; };
 		F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */; };
 		F5145E7B2AD57863001860E0 /* AddPaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E7A2AD57863001860E0 /* AddPaperView.swift */; };
@@ -84,7 +84,7 @@
 		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		76C15CBE2AD82AB300614902 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		76C15CBE2AD82AB300614902 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreateEditView.swift; sourceTree = "<group>"; };
 		F5145E7A2AD57863001860E0 /* AddPaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaperView.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 			children = (
 				F59367F62AE193CE009230AF /* AppState.swift */,
 				F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */,
-				76C15CBE2AD82AB300614902 /* LoginViewModel.swift */,
+				76C15CBE2AD82AB300614902 /* AccountViewModel.swift */,
 				F5643F2B2AE2D89000186A2F /* TranslatorViewModel.swift */,
 				F59FB3D62AE580A20007A76B /* NavigationContext.swift */,
 			);
@@ -485,7 +485,7 @@
 				F58DF0332AE2C5BE001D4D68 /* TranslatorView.swift in Sources */,
 				F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */,
 				F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */,
-				76C15CBF2AD82AB300614902 /* LoginViewModel.swift in Sources */,
+				76C15CBF2AD82AB300614902 /* AccountViewModel.swift in Sources */,
 				F59FB3C92AE53B590007A76B /* GeneralSettingsView.swift in Sources */,
 				F5643F3B2AE3C63200186A2F /* MultipartFormDataRequest.swift in Sources */,
 				F5643F4C2AE4E05F00186A2F /* SettingsView.swift in Sources */,

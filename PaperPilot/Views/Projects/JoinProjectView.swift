@@ -53,7 +53,7 @@ struct JoinProjectView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    AsyncButton("Join", disabled: invitationCode.isEmpty) {
+                    AsyncButton("Join") {
                         do {
                             let result = try await API.shared.project.joinProject(.with {
                                 $0.inviteCode = invitationCode
@@ -72,6 +72,7 @@ struct JoinProjectView: View {
                             errorMsg = error.localizedDescription
                         }
                     }
+                    .disabled(invitationCode.isEmpty)
                 }
             }
         }

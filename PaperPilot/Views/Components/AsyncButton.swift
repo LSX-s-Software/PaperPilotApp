@@ -22,7 +22,6 @@ struct AsyncButton<Content: View>: View {
                 .regular
         }
     }
-    let disabled: Bool
     let action: () async -> Void
 
     @State private var hasTaskFinished = true
@@ -32,25 +31,22 @@ struct AsyncButton<Content: View>: View {
     }
 
     init(role: ButtonRole? = nil,
-         disabled: Bool = false,
          loading: Binding<Bool> = .constant(false),
          action: @escaping () async -> Void,
          @ViewBuilder label: @escaping () -> Content
     ) {
         self.title = label
         self.role = role
-        self.disabled = disabled
         self.action = action
         self._loading = loading
     }
 
     init(_ title: LocalizedStringKey,
          role: ButtonRole? = nil,
-         disabled: Bool = false,
          loading: Binding<Bool> = .constant(false),
          action: @escaping () async -> Void
     ) where Content == Text {
-        self.init(role: role, disabled: disabled, loading: loading, action: action) {
+        self.init(role: role, loading: loading, action: action) {
             Text(title)
         }
     }

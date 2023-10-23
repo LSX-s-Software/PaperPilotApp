@@ -65,8 +65,8 @@ struct TranslatorView: View {
             }
 
             Section {
-                AsyncButton("Translate", disabled: viewModel.originalText.isEmpty, action: viewModel.translate)
-                    .keyboardShortcut(.defaultAction)
+                AsyncButton("Translate", action: viewModel.translate)
+                    .disabled(viewModel.originalText.isEmpty)
             }
         }
         .formStyle(.grouped)

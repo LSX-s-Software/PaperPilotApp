@@ -100,12 +100,13 @@ struct AccountView: View {
                                 .textFieldStyle(
                                     InputTextFieldWithButtonStyle(
                                         title: "Verification Code") {
-                                            AsyncButton(disabled: !viewModel.canSendVerification) {
+                                            AsyncButton {
                                                 await viewModel.sendVerificationCode()
                                             } label: {
                                                 Text(viewModel.waitingForTimer ? "Retry after \(viewModel.secRemaining)s" : "Send")
                                                     .padding(.vertical, 6)
                                             }
+                                            .disabled(!viewModel.canSendVerification)
                                         })
                             if viewModel.isEditing {
                                 Text("Only required when changing the phone number.")

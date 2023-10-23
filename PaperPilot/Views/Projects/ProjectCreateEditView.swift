@@ -71,9 +71,10 @@ struct ProjectCreateEditView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    AsyncButton(edit ? "Edit" : "Create", disabled: project.name.isEmpty) {
+                    AsyncButton(edit ? "Edit" : "Create") {
                         await handleCreateEditProject()
                     }
+                    .disabled(project.name.isEmpty)
                 }
                 if edit {
                     ToolbarItem(placement: .destructiveAction) {

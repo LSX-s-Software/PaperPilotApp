@@ -38,9 +38,10 @@ struct AddPaperByURLView: View {
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                AsyncButton("Resolve", disabled: url.isEmpty || isDoi && !url.hasPrefix("10.")) {
+                AsyncButton("Resolve") {
                     await handleResolvePaper()
                 }
+                .disabled(url.isEmpty || isDoi && !url.hasPrefix("10."))
                 .keyboardShortcut(.defaultAction)
             }
         }
