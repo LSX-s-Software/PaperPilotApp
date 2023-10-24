@@ -78,10 +78,17 @@ struct PaperPilotApp: App {
         .modelContainer(modelContainer)
 #endif
         
-        WindowGroup("Paper Reader", id: AppWindow.reader.id, for: Paper.self) { $paper in
-            PaperReader(paper: paper ?? Paper(title: "Loading"))
-                .navigationTitle(paper?.title ?? "Paper Reader")
-                .frame(minWidth: 600, minHeight: 400)
+        WindowGroup("Paper Reader", id: AppWindow.reader.id, for: PersistentIdentifier.self) { $paperId in
+            if let paperId = paperId,
+               let paper: Paper = modelContainer.mainContext.registeredModel(for: paperId) {
+                PaperReader(paper: paper)
+                    .frame(minWidth: 600, minHeight: 400)
+            } else {
+                Text("This paper does not exist.")
+                    .font(.title)
+                    .foregroundStyle(.secondary)
+                    .padding()
+            }
         }
 #if os(macOS)
         .register(AppWindow.reader.id)
@@ -90,10 +97,9 @@ struct PaperPilotApp: App {
 #endif
         .modelContainer(modelContainer)
         .environmentObject(appState)
+        .commandsRemoved()
         .commands {
             InspectorCommands()
-
-            CommandGroup(replacing: .newItem, addition: { })
             
             CommandGroup(after: .textEditing) {
                 Button(appState.findingInPDF ? "Stop Finding" : "Find in PDF") {

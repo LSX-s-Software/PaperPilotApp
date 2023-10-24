@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftData
-import SimpleCodable
 import UniformTypeIdentifiers
 
 /// 论文
@@ -116,30 +115,6 @@ class Paper: Hashable, Identifiable {
         self.read = read
         self.note = note
         self.bookmarks = bookmarks
-    }
-    
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(UUID.self, forKey: .id)
-        self.remoteId = try container.decodeIfPresent(String.self, forKey: .remoteId)
-        self.status = try container.decode(Int.self, forKey: .status)
-        self.title = try container.decode(String.self, forKey: .title)
-        self.abstract = try container.decodeIfPresent(String.self, forKey: .abstract)
-        self.keywords = try container.decode([String].self, forKey: .keywords)
-        self.authors = try container.decode([String].self, forKey: .authors)
-        self.tags = try container.decode([String].self, forKey: .tags)
-        self.publicationYear = try container.decodeIfPresent(String.self, forKey: .publicationYear)
-        self.publication = try container.decodeIfPresent(String.self, forKey: .publication)
-        self.volume = try container.decodeIfPresent(String.self, forKey: .volume)
-        self.issue = try container.decodeIfPresent(String.self, forKey: .issue)
-        self.pages = try container.decodeIfPresent(String.self, forKey: .pages)
-        self.url = try container.decodeIfPresent(String.self, forKey: .url)
-        self.doi = try container.decodeIfPresent(String.self, forKey: .doi)
-        self.file = try container.decodeIfPresent(String.self, forKey: .file)
-        self.localFile = try container.decodeIfPresent(URL.self, forKey: .localFile)
-        self.createTime = try container.decode(Date.self, forKey: .createTime)
-        self.read = try container.decode(Bool.self, forKey: .read)
-        self.note = try container.decode(String.self, forKey: .note)
     }
 }
 
@@ -337,54 +312,5 @@ extension Paper {
             self.file = String(pdfMatch.1)
             self.status = ModelStatus.waitingForDownload.rawValue
         }
-    }
-}
-
-extension Paper: Codable {
-    enum CodingKeys: String, CodingKey {
-        case id
-        case remoteId
-        case status
-        case title
-        case abstract
-        case keywords
-        case authors
-        case tags
-        case publicationYear
-        case publication
-        case volume
-        case issue
-        case pages
-        case url
-        case doi
-        case file
-        case localFile
-        case createTime
-        case read
-        case note
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(remoteId, forKey: .remoteId)
-        try container.encode(status, forKey: .status)
-        try container.encode(title, forKey: .title)
-        try container.encode(abstract, forKey: .abstract)
-        try container.encode(keywords, forKey: .keywords)
-        try container.encode(authors, forKey: .authors)
-        try container.encode(tags, forKey: .tags)
-        try container.encode(publicationYear, forKey: .publicationYear)
-        try container.encode(publication, forKey: .publication)
-        try container.encode(volume, forKey: .volume)
-        try container.encode(issue, forKey: .issue)
-        try container.encode(pages, forKey: .pages)
-        try container.encode(url, forKey: .url)
-        try container.encode(doi, forKey: .doi)
-        try container.encode(file, forKey: .file)
-        try container.encode(localFile, forKey: .localFile)
-        try container.encode(createTime, forKey: .createTime)
-        try container.encode(read, forKey: .read)
-        try container.encode(note, forKey: .note)
     }
 }

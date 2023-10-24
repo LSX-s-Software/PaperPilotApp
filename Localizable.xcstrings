@@ -1835,6 +1835,16 @@
         }
       }
     },
+    "This paper does not exist." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这篇论文不存在"
+          }
+        }
+      }
+    },
     "This paper has no PDF file attached." : {
       "localizations" : {
         "zh-Hans" : {

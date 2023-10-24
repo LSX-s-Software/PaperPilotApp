@@ -47,7 +47,7 @@ struct PaperReader: View {
     @State private var newAuthor = ""
     @StateObject private var translatorVM = TranslatorViewModel()
     @StateObject private var downloadVM = DownloadViewModel()
-    
+
     var body: some View {
         NavigationStack {
             // MARK: - 左侧内容
@@ -113,6 +113,7 @@ struct PaperReader: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .navigationTitle(paper.title)
             // MARK: - 右侧内容
             .inspector(isPresented: $isShowingInspector) {
                 VStack(alignment: .leading) {
@@ -205,6 +206,9 @@ struct PaperReader: View {
                         isShowingInspector.toggle()
                     }
                 }
+            }
+            .onAppear {
+                paper.read = true
             }
             .task(id: paper.id) {
                 await loadPDF()

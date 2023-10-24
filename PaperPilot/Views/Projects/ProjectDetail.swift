@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftUIFlow
+import SwiftData
 
 struct ProjectDetail: View {
     @Environment(\.openWindow) private var openWindow
@@ -107,10 +108,14 @@ struct ProjectDetail: View {
                 }
             }
         } primaryAction: { selectedPapers in
-            if selectedPapers.count == 1,
-               let paperIndex = project.papers.firstIndex(where: { $0.id == selectedPapers.first! }) {
-                openWindow(value: project.papers[paperIndex])
-                project.papers[paperIndex].read = true
+            selectedPapers.forEach { paperId in
+                let predicate = #Predicate<Paper> {
+                    $0.id == paperId
+                }
+                let descriptor = FetchDescriptor(predicate: predicate)
+                try? modelContext.fetchIdentifiers(descriptor).forEach { id in
+                    openWindow(id: AppWindow.reader.id, value: id)
+                }
             }
         }
         .overlay(alignment: .bottom) {
