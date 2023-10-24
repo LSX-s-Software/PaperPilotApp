@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct AvatarView: View {
+    var url: URL?
     var size: CGFloat = 40
-    
+
     @AppStorage(AppStorageKey.User.avatar.rawValue)
-    private var avatar: String?
+    private var avatar: String = ""
     private var controlSize: ControlSize {
         switch size {
         case 0...16:
@@ -26,7 +27,7 @@ struct AvatarView: View {
     }
     
     var body: some View {
-        CachedAsyncImage(url: .constant(avatar.flatMap({URL(string: $0)}))) { image in
+        CachedAsyncImage(url: .constant(url ?? URL(string: avatar))) { image in
             image
                 .resizable()
                 .scaledToFill()
