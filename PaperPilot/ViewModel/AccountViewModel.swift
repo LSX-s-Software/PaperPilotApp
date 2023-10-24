@@ -79,7 +79,6 @@ class AccountViewModel: ObservableObject {
     }
 
     func submit() async {
-        var anyCall: WithApiException?
         do {
             if self.isEditing {
                 let request = User_UpdateUserRequest.with {
@@ -90,9 +89,7 @@ class AccountViewModel: ObservableObject {
                     $0.phone = phoneInput.isEmpty ? phoneStored! : phoneInput
                     $0.code = verificationCode
                 }
-                let call = API.shared.user.makeUpdateUserCall(request)
-                anyCall = call
-                let result = try await call.response
+                let result = try await API.shared.user.updateUser(request)
                 DispatchQueue.main.async {
                     self.usernameStored = result.username
                     self.phoneStored = result.phone
@@ -101,21 +98,17 @@ class AccountViewModel: ObservableObject {
             } else {
                 let result: Auth_LoginResponse
                 if self.isRegistering {
-                    let call = API.shared.auth.makeRegisterCall(.with {
+                    try await result = API.shared.auth.register(.with {
                         $0.phone = self.phoneInput
                         $0.password = self.password
                         $0.code = self.verificationCode
                         $0.username = self.usernameInput
                     })
-                    anyCall = call
-                    result = try await call.response
                 } else {
-                    let call = API.shared.auth.makeLoginCall(.with {
+                    result = try await API.shared.auth.login(.with {
                         $0.phone = self.phoneInput
                         $0.password = self.password
                     })
-                    anyCall = call
-                    result = try await call.response
                 }
                 DispatchQueue.main.async {
                     self.accessToken = result.access.value
@@ -128,15 +121,14 @@ class AccountViewModel: ObservableObject {
                 }
             }
         } catch let error as GRPCStatus {
-            await apiFail(anyCall, error)
+            await apiFail(error)
         } catch {
             print(error)
         }
     }
 
-    func apiFail(_ call: (any WithApiException)?, _ error: GRPCStatus) async {
-        let detail = await call?.apiException?.message
-        fail(message: error.message ?? "Unknown error", detail: detail)
+    func apiFail(_ error: GRPCStatus) async {
+        fail(message: error.message ?? "Unknown error", detail: "")
     }
 
     func fail(message: String, detail: String?) {
@@ -155,11 +147,10 @@ class AccountViewModel: ObservableObject {
     }
 
     private func getAvatarOSSToken() async throws -> Util_OssToken? {
-        let call = API.shared.user.makeUploadUserAvatarCall(.init())
         do {
-            return try await call.response.token
+            return try await API.shared.user.uploadUserAvatar(.init()).token
         } catch let error as GRPCStatus {
-            await apiFail(call, error)
+            await apiFail(error)
             return nil
         }
     }
