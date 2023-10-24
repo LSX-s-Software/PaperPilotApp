@@ -9,15 +9,15 @@ import SwiftUI
 import SwiftUIFlow
 
 private struct InfoRow: View {
-    let title: String
+    let title: LocalizedStringKey
     let content: String?
     let onEditEnd: (String) -> Void
     
     var body: some View {
         HStack {
-            Text(LocalizedStringKey(title))
+            Text(title)
             Spacer()
-            EditableText(content, prompt: "Enter \(title)", onEditEnd: onEditEnd)
+            EditableText(content, prompt: title, onEditEnd: onEditEnd)
         }
     }
 }

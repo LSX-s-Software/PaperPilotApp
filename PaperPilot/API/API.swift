@@ -20,6 +20,8 @@ final class API {
     static let builder = ClientConnection.usingPlatformAppropriateTLS(for: eventLoopGroup)
     let channel: ClientConnection = builder.connect(host: "paperpilot.jryang.com")
 
+    /// GRPC Test public service client
+    public var test: Test_TestPublicServiceAsyncClient
     /// GRPC Auth public service client
     public var auth: Auth_AuthPublicServiceAsyncClient
     /// GRPC User public service client
@@ -51,6 +53,7 @@ final class API {
         self.project = Project_ProjectPublicServiceAsyncClient(channel: channel, interceptors: factory)
         self.paper = Paper_PaperPublicServiceAsyncClient(channel: channel, interceptors: factory)
         self.translation = Translation_TranslationPublicServiceAsyncClient(channel: channel, interceptors: factory)
+        self.test = Test_TestPublicServiceAsyncClient(channel: channel)
 
 #if os(macOS)
         let notification = NSApplication.willTerminateNotification

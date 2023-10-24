@@ -11,6 +11,7 @@ struct SettingsView: View {
     private enum Tabs: Hashable {
         case general
         case file
+        case serviceStatus
     }
 
     var body: some View {
@@ -21,7 +22,11 @@ struct SettingsView: View {
 
             StorageSpaceSettingsView()
                 .tabItem { Label("Storage Space", systemImage: "internaldrive") }
-                .tag(Tabs.general)
+                .tag(Tabs.file)
+
+            ServiceStatusView()
+                .tabItem { Label("Service Status", systemImage: "network") }
+                .tag(Tabs.serviceStatus)
         }
     }
 }

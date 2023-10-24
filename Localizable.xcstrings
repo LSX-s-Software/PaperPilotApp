@@ -178,6 +178,16 @@
         }
       }
     },
+    "Auth:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鉴权："
+          }
+        }
+      }
+    },
     "Authors" : {
       "localizations" : {
         "zh-Hans" : {
@@ -204,6 +214,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "自动检测"
+          }
+        }
+      }
+    },
+    "Available" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可用"
           }
         }
       }
@@ -531,16 +551,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "英语"
-          }
-        }
-      }
-    },
-    "Enter %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "输入 %@"
           }
         }
       }
@@ -1101,6 +1111,16 @@
         }
       }
     },
+    "Main Server:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主服务器："
+          }
+        }
+      }
+    },
     "Mark as Read" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1381,6 +1401,16 @@
         }
       }
     },
+    "Paper:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "论文："
+          }
+        }
+      }
+    },
     "PaperPilot Account" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1510,6 +1540,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "项目类型"
+          }
+        }
+      }
+    },
+    "Project:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目："
           }
         }
       }
@@ -1725,6 +1765,36 @@
         }
       }
     },
+    "Servers" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器"
+          }
+        }
+      }
+    },
+    "Service Status" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务状态"
+          }
+        }
+      }
+    },
+    "Services" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务"
+          }
+        }
+      }
+    },
     "Share" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1835,6 +1905,16 @@
         }
       }
     },
+    "Testing" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "测试中"
+          }
+        }
+      }
+    },
     "This action cannot be undone." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1936,6 +2016,16 @@
         }
       }
     },
+    "Translation:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译："
+          }
+        }
+      }
+    },
     "Translator" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1962,6 +2052,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "类型"
+          }
+        }
+      }
+    },
+    "Unavailable" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不可用"
           }
         }
       }
@@ -2034,6 +2134,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用邀请码加入项目"
+          }
+        }
+      }
+    },
+    "User:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用户："
           }
         }
       }
