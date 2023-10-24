@@ -12,6 +12,7 @@ import GRPC
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var navigationContext: NavigationContext
+    @State var alert = Alert()
 
     @Query(filter: #Predicate<Project> { $0.remoteId == nil }) private var localProjects: [Project]
     @Query(filter: #Predicate<Project> { $0.remoteId != nil }) private var remoteProjects: [Project]
@@ -86,6 +87,7 @@ struct ContentView: View {
                         navigationContext.selectedProject = nil
                     }
                     Task {
+                        let errorMsg = String(localized: "Failed to delete project")
                         do {
                             for project in projects {
                                 if let remoteId = project.remoteId {
@@ -103,17 +105,12 @@ struct ContentView: View {
                                 modelContext.delete(project)
                             }
                         } catch let error as GRPCStatus {
-                            hasError = true
-                            errorMsg = error.message
+                            alert.alert(message: errorMsg, detail: error.message ?? "Unknown Error")
                         } catch {
-                            hasError = true
-                            errorMsg = error.localizedDescription
+                            alert.alert(message: errorMsg, detail: error.localizedDescription)
                         }
                     }
                 }
-            }
-            .alert("Failed to delete project", isPresented: $hasError) {} message: {
-                Text(errorMsg ?? String(localized: "Unknown error"))
             }
         } detail: {
             // MARK: - 项目详情
@@ -150,6 +147,10 @@ struct ContentView: View {
         .sheet(isPresented: $isShowingLoginSheet) {
             AccountView()
         }
+        .alert(alert.errorMsg, isPresented: $alert.hasFailed) {} message: {
+            Text(alert.errorDetail)
+        }
+        .environment(alert)
     }
 }
 

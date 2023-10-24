@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		272423D32AD677F9001748AC /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272423D22AD677F9001748AC /* API.swift */; };
+		273E52EE2AE80072004331FB /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E52ED2AE80072004331FB /* Alert.swift */; };
 		27428DE12AE2F86C00BBACFB /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */; };
 		279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */; };
 		279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */; };
@@ -83,6 +84,7 @@
 /* Begin PBXFileReference section */
 		272423D22AD677F9001748AC /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		27293A652AD2CE2500A98E13 /* team.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = team.xcconfig; sourceTree = "<group>"; };
+		273E52ED2AE80072004331FB /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
 		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				76C15CBE2AD82AB300614902 /* AccountViewModel.swift */,
 				F5643F2B2AE2D89000186A2F /* TranslatorViewModel.swift */,
 				F59FB3D62AE580A20007A76B /* NavigationContext.swift */,
+				273E52ED2AE80072004331FB /* Alert.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */,
 				F5145E832AD58332001860E0 /* ImageTitleDialog.swift in Sources */,
 				F53D81402AC02A7A00865B80 /* Project.swift in Sources */,
+				273E52EE2AE80072004331FB /* Alert.swift in Sources */,
 				F5145E7F2AD58275001860E0 /* AddPaperByURLView.swift in Sources */,
 				F5643F3F2AE3CBB800186A2F /* OSSRequest.swift in Sources */,
 				F59FB3D12AE555840007A76B /* ShareProjectView.swift in Sources */,
