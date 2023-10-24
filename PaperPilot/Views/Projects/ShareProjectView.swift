@@ -35,31 +35,38 @@ struct ShareProjectView: View {
                 GroupBox("Members") {
                     LazyVGrid(columns: [GridItem](repeating: GridItem(), count: 6)) {
                         ForEach(project.members) { member in
-                            AvatarView(url: URL(string: member.avatar), size: 40)
+                            AvatarView(url: URL(string: member.avatar), size: 36)
+#if os(macOS)
+                                .toolTip(member.username)
+#endif
                         }
                     }
-                    .frame(minHeight: 40)
+                    .frame(minHeight: 36)
                 }
 
                 Group {
                     GroupBox("Invitation Code") {
-                        HStack(spacing: 0) {
-                            TextField("Invitation Code", text: .constant(project.invitationCode ?? ""))
-                                .textFieldStyle(.plain)
-                                .disabled(true)
-                            Button("Copy") {
-                                if let inviteCode = project.invitationCode {
-                                    setPasteboard(inviteCode)
-                                }
+                        Text(project.invitationCode ?? String(localized: "No invitation code"))
+                            .lineLimit(1)
+                            .textSelection(.enabled)
+                            .frame(minWidth: 256, alignment: .leading)
+                            .fixedSize()
+                    }
+
+                    HStack {
+                        Button("Copy Invitation", systemImage: "doc.on.doc") {
+                            if let inviteCode = project.invitationCode {
+                                setPasteboard(inviteCode)
                             }
                         }
+
+                        ShareLink(
+                            "Send Invitation",
+                            item: URL(string: "https://paperpilot.ziqiang.net.cn/invite.html?invitation=\(project.invitationCode ?? "")")!,
+                            subject: Text(project.name),
+                            message: Text("\(username ?? String(localized: "I")) invites you to join the project \"\(project.name)\" on Paper Pilot.")
+                        )
                     }
-                    ShareLink(
-                        "Send Invitation",
-                        item: URL(string: "https://paperpilot.ziqiang.net.cn/invite.html?invitation=\(project.invitationCode ?? "")")!,
-                        subject: Text(project.name),
-                        message: Text("\(username ?? String(localized: "I")) invites you to join the project \"\(project.name)\" on Paper Pilot.")
-                    )
                 }
                 .disabled(project.invitationCode == nil || project.invitationCode!.isEmpty)
             } else {

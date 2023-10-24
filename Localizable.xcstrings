@@ -354,22 +354,22 @@
         }
       }
     },
-    "Copy" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拷贝"
-          }
-        }
-      }
-    },
     "Copy Information" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "拷贝信息"
+          }
+        }
+      }
+    },
+    "Copy Invitation" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拷贝邀请"
           }
         }
       }
@@ -1188,6 +1188,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "没有详细错误信息。"
+          }
+        }
+      }
+    },
+    "No invitation code" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有邀请码"
           }
         }
       }
