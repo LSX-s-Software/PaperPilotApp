@@ -34,6 +34,7 @@ struct ProjectDetail: View {
         Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
             TableColumn("Status") { paper in
                 (ModelStatus(rawValue: paper.status) ?? ModelStatus.normal).icon
+                    .contentTransition(.symbolEffect(.replace))
             }
             .width(35)
             .alignment(.center)
