@@ -32,15 +32,21 @@ struct ShareProjectView: View {
                 .fontWeight(.medium)
 
             if project.remoteId != nil {
+                GroupBox("Members") {
+                    LazyVGrid(columns: [GridItem](repeating: GridItem(), count: 6)) {
+                        ForEach(project.members) { member in
+                            AvatarView(url: URL(string: member.avatar), size: 40)
+                        }
+                    }
+                    .frame(minHeight: 40)
+                }
+
                 Group {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Invitation Code")
-                            .font(.caption)
-                        HStack {
+                    GroupBox("Invitation Code") {
+                        HStack(spacing: 0) {
                             TextField("Invitation Code", text: .constant(project.invitationCode ?? ""))
-                                .textFieldStyle(.roundedBorder)
+                                .textFieldStyle(.plain)
                                 .disabled(true)
-                                .frame(minWidth: 100)
                             Button("Copy") {
                                 if let inviteCode = project.invitationCode {
                                     setPasteboard(inviteCode)
@@ -121,4 +127,6 @@ struct ShareProjectView: View {
 
 #Preview {
     ShareProjectView(project: ModelData.project1)
+        .modelContainer(previewContainer)
+        .fixedSize()
 }

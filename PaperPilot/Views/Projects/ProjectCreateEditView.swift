@@ -115,6 +115,11 @@ struct ProjectCreateEditView: View {
                     project.remoteId = result.id
                     project.invitationCode = result.inviteCode
                     modelContext.insert(project)
+                    for member in result.members {
+                        let user = User(remoteId: member.id, username: member.username, avatar: member.avatar)
+                        modelContext.insert(user)
+                        project.members.append(user)
+                    }
                 }
                 dismiss()
             } catch let error as GRPCStatus {

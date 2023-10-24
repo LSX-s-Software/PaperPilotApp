@@ -7,12 +7,10 @@
 
 import Foundation
 import SwiftData
-import SimpleCodable
 
 /// 项目
 @Model
-@Codable
-class Project: Hashable, Codable, Identifiable {
+class Project: Hashable, Identifiable {
     @Attribute(.unique) var id: UUID
     var remoteId: String?
     /// 名称
@@ -23,10 +21,9 @@ class Project: Hashable, Codable, Identifiable {
     var invitationCode: String?
     /// 是否是所有者
     var isOwner: Bool
-    // TODO: 成员列表
-    //    /// 成员列表
-    //    @Relationship(deleteRule: .cascade)
-    //    var members: [User]
+    /// 成员列表
+    @Relationship(inverse: \User.projects)
+    var members: [User] = []
     /// 论文列表
     @Relationship(deleteRule: .cascade, inverse: \Paper.project)
     var papers: [Paper]
@@ -37,6 +34,7 @@ class Project: Hashable, Codable, Identifiable {
          desc: String,
          invitationCode: String? = nil,
          isOwner: Bool = true,
+         members: [User] = [],
          papers: [Paper] = []) {
         self.id = uuid
         self.remoteId = remoteId
@@ -44,6 +42,7 @@ class Project: Hashable, Codable, Identifiable {
         self.desc = desc
         self.invitationCode = invitationCode
         self.isOwner = isOwner
+        self.members = members
         self.papers = papers
     }
 }

@@ -51,7 +51,6 @@ struct PDFReader: View {
     @State private var savingPDF = false
     @State private var saveErrorMsg: LocalizedStringKey?
     @State private var isShowingSaveErrorDetail = false
-    @State private var shouldUpdate = false
 
     var onSelection: ((PDFSelection?) -> Void)?
 
@@ -279,8 +278,7 @@ struct PDFReader: View {
                 Button("Add to bookmark", systemImage: "bookmark\(currentPageBookmarked ? ".fill" : "")") {
                     handleToggleBookmark()
                 }
-                .id(shouldUpdate)
-                
+
                 Spacer()
                 
                 // MARK: 计时器
@@ -384,7 +382,6 @@ extension PDFReader {
             let bookmark = Bookmark(page: page, label: currentPage.label)
             paper.bookmarks.append(bookmark)
         }
-        shouldUpdate.toggle()
     }
 }
 

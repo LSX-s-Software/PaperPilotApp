@@ -1121,6 +1121,16 @@
         }
       }
     },
+    "Members" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成员"
+          }
+        }
+      }
+    },
     "New author" : {
       "localizations" : {
         "zh-Hans" : {

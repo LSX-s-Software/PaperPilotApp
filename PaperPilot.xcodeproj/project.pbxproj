@@ -54,6 +54,7 @@
 		F59FB3C92AE53B590007A76B /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3C82AE53B590007A76B /* GeneralSettingsView.swift */; };
 		F59FB3D12AE555840007A76B /* ShareProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3D02AE555840007A76B /* ShareProjectView.swift */; };
 		F59FB3D72AE580A20007A76B /* NavigationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3D62AE580A20007A76B /* NavigationContext.swift */; };
+		F5AEFA822AE75DA70052F975 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AEFA812AE75DA70052F975 /* User.swift */; };
 		F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */; };
 		F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */; };
 		F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */ = {isa = PBXBuildFile; productRef = F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */; };
@@ -124,6 +125,7 @@
 		F59FB3C82AE53B590007A76B /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		F59FB3D02AE555840007A76B /* ShareProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareProjectView.swift; sourceTree = "<group>"; };
 		F59FB3D62AE580A20007A76B /* NavigationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationContext.swift; sourceTree = "<group>"; };
+		F5AEFA812AE75DA70052F975 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		F5C379082AC44BFF00C88C94 /* PaperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperInfo.swift; sourceTree = "<group>"; };
@@ -197,10 +199,11 @@
 		F53D813E2AC02A6B00865B80 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F53D813F2AC02A7A00865B80 /* Project.swift */,
-				F53D81412AC02AF800865B80 /* Paper.swift */,
 				F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */,
 				F53D81432AC02C6500865B80 /* ModelData.swift */,
+				F53D81412AC02AF800865B80 /* Paper.swift */,
+				F53D813F2AC02A7A00865B80 /* Project.swift */,
+				F5AEFA812AE75DA70052F975 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				F5643F3B2AE3C63200186A2F /* MultipartFormDataRequest.swift in Sources */,
 				F5643F4C2AE4E05F00186A2F /* SettingsView.swift in Sources */,
 				F53D81492AC1369200865B80 /* PDFKitView.swift in Sources */,
+				F5AEFA822AE75DA70052F975 /* User.swift in Sources */,
 				F58DF02D2AE2B743001D4D68 /* ImageTitle.swift in Sources */,
 				F59FB3C72AE539E50007A76B /* StorageSpaceSettingsView.swift in Sources */,
 				F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */,
