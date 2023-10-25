@@ -189,9 +189,7 @@ class AccountViewModel: ObservableObject {
                         return
                     }
                     try await URLSession.shared.upload(for: oss)
-                    if let (error, exception) = await API.shared.refreshUserInfo() {
-                        fail(message: error.localizedDescription, detail: exception.message)
-                    }
+                    try await API.shared.refreshUserInfo()
                     DispatchQueue.main.async {
                         self.isChangingAvatar = false
                     }

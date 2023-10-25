@@ -78,20 +78,11 @@ final class API {
         translation.defaultCallOptions.customMetadata = headers
     }
 
-    func refreshUserInfo() async -> (GRPCStatus, Exec_ApiException)? {
-        let call = Self.shared.user.makeGetCurrentUserCall(.init())
-        do {
-            let result = try await call.response
-            id = result.id
-            username = result.username
-            phone = result.phone
-            avatar = result.avatar
-            return nil
-        } catch let error as GRPCStatus {
-            return await call.apiException.map { (error, $0) }
-        } catch {
-            print(error)
-            return nil
-        }
+    func refreshUserInfo() async throws {
+        let result = try await Self.shared.user.getCurrentUser(.init())
+        id = result.id
+        username = result.username
+        phone = result.phone
+        avatar = result.avatar
     }
 }

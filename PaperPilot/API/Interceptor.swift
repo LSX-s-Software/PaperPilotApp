@@ -15,6 +15,7 @@ protocol WithApiException {
     var apiException: Exec_ApiException? { get async }
 }
 
+@available(*, deprecated, message: "Use interceptors instead")
 extension GRPCAsyncUnaryCall: WithApiException {
     @available(*, deprecated, message: "Use interceptors instead")
     var apiException: Exec_ApiException? {
