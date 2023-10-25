@@ -20,6 +20,8 @@ struct ProjectDetail: View {
 
     @AppStorage(AppStorageKey.User.loggedIn.rawValue)
     private var loggedIn: Bool = false
+    @SceneStorage(SceneStorageKey.Table.customizations.rawValue)
+    private var columnCustomization: TableColumnCustomization<Paper>
 
     @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
@@ -32,24 +34,35 @@ struct ProjectDetail: View {
     @State private var message: String?
 
     var body: some View {
-        Table(project.papers.sorted(using: sortOrder), selection: $selection, sortOrder: $sortOrder) {
+        Table(project.papers.sorted(using: sortOrder),
+              selection: $selection,
+              sortOrder: $sortOrder,
+              columnCustomization: $columnCustomization
+        ) {
             TableColumn("Status") { paper in
                 (ModelStatus(rawValue: paper.status) ?? ModelStatus.normal).icon
                     .contentTransition(.symbolEffect(.replace))
             }
             .width(35)
             .alignment(.center)
+            .customizationID("status")
             TableColumn("Title", value: \.title)
+                .customizationID("title")
+                .disabledCustomizationBehavior(.visibility)
             TableColumn("Authors", value: \.formattedAuthors)
+                .customizationID("authors")
             TableColumn("Publication Year") { paper in
                 Text(paper.publicationYear ?? String(localized: "Unknown"))
             }
             .width(50)
+            .customizationID("publicationYear")
             TableColumn("Publication") { paper in
                 Text(paper.publication ?? String(localized: "Unknown"))
             }
+            .customizationID("publication")
             TableColumn("Date Added", value: \.formattedCreateTime)
                 .width(70)
+                .customizationID("dateAdded")
             TableColumn("Tags") { paper in
                 VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.tags, id: \.self) { tag in
@@ -58,6 +71,7 @@ struct ProjectDetail: View {
                 }
                 .clipped()
             }
+            .customizationID("tags")
             TableColumn("Read") { paper in
                 if paper.read {
                     Image(systemName: "checkmark.circle.fill")
@@ -65,6 +79,7 @@ struct ProjectDetail: View {
             }
             .width(35)
             .alignment(.center)
+            .customizationID("read")
         }
         .contextMenu(forSelectionType: Paper.ID.self) { selectedPapers in
             if !selectedPapers.isEmpty {

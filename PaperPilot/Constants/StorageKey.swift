@@ -1,5 +1,5 @@
 //
-//  AppStorageKey.swift
+//  StorageKey.swift
 //  PaperPilot
 //
 //  Created by 林思行 on 2023/10/10.
@@ -24,5 +24,11 @@ enum AppStorageKey {
     enum Reader: String {
         case sidebarContent = "reader.sidebarContent"
         case isShowingInspector = "reader.isShowingInspector"
+    }
+}
+
+enum SceneStorageKey {
+    enum Table: String {
+        case customizations = "table.customizations"
     }
 }
