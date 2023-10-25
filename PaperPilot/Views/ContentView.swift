@@ -151,6 +151,24 @@ struct ContentView: View {
             Text(alert.errorDetail)
         }
         .environment(alert)
+        .task(id: username) {
+            print("download remote project list")
+            if username == nil {
+                return
+            }
+            let msg = String(localized: "Failed to fetch remote projects.")
+            do {
+                try await downloadRemoteProjects()
+            } catch let error as GRPCStatus {
+                alert.alert(
+                    message: msg,
+                    detail: error.message ?? "")
+            } catch {
+                alert.alert(
+                    message: msg,
+                    detail: error.localizedDescription )
+            }
+        }
     }
 }
 

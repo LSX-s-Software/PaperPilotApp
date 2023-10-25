@@ -665,6 +665,16 @@
         }
       }
     },
+    "Failed to fetch remote projects." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "获取远程项目列表失败。"
+          }
+        }
+      }
+    },
     "Failed to import this file" : {
       "localizations" : {
         "zh-Hans" : {

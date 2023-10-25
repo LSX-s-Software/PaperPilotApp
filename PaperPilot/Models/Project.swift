@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
 
 /// 项目
 @Model
@@ -45,6 +46,27 @@ class Project: Hashable, Identifiable {
         self.members = members
         self.papers = papers
     }
+
+    init(remote: Project_ProjectInfo, userID: String) {
+        self.id = UUID()
+        self.remoteId = remote.id
+        self.name = remote.name
+        self.desc = remote.description_p
+        self.invitationCode = remote.inviteCode
+        self.isOwner = remote.ownerID == userID
+        self.members = [] // TODO: members
+        self.papers = []
+    }
+
+    func update(from remote: Project_ProjectInfo, userID: String) {
+        self.remoteId = remote.id
+        self.name = remote.name
+        self.desc = remote.description_p
+        self.invitationCode = remote.inviteCode
+        self.isOwner = remote.ownerID == userID
+        self.members = [] // TODO: members
+        self.papers = []
+    }
 }
 
 // MARK: - Project相关操作
@@ -61,4 +83,12 @@ extension Project {
             paper.status = ModelStatus.waitingForUpload.rawValue
         }
     }
+}
+
+func downloadRemoteProjects() async throws {
+    let result = try await API.shared.project.listUserJoinedProjects(.with {
+        $0.page = 0
+        $0.pageSize = 0
+    })
+    try await PPModelActor.shared.updateRemoteProjects(from: result.projects)
 }
