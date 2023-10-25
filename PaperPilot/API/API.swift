@@ -121,11 +121,11 @@ final class API {
     }
 
     func scheduleRefreshToken(alert: Alert) {
-        guard let accessToken = self.accessToken else {
-            return
-        }
-        let accessExpireDate = Date(timeIntervalSince1970: accessTokenExpireTime!)
-        let refreshExpireDate = Date(timeIntervalSince1970: refreshTokenExpireTime!)
+        guard self.accessToken != nil,
+            let accessTokenExpireTime = accessTokenExpireTime,
+            let refreshTokenExpireTime = refreshTokenExpireTime else { return }
+        let accessExpireDate = Date(timeIntervalSince1970: accessTokenExpireTime)
+        let refreshExpireDate = Date(timeIntervalSince1970: refreshTokenExpireTime)
         let secBeforeExpire: Double = 60.0
         if Date().advanced(by: secBeforeExpire) >= accessExpireDate {
             Task {
