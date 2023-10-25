@@ -6,70 +6,95 @@
 //
 
 import SwiftUI
-
-enum ServiceStatus {
-    case unknown
-    case available
-    case unavailable
-
-    var localizedString: String {
-        switch self {
-        case .unknown:
-            return String(localized: "Testing")
-        case .available:
-            return String(localized: "Available")
-        case .unavailable:
-            return String(localized: "Unavailable")
-        }
-    }
-}
+import SwiftData
 
 struct ServiceStatusRow: View {
-    var name: LocalizedStringKey
-    var status: ServiceStatus
+    let status: MicroserviceStatus
+    let loading: Bool
 
     var body: some View {
-        LabeledContent(name) {
+        LabeledContent {
             HStack(spacing: 8) {
-                if status == .unknown {
+                if loading {
                     ProgressView().controlSize(.small)
+                    Text("Testing...")
+                        .foregroundStyle(.secondary)
                 } else {
-                    Circle()
-                        .foregroundColor(status == .available ? .green : .red)
-                        .frame(width: 10, height: 10)
+                    if status.healthyCount == status.totalCount {
+                        Circle()
+                            .foregroundColor(.green)
+                            .frame(width: 10, height: 10)
+                        Text("Available")
+                    } else if status.healthyCount == 0 {
+                        Circle()
+                            .foregroundColor(.red)
+                            .frame(width: 10, height: 10)
+                        Text("Unavailable")
+                    } else {
+                        Circle()
+                            .foregroundColor(.yellow)
+                            .frame(width: 10, height: 10)
+                        Text("Downgraded")
+                            .toolTip("Available: \(status.healthyCount)/\(status.totalCount)")
+                    }
                 }
-                Text(status.localizedString)
             }
+        } label: {
+            Text("\(status.name):")
+                .toolTip(status.desc)
         }
     }
 }
 
 struct ServiceStatusView: View {
-    @State private var serverOnline = ServiceStatus.unknown
+    @Environment(\.modelContext) var modelContext
+
+    @Query(sort: \MicroserviceStatus.id) private var statuses: [MicroserviceStatus]
+    @State private var loading = true
+    @State private var onlineServers: Int32 = 0
+    @State private var latestUpdate = "Never"
 
     var body: some View {
         Form {
-            Section("Servers") {
-                ServiceStatusRow(name: "Main Server:", status: serverOnline)
+            LabeledContent("Online Servers:") {
+                if loading {
+                    ProgressView().controlSize(.small)
+                } else {
+                    Text("\(onlineServers)")
+                }
             }
 
             Divider()
 
-            Section("Services") {
-                ServiceStatusRow(name: "Auth:", status: serverOnline)
-                ServiceStatusRow(name: "User:", status: serverOnline)
-                ServiceStatusRow(name: "Project:", status: serverOnline)
-                ServiceStatusRow(name: "Paper:", status: serverOnline)
-                ServiceStatusRow(name: "Translation:", status: serverOnline)
+            ForEach(statuses) { status in
+                ServiceStatusRow(status: status, loading: loading)
             }
+
+            Divider()
+
+            LabeledContent("Latest update:", value: latestUpdate)
         }
         .padding()
         .task {
-            serverOnline = (try? await API.shared.test.test(.init())) != nil ? .available : .unavailable
+            loading = true
+            if let status = try? await API.shared.monitor.getStatus(.init()) {
+                onlineServers = status.hostCount
+                status.projects.forEach { projectStatus in
+                    let status = MicroserviceStatus(id: projectStatus.id,
+                                                    name: projectStatus.name,
+                                                    desc: projectStatus.description_p,
+                                                    healthyCount: projectStatus.healthyCount,
+                                                    totalCount: projectStatus.totalCount)
+                    modelContext.insert(status)
+                }
+                latestUpdate = status.time.date.formatted()
+            }
+            loading = false
         }
     }
 }
 
 #Preview {
     ServiceStatusView()
+        .modelContainer(for: MicroserviceStatus.self, inMemory: true)
 }

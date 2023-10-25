@@ -17,6 +17,7 @@
 		279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */; };
 		279F2D272AC8398A00FEA9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
 		76C15CBF2AD82AB300614902 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C15CBE2AD82AB300614902 /* AccountViewModel.swift */; };
+		F508805B2AE8B0A200CD7510 /* MicroserviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */; };
 		F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */; };
 		F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */; };
 		F5145E7B2AD57863001860E0 /* AddPaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E7A2AD57863001860E0 /* AddPaperView.swift */; };
@@ -91,6 +92,7 @@
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		76C15CBE2AD82AB300614902 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
+		F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroserviceStatus.swift; sourceTree = "<group>"; };
 		F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreateEditView.swift; sourceTree = "<group>"; };
 		F5145E7A2AD57863001860E0 /* AddPaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaperView.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				F53D81412AC02AF800865B80 /* Paper.swift */,
 				F53D813F2AC02A7A00865B80 /* Project.swift */,
 				F5AEFA812AE75DA70052F975 /* User.swift */,
+				F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				F5FDF8E72AD6D968001D9460 /* PDFKitThumbnailView.swift in Sources */,
 				F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */,
 				F53D814B2AC1385300865B80 /* PaperReader.swift in Sources */,
+				F508805B2AE8B0A200CD7510 /* MicroserviceStatus.swift in Sources */,
 				F5145E852AD59172001860E0 /* NewPaperInfoView.swift in Sources */,
 				F536A6022AE61E0F0042B86A /* ModelStatus.swift in Sources */,
 				F578D8212AD78ABE00322819 /* PDFOutlineView.swift in Sources */,

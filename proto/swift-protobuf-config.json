@@ -10,7 +10,8 @@
                 "paperpilot_common/protobuf/common/util.proto",
                 "paperpilot_common/protobuf/common/exce.proto",
                 "paperpilot_common/protobuf/translation/translation.proto",
-                "google/rpc/status.proto"
+                "google/rpc/status.proto",
+                "paperpilot_common/protobuf/monitor/server.proto"
             ]
         }
     ]

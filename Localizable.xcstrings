@@ -17,6 +17,26 @@
         }
       }
     },
+    "%@:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@："
+          }
+        }
+      }
+    },
+    "%d" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d"
+          }
+        }
+      }
+    },
     "Abstract" : {
       "localizations" : {
         "zh-Hans" : {
@@ -174,16 +194,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "确定要退出登录吗？"
-          }
-        }
-      }
-    },
-    "Auth:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "鉴权："
           }
         }
       }
@@ -500,6 +510,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "完成"
+          }
+        }
+      }
+    },
+    "Downgraded" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "降级"
           }
         }
       }
@@ -998,6 +1018,16 @@
         }
       }
     },
+    "Latest update:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新时间："
+          }
+        }
+      }
+    },
     "Local" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1107,16 +1137,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "退出登录"
-          }
-        }
-      }
-    },
-    "Main Server:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "主服务器："
           }
         }
       }
@@ -1283,6 +1303,16 @@
         }
       }
     },
+    "Online Servers:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在线的服务器："
+          }
+        }
+      }
+    },
     "Only required when changing the phone number." : {
       "localizations" : {
         "zh-Hans" : {
@@ -1397,16 +1427,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "阅读论文"
-          }
-        }
-      }
-    },
-    "Paper:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "论文："
           }
         }
       }
@@ -1540,16 +1560,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "项目类型"
-          }
-        }
-      }
-    },
-    "Project:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "项目："
           }
         }
       }
@@ -1765,32 +1775,12 @@
         }
       }
     },
-    "Servers" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "服务器"
-          }
-        }
-      }
-    },
     "Service Status" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "服务状态"
-          }
-        }
-      }
-    },
-    "Services" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "服务"
           }
         }
       }
@@ -1905,12 +1895,12 @@
         }
       }
     },
-    "Testing" : {
+    "Testing..." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "测试中"
+            "value" : "测试中…"
           }
         }
       }
@@ -2012,16 +2002,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "译文"
-          }
-        }
-      }
-    },
-    "Translation:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "翻译："
           }
         }
       }
@@ -2134,16 +2114,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用邀请码加入项目"
-          }
-        }
-      }
-    },
-    "User:" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "用户："
           }
         }
       }
