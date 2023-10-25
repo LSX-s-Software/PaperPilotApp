@@ -26,9 +26,6 @@ struct PaperPilotApp: App {
     @StateObject var appState = AppState()
     @StateObject var navigationContext = NavigationContext()
 
-    @AppStorage(AppStorageKey.User.accessToken.rawValue)
-    private var accessToken: String?
-
     init() {
         do {
             modelContainer = try ModelContainer(for: Paper.self, Project.self, Bookmark.self, User.self, MicroserviceStatus.self)
@@ -36,9 +33,7 @@ struct PaperPilotApp: App {
         } catch {
             fatalError("Could not initialize ModelContainer: \(error.localizedDescription)")
         }
-        if let accessToken = self.accessToken {
-            API.shared.setToken(accessToken)
-        }
+        API.shared.setToken()
     }
     
     var body: some Scene {

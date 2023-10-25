@@ -715,6 +715,16 @@
         }
       }
     },
+    "Failed to refresh the access token." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新access token失败。"
+          }
+        }
+      }
+    },
     "Failed to resolve paper" : {
       "localizations" : {
         "zh-Hans" : {

@@ -44,6 +44,12 @@ class AccountViewModel: ObservableObject {
     private var loggedInStored: Bool = false
     @AppStorage(AppStorageKey.User.accessToken.rawValue)
     private var accessToken: String?
+    @AppStorage(AppStorageKey.User.accessTokenExpireTime.rawValue)
+    private var accessTokenExpireTime: Double?
+    @AppStorage(AppStorageKey.User.refreshToken.rawValue)
+    private var refreshToken: String?
+    @AppStorage(AppStorageKey.User.refreshTokenExpireTime.rawValue)
+    private var refreshTokenExpireTime: Double?
     @AppStorage(AppStorageKey.User.id.rawValue)
     private var id: String?
     @AppStorage(AppStorageKey.User.phone.rawValue)
@@ -112,8 +118,11 @@ class AccountViewModel: ObservableObject {
                 }
                 DispatchQueue.main.async {
                     self.accessToken = result.access.value
+                    self.accessTokenExpireTime = Double(result.access.expireTime.seconds)
+                    self.refreshToken = result.refresh.value
+                    self.refreshTokenExpireTime = Double(result.refresh.expireTime.seconds)
                     self.loggedInStored = true
-                    API.shared.setToken(result.access.value)
+                    API.shared.setToken()
                     self.id = result.user.id
                     self.avatar = result.user.avatar
                     self.phoneStored = self.phoneInput

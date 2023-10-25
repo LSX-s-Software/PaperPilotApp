@@ -169,6 +169,9 @@ struct ContentView: View {
                     detail: error.localizedDescription )
             }
         }
+        .task {
+            API.shared.scheduleRefreshToken(alert: alert)
+        }
     }
 }
 
