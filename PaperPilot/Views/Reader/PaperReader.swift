@@ -73,7 +73,7 @@ struct PaperReader: View {
                                 "arrow.down.circle.fill" : "exclamationmark.triangle.fill"
                             )
                             .symbolRenderingMode(.hierarchical)
-                            .foregroundStyle(.red)
+                            .foregroundStyle(downloadVM.downloading ? Color.accentColor : .red)
                             .font(.title)
                             if paper.file == nil {
                                 Text("This paper has no PDF file attached.")

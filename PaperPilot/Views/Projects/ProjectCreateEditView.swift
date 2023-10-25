@@ -88,6 +88,7 @@ struct ProjectCreateEditView: View {
                         } message: {
                             Text("This action cannot be undone.")
                         }
+                        .dialogSeverity(.critical)
                     }
                 }
             }

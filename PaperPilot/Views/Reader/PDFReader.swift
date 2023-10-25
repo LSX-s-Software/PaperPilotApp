@@ -275,9 +275,10 @@ struct PDFReader: View {
                         handleAddAnnotation(.underline)
                     }
                 }
-                Button("Add to bookmark", systemImage: "bookmark\(currentPageBookmarked ? ".fill" : "")") {
+                Button("Add to bookmark", systemImage: "bookmark") {
                     handleToggleBookmark()
                 }
+                .symbolVariant(currentPageBookmarked ? .fill : .none)
 
                 Spacer()
                 

@@ -64,6 +64,7 @@ struct StorageSpaceSettingsView: View {
                     } message: {
                         Text("Will delete all imported/downloaded PDFs. ") + Text("This action cannot be undone.")
                     }
+                    .dialogSeverity(.critical)
                 }
             }
         }
