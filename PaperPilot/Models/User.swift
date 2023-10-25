@@ -23,4 +23,10 @@ class User: Identifiable {
         self.username = username
         self.avatar = avatar ?? "https://ui-avatars.com/api/?name=\(username.replacingOccurrences(of: " ", with: "+"))&size=120&background=random"
     }
+
+    init(from remote: User_UserInfo) {
+        self.remoteId = remote.id
+        self.username = remote.username
+        self.avatar = remote.avatar
+    }
 }
