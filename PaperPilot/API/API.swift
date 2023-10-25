@@ -53,7 +53,7 @@ final class API {
         self.project = Project_ProjectPublicServiceAsyncClient(channel: channel, interceptors: factory)
         self.paper = Paper_PaperPublicServiceAsyncClient(channel: channel, interceptors: factory)
         self.translation = Translation_TranslationPublicServiceAsyncClient(channel: channel, interceptors: factory)
-        self.monitor = Monitor_MonitorPublicServiceAsyncClient(channel: channel)
+        self.monitor = Monitor_MonitorPublicServiceAsyncClient(channel: channel, interceptors: factory)
 
 #if os(macOS)
         let notification = NSApplication.willTerminateNotification

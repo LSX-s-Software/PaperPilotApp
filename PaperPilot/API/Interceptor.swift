@@ -78,9 +78,14 @@ final class ErrorInterceptorFactory:
     User_UserPublicServiceClientInterceptorFactoryProtocol,
     Project_ProjectPublicServiceClientInterceptorFactoryProtocol,
     Translation_TranslationPublicServiceClientInterceptorFactoryProtocol,
-    Paper_PaperPublicServiceClientInterceptorFactoryProtocol {
+    Paper_PaperPublicServiceClientInterceptorFactoryProtocol,
+    Monitor_MonitorPublicServiceClientInterceptorFactoryProtocol {
     private func new<I, O>() -> [GRPC.ClientInterceptor<I, O>] {
         return [ErrorInterceptor<I, O>()]
+    }
+
+    func makeGetStatusInterceptors() -> [GRPC.ClientInterceptor<SwiftProtobuf.Google_Protobuf_Empty, Monitor_ServerStatus>] {
+        new()
     }
 
     func makeGetUserInfoInterceptors() -> [GRPC.ClientInterceptor<User_UserId, User_UserInfo>] {
