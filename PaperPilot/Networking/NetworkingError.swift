@@ -12,7 +12,7 @@ enum NetworkingError: Error {
     case responseFormatError
     case networkError(Error)
     case notFound
-    case requestError(code: Int, message: String)
+    case requestError(code: Int?, message: String?)
 }
 
 extension NetworkingError: LocalizedError {
@@ -27,7 +27,7 @@ extension NetworkingError: LocalizedError {
         case .notFound:
             return String(localized: "Not found")
         case .requestError(let code, let message):
-            return "\(message)(\(code))"
+            return code == nil ? message : "\(message ?? String(localized: "Unknown error"))(\(code!))"
         }
     }
 }

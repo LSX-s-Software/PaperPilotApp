@@ -164,7 +164,7 @@ struct ProjectDetail: View {
                 for paper in project.papers {
                     switch paper.status {
                     case ModelStatus.waitingForUpload.rawValue:
-                        try await paper.upload(to: project)
+                        try await ModelService.shared.uploadPaper(paper, to: project)
                     default:
                         break
                     }

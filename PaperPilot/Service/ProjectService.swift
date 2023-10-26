@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-extension PPModelActor {
+extension ModelService {
     private func updateRemoteProject(from: Project_ProjectInfo) throws {
         let remoteId = from.id
 

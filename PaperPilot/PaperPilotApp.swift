@@ -29,7 +29,7 @@ struct PaperPilotApp: App {
     init() {
         do {
             modelContainer = try ModelContainer(for: Paper.self, Project.self, Bookmark.self, User.self, MicroserviceStatus.self)
-            PPModelActor.createSharedInstance(modelContainer: modelContainer)
+            ModelService.createSharedInstance(modelContainer: modelContainer)
         } catch {
             fatalError("Could not initialize ModelContainer: \(error.localizedDescription)")
         }

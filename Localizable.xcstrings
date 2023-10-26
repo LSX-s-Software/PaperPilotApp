@@ -755,6 +755,9 @@
         }
       }
     },
+    "Failed to update paper info" : {
+
+    },
     "Failed to upload the image." : {
       "localizations" : {
         "zh-Hans" : {

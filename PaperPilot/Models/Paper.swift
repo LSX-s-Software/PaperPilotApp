@@ -61,7 +61,8 @@ class Paper: Hashable, Identifiable {
     var formattedCreateTime: String {
         createTime.formatted(date: .numeric, time: .omitted)
     }
-    
+    var updateTime: Date = Date.now
+
     /// 已读
     var read: Bool
     
@@ -112,6 +113,7 @@ class Paper: Hashable, Identifiable {
         self.file = file
         self.localFile = localFile
         self.createTime = createTime
+        self.updateTime = createTime
         self.read = read
         self.note = note
         self.bookmarks = bookmarks
@@ -120,73 +122,6 @@ class Paper: Hashable, Identifiable {
 
 // MARK: - Paper相关操作
 extension Paper {
-    /// 上传到服务器
-    /// - Parameters:
-    ///   - project: 所属项目
-    ///   - parseMetadata: 是否解析元数据
-    func upload(to project: Project) async throws {
-        guard let projectId = project.remoteId else { return }
-        status = ModelStatus.updating.rawValue
-        do {
-            // 上传基本信息
-            if remoteId == nil {
-                let result = try await API.shared.paper.createPaper(.with {
-                    $0.projectID = projectId
-                    $0.paper = self.paperDetail
-                })
-                remoteId = result.id
-                createTime = result.createTime.date
-                print(title, "basic info uploaded")
-            }
-            // 读取本地文件
-            guard let localFile = localFile, FileManager.default.isReadableFile(atPath: localFile.path()) else {
-                status = ModelStatus.normal.rawValue
-                return
-            }
-            let fileData = try Data(contentsOf: localFile)
-            // 获取、解析OSS直传Token
-            let token = try await API.shared.paper.uploadAttachment(.with { $0.paperID = remoteId! }).token
-            print(title, "OSS token got")
-            // 上传文件
-            guard let request = OSSRequest(token: token,
-                                           fileName: localFile.lastPathComponent,
-                                           fileData: fileData,
-                                           mimeType: "application/pdf") else {
-                throw NetworkingError.responseFormatError
-            }
-            try await URLSession.shared.upload(for: request)
-            print(title, "file uploaded")
-            // 更新文件URL
-            if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = remoteId! }).file {
-                self.file = newFileURL
-            }
-        } catch {
-            status = ModelStatus.waitingForUpload.rawValue
-            throw error
-        }
-        status = ModelStatus.normal.rawValue
-    }
-    
-    /// 使用远端数据更新论文信息
-    /// - Parameter detail: 远端数据
-    func update(with detail: Paper_PaperDetail) {
-        remoteId = detail.id
-        title = detail.title
-        abstract = detail.abstract
-        keywords = detail.keywords
-        authors = detail.authors
-        tags = detail.tags
-        publicationYear = detail.publicationYear == 0 ? nil : String(format: "%d", detail.publicationYear)
-        publication = detail.publication
-        volume = detail.volume
-        issue = detail.issue
-        pages = detail.pages
-        url = detail.url
-        doi = detail.doi
-        file = detail.file
-        createTime = detail.hasCreateTime ? detail.createTime.date : Date.now
-    }
-
     var paperDetail: Paper_PaperDetail {
         Paper_PaperDetail.with {
             if let remoteId = remoteId { $0.id = remoteId }
@@ -211,9 +146,9 @@ extension Paper {
 
 // MARK: - Paper扩展构造函数
 extension Paper {
-    convenience init(from detail: Paper_PaperDetail) {
-        self.init(title: detail.title)
-        self.update(with: detail)
+    convenience init(from detail: Paper_PaperDetail) async {
+        self.init(title: detail.title, createTime: detail.hasCreateTime ? detail.createTime.date : Date.now)
+        await ModelService.shared.updatePaper(self, with: detail)
     }
 
     /// 通过DOI获取论文信息

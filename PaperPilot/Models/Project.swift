@@ -90,5 +90,5 @@ func downloadRemoteProjects() async throws {
         $0.page = 0
         $0.pageSize = 0
     })
-    try await PPModelActor.shared.updateRemoteProjects(from: result.projects)
+    try await ModelService.shared.updateRemoteProjects(from: result.projects)
 }

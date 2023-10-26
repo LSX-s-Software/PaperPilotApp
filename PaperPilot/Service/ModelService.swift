@@ -1,5 +1,5 @@
 //
-//  ModelActor.swift
+//  ModelService.swift
 //  PaperPilot
 //
 //  Created by mike on 2023/10/24.
@@ -10,8 +10,8 @@ import SwiftData
 import SwiftUI
 
 @ModelActor
-actor PPModelActor {
-    static var shared: PPModelActor!
+actor ModelService {
+    static var shared: ModelService!
 
     static func createSharedInstance(modelContainer: ModelContainer) {
         shared = Self(modelContainer: modelContainer)

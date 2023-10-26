@@ -8,23 +8,100 @@
 import SwiftUI
 import SwiftUIFlow
 
-private struct InfoRow: View {
-    let title: LocalizedStringKey
-    let content: String?
-    let onEditEnd: (String) -> Void
-    
+private struct EditingKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    var editing: Bool {
+        get { self[EditingKey.self] }
+        set { self[EditingKey.self] = newValue }
+    }
+}
+
+struct EditToggleButton: View {
+    @Binding var editing: Bool
+    var saving: Bool
+
+    var onSubmit: () -> Void
+    var onCancel: (() -> Void)?
+
     var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            EditableText(content, prompt: title, onEditEnd: onEditEnd)
+        Group {
+            if editing {
+                if saving {
+                    ProgressView()
+                        .controlSize(.small)
+                        .padding(.trailing, 2)
+                }
+                ControlGroup {
+                    Button("Save", systemImage: "checkmark", action: onSubmit)
+                    Button("Cancel", systemImage: "xmark") {
+                        onCancel?()
+                        editing = false
+                    }
+                }
+                .fixedSize()
+                .disabled(saving)
+            } else {
+                Button("Edit", systemImage: "pencil") {
+                    editing = true
+                }
+            }
+        }
+        .labelStyle(.iconOnly)
+        .controlSize(.small)
+    }
+}
+
+private struct InfoRow: View {
+    @Environment(\.editing) var editing
+
+    let title: LocalizedStringKey
+    @Binding var value: String
+
+    var body: some View {
+        LabeledContent(title) {
+            Group {
+                if editing {
+                    TextField(title, text: $value)
+                } else {
+                    Text(value)
+                }
+            }
+            .multilineTextAlignment(.trailing)
         }
     }
 }
 
 struct PaperInfo: View {
     @Bindable var paper: Paper
-    
+    @State private var editing = false
+    @State private var saving = false
+    @State private var hasError = false
+    @State private var errorMsg: String?
+
+    @State private var doi: String
+    @State private var publication: String
+    @State private var publicationYear: String
+    @State private var volume: String
+    @State private var issue: String
+    @State private var pages: String
+    @State private var url: String
+    @State private var abstract: String
+
+    init(paper: Paper) {
+        self.paper = paper
+        self._doi = State(initialValue: paper.doi ?? "")
+        self._publication = State(initialValue: paper.publication ?? "")
+        self._publicationYear = State(initialValue: paper.publicationYear ?? "")
+        self._volume = State(initialValue: paper.volume ?? "")
+        self._issue = State(initialValue: paper.issue ?? "")
+        self._pages = State(initialValue: paper.pages ?? "")
+        self._url = State(initialValue: paper.url ?? "")
+        self._abstract = State(initialValue: paper.abstract ?? "")
+    }
+
     var body: some View {
         List {
             Section("Tags") {
@@ -44,36 +121,29 @@ struct PaperInfo: View {
             }
             .listRowSeparator(.hidden)
             
-            Section("Basic Info") {
-                InfoRow(title: "DOI", content: paper.doi) { newValue in
-                    paper.doi = newValue
-                }
-                InfoRow(title: "Publication", content: paper.publication) { newValue in
-                    paper.publication = newValue
-                }
-                InfoRow(title: "Publication Year", content: paper.publicationYear) { newValue in
-                    paper.publicationYear = newValue
-                }
-                InfoRow(title: "Volume", content: paper.volume) { newValue in
-                    paper.volume = newValue
-                }
-                InfoRow(title: "Issue", content: paper.issue) { newValue in
-                    paper.issue = newValue
-                }
-                InfoRow(title: "Pages", content: paper.pages) { newValue in
-                    paper.pages = newValue
-                }
-                InfoRow(title: "URL", content: paper.url) { newValue in
-                    paper.url = newValue
-                }
+            Section {
+                InfoRow(title: "DOI", value: $doi)
+                InfoRow(title: "Publication", value: $publication)
+                InfoRow(title: "Publication Year", value: $publicationYear)
+                InfoRow(title: "Volume", value: $volume)
+                InfoRow(title: "Issue", value: $issue)
+                InfoRow(title: "Pages", value: $pages)
+                InfoRow(title: "URL", value: $url)
                 HStack {
                     Text("Date Added")
                     Spacer()
                     Text(paper.formattedCreateTime)
                         .foregroundStyle(.secondary)
                 }
+            } header: {
+                HStack {
+                    Text("Basic Info")
+                    Spacer()
+                    EditToggleButton(editing: $editing, saving: saving, onSubmit: submit, onCancel: reset)
+                }
             }
-            
+            .environment(\.editing, editing)
+
             Section("Keywords") {
                 VFlow(alignment: .leading, spacing: 4) {
                     ForEach(paper.keywords, id: \.self) { keyword in
@@ -91,19 +161,67 @@ struct PaperInfo: View {
             }
             .listRowSeparator(.hidden)
             
-            Section("Abstract") {
-                TextEditor(text: Binding { paper.abstract ?? "" } set: { paper.abstract = $0 })
+            Section {
+                TextEditor(text: $abstract)
                     .font(.body)
-                    .disabled(true)
+                    .disabled(!editing)
                     .frame(minHeight: 150)
+            } header: {
+                HStack {
+                    Text("Abstract")
+                    Spacer()
+                    EditToggleButton(editing: $editing, saving: saving, onSubmit: submit, onCancel: reset)
+                }
             }
         }
+        .alert("Failed to update paper info", isPresented: $hasError) {} message: {
+            if let errorMsg = errorMsg {
+                Text(errorMsg)
+            }
+        }
+
 #if os(iOS)
         .listStyle(.insetGrouped)
 #endif
     }
 }
 
+extension PaperInfo {
+    func reset() {
+        doi = paper.doi ?? ""
+        publication = paper.publication ?? ""
+        publicationYear = paper.publicationYear ?? ""
+        volume = paper.volume ?? ""
+        issue = paper.issue ?? ""
+        pages = paper.pages ?? ""
+        url = paper.url ?? ""
+        abstract = paper.abstract ?? ""
+    }
+
+    func submit() {
+        saving = true
+        Task {
+            do {
+                try await ModelService.shared.updatePaper(paper,
+                                                          abstract: abstract,
+                                                          publicationYear: publicationYear,
+                                                          publication: publication,
+                                                          volume: volume,
+                                                          issue: issue,
+                                                          pages: pages,
+                                                          url: url,
+                                                          doi: doi)
+                editing = false
+            } catch {
+                hasError = true
+                errorMsg = error.localizedDescription
+            }
+            saving = false
+        }
+    }
+}
+
 #Preview {
     PaperInfo(paper: ModelData.paper1)
+        .frame(width: 300)
 }

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		272423D32AD677F9001748AC /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272423D22AD677F9001748AC /* API.swift */; };
 		273E52EE2AE80072004331FB /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E52ED2AE80072004331FB /* Alert.swift */; };
-		273E52F42AE80E1C004331FB /* ModelActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E52F32AE80E1C004331FB /* ModelActor.swift */; };
+		273E52F42AE80E1C004331FB /* ModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E52F32AE80E1C004331FB /* ModelService.swift */; };
 		273E52F92AE8FF3F004331FB /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E52F82AE8FF3F004331FB /* ProjectService.swift */; };
 		27428DE12AE2F86C00BBACFB /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */; };
 		279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */; };
@@ -75,6 +75,7 @@
 		F5D8EEED2AD42D5100501B0E /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* AccountView.swift */; };
 		F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */ = {isa = PBXBuildFile; productRef = F5D8EEF32AD4559300501B0E /* SimpleCodable */; };
 		F5D8EF012AD4F62E00501B0E /* StorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EF002AD4F62E00501B0E /* StorageKey.swift */; };
+		F5DF33FB2AEA086200624672 /* PaperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF33FA2AEA086200624672 /* PaperService.swift */; };
 		F5E4B2A82ADB81F000F50EDA /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */; };
 		F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */; };
 		F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */; };
@@ -90,7 +91,7 @@
 		272423D22AD677F9001748AC /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		27293A652AD2CE2500A98E13 /* team.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = team.xcconfig; sourceTree = "<group>"; };
 		273E52ED2AE80072004331FB /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		273E52F32AE80E1C004331FB /* ModelActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelActor.swift; sourceTree = "<group>"; };
+		273E52F32AE80E1C004331FB /* ModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelService.swift; sourceTree = "<group>"; };
 		273E52F82AE8FF3F004331FB /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
 		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 		F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinProjectView.swift; sourceTree = "<group>"; };
 		F5D8EEEC2AD42D5100501B0E /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		F5D8EF002AD4F62E00501B0E /* StorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageKey.swift; sourceTree = "<group>"; };
+		F5DF33FA2AEA086200624672 /* PaperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperService.swift; sourceTree = "<group>"; };
 		F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaperPilot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPilotApp.swift; sourceTree = "<group>"; };
@@ -190,13 +192,14 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		273E52F52AE8FF22004331FB /* service */ = {
+		273E52F52AE8FF22004331FB /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				273E52F32AE80E1C004331FB /* ModelActor.swift */,
+				273E52F32AE80E1C004331FB /* ModelService.swift */,
 				273E52F82AE8FF3F004331FB /* ProjectService.swift */,
+				F5DF33FA2AEA086200624672 /* PaperService.swift */,
 			);
-			path = service;
+			path = Service;
 			sourceTree = "<group>";
 		};
 		279F2D1F2AC8364500FEA9D8 /* proto */ = {
@@ -340,7 +343,6 @@
 		F5EBC0B02ABFD98E00B2B4A3 /* PaperPilot */ = {
 			isa = PBXGroup;
 			children = (
-				273E52F52AE8FF22004331FB /* service */,
 				F578D8242AD7B1F800322819 /* Info.plist */,
 				F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */,
 				F5B2A8942ADE2C110088428C /* Networking */,
@@ -348,6 +350,7 @@
 				F5D8EEFB2AD4F60B00501B0E /* Constants */,
 				F53D813E2AC02A6B00865B80 /* Models */,
 				76C15CB92AD82A9500614902 /* ViewModel */,
+				273E52F52AE8FF22004331FB /* Service */,
 				F5EBC0C22ABFDF5500B2B4A3 /* Views */,
 				F53EA70C2ADFCDAE00B97EB0 /* Utils */,
 				F5EBC0B52ABFD99000B2B4A3 /* Assets.xcassets */,
@@ -538,6 +541,7 @@
 				F53D81402AC02A7A00865B80 /* Project.swift in Sources */,
 				273E52EE2AE80072004331FB /* Alert.swift in Sources */,
 				F5145E7F2AD58275001860E0 /* AddPaperByURLView.swift in Sources */,
+				F5DF33FB2AEA086200624672 /* PaperService.swift in Sources */,
 				F5643F3F2AE3CBB800186A2F /* OSSRequest.swift in Sources */,
 				F59FB3D12AE555840007A76B /* ShareProjectView.swift in Sources */,
 				F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */,
@@ -545,7 +549,7 @@
 				272423D32AD677F9001748AC /* API.swift in Sources */,
 				273E52F92AE8FF3F004331FB /* ProjectService.swift in Sources */,
 				F53D81442AC02C6500865B80 /* ModelData.swift in Sources */,
-				273E52F42AE80E1C004331FB /* ModelActor.swift in Sources */,
+				273E52F42AE80E1C004331FB /* ModelService.swift in Sources */,
 				F5D8EF012AD4F62E00501B0E /* StorageKey.swift in Sources */,
 				F59FB3C02AE51B9A0007A76B /* FileManager.swift in Sources */,
 				F59367F72AE193CE009230AF /* AppState.swift in Sources */,
