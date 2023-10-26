@@ -106,16 +106,21 @@ struct PaperInfo: View {
         List {
             Section("Tags") {
                 VFlow(alignment: .leading, spacing: 4) {
-                    ForEach(paper.tags, id: \.self) { tag in
+                    ForEach(Array(paper.tags.enumerated()), id: \.offset) { index, tag in
                         TagView(text: tag) { newValue in
-                            let index = paper.tags.firstIndex(of: tag)!
-                            paper.tags[index] = newValue
+                            var newTags = paper.tags
+                            newTags[index] = newValue
+                            modify(newTags: newTags)
                         } onDelete: {
-                            paper.tags.removeAll { $0 == tag }
+                            var newTags = paper.tags
+                            newTags.remove(at: index)
+                            modify(newTags: newTags)
                         }
                     }
                     AddTagView { newTag in
-                        paper.tags.append(newTag)
+                        var newTags = paper.tags
+                        newTags.append(newTag)
+                        modify(newTags: newTags)
                     }
                 }
             }
@@ -146,16 +151,21 @@ struct PaperInfo: View {
 
             Section("Keywords") {
                 VFlow(alignment: .leading, spacing: 4) {
-                    ForEach(paper.keywords, id: \.self) { keyword in
+                    ForEach(Array(paper.keywords.enumerated()), id: \.offset) { index, keyword in
                         TagView(text: keyword) { newValue in
-                            let index = paper.keywords.firstIndex(of: keyword)!
-                            paper.keywords[index] = newValue
+                            var newKeywords = paper.keywords
+                            newKeywords[index] = newValue
+                            modify(newKeywords: newKeywords)
                         } onDelete: {
-                            paper.keywords.removeAll { $0 == keyword }
+                            var newKeywords = paper.keywords
+                            newKeywords.remove(at: index)
+                            modify(newKeywords: newKeywords)
                         }
                     }
-                    AddTagView { newTag in
-                        paper.keywords.append(newTag)
+                    AddTagView { newKeyword in
+                        var newKeywords = paper.keywords
+                        newKeywords.append(newKeyword)
+                        modify(newKeywords: newKeywords)
                     }
                 }
             }
@@ -213,10 +223,22 @@ extension PaperInfo {
                                                           doi: doi)
                 editing = false
             } catch {
-                hasError = true
                 errorMsg = error.localizedDescription
+                hasError = true
             }
             saving = false
+        }
+    }
+
+    func modify(newTags: [String]? = nil, newKeywords: [String]? = nil) {
+        if newTags == nil && newKeywords == nil { return }
+        Task {
+            do {
+                try await ModelService.shared.updatePaper(paper, keywords: newKeywords, tags: newTags)
+            } catch {
+                errorMsg = error.localizedDescription
+                hasError = true
+            }
         }
     }
 }

@@ -84,7 +84,12 @@ extension ModelService {
         paper.file = detail.file
         paper.updateTime = detail.hasUpdateTime ? detail.updateTime.date : Date.now
     }
-
+    
+    /// 更新论文信息
+    ///
+    /// 如果远程的版本比本地新，则会先使用远程数据更新本地数据，然后再将即将进行的修改提交到远程，提交成功后将修改应用到本地
+    ///
+    /// > Tip: 修改时只需要填写需要修改的信息
     func updatePaper(_ paper: Paper,
                      title: String? = nil,
                      abstract: String? = nil,
@@ -103,7 +108,9 @@ extension ModelService {
                      bookmarks: [Bookmark]? = nil) async throws {
         let originalStatus = paper.status
         paper.status = ModelStatus.updating.rawValue
-        defer { paper.status = originalStatus == ModelStatus.updating.rawValue ? ModelStatus.normal.rawValue : originalStatus }
+        defer {
+            paper.status = originalStatus == ModelStatus.updating.rawValue ? ModelStatus.normal.rawValue : originalStatus
+        }
         if let remoteId = paper.remoteId {
             // 从服务器上拉取最新的Paper
             do {
@@ -147,5 +154,6 @@ extension ModelService {
         if let newRead = read { paper.read = newRead }
         if let newNote = note { paper.note = newNote }
         if let newBookmarks = bookmarks { paper.bookmarks = newBookmarks }
+        paper.updateTime = Date.now
     }
 }

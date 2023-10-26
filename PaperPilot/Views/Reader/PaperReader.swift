@@ -32,7 +32,7 @@ private enum EditableContent {
 
 struct PaperReader: View {
     @Bindable var paper: Paper
-    
+
     @AppStorage(AppStorageKey.Reader.sidebarContent.rawValue)
     private var sidebarContent = SidebarContent.info
     @AppStorage(AppStorageKey.Reader.isShowingInspector.rawValue)
@@ -44,7 +44,9 @@ struct PaperReader: View {
     @State private var isImporting = false
     @State private var isShowingEditButton = EditableContent.none
     @State private var editing = EditableContent.none
+    @State private var newTitle = ""
     @State private var newAuthor = ""
+    @State private var newAuthors = [String]()
     @StateObject private var translatorVM = TranslatorViewModel()
     @StateObject private var downloadVM = DownloadViewModel()
 
@@ -125,6 +127,7 @@ struct PaperReader: View {
                                 .overlay(alignment: .trailing) {
                                     if isShowingEditButton == .title {
                                         Button("Edit", systemImage: "pencil") {
+                                            newTitle = paper.title
                                             editing = .title
                                         }
                                         .labelStyle(.iconOnly)
@@ -137,10 +140,12 @@ struct PaperReader: View {
                                     isPresented: Binding { editing == .title } set: { _ in editing = .none },
                                     arrowEdge: .bottom
                                 ) {
-                                    TextField("Enter title", text: $paper.title)
+                                    TextField("Enter title", text: $newTitle)
                                         .padding()
                                         .onSubmit {
-                                            editing = .none
+                                            if !newTitle.isEmpty {
+                                                handleModifyPaper(newTitle: newTitle)
+                                            }
                                         }
                                 }
 
@@ -150,6 +155,7 @@ struct PaperReader: View {
                                 .overlay(alignment: .trailing) {
                                     if isShowingEditButton == .author {
                                         Button("Edit", systemImage: "pencil") {
+                                            newAuthors = paper.authors
                                             editing = .author
                                         }
                                         .labelStyle(.iconOnly)
@@ -163,15 +169,25 @@ struct PaperReader: View {
                                     arrowEdge: .bottom
                                 ) {
                                     List {
-                                        ForEach(paper.authors, id: \.self) { author in
+                                        ForEach(newAuthors, id: \.self) { author in
                                             Text(author)
                                         }
-                                        .onDelete { paper.authors.remove(atOffsets: $0) }
+                                        .onMove { source, destination in
+                                            newAuthors.move(fromOffsets: source, toOffset: destination)
+                                            handleModifyPaper(newAuthors: newAuthors)
+                                        }
+                                        .onDelete {
+                                            newAuthors.remove(atOffsets: $0)
+                                            handleModifyPaper(newAuthors: newAuthors)
+                                        }
                                         Section("Add author") {
                                             TextField("New author", text: $newAuthor)
                                             Button("Add") {
-                                                paper.authors.append(newAuthor)
-                                                newAuthor = ""
+                                                if !newAuthor.isEmpty {
+                                                    newAuthors.append(newAuthor)
+                                                    newAuthor = ""
+                                                    handleModifyPaper(newAuthors: newAuthors)
+                                                }
                                             }
                                             .keyboardShortcut(.defaultAction)
                                         }
@@ -215,7 +231,9 @@ struct PaperReader: View {
             }
         }
     }
-    
+}
+
+extension PaperReader {
     func loadPDF() async {
         loading = true
         defer { loading = false }
@@ -278,6 +296,18 @@ struct PaperReader: View {
                 errorDescription = error.localizedDescription
             }
             loading = false
+        }
+    }
+
+    func handleModifyPaper(newTitle: String? = nil, newAuthors: [String]? = nil) {
+        if newTitle == nil && newAuthors == nil { return }
+        Task {
+            do {
+                try await ModelService.shared.updatePaper(paper, title: newTitle, authors: newAuthors)
+                editing = .none
+            } catch {
+                print(error)
+            }
         }
     }
 }
