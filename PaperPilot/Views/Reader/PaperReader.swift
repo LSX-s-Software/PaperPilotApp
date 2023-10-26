@@ -223,11 +223,9 @@ struct PaperReader: View {
                     }
                 }
             }
-            .onAppear {
-                paper.read = true
-            }
             .task(id: paper.id) {
                 await loadPDF()
+                await ModelService.shared.setPaperRead(paper, read: true)
             }
         }
     }

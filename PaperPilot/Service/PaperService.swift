@@ -13,6 +13,17 @@ import GRPC
 private let logger = Logger(subsystem: "cn.defaultlin.paperpilotapp.ModelService", category: "PaperService")
 
 extension ModelService {
+    /// 通过ID获取Paper
+    func getPaper(id: Paper.ID) -> Paper? {
+        let descriptor = FetchDescriptor<Paper>(predicate: #Predicate { $0.id == id })
+        return try? modelContext.fetch(descriptor).first
+    }
+
+    func getPapers(id: Set<Paper.ID>) -> [Paper] {
+        let descriptor = FetchDescriptor<Paper>(predicate: #Predicate { id.contains($0.id) })
+        return (try? modelContext.fetch(descriptor)) ?? []
+    }
+
     /// 上传Paper到服务器
     /// - Parameters:
     ///   - project: 所属项目
@@ -56,6 +67,9 @@ extension ModelService {
             if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = paper.remoteId! }).file {
                 paper.file = newFileURL
             }
+        } catch let error as GRPCStatus {
+            paper.status = ModelStatus.waitingForUpload.rawValue
+            throw NetworkingError.requestError(code: error.code.rawValue, message: error.message)
         } catch {
             paper.status = ModelStatus.waitingForUpload.rawValue
             throw error
@@ -103,7 +117,6 @@ extension ModelService {
                      pages: String? = nil,
                      url: String? = nil,
                      doi: String? = nil,
-                     read: Bool? = nil,
                      note: String? = nil,
                      bookmarks: [Bookmark]? = nil) async throws {
         let originalStatus = paper.status
@@ -151,9 +164,41 @@ extension ModelService {
         if let newPages = pages { paper.pages = newPages }
         if let newUrl = url { paper.url = newUrl }
         if let newDoi = doi { paper.doi = newDoi }
-        if let newRead = read { paper.read = newRead }
         if let newNote = note { paper.note = newNote }
         if let newBookmarks = bookmarks { paper.bookmarks = newBookmarks }
         paper.updateTime = Date.now
+    }
+    
+    /// 设置论文的已读状态
+    /// - Parameters:
+    ///   - read: 是否已读
+    func setPaperRead(_ paper: Paper, read: Bool) {
+        paper.read = read
+    }
+    
+    /// 删除论文
+    /// - Parameters:
+    ///   - pdfOnly: 仅删除本地的PDF文件
+    ///
+    /// > Warning: 必须使用与ModelService处在同一个context下的Paper对象（可通过``getPaper(id:)``获取）
+    func deletePaper(_ paper: Paper, pdfOnly: Bool = false) async throws {
+        if pdfOnly,
+           let url = paper.localFile,
+           FileManager.default.fileExists(atPath: url.path()) {
+            try FileManager.default.removeItem(at: url)
+            paper.localFile = nil
+            if paper.file != nil {
+                paper.status = ModelStatus.waitingForDownload.rawValue
+            }
+        } else if let dir = try? FilePath.paperDirectory(for: paper),
+                  FileManager.default.fileExists(atPath: dir.path()) {
+            try? FileManager.default.removeItem(at: dir)
+        }
+        if !pdfOnly {
+            if let remoteId = paper.remoteId {
+                _ = try await API.shared.paper.deletePaper(.with { $0.id = remoteId })
+            }
+            modelContext.delete(paper)
+        }
     }
 }

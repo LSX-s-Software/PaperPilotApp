@@ -7,6 +7,9 @@
 
 import SwiftUI
 import GRPC
+import OSLog
+
+private let logger = Logger(subsystem: "cn.defaultlin.paperpilotapp.NewPaperInfoView", category: "onDismiss")
 
 struct NewPaperInfoView: View {
     @Bindable var project: Project
@@ -40,13 +43,13 @@ struct NewPaperInfoView: View {
             }
         } onDismiss: {
             // rollback
-            if let remoteId = paper.remoteId {
-                Task {
-                    do {
-                        _ = try await API.shared.paper.deletePaper(.with { $0.id = remoteId })
-                    } catch {
-                        print(error)
+            Task {
+                do {
+                    if let paper = await ModelService.shared.getPaper(id: paper.id) {
+                        try await ModelService.shared.deletePaper(paper)
                     }
+                } catch {
+                    logger.warning("Rollback failed: \(error)")
                 }
             }
         }

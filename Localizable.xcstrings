@@ -655,6 +655,16 @@
         }
       }
     },
+    "Failed to delete: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除失败：%@"
+          }
+        }
+      }
+    },
     "Failed to download PDF: " : {
       "localizations" : {
         "zh-Hans" : {
@@ -710,7 +720,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法加载PDF："
+            "value" : "加载PDF失败："
           }
         }
       }
@@ -740,7 +750,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "解析论文信息失败"
+            "value" : "论文信息解析失败"
           }
         }
       }
@@ -756,7 +766,24 @@
       }
     },
     "Failed to update paper info" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "论文信息更新失败"
+          }
+        }
+      }
+    },
+    "Failed to update: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新失败：%@"
+          }
+        }
+      }
     },
     "Failed to upload the image." : {
       "localizations" : {
@@ -1698,6 +1725,16 @@
         }
       }
     },
+    "Request failed: " : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求失败："
+          }
+        }
+      }
+    },
     "Required Info" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2107,16 +2144,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知错误"
-          }
-        }
-      }
-    },
-    "Update failed: %@" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更新失败："
           }
         }
       }

@@ -99,16 +99,16 @@ struct ProjectDetail: View {
                 }
                 Divider()
                 Button("Mark as Read", systemImage: "checkmark.circle.fill") {
-                    for paperId in selectedPapers {
-                        if let index = project.papers.firstIndex(where: { $0.id == paperId }) {
-                            project.papers[index].read = true
+                    Task {
+                        for paper in await ModelService.shared.getPapers(id: selectedPapers) {
+                            await ModelService.shared.setPaperRead(paper, read: true)
                         }
                     }
                 }
                 Button("Mark as Unread", systemImage: "circle") {
-                    for paperId in selectedPapers {
-                        if let index = project.papers.firstIndex(where: { $0.id == paperId }) {
-                            project.papers[index].read = false
+                    Task {
+                        for paper in await ModelService.shared.getPapers(id: selectedPapers) {
+                            await ModelService.shared.setPaperRead(paper, read: false)
                         }
                     }
                 }
@@ -123,14 +123,9 @@ struct ProjectDetail: View {
                 }
             }
         } primaryAction: { selectedPapers in
-            selectedPapers.forEach { paperId in
-                let predicate = #Predicate<Paper> {
-                    $0.id == paperId
-                }
-                let descriptor = FetchDescriptor(predicate: predicate)
-                try? modelContext.fetchIdentifiers(descriptor).forEach { id in
-                    openWindow(id: AppWindow.reader.id, value: id)
-                }
+            let descriptor = FetchDescriptor(predicate: #Predicate<Paper> { selectedPapers.contains($0.id) })
+            try? modelContext.fetchIdentifiers(descriptor).forEach { id in
+                openWindow(id: AppWindow.reader.id, value: id)
             }
         }
         .overlay(alignment: .bottom) {
@@ -162,16 +157,13 @@ struct ProjectDetail: View {
             }
             do {
                 for paper in project.papers {
-                    switch paper.status {
-                    case ModelStatus.waitingForUpload.rawValue:
+                    if paper.status == ModelStatus.waitingForUpload.rawValue {
                         try await ModelService.shared.uploadPaper(paper, to: project)
-                    default:
-                        break
                     }
                 }
                 message = nil
             } catch {
-                message = String(localized: "Update failed: \(error.localizedDescription)")
+                message = String(localized: "Failed to update: \(error.localizedDescription)")
             }
             withAnimation {
                 updating = false
@@ -218,37 +210,18 @@ struct ProjectDetail: View {
         withAnimation {
             updating = true
         }
-        progress = Progress(totalUnitCount: Int64(papers.count))
+        if papers.count > 1 {
+            progress = Progress(totalUnitCount: Int64(papers.count))
+        }
         Task {
             do {
-                for paperId in papers {
-                    guard let paper = project.papers.first(where: { $0.id == paperId }) else {
-                        progress?.completedUnitCount += 1
-                        continue
-                    }
-                    if pdfOnly,
-                       let url = paper.localFile,
-                       FileManager.default.fileExists(atPath: url.path()) {
-                        try FileManager.default.removeItem(at: url)
-                        paper.localFile = nil
-                        if paper.file != nil {
-                            paper.status = ModelStatus.waitingForDownload.rawValue
-                        }
-                    } else if let dir = try? FilePath.paperDirectory(for: paper),
-                              FileManager.default.fileExists(atPath: dir.path()) {
-                        try? FileManager.default.removeItem(at: dir)
-                    }
-                    if !pdfOnly {
-                        if project.remoteId != nil, let remoteId = paper.remoteId {
-                            _ = try await API.shared.paper.deletePaper(.with { $0.id = remoteId })
-                        }
-                        modelContext.delete(paper)
-                    }
+                for paper in await ModelService.shared.getPapers(id: papers) {
+                    try await ModelService.shared.deletePaper(paper, pdfOnly: pdfOnly)
                     progress?.completedUnitCount += 1
                 }
                 message = nil
             } catch {
-                message = error.localizedDescription
+                message = String(localized: "Failed to delete: \(error.localizedDescription)")
             }
             withAnimation {
                 updating = false

@@ -47,9 +47,7 @@ struct AddPaperByURLView: View {
             }
         }
         .sheet(item: $paper) { paper in
-            NewPaperInfoView(project: project,
-                             paper: paper,
-                             shouldClose: $shouldClose)
+            NewPaperInfoView(project: project, paper: paper, shouldClose: $shouldClose)
         }
         .alert("Failed to resolve paper", isPresented: Binding { errorMsg != nil } set: { _ in errorMsg = nil}) {} message: {
             Text(errorMsg ?? String(localized: "Unknown error"))

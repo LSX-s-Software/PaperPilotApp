@@ -240,7 +240,6 @@
 		F53D81472AC1367400865B80 /* Reader */ = {
 			isa = PBXGroup;
 			children = (
-				F547D0E52AC56F89006D2216 /* EditableText.swift */,
 				F5C379082AC44BFF00C88C94 /* PaperInfo.swift */,
 				F53D814A2AC1385300865B80 /* PaperReader.swift */,
 				F5FDF8E62AD6D968001D9460 /* PDFKitThumbnailView.swift */,
@@ -289,6 +288,7 @@
 				F59AD1022ACB0CA200DFABCC /* AddTagView.swift */,
 				F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */,
 				27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */,
+				F547D0E52AC56F89006D2216 /* EditableText.swift */,
 				F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */,
 				F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */,
 				F5145E822AD58332001860E0 /* ImageTitleDialog.swift */,

@@ -126,7 +126,6 @@ struct ShareProjectView: View {
             promptMsg = String(localized: "Converting project...")
             try await project.upload()
         } catch {
-            print(error)
             promptMsg = String(localized: "Convert failed: \(error.localizedDescription)")
         }
     }

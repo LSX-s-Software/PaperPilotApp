@@ -89,32 +89,32 @@ struct AddPaperView: View {
             switch result {
             case .success(let url):
                 filePath = url
-                try modelContext.transaction {
-                    newPaper = Paper(title: url.deletingPathExtension().lastPathComponent)
-                    newPaper!.project = project
-                    let didStartAccessing = url.startAccessingSecurityScopedResource()
-                    defer {
-                        url.stopAccessingSecurityScopedResource()
+                let paper = Paper(title: url.deletingPathExtension().lastPathComponent)
+                paper.project = project
+                let didStartAccessing = url.startAccessingSecurityScopedResource()
+                defer {
+                    url.stopAccessingSecurityScopedResource()
+                }
+                if didStartAccessing {
+                    let savedURL = try FilePath.paperDirectory(for: paper, create: true)
+                        .appending(path: url.lastPathComponent)
+                    try FileManager.default.copyItem(at: url, to: savedURL)
+                    paper.localFile = savedURL
+                    if project.remoteId != nil {
+                        paper.status = ModelStatus.waitingForUpload.rawValue
                     }
-                    if didStartAccessing {
-                        let savedURL = try FilePath.paperDirectory(for: newPaper!, create: true)
-                            .appending(path: url.lastPathComponent)
-                        try FileManager.default.copyItem(at: url, to: savedURL)
-                        newPaper!.localFile = savedURL
-                        if project.remoteId != nil {
-                            newPaper!.status = ModelStatus.waitingForUpload.rawValue
-                        }
-                        try modelContext.save()
-                    } else {
-                        errorMsg = String(localized: "You don't have access to the PDF.")
-                        modelContext.rollback()
-                    }
+                    newPaper = paper
+                } else {
+                    errorMsg = String(localized: "You don't have access to the PDF.")
+                    hasError = true
+                    modelContext.delete(paper)
                 }
             case .failure(let error):
                 throw error
             }
         } catch {
             errorMsg = error.localizedDescription
+            hasError = true
         }
     }
 }

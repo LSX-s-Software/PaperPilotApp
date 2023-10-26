@@ -27,7 +27,8 @@ extension NetworkingError: LocalizedError {
         case .notFound:
             return String(localized: "Not found")
         case .requestError(let code, let message):
-            return code == nil ? message : "\(message ?? String(localized: "Unknown error"))(\(code!))"
+            let msg = message ?? (String(localized: "Request failed: ") + String(localized: "Unknown error"))
+            return code == nil ? msg : "\(msg) (\(code!))"
         }
     }
 }
