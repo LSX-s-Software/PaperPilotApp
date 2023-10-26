@@ -160,13 +160,9 @@ struct ContentView: View {
             do {
                 try await downloadRemoteProjects()
             } catch let error as GRPCStatus {
-                alert.alert(
-                    message: msg,
-                    detail: error.message ?? "")
+                alert.alert(message: msg, detail: error.message ?? "")
             } catch {
-                alert.alert(
-                    message: msg,
-                    detail: error.localizedDescription )
+                alert.alert(message: msg, detail: error.localizedDescription)
             }
         }
         .task {

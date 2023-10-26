@@ -283,14 +283,14 @@
 		F5D2BC562AE124A2008DCDE6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				F59AD1022ACB0CA200DFABCC /* AddTagView.swift */,
+				F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */,
 				27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */,
+				F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */,
 				F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */,
 				F5145E822AD58332001860E0 /* ImageTitleDialog.swift */,
 				F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */,
 				F53D81452AC038A700865B80 /* TagView.swift */,
-				F59AD1022ACB0CA200DFABCC /* AddTagView.swift */,
-				F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */,
-				F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */,
 				F58603A62AE7EDDF001EBFD4 /* Tooltip.swift */,
 			);
 			path = Components;

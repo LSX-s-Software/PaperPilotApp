@@ -81,8 +81,11 @@ struct ProjectCreateEditView: View {
                         Button(project.isOwner ? "Delete" : "Quit", role: .destructive) {
                             isShowingDeleteConfirm.toggle()
                         }
-                        .confirmationDialog("Are you sure to delete this project?", isPresented: $isShowingDeleteConfirm) {
-                            AsyncButton("Delete", role: .destructive) {
+                        .confirmationDialog(
+                            project.isOwner ? "Are you sure to delete this project?" : "Are you sure to quit this project?",
+                            isPresented: $isShowingDeleteConfirm
+                        ) {
+                            AsyncButton(project.isOwner ? "Delete" : "Quit", role: .destructive) {
                                 await handleDeleteProject()
                             }
                         } message: {

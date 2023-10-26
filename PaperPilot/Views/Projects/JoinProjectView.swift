@@ -64,10 +64,10 @@ struct JoinProjectView: View {
                                                      invitationCode: result.inviteCode,
                                                      isOwner: false)
                             modelContext.insert(newProject)
-                            for member in result.members {
-                                let user = User(remoteId: member.id, username: member.username, avatar: member.avatar)
+                            newProject.members = result.members.map { member in
+                                let user = User(from: member)
                                 modelContext.insert(user)
-                                newProject.members.append(user)
+                                return user
                             }
                             dismiss()
                         } catch let error as GRPCStatus {
