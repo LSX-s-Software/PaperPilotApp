@@ -228,6 +228,7 @@ struct PaperReader: View {
                 await ModelService.shared.setPaperRead(paper, read: true)
             }
         }
+        .focusedSceneValue(\.selectedPaper, .constant(paper))
     }
 }
 

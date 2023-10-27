@@ -12,11 +12,7 @@ import SwiftData
 struct ProjectDetail: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.modelContext) private var modelContext
-
-    private let copiableProperties: [(String, PartialKeyPath)] = [("Title", \Paper.title),
-                                                                  ("Abstract", \Paper.abstract),
-                                                                  ("URL", \Paper.url),
-                                                                  ("DOI", \Paper.doi)]
+    @Environment(AppState.self) private var appState
 
     @AppStorage(AppStorageKey.User.loggedIn.rawValue)
     private var loggedIn: Bool = false
@@ -26,9 +22,6 @@ struct ProjectDetail: View {
     @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime, order: .reverse)]
-    @State private var isShowingEditProjectSheet = false
-    @State private var isShowingAddPaperSheet = false
-    @State private var isShowingSharePopover = false
     @State private var updating = false
     @State private var progress: Progress?
     @State private var message: String?
@@ -87,7 +80,7 @@ struct ProjectDetail: View {
                    let paperId = selectedPapers.first,
                    let paper = project.papers.first(where: { $0.id == paperId }) {
                     Menu("Copy Information", systemImage: "doc.on.doc") {
-                        ForEach(copiableProperties, id: \.0) { name, keypath in
+                        ForEach(Paper.copiableProperties, id: \.0) { name, keypath in
                             Button(LocalizedStringKey(name)) {
                                 if let value = paper[keyPath: keypath] as? String {
                                     setPasteboard(value)
@@ -177,24 +170,25 @@ struct ProjectDetail: View {
             ToolbarItemGroup {
                 Spacer()
                 Button("Share", systemImage: "square.and.arrow.up") {
-                    isShowingSharePopover.toggle()
+                    appState.isSharingProject.toggle()
                 }
                 .disabled(!loggedIn)
-                .popover(isPresented: $isShowingSharePopover, arrowEdge: .bottom) {
+                .popover(isPresented: Binding { appState.isSharingProject } set: { appState.isSharingProject = $0 },
+                         arrowEdge: .bottom) {
                     ShareProjectView(project: project)
                 }
 
                 Button("Project Settings", systemImage: "folder.badge.gear") {
-                    isShowingEditProjectSheet.toggle()
+                    appState.isEditingProject.toggle()
                 }
-                .sheet(isPresented: $isShowingEditProjectSheet) {
+                .sheet(isPresented: Binding { appState.isEditingProject } set: { appState.isEditingProject = $0 }) {
                     ProjectCreateEditView(edit: true, project: project)
                 }
 
-                Button("Add Document", systemImage: "plus") {
-                    isShowingAddPaperSheet.toggle()
+                Button("Add Paper", systemImage: "plus") {
+                    appState.isAddingPaper.toggle()
                 }
-                .sheet(isPresented: $isShowingAddPaperSheet) {
+                .sheet(isPresented: Binding { appState.isAddingPaper } set: { appState.isAddingPaper = $0 }) {
                     AddPaperView(project: project)
                 }
             }

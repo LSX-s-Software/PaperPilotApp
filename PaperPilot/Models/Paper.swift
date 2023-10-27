@@ -118,6 +118,11 @@ class Paper: Hashable, Identifiable {
         self.note = note
         self.bookmarks = bookmarks
     }
+
+    static let copiableProperties: [(String, PartialKeyPath)] = [("Title", \Paper.title),
+                                                                 ("Abstract", \Paper.abstract),
+                                                                 ("URL", \Paper.url),
+                                                                 ("DOI", \Paper.doi)]
 }
 
 // MARK: - Paper相关操作

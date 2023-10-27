@@ -23,8 +23,8 @@ enum AppWindow: String, Identifiable {
 @main
 struct PaperPilotApp: App {
     let modelContainer: ModelContainer
-    @StateObject var appState = AppState()
-    @StateObject var navigationContext = NavigationContext()
+    @State private var appState = AppState()
+    @StateObject private var navigationContext = NavigationContext()
 
     init() {
         do {
@@ -46,8 +46,7 @@ struct PaperPilotApp: App {
                     if let url = appState.incomingURL {
                         JoinProjectView(invitationURL: url)
                     } else {
-                        ProgressView()
-                            .padding()
+                        JoinProjectView()
                     }
                 }
                 .onOpenURL(perform: appState.handleIncomingURL(url:))
@@ -56,7 +55,9 @@ struct PaperPilotApp: App {
         .modelContainer(modelContainer)
         .commands {
             SidebarCommands()
+            ProjectCommands()
         }
+        .environment(appState)
 #else
         WindowGroup("Paper Pilot", id: AppWindow.main.id) {
             ContentView()
@@ -92,18 +93,12 @@ struct PaperPilotApp: App {
         .defaultSize(width: 1200, height: 800)
 #endif
         .modelContainer(modelContainer)
-        .environmentObject(appState)
         .commandsRemoved()
         .commands {
             InspectorCommands()
-            
-            CommandGroup(after: .textEditing) {
-                Button(appState.findingInPDF ? "Stop Finding" : "Find in PDF") {
-                    appState.findInPDFHandler?(!appState.findingInPDF)
-                }
-                .keyboardShortcut("f")
-            }
+            PaperCommands()
         }
+        .environment(appState)
 
 #if os(macOS)
         Settings {

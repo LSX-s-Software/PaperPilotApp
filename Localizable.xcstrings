@@ -68,16 +68,6 @@
         }
       }
     },
-    "Add Document" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加论文"
-          }
-        }
-      }
-    },
     "Add Paper" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1231,6 +1221,16 @@
         }
       }
     },
+    "New" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建"
+          }
+        }
+      }
+    },
     "New author" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1461,6 +1461,16 @@
         }
       }
     },
+    "Paper" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "论文"
+          }
+        }
+      }
+    },
     "Paper and PDF file" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1580,6 +1590,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "葡萄牙语"
+          }
+        }
+      }
+    },
+    "Project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目"
           }
         }
       }
@@ -1861,6 +1881,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "共享"
+          }
+        }
+      }
+    },
+    "Share Project" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共享项目"
           }
         }
       }

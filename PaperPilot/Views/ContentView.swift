@@ -12,6 +12,7 @@ import GRPC
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var navigationContext: NavigationContext
+    @Environment(AppState.self) private var appState
     @State var alert = Alert()
 
     @Query(filter: #Predicate<Project> { $0.remoteId == nil }) private var localProjects: [Project]
@@ -54,7 +55,7 @@ struct ContentView: View {
                         Label("No Project", systemImage: "folder")
                     } actions: {
                         Button("Create New Project") {
-                            isShowingNewProjectSheet.toggle()
+                            appState.isCreatingProject.toggle()
                         }
                     }
                 }
@@ -64,7 +65,7 @@ struct ContentView: View {
                 ToolbarItem {
                     Menu("Add Project", systemImage: "folder.badge.plus") {
                         Button("Create New Project", systemImage: "folder.badge.plus") {
-                            isShowingNewProjectSheet.toggle()
+                            appState.isCreatingProject.toggle()
                         }
                         
                         Button("Join Project", systemImage: "folder.badge.person.crop") {
@@ -72,7 +73,7 @@ struct ContentView: View {
                         }
                     }
                     .menuStyle(.button)
-                    .sheet(isPresented: $isShowingNewProjectSheet) {
+                    .sheet(isPresented: Binding { appState.isCreatingProject } set: { appState.isCreatingProject = $0 }) {
                         ProjectCreateEditView()
                     }
                     .sheet(isPresented: $isShowingJoinProjectSheet) {

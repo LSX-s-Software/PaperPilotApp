@@ -22,6 +22,7 @@
 		F508805B2AE8B0A200CD7510 /* MicroserviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */; };
 		F508805F2AE8C24A00CD7510 /* Interceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F508805E2AE8C24A00CD7510 /* Interceptor.swift */; };
 		F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */; };
+		F5131BF32AEB70DD0077393E /* ProjectCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5131BF22AEB70DD0077393E /* ProjectCommands.swift */; };
 		F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */; };
 		F5145E7B2AD57863001860E0 /* AddPaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E7A2AD57863001860E0 /* AddPaperView.swift */; };
 		F5145E7F2AD58275001860E0 /* AddPaperByURLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E7E2AD58275001860E0 /* AddPaperByURLView.swift */; };
@@ -77,6 +78,7 @@
 		F5D8EF012AD4F62E00501B0E /* StorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EF002AD4F62E00501B0E /* StorageKey.swift */; };
 		F5DF33FB2AEA086200624672 /* PaperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF33FA2AEA086200624672 /* PaperService.swift */; };
 		F5DF34052AEB537500624672 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF34042AEB537500624672 /* Image.swift */; };
+		F5DF340A2AEB596B00624672 /* PaperCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF34092AEB596B00624672 /* PaperCommands.swift */; };
 		F5E4B2A82ADB81F000F50EDA /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */; };
 		F5EBC0B22ABFD98E00B2B4A3 /* PaperPilotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */; };
 		F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */; };
@@ -102,6 +104,7 @@
 		F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroserviceStatus.swift; sourceTree = "<group>"; };
 		F508805E2AE8C24A00CD7510 /* Interceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interceptor.swift; sourceTree = "<group>"; };
 		F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		F5131BF22AEB70DD0077393E /* ProjectCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCommands.swift; sourceTree = "<group>"; };
 		F5145E702AD5388E001860E0 /* ProjectCreateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCreateEditView.swift; sourceTree = "<group>"; };
 		F5145E7A2AD57863001860E0 /* AddPaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaperView.swift; sourceTree = "<group>"; };
 		F5145E7E2AD58275001860E0 /* AddPaperByURLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaperByURLView.swift; sourceTree = "<group>"; };
@@ -152,6 +155,7 @@
 		F5D8EF002AD4F62E00501B0E /* StorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageKey.swift; sourceTree = "<group>"; };
 		F5DF33FA2AEA086200624672 /* PaperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperService.swift; sourceTree = "<group>"; };
 		F5DF34042AEB537500624672 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		F5DF34092AEB596B00624672 /* PaperCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperCommands.swift; sourceTree = "<group>"; };
 		F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaperPilot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5EBC0B12ABFD98E00B2B4A3 /* PaperPilotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperPilotApp.swift; sourceTree = "<group>"; };
@@ -324,6 +328,15 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		F5DF34082AEB594C00624672 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				F5DF34092AEB596B00624672 /* PaperCommands.swift */,
+				F5131BF22AEB70DD0077393E /* ProjectCommands.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
 		F5EBC0A52ABFD98E00B2B4A3 = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +390,7 @@
 			children = (
 				F5EBC0B32ABFD98E00B2B4A3 /* ContentView.swift */,
 				F53EA7132ADFD91C00B97EB0 /* LaunchScreen.storyboard */,
+				F5DF34082AEB594C00624672 /* Commands */,
 				F5D2BC562AE124A2008DCDE6 /* Components */,
 				F5EBC0C32ABFE16600B2B4A3 /* Projects */,
 				F53D81472AC1367400865B80 /* Reader */,
@@ -524,6 +538,7 @@
 				F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */,
 				F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */,
 				F5CF43402ADC4361004F1A16 /* HSplitViewLayout.swift in Sources */,
+				F5DF340A2AEB596B00624672 /* PaperCommands.swift in Sources */,
 				F5D8EEED2AD42D5100501B0E /* AccountView.swift in Sources */,
 				F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */,
 				F53D81422AC02AF800865B80 /* Paper.swift in Sources */,
@@ -558,6 +573,7 @@
 				F59FB3C02AE51B9A0007A76B /* FileManager.swift in Sources */,
 				F59367F72AE193CE009230AF /* AppState.swift in Sources */,
 				F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */,
+				F5131BF32AEB70DD0077393E /* ProjectCommands.swift in Sources */,
 				F53D81462AC038A700865B80 /* TagView.swift in Sources */,
 				F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */,
 				F51710112ADD78AC002E2D79 /* HighlighterColor.swift in Sources */,

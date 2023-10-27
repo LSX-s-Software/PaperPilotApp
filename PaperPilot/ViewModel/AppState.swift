@@ -5,14 +5,29 @@
 //  Created by 林思行 on 2023/10/20.
 //
 
-import Foundation
+import SwiftUI
 
-class AppState: ObservableObject {
-    @Published var findingInPDF = false
-    var findInPDFHandler: ((Bool) -> Void)?
+struct SelectedPaperKey: FocusedValueKey {
+    typealias Value = Binding<Paper>
+}
 
-    @Published var isShowingJoinProjectView = false
-    @Published var incomingURL: URL?
+extension FocusedValues {
+    var selectedPaper: SelectedPaperKey.Value? {
+        get { self[SelectedPaperKey.self] }
+        set { self[SelectedPaperKey.self] = newValue }
+    }
+}
+
+@Observable class AppState {
+    var findingPaper: Set<Paper.ID> = []
+
+    var isShowingJoinProjectView = false
+    var incomingURL: URL?
+
+    var isCreatingProject = false
+    var isEditingProject = false
+    var isAddingPaper = false
+    var isSharingProject = false
 
     func handleIncomingURL(url: URL) {
         incomingURL = url

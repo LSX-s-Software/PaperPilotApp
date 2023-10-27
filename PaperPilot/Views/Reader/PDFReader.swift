@@ -19,9 +19,9 @@ private enum TOCContentType: String, Identifiable, CaseIterable {
 }
 
 struct PDFReader: View {
-    @EnvironmentObject var appState: AppState
-    @Environment(\.modelContext) var modelContext
-    
+    @Environment(AppState.self) private var appState
+    @Environment(\.modelContext) private var modelContext
+
     @Bindable var paper: Paper
     let pdf: PDFDocument
     
@@ -192,6 +192,12 @@ struct PDFReader: View {
                 .searchable(text: $findText, isPresented: $searchBarPresented, prompt: Text("Find in PDF"))
                 .navigationDocument(pdf.documentURL!)
                 .onChange(of: findText, performFind)
+                .onChange(of: appState.findingPaper, findInPDFHandler)
+                .onChange(of: searchBarPresented) {
+                    if !searchBarPresented && findText.isEmpty {
+                        appState.findingPaper.remove(paper.id)
+                    }
+                }
                 .onSubmit(of: .search) {
                     if findResult.isEmpty {
                         performFind()
@@ -274,7 +280,6 @@ struct PDFReader: View {
             }
         }
         .onAppear {
-            appState.findInPDFHandler = findInPDFHandler(_:)
             if let page = pdfView.currentPage {
                 currentPage = page
             }
@@ -284,30 +289,31 @@ struct PDFReader: View {
     
 // MARK: - PDF查找
 extension PDFReader {
-    func findInPDFHandler(_ shouldFind: Bool) {
-        if shouldFind {
+    func findInPDFHandler() {
+        if appState.findingPaper.contains(paper.id) {
             searchBarPresented = true
         } else {
             searchBarPresented = false
             findText = ""
             finding = false
             findResult.removeAll()
-            appState.findingInPDF = false
         }
     }
     
     private func performFind() {
-        if finding || findText.isEmpty {
+        if finding { return }
+        if findText.isEmpty {
             finding = false
+            appState.findingPaper.remove(paper.id)
             return
         }
         finding = true
-        appState.findingInPDF = true
+        appState.findingPaper.insert(paper.id)
         Task {
             findResult = pdf.findString(findText, withOptions: findOptions)
             finding = false
             if let firstResult = findResult.first {
-                pdfView.setCurrentSelection(firstResult, animate: true)
+                await pdfView.setCurrentSelection(firstResult, animate: true)
                 currentSelection = firstResult
             }
         }
@@ -376,7 +382,7 @@ extension PDFReader {
 #Preview {
     PDFReader(paper: ModelData.paper1,
               pdf: PDFDocument(url: Bundle.main.url(forResource: "sample", withExtension: "pdf")!)!)
-        .environmentObject(AppState())
+        .environment(AppState())
         .modelContainer(previewContainer)
         .frame(width: 800)
 }
