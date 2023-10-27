@@ -9,7 +9,7 @@ import SwiftUI
 import Throttler
 
 struct TranslatorView: View {
-    @ObservedObject var viewModel: TranslatorViewModel
+    @EnvironmentObject private var viewModel: TranslatorViewModel
 
     var body: some View {
         Form {
@@ -74,6 +74,7 @@ struct TranslatorView: View {
 }
 
 #Preview {
-    TranslatorView(viewModel: TranslatorViewModel())
+    TranslatorView()
+        .environmentObject(TranslatorViewModel())
         .frame(width: 300)
 }
