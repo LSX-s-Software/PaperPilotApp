@@ -132,8 +132,7 @@ struct PDFReader: View {
                         ) { bookmark in
                             HStack {
                                 if let page = pdf.page(at: bookmark.page) {
-#if os(macOS)
-                                    Image(nsImage: page.thumbnail(of: NSSize(width: 180, height: 360), for: .trimBox))
+                                    Image(image: page.thumbnail(of: PlatformSize(width: 180, height: 360).size, for: .trimBox))
                                         .resizable()
                                         .scaledToFit()
                                         .clipShape(RoundedRectangle(cornerRadius: 5))
@@ -142,18 +141,6 @@ struct PDFReader: View {
                                             Image(systemName: "bookmark.fill")
                                                 .foregroundStyle(Color.accentColor)
                                         }
-#else
-                                    Image(uiImage: page.thumbnail(of: CGSize(width: 180, height: 360), for: .trimBox))
-                                        .resizable()
-                                        .scaledToFit()
-                                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                                        .frame(maxWidth: 60, maxHeight: 120)
-                                        .overlay(alignment: .topTrailing) {
-                                            Image(systemName: "bookmark.fill")
-                                                .foregroundStyle(Color.accentColor)
-                                        }
-
-#endif
                                     Spacer()
                                 }
                                 Text("Page \(bookmark.label ?? String(bookmark.page + 1))")
