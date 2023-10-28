@@ -9,6 +9,7 @@ import SwiftUI
 import Throttler
 
 struct TranslatorView: View {
+    @EnvironmentObject private var pdfVM: PDFViewModel
     @EnvironmentObject private var viewModel: TranslatorViewModel
 
     var body: some View {
@@ -35,7 +36,20 @@ struct TranslatorView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .scrollContentBackground(.hidden)
                     .onChange(of: viewModel.originalText) {
-                        Task { await viewModel.translate() }
+                        throttle(option: .ensureLast) {
+                            Task { await viewModel.translate() }
+                        }
+                    }
+                    .onReceive(
+                        NotificationCenter.default.publisher(for: .PDFViewSelectionChanged)
+                            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+                    ) { _ in
+                        if viewModel.translateBySelection,
+                           let selection = pdfVM.pdfView.currentSelection?.string {
+                            viewModel.originalText = viewModel.trimNewlines
+                            ? selection.trimmingCharacters(in: .newlines)
+                            : selection
+                        }
                     }
             }
 
@@ -75,6 +89,7 @@ struct TranslatorView: View {
 
 #Preview {
     TranslatorView()
+        .environmentObject(PDFViewModel())
         .environmentObject(TranslatorViewModel())
         .frame(width: 300)
 }

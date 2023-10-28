@@ -22,7 +22,7 @@ enum AppStorageKey {
     }
 
     enum Reader: String {
-        case sidebarContent = "reader.sidebarContent"
+        case inspectorContent = "reader.inspectorContent"
         case isShowingInspector = "reader.isShowingInspector"
     }
 }
