@@ -214,7 +214,11 @@ extension PDFReader {
         guard let pdf = pdfVM.pdf else { return }
         let pageIndex = pdf.index(for: pdfVM.currentPage)
         if pageBookmarked {
-            paper.bookmarks.removeAll { $0.page == pageIndex }
+            if let index = paper.bookmarks.firstIndex(where: { $0.page == pageIndex }) {
+                let bookmark = paper.bookmarks[index]
+                paper.bookmarks.remove(at: index)
+                modelContext.delete(bookmark)
+            }
         } else {
             let bookmark = Bookmark(page: pageIndex, label: pdfVM.currentPage.label)
             paper.bookmarks.append(bookmark)
