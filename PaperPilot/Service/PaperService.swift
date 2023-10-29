@@ -116,9 +116,7 @@ extension ModelService {
                      issue: String? = nil,
                      pages: String? = nil,
                      url: String? = nil,
-                     doi: String? = nil,
-                     note: String? = nil,
-                     bookmarks: [Bookmark]? = nil) async throws {
+                     doi: String? = nil) async throws {
         let originalStatus = paper.status
         paper.status = ModelStatus.updating.rawValue
         defer {
@@ -164,11 +162,19 @@ extension ModelService {
         if let newPages = pages { paper.pages = newPages }
         if let newUrl = url { paper.url = newUrl }
         if let newDoi = doi { paper.doi = newDoi }
-        if let newNote = note { paper.note = newNote }
-        if let newBookmarks = bookmarks { paper.bookmarks = newBookmarks }
         paper.updateTime = Date.now
     }
     
+    /// 更新本地缓存的论文信息
+    ///
+    /// > Important: 这个方法只更新缓存在本地的数据，例如笔记、书签等，不会与远程数据进行同步
+    func updatePaper(_ paper: Paper,
+                     note: String? = nil,
+                     bookmarks: [Bookmark]? = nil) {
+        if let newNote = note { paper.note = newNote }
+        if let newBookmarks = bookmarks { paper.bookmarks = newBookmarks }
+    }
+
     /// 设置论文的已读状态
     /// - Parameters:
     ///   - read: 是否已读

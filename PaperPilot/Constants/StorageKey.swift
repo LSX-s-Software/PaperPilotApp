@@ -24,6 +24,7 @@ enum AppStorageKey {
     enum Reader: String {
         case inspectorContent = "reader.inspectorContent"
         case isShowingInspector = "reader.isShowingInspector"
+        case noteFontSize = "reader.noteFontSize"
     }
 }
 

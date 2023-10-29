@@ -354,6 +354,17 @@
         }
       }
     },
+    "Connecting..." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接中…"
+          }
+        }
+      }
+    },
     "Convert failed: %@" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1322,16 +1333,6 @@
         }
       }
     },
-    "No Results" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有结果"
-          }
-        }
-      }
-    },
     "Not found" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1359,6 +1360,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "旧密码"
+          }
+        }
+      }
+    },
+    "Online" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在线"
           }
         }
       }
@@ -1420,16 +1431,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "页面 %@"
-          }
-        }
-      }
-    },
-    "Page %lld" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "页面 %lld"
           }
         }
       }
@@ -1891,6 +1892,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "共享项目"
+          }
+        }
+      }
+    },
+    "ShareDB service is not connected." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未连接到ShareDB服务"
           }
         }
       }

@@ -135,7 +135,7 @@ struct PaperReaderInspector: View {
             case .info:
                 PaperInfo(paper: paper)
             case .note:
-                TextEditor(text: $paper.note)
+                SharedNoteView(paper: paper)
             case .translator:
                 TranslatorView()
             }

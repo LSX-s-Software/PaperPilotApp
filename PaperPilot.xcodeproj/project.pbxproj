@@ -19,11 +19,12 @@
 		279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */; };
 		279F2D272AC8398A00FEA9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
 		76C15CBF2AD82AB300614902 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C15CBE2AD82AB300614902 /* AccountViewModel.swift */; };
+		F5008D6F2AECD156004F326E /* SharedNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5008D6E2AECD156004F326E /* SharedNoteView.swift */; };
+		F5008D772AED50BD004F326E /* ShareKit in Frameworks */ = {isa = PBXBuildFile; productRef = F5008D762AED50BD004F326E /* ShareKit */; };
 		F508805B2AE8B0A200CD7510 /* MicroserviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */; };
 		F508805F2AE8C24A00CD7510 /* Interceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F508805E2AE8C24A00CD7510 /* Interceptor.swift */; };
 		F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */; };
 		F5131BF32AEB70DD0077393E /* ProjectCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5131BF22AEB70DD0077393E /* ProjectCommands.swift */; };
-		F5131BF82AEBABF00077393E /* ShareKit in Frameworks */ = {isa = PBXBuildFile; productRef = F5131BF72AEBABF00077393E /* ShareKit */; };
 		F5131BFD2AEBAC700077393E /* ShareCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5131BFC2AEBAC700077393E /* ShareCoordinator.swift */; };
 		F5131BFF2AEBB1DB0077393E /* ShareCollectionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5131BFE2AEBB1DB0077393E /* ShareCollectionKey.swift */; };
 		F5131C012AEBB5090077393E /* ShareCoordinatorError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5131C002AEBB5090077393E /* ShareCoordinatorError.swift */; };
@@ -110,6 +111,7 @@
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		76C15CBE2AD82AB300614902 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
+		F5008D6E2AECD156004F326E /* SharedNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedNoteView.swift; sourceTree = "<group>"; };
 		F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroserviceStatus.swift; sourceTree = "<group>"; };
 		F508805E2AE8C24A00CD7510 /* Interceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interceptor.swift; sourceTree = "<group>"; };
 		F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
@@ -190,7 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5131BF82AEBABF00077393E /* ShareKit in Frameworks */,
+				F5008D772AED50BD004F326E /* ShareKit in Frameworks */,
 				279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */,
 				F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */,
 				F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */,
@@ -264,8 +266,9 @@
 		F5131C132AECA47C0077393E /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				F5C379082AC44BFF00C88C94 /* PaperInfo.swift */,
 				F5131C062AEBF17C0077393E /* PaperReaderInspector.swift */,
+				F5C379082AC44BFF00C88C94 /* PaperInfo.swift */,
+				F5008D6E2AECD156004F326E /* SharedNoteView.swift */,
 				F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */,
 			);
 			path = Inspector;
@@ -488,7 +491,7 @@
 				F5D8EEF32AD4559300501B0E /* SimpleCodable */,
 				F5CF43332ADC1FB6004F1A16 /* WindowManagement */,
 				F5643F362AE37C9C00186A2F /* Throttler */,
-				F5131BF72AEBABF00077393E /* ShareKit */,
+				F5008D762AED50BD004F326E /* ShareKit */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -527,7 +530,7 @@
 				F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */,
 				F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */,
 				F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */,
-				F5131BF62AEBABF00077393E /* XCRemoteSwiftPackageReference "share-kit" */,
+				F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -616,6 +619,7 @@
 				F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */,
 				F5131C172AECA5D40077393E /* BookmarkView.swift in Sources */,
 				F59FB3D72AE580A20007A76B /* NavigationContext.swift in Sources */,
+				F5008D6F2AECD156004F326E /* SharedNoteView.swift in Sources */,
 				272423D32AD677F9001748AC /* API.swift in Sources */,
 				273E52F92AE8FF3F004331FB /* ProjectService.swift in Sources */,
 				F53D81442AC02C6500865B80 /* ModelData.swift in Sources */,
@@ -905,9 +909,9 @@
 				version = 1.23.0;
 			};
 		};
-		F5131BF62AEBABF00077393E /* XCRemoteSwiftPackageReference "share-kit" */ = {
+		F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zeeyang/share-kit.git";
+			repositoryURL = "https://github.com/LSX-s-Software/share-kit.git";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -999,9 +1003,9 @@
 			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
 			productName = "protoc-gen-grpc-swift";
 		};
-		F5131BF72AEBABF00077393E /* ShareKit */ = {
+		F5008D762AED50BD004F326E /* ShareKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F5131BF62AEBABF00077393E /* XCRemoteSwiftPackageReference "share-kit" */;
+			package = F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */;
 			productName = ShareKit;
 		};
 		F547D0DC2AC52A6F006D2216 /* SwiftUIFlow */ = {
