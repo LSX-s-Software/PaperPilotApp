@@ -495,6 +495,16 @@
         }
       }
     },
+    "Document is already subscribed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已经订阅该文档"
+          }
+        }
+      }
+    },
     "DOI" : {
       "localizations" : {
         "zh-Hans" : {

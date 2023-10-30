@@ -64,7 +64,7 @@ struct SharedNoteView: View {
                 guard let id = paper.remoteId else { return }
                 await ShareCoordinator.shared.connect()
                 do {
-                    shareDocument = try await ShareCoordinator.shared.subscribe(to: id, in: .notes)
+                    shareDocument = try await ShareCoordinator.shared.getDocument(id, in: .notes)
                     if await shareDocument!.notCreated {
                         try await shareDocument!.create(SharedNote())
                     }

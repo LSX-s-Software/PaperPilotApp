@@ -33,17 +33,51 @@ class ShareCoordinator {
         }
     }
 
+    /// 获取文档
+    /// - Parameters:
+    ///   - document: 文档名称
+    ///   - collection: 文档所在集合
+    ///
+    /// 这个方法包含``subscribe(to:in:)-ww8k``操作。
+    /// > Tip: 如果已经订阅文档，不会抛出``ShareCoordinatorError/docAlreadySubscribed``异常
+    func getDocument<T: Codable>(_ key: String, in collection: ShareCollectionKey) async throws -> ShareDocument<T> {
+        return try await getDocument(key, in: collection.rawValue)
+    }
+    
+    /// 获取文档
+    /// - Parameters:
+    ///   - document: 文档名称
+    ///   - collection: 集合名称
+    ///
+    /// 这个方法包含``subscribe(to:in:)-ww8k``操作。
+    /// > Tip: 如果已经订阅文档，不会抛出``ShareCoordinatorError/docAlreadySubscribed``异常
+    func getDocument<T: Codable>(_ key: String, in collection: String) async throws -> ShareDocument<T> {
+        guard let connection = connection else { throw ShareCoordinatorError.notConnected }
+        do {
+            return try await subscribe(to: key, in: collection)
+        } catch ShareCoordinatorError.docAlreadySubscribed {
+            return try connection.getDocument(key, in: collection)
+        }
+    }
+
     /// 订阅文档
     /// - Parameters:
     ///   - document: 文档名称
     ///   - collection: 文档所在集合
     func subscribe<T: Codable>(to document: String, in collection: ShareCollectionKey) async throws -> ShareDocument<T> {
-        guard let connection = connection else { throw ShareCoordinatorError.notConnected }
-        return try await connection.subscribe(document: document, in: collection.rawValue)
+        return try await subscribe(to: document, in: collection.rawValue)
     }
 
+    /// 订阅文档
+    /// - Parameters:
+    ///   - document: 文档名称
+    ///   - collection: 集合名称
     func subscribe<T: Codable>(to document: String, in collection: String) async throws -> ShareDocument<T> {
         guard let connection = connection else { throw ShareCoordinatorError.notConnected }
-        return try await connection.subscribe(document: document, in: collection)
+        do {
+            return try await connection.subscribe(document: document, in: collection)
+        } catch ShareDocumentError.alreadySubscribed {
+            throw ShareCoordinatorError.docAlreadySubscribed
+        }
     }
 }

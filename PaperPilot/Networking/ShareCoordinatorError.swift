@@ -9,6 +9,7 @@ import Foundation
 
 enum ShareCoordinatorError: Error {
     case notConnected
+    case docAlreadySubscribed
 }
 
 extension ShareCoordinatorError: LocalizedError {
@@ -16,6 +17,8 @@ extension ShareCoordinatorError: LocalizedError {
         switch self {
         case .notConnected:
             return String(localized: "ShareDB service is not connected.")
+        case .docAlreadySubscribed:
+            return String(localized: "Document is already subscribed.")
         }
     }
 }
