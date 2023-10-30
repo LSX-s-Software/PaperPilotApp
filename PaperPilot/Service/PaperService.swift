@@ -47,27 +47,26 @@ extension ModelService {
                 logger.trace("\(paper.title): Basic info uploaded")
             }
             guard let remoteId = paper.remoteId else { return }
-            // 读取本地文件
-            guard let localFile = paper.localFile, FileManager.default.isReadableFile(atPath: localFile.path()) else {
-                paper.status = ModelStatus.normal.rawValue
-                return
-            }
-            let fileData = try Data(contentsOf: localFile)
-            // 获取、解析OSS直传Token
-            let token = try await API.shared.paper.uploadAttachment(.with { $0.paperID = remoteId }).token
-            logger.trace("\(paper.title): OSS token got")
             // 上传文件
-            guard let request = OSSRequest(token: token,
-                                           fileName: localFile.lastPathComponent,
-                                           fileData: fileData,
-                                           mimeType: "application/pdf") else {
-                throw NetworkingError.responseFormatError
-            }
-            try await URLSession.shared.upload(for: request)
-            logger.trace("\(paper.title): File uploaded")
-            // 更新文件URL
-            if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = remoteId }).file {
-                paper.file = newFileURL
+            if let localFile = paper.localFile, FileManager.default.isReadableFile(atPath: localFile.path()) {
+                // 读取本地文件
+                let fileData = try Data(contentsOf: localFile)
+                // 获取、解析OSS直传Token
+                let token = try await API.shared.paper.uploadAttachment(.with { $0.paperID = remoteId }).token
+                logger.trace("\(paper.title): OSS token got")
+                // 上传文件
+                guard let request = OSSRequest(token: token,
+                                               fileName: localFile.lastPathComponent,
+                                               fileData: fileData,
+                                               mimeType: "application/pdf") else {
+                    throw NetworkingError.responseFormatError
+                }
+                try await URLSession.shared.upload(for: request)
+                logger.trace("\(paper.title): File uploaded")
+                // 更新文件URL
+                if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = remoteId }).file {
+                    paper.file = newFileURL
+                }
             }
             // 上传笔记
             if !paper.note.isEmpty {
@@ -78,7 +77,6 @@ extension ModelService {
                 }
                 logger.trace("\(paper.title): Notes uploaded to ShareDB")
             }
-            // TODO: 上传书签
         } catch let error as GRPCStatus {
             paper.status = ModelStatus.waitingForUpload.rawValue
             throw NetworkingError.requestError(code: error.code.rawValue, message: error.message)
@@ -214,7 +212,13 @@ extension ModelService {
         }
         if !pdfOnly {
             if let remoteId = paper.remoteId {
-                _ = try await API.shared.paper.deletePaper(.with { $0.id = remoteId })
+                do {
+                    _ = try await API.shared.paper.deletePaper(.with { $0.id = remoteId })
+                } catch let error as GRPCStatus {
+                    if error.code != .notFound {
+                        throw NetworkingError.requestError(code: error.code.rawValue, message: error.message)
+                    }
+                }
             }
             modelContext.delete(paper)
         }
