@@ -9,7 +9,7 @@ import SwiftUI
 import GRPC
 import OSLog
 
-private let logger = Logger(subsystem: "cn.defaultlin.paperpilotapp.NewPaperInfoView", category: "onDismiss")
+private let logger = LoggerFactory.make(category: "NewPaperInfoView")
 
 struct NewPaperInfoView: View {
     @Bindable var project: Project

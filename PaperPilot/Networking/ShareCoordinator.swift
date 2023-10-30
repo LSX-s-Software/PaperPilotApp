@@ -9,7 +9,7 @@ import ShareKit
 import OSLog
 
 class ShareCoordinator {
-    private let logger = Logger(subsystem: "cn.defaultlin.PaperPilot", category: "ShareCoordinator")
+    private let logger = LoggerFactory.make(category: "ShareCoordinator")
     static let shared = ShareCoordinator()
 
     private let shareClient = ShareClient(eventLoopGroupProvider: .createNew)
