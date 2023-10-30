@@ -108,7 +108,7 @@ struct ShareProjectView: View {
             for paper in project.papers {
                 promptMsg = String(localized: "Downloading: \(paper.title)")
                 if let localFile = paper.localFile,
-                   FileManager.default.isReadableFile(atPath: localFile.path()) {
+                   FileManager.default.isReadableFile(atPath: localFile.path(percentEncoded: false)) {
                     downloadProgress?.completedUnitCount += 1
                     continue
                 }

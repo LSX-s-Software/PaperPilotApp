@@ -48,7 +48,8 @@ extension ModelService {
             }
             guard let remoteId = paper.remoteId else { return }
             // 上传文件
-            if let localFile = paper.localFile, FileManager.default.isReadableFile(atPath: localFile.path()) {
+            if let localFile = paper.localFile,
+               FileManager.default.isReadableFile(atPath: localFile.path(percentEncoded: false)) {
                 // 读取本地文件
                 let fileData = try Data(contentsOf: localFile)
                 // 获取、解析OSS直传Token
@@ -200,14 +201,14 @@ extension ModelService {
     func deletePaper(_ paper: Paper, pdfOnly: Bool = false) async throws {
         if pdfOnly,
            let url = paper.localFile,
-           FileManager.default.fileExists(atPath: url.path()) {
+           FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
             try FileManager.default.removeItem(at: url)
             paper.localFile = nil
             if paper.file != nil {
                 paper.status = ModelStatus.waitingForDownload.rawValue
             }
         } else if let dir = try? FilePath.paperDirectory(for: paper),
-                  FileManager.default.fileExists(atPath: dir.path()) {
+                  FileManager.default.fileExists(atPath: dir.path(percentEncoded: false)) {
             try? FileManager.default.removeItem(at: dir)
         }
         if !pdfOnly {

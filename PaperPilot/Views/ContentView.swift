@@ -100,7 +100,7 @@ struct ContentView: View {
                                     }
                                 }
                                 if let dir = try? FilePath.projectDirectory(for: project),
-                                   FileManager.default.fileExists(atPath: dir.path()) {
+                                   FileManager.default.fileExists(atPath: dir.path(percentEncoded: false)) {
                                     try? FileManager.default.removeItem(at: dir)
                                 }
                                 modelContext.delete(project)

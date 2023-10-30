@@ -21,7 +21,7 @@ struct StorageSpaceSettingsView: View {
             Section("Local Files") {
                 if let baseDir = baseDir {
                     HStack {
-                        TextField("Location:", text: .constant(baseDir.path()))
+                        TextField("Location:", text: .constant(baseDir.path(percentEncoded: false)))
                         Button("Show in Finder") {
                             NSWorkspace.shared.open(baseDir)
                         }
@@ -74,7 +74,7 @@ struct StorageSpaceSettingsView: View {
     func calcUsedSpace() {
         if let baseDir = baseDir {
             do {
-                totalUsedSpace = try FileManager.default.totalSize(atPath: baseDir.path())
+                totalUsedSpace = try FileManager.default.totalSize(atPath: baseDir.path(percentEncoded: false))
             } catch {
                 totalUsedSpaceError = error.localizedDescription
             }

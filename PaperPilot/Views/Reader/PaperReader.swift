@@ -155,7 +155,7 @@ extension PaperReader {
         defer { pdfVM.loading = false }
         // 从本地文件加载
         if let url = paper.localFile {
-            if FileManager.default.isReadableFile(atPath: url.path()) {
+            if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
                 pdfVM.pdf = PDFDocument(url: url)
                 columnVisibility = .all
             } else {
