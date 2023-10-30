@@ -9,8 +9,9 @@ import Foundation
 import SwiftData
 import OSLog
 import GRPC
+import ShareKit
 
-private let logger = Logger(subsystem: "cn.defaultlin.paperpilotapp.ModelService", category: "PaperService")
+private let logger = Logger(subsystem: "cn.defaultlin.PaperPilotApp", category: "ModelService.PaperService")
 
 extension ModelService {
     /// 通过ID获取Paper
@@ -45,6 +46,7 @@ extension ModelService {
 
                 logger.trace("\(paper.title): Basic info uploaded")
             }
+            guard let remoteId = paper.remoteId else { return }
             // 读取本地文件
             guard let localFile = paper.localFile, FileManager.default.isReadableFile(atPath: localFile.path()) else {
                 paper.status = ModelStatus.normal.rawValue
@@ -52,7 +54,7 @@ extension ModelService {
             }
             let fileData = try Data(contentsOf: localFile)
             // 获取、解析OSS直传Token
-            let token = try await API.shared.paper.uploadAttachment(.with { $0.paperID = paper.remoteId! }).token
+            let token = try await API.shared.paper.uploadAttachment(.with { $0.paperID = remoteId }).token
             logger.trace("\(paper.title): OSS token got")
             // 上传文件
             guard let request = OSSRequest(token: token,
@@ -64,9 +66,19 @@ extension ModelService {
             try await URLSession.shared.upload(for: request)
             logger.trace("\(paper.title): File uploaded")
             // 更新文件URL
-            if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = paper.remoteId! }).file {
+            if let newFileURL = try? await API.shared.paper.getPaper(.with { $0.id = remoteId }).file {
                 paper.file = newFileURL
             }
+            // 上传笔记
+            if !paper.note.isEmpty {
+                await ShareCoordinator.shared.connect()
+                let sharedNote: ShareDocument<SharedNote> = try await ShareCoordinator.shared.getDocument(remoteId, in: .notes)
+                if await sharedNote.notCreated {
+                    try await sharedNote.create(SharedNote(content: paper.note))
+                }
+                logger.trace("\(paper.title): Notes uploaded to ShareDB")
+            }
+            // TODO: 上传书签
         } catch let error as GRPCStatus {
             paper.status = ModelStatus.waitingForUpload.rawValue
             throw NetworkingError.requestError(code: error.code.rawValue, message: error.message)
