@@ -26,7 +26,7 @@ struct PaperReader: View {
 
     @State private var errorDescription: String?
     @State private var isImporting = false
-    @State private var tocContent: TOCContentType = .outline
+    @State private var tocContent: TOCContentType = .none
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     @StateObject private var pdfVM = PDFViewModel()
     @StateObject private var translatorVM = TranslatorViewModel()
@@ -55,6 +55,7 @@ struct PaperReader: View {
                     }
                 }
             }
+            .navigationSplitViewColumnWidth(min: 150, ideal: 175)
             .environmentObject(pdfVM)
             .toolbar(removing: .sidebarToggle)
             .toolbar {
@@ -96,7 +97,13 @@ struct PaperReader: View {
                         .symbolRenderingMode(.hierarchical)
                         .foregroundStyle(downloadVM.downloading ? Color.accentColor : .red)
                         .font(.title)
-                        if paper.file == nil {
+                        if let errorDescription = errorDescription {
+                            Text(errorDescription)
+                                .font(.title)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal)
+                        } else if paper.file == nil && paper.localFile == nil {
                             Text("This paper has no PDF file attached.")
                                 .font(.title)
                                 .foregroundStyle(.secondary)
@@ -124,10 +131,8 @@ struct PaperReader: View {
                             .padding(.horizontal)
                             .frame(maxWidth: 350)
                         } else {
-                            Text(errorDescription ?? String(localized: "Unknown error"))
+                            Text("Unknown error")
                                 .font(.title)
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal)
                         }
                     }
                 }
@@ -157,7 +162,9 @@ extension PaperReader {
         if let url = paper.localFile {
             if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
                 pdfVM.pdf = PDFDocument(url: url)
+                tocContent = .outline
                 columnVisibility = .all
+                errorDescription = nil
             } else {
                 paper.localFile = nil
                 errorDescription = String(localized: "Failed to load PDF: ") + String(localized: "File not found")
@@ -176,6 +183,7 @@ extension PaperReader {
                 paper.localFile = savedURL
                 paper.status = ModelStatus.normal.rawValue
                 pdfVM.pdf = PDFDocument(url: savedURL)
+                tocContent = .outline
                 columnVisibility = .all
                 errorDescription = nil
             } catch {
@@ -195,6 +203,9 @@ extension PaperReader {
                     if didStartAccessing {
                         let savedURL = try FilePath.paperDirectory(for: paper, create: true)
                             .appending(path: url.lastPathComponent)
+                        if FileManager.default.fileExists(atPath: savedURL.path(percentEncoded: false)) {
+                            try FileManager.default.removeItem(at: savedURL)
+                        }
                         try FileManager.default.copyItem(at: url, to: savedURL)
                         paper.localFile = savedURL
                         if paper.project?.remoteId == nil {
@@ -203,6 +214,8 @@ extension PaperReader {
                             paper.status = ModelStatus.waitingForUpload.rawValue
                         }
                         pdfVM.pdf = PDFDocument(url: savedURL)
+                        tocContent = .outline
+                        columnVisibility = .all
                         errorDescription = nil
                     } else {
                         errorDescription = String(localized: "You don't have access to the PDF.")
