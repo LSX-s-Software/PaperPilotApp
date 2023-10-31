@@ -35,6 +35,14 @@ struct TranslatorView: View {
                     .frame(maxHeight: 500)
                     .fixedSize(horizontal: false, vertical: true)
                     .scrollContentBackground(.hidden)
+                    .overlay(alignment: .topLeading) {
+                        if viewModel.originalText.isEmpty {
+                            Text("Enter to translate")
+                                .foregroundStyle(.placeholder)
+                                .offset(x: 8)
+                                .allowsHitTesting(false)
+                        }
+                    }
                     .onChange(of: viewModel.originalText) {
                         throttle(option: .ensureLast) {
                             Task { await viewModel.translate() }
@@ -70,11 +78,11 @@ struct TranslatorView: View {
                     }
                     .foregroundColor(.red)
                 } else {
-                    TextEditor(text: $viewModel.translatedText)
-                        .font(.body)
-                        .frame(maxHeight: 500)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .scrollContentBackground(.hidden)
+                    ScrollView {
+                        Text(viewModel.translatedText)
+                            .textSelection(.enabled)
+                    }
+                    .frame(maxHeight: 500)
                 }
             }
 

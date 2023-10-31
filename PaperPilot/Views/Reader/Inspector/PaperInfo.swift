@@ -175,7 +175,16 @@ struct PaperInfo: View {
                 TextEditor(text: $abstract)
                     .font(.body)
                     .disabled(!editing)
+                    .scrollContentBackground(.hidden)
                     .frame(minHeight: 150)
+                    .overlay(alignment: .topLeading) {
+                        if abstract.isEmpty {
+                            Text("No Abstract")
+                                .foregroundStyle(.placeholder)
+                                .offset(x: 8)
+                                .allowsHitTesting(false)
+                        }
+                    }
             } header: {
                 HStack {
                     Text("Abstract")

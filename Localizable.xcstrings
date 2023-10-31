@@ -606,6 +606,16 @@
         }
       }
     },
+    "Enter to translate" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入文本查看翻译"
+          }
+        }
+      }
+    },
     "Error" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1319,6 +1329,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新用户名"
+          }
+        }
+      }
+    },
+    "No Abstract" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有摘要"
           }
         }
       }
