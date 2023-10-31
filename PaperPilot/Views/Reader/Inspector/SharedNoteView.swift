@@ -17,7 +17,7 @@ struct SharedNoteView: View {
     @Bindable var paper: Paper
 
     @AppStorage(AppStorageKey.Reader.noteFontSize.rawValue)
-    private var fontSize: Int = 16
+    private var fontSize: Double = 16
 
     @State private var loading = true
     @State private var shareDocument: ShareDocument<SharedNote>?

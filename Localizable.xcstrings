@@ -856,6 +856,16 @@
         }
       }
     },
+    "Font Size" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "字体大小"
+          }
+        }
+      }
+    },
     "French" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1085,6 +1095,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "语言"
+          }
+        }
+      }
+    },
+    "Larger" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更大"
           }
         }
       }
@@ -1776,6 +1796,16 @@
         }
       }
     },
+    "Reset" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置"
+          }
+        }
+      }
+    },
     "Resolve" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1942,6 +1972,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "侧栏内容"
+          }
+        }
+      }
+    },
+    "Smaller" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更小"
           }
         }
       }
