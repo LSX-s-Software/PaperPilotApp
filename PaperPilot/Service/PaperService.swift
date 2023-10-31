@@ -181,8 +181,12 @@ extension ModelService {
     /// > Important: 这个方法只更新缓存在本地的数据，例如笔记、书签等，不会与远程数据进行同步
     func updatePaper(_ paper: Paper,
                      note: String? = nil,
+                     noteUpdateTime: Date = Date.now,
                      bookmarks: [Bookmark]? = nil) {
-        if let newNote = note { paper.note = newNote }
+        if let newNote = note {
+            paper.note = newNote
+            paper.noteUpdateTime = noteUpdateTime
+        }
         if let newBookmarks = bookmarks { paper.bookmarks = newBookmarks }
     }
 

@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftData
-import UniformTypeIdentifiers
 
 /// 论文
 @Model
@@ -68,6 +67,7 @@ class Paper: Hashable, Identifiable {
     
     /// 笔记
     var note: String = ""
+    var noteUpdateTime: Date = Date.now
     /// 书签
     @Relationship(deleteRule: .cascade)
     var bookmarks = [Bookmark]()

@@ -11,6 +11,7 @@ import Combine
 
 struct SharedNote: Codable {
     var content = ""
+    var timestamp = Date.now.ISO8601Format()
 }
 
 struct SharedNoteView: View {
@@ -24,6 +25,7 @@ struct SharedNoteView: View {
     @State private var errorMsg: String?
     @State private var bag = Set<AnyCancellable>()
     @State private var sharedNote = SharedNote()
+    let dateFormatter = ISO8601DateFormatter()
 
     var body: some View {
         TextEditor(text: Binding { sharedNote.content } set: { handleModifyNote($0) })
@@ -61,6 +63,7 @@ struct SharedNoteView: View {
             }
             .task(id: paper.id) {
                 sharedNote.content = paper.note
+                sharedNote.timestamp = paper.noteUpdateTime.ISO8601Format()
                 guard let id = paper.remoteId else { return }
                 await ShareCoordinator.shared.connect()
                 do {
@@ -71,7 +74,15 @@ struct SharedNoteView: View {
                     await shareDocument!.value
                         .compactMap { $0 }
                         .receive(on: RunLoop.main)
-                        .assign(to: \.sharedNote, on: self)
+                        .sink { newNote in
+                            let newDate = dateFormatter.date(from: newNote.timestamp) ?? Date.now
+                            let oldDate = dateFormatter.date(from: sharedNote.timestamp) ?? Date.distantPast
+                            if newDate > oldDate {
+                                sharedNote = newNote
+                            } else {
+                                handleModifyNote(sharedNote.content)
+                            }
+                        }
                         .store(in: &bag)
                 } catch {
                     print("init error:", error)
@@ -88,11 +99,13 @@ struct SharedNoteView: View {
                 sharedNote.content = newNote
                 return
             }
+            let updateTime = Date.now
             do {
                 try await shareDocument?.change {
                     try $0.content.set(newNote)
+                    try $0.timestamp.set(dateFormatter.string(from: Date.now))
                 }
-                await ModelService.shared.updatePaper(paper, note: newNote)
+                await ModelService.shared.updatePaper(paper, note: newNote, noteUpdateTime: updateTime)
             } catch {
                 print("update error:", error)
                 errorMsg = error.localizedDescription
