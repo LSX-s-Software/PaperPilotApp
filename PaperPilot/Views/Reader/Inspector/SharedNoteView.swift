@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ShareKit
+import Throttler
 import Combine
 
 struct SharedNote: Codable {
@@ -93,12 +94,14 @@ struct SharedNoteView: View {
     }
 
     func handleModifyNote(_ newNote: String) {
-        Task {
-            if paper.remoteId == nil {
+        sharedNote.content = newNote
+        debounce(.seconds(5)) {
+            Task {
                 await ModelService.shared.updatePaper(paper, note: newNote)
-                sharedNote.content = newNote
-                return
             }
+        }
+        if paper.remoteId == nil { return }
+        Task {
             let updateTime = Date.now
             do {
                 try await shareDocument?.change {
