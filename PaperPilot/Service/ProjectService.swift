@@ -21,7 +21,10 @@ extension ModelService {
             return
         }
         if projects.isEmpty {
-            modelContext.insert(Project(remote: from, userID: userID!))
+            print("insert project")
+            var project = Project(remote: from, userID: userID!)
+            project.members.append(contentsOf: from.members.map {User(from: $0)})
+            modelContext.insert(project)
             return
         }
         let project = projects[0]

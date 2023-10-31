@@ -54,7 +54,6 @@ class Project: Hashable, Identifiable {
         self.desc = remote.description_p
         self.invitationCode = remote.inviteCode
         self.isOwner = remote.ownerID == userID
-        self.members = remote.members.map { User(from: $0) }
         self.papers = []
     }
 
