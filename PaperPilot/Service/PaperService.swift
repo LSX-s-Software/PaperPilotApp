@@ -221,6 +221,8 @@ extension ModelService {
                     }
                 }
             }
+            paper.project?.papers.removeAll { $0.id == paper.id }
+            paper.project = nil
             modelContext.delete(paper)
         }
     }
