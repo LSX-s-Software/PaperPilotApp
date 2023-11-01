@@ -18,18 +18,3 @@ extension Image {
     }
 #endif
 }
-
-struct PlatformSize {
-    var width: CGFloat
-    var height: CGFloat
-
-#if os(macOS)
-    var size: NSSize {
-        NSSize(width: width, height: height)
-    }
-#else
-    var size: CGSize {
-        CGSize(width: width, height: height)
-    }
-#endif
-}

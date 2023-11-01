@@ -15,13 +15,29 @@ struct SharedNote: Codable {
 
 struct SharedAnnotation: Codable {
     struct Annotation: Codable {
+        /// 页码
+        var page: Int
         /// 区域
         var bounds: CGRect
         /// 类型
         var type: PDFAnnotationSubtype.RawValue
+        /// 颜色
+        var color: PlatformColor
         /// 作者ID
         var authorId: User.ID
+//        private enum CodingKeys: String, CodingKey {
+//            case page = "p"
+//            case bounds = "b"
+//            case type = "t"
+//            case color = "c"
+//            case authorId = "a"
+//        }
     }
 
     var annotations = [String: Annotation]()
+    var pdfAnnotations = [String: PDFAnnotation]()
+
+    private enum CodingKeys: String, CodingKey {
+        case annotations
+    }
 }

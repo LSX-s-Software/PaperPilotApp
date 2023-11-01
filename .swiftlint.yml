@@ -3,8 +3,8 @@ disabled_rules: # 执行时排除掉的规则
   - trailing_whitespace
   - function_body_length
   - type_body_length
-  - for_where
   - cyclomatic_complexity
+  - nesting
 opt_in_rules: # 一些规则仅仅是可选的
   - missing_docs
 included:

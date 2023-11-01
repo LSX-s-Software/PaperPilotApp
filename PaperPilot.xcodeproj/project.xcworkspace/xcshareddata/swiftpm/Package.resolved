@@ -33,7 +33,7 @@
       "location" : "https://github.com/LSX-s-Software/share-kit.git",
       "state" : {
         "branch" : "master",
-        "revision" : "47e9497d1dc11b0666d9154f651c0fe1e8fe8770"
+        "revision" : "c46e07455f7b4cb6f432fb2cb546b83aa81d3f6b"
       }
     },
     {
@@ -104,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "9497e442486aab515c8486ef8153a506f93a5032",
-        "version" : "2.61.0"
+        "revision" : "853522d90871b4b63262843196685795b5008c46",
+        "version" : "2.61.1"
       }
     },
     {

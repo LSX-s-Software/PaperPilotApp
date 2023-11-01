@@ -33,4 +33,14 @@ enum HighlighterColor: String, CaseIterable, Identifiable {
             Color.black
         }
     }
+
+#if os(macOS)
+    var platformColor: NSColor {
+        NSColor(color)
+    }
+#else
+    var platformColor: UIColor {
+        UIColor(color)
+    }
+#endif
 }

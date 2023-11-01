@@ -20,7 +20,7 @@ struct OnlineIndicator: View {
             } else {
                 Circle()
                     .frame(width: 12, height: 12)
-                    .foregroundStyle(online ? .green : .yellow)
+                    .foregroundStyle(online && errorMsg == nil ? .green : .yellow)
             }
 
             Group {
