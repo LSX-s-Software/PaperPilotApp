@@ -72,17 +72,17 @@ struct PDFReader: View {
             .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
 #endif
             // MARK: - 工具栏
-            .toolbar {
+            .toolbar(id: "reader-tools") {
                 // MARK: 搜索选项
                 if findVM.searchBarPresented {
-                    ToolbarItem {
+                    ToolbarItem(id: "search") {
                         Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
                             Toggle("Case Sensitive", systemImage: "textformat", isOn: $findVM.caseSensitive)
                         }
                         .onChange(of: findVM.findOptions, performFind)
                     }
                 }
-                ToolbarItemGroup {
+                ToolbarItem(id: "annotation") {
                     // MARK: 标注
                     ControlGroup {
                         Picker("Highlighter Color", selection: $annotationColor) {
@@ -103,18 +103,19 @@ struct PDFReader: View {
                             handleAddAnnotation(.underline)
                         }
                     }
+                }
+
+                ToolbarItem(id: "bookmark") {
                     Button("Add to bookmark", systemImage: "bookmark") {
                         handleToggleBookmark()
                     }
                     .symbolVariant(pageBookmarked ? .fill : .none)
+                }
 
-                    Spacer()
-
-                    // MARK: 计时器
+                ToolbarItem(id: "timer") {
                     TimerView()
                 }
             }
-            .toolbarRole(.editor)
             // MARK: - 底部叠层
             .overlay(alignment: .bottom) {
                 Group {

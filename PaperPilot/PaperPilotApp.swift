@@ -96,6 +96,7 @@ struct PaperPilotApp: App {
         .commandsRemoved()
         .commands {
             InspectorCommands()
+            ToolbarCommands()
             PaperCommands()
         }
         .environment(appState)
