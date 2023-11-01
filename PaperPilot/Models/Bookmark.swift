@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftData
-import PDFKit
 
 /// 书签
 @Model

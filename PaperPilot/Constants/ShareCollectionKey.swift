@@ -11,8 +11,6 @@ import Foundation
 enum ShareCollectionKey: String {
     /// 笔记
     case notes
-    /// 书签
-    case bookmarks
     /// 标注
     case annotations
 }
