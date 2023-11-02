@@ -146,11 +146,29 @@ struct ProjectDetail: View {
             }
         }
         .task(id: project.id) {
-            guard project.remoteId != nil else { return }
+            guard let projectId = project.remoteId else { return }
             withAnimation {
                 updating = true
             }
             do {
+                let papers = try await API.shared.paper.listPaper(.with {
+                    $0.projectID = projectId
+                }).papers
+                let oldIdSet = Set(project.papers.map { $0.remoteId })
+                for paperRemoteId in oldIdSet.subtracting(papers.map { $0.id }) {
+                    if let paperRemoteId = paperRemoteId,
+                       let paper = await ModelService.shared.getPaper(remoteId: paperRemoteId) {
+                        try await ModelService.shared.deletePaper(paper)
+                    }
+                }
+                for paper in papers {
+                    if let localPaper = await ModelService.shared.getPaper(remoteId: paper.id) {
+                        await ModelService.shared.updatePaper(localPaper, with: paper)
+                    } else {
+                        let newPaper = await Paper(from: paper)
+                        project.papers.append(newPaper)
+                    }
+                }
                 for paper in project.papers {
                     if paper.status == ModelStatus.waitingForUpload.rawValue {
                         try await ModelService.shared.uploadPaper(paper, to: project)

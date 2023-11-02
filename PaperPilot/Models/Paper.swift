@@ -155,6 +155,11 @@ extension Paper {
         self.init(title: detail.title, createTime: detail.hasCreateTime ? detail.createTime.date : Date.now)
         await ModelService.shared.updatePaper(self, with: detail)
     }
+    
+    convenience init(from info: Paper_PaperInfo) async {
+        self.init(title: info.title, createTime: info.hasCreateTime ? info.createTime.date : Date.now)
+        await ModelService.shared.updatePaper(self, with: info)
+    }
 
     /// 通过DOI获取论文信息
     /// - Parameter doi: 论文DOI

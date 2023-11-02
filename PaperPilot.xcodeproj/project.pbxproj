@@ -84,7 +84,6 @@
 		F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */; };
 		F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C379082AC44BFF00C88C94 /* PaperInfo.swift */; };
 		F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = F5CF43332ADC1FB6004F1A16 /* WindowManagement */; settings = {ATTRIBUTES = (Required, ); }; };
-		F5CF43402ADC4361004F1A16 /* HSplitViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */; };
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
 		F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */; };
 		F5D8EEED2AD42D5100501B0E /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* AccountView.swift */; };
@@ -175,7 +174,6 @@
 		F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		F5C379082AC44BFF00C88C94 /* PaperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperInfo.swift; sourceTree = "<group>"; };
-		F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSplitViewLayout.swift; sourceTree = "<group>"; };
 		F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinProjectView.swift; sourceTree = "<group>"; };
 		F5D8EEEC2AD42D5100501B0E /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -350,7 +348,6 @@
 				F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */,
 				27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */,
 				F547D0E52AC56F89006D2216 /* EditableText.swift */,
-				F5CF433F2ADC4361004F1A16 /* HSplitViewLayout.swift */,
 				F5DF34042AEB537500624672 /* Image.swift */,
 				F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */,
 				F5145E822AD58332001860E0 /* ImageTitleDialog.swift */,
@@ -601,7 +598,6 @@
 				F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */,
 				F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */,
 				F5EBC0B42ABFD98E00B2B4A3 /* ContentView.swift in Sources */,
-				F5CF43402ADC4361004F1A16 /* HSplitViewLayout.swift in Sources */,
 				F5DF340A2AEB596B00624672 /* PaperCommands.swift in Sources */,
 				F5D8EEED2AD42D5100501B0E /* AccountView.swift in Sources */,
 				F5145E712AD5388E001860E0 /* ProjectCreateEditView.swift in Sources */,

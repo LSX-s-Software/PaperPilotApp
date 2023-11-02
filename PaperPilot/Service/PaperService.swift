@@ -19,6 +19,12 @@ extension ModelService {
         let descriptor = FetchDescriptor<Paper>(predicate: #Predicate { $0.id == id })
         return try? modelContext.fetch(descriptor).first
     }
+    
+    /// 通过remoteId获取Paper
+    func getPaper(remoteId: String) -> Paper? {
+        let descriptor = FetchDescriptor<Paper>(predicate: #Predicate { $0.remoteId == remoteId })
+        return try? modelContext.fetch(descriptor).first
+    }
 
     func getPapers(id: Set<Paper.ID>) -> [Paper] {
         let descriptor = FetchDescriptor<Paper>(predicate: #Predicate { id.contains($0.id) })
@@ -108,6 +114,19 @@ extension ModelService {
         paper.doi = detail.doi
         paper.file = detail.file
         paper.updateTime = detail.hasUpdateTime ? detail.updateTime.date : Date.now
+    }
+    
+    /// 使用远端数据更新论文信息
+    /// - Parameter info: 远端数据
+    ///
+    /// > Warning: 该方法不会处理版本冲突
+    func updatePaper(_ paper: Paper, with info: Paper_PaperInfo) {
+        paper.remoteId = info.id
+        paper.title = info.title
+        paper.authors = info.authors
+        paper.publicationYear = info.publicationYear == 0 ? nil : String(format: "%d", info.publicationYear)
+        paper.publication = info.publication
+        paper.updateTime = Date.now
     }
     
     /// 更新论文信息
@@ -202,7 +221,7 @@ extension ModelService {
     ///   - pdfOnly: 仅删除本地的PDF文件
     ///
     /// > Warning: 必须使用与ModelService处在同一个context下的Paper对象（可通过``getPaper(id:)``获取）
-    func deletePaper(_ paper: Paper, pdfOnly: Bool = false) async throws {
+    func deletePaper(_ paper: Paper, pdfOnly: Bool = false, localOnly: Bool = false) async throws {
         if pdfOnly,
            let url = paper.localFile,
            FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
@@ -216,7 +235,7 @@ extension ModelService {
             try? FileManager.default.removeItem(at: dir)
         }
         if !pdfOnly {
-            if let remoteId = paper.remoteId {
+            if !localOnly, let remoteId = paper.remoteId {
                 do {
                     _ = try await API.shared.paper.deletePaper(.with { $0.id = remoteId })
                 } catch let error as GRPCStatus {

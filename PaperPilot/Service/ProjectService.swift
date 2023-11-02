@@ -12,7 +12,7 @@ extension ModelService {
     private func updateRemoteProject(from: Project_ProjectInfo) throws {
         let remoteId = from.id
 
-        var projects = try modelContext.fetch(FetchDescriptor(
+        let projects = try modelContext.fetch(FetchDescriptor(
             predicate: #Predicate<Project> { project in
                 project.remoteId == remoteId
             }))
@@ -22,7 +22,7 @@ extension ModelService {
         }
         if projects.isEmpty {
             print("insert project")
-            var project = Project(remote: from, userID: userID!)
+            let project = Project(remote: from, userID: userID!)
             project.members.append(contentsOf: from.members.map {User(from: $0)})
             modelContext.insert(project)
             return

@@ -156,6 +156,6 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
     }
 }
 
-// #Preview {
-//     CacheAsyncImage()
-// }
+ #Preview {
+     CachedAsyncImage(url: .constant(URL(string: "https://ui-avatars.com/api/?name=default+lin&size=120&background=random")))
+ }
