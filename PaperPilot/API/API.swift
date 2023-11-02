@@ -122,8 +122,8 @@ final class API {
 
     func scheduleRefreshToken(alert: Alert) {
         guard self.accessToken != nil,
-            let accessTokenExpireTime = accessTokenExpireTime,
-            let refreshTokenExpireTime = refreshTokenExpireTime else { return }
+              let accessTokenExpireTime = accessTokenExpireTime,
+              let refreshTokenExpireTime = refreshTokenExpireTime else { return }
         let accessExpireDate = Date(timeIntervalSince1970: accessTokenExpireTime)
         let refreshExpireDate = Date(timeIntervalSince1970: refreshTokenExpireTime)
         let secBeforeExpire: Double = 60.0
@@ -138,10 +138,61 @@ final class API {
             fire: refreshExpireDate.advanced(by: -secBeforeExpire),
             interval: 0,
             repeats: false) { _ in
-            Task {
-                await self.refreshAccessToken(alert: alert)
+                Task {
+                    await self.refreshAccessToken(alert: alert)
+                }
             }
-        }
         RunLoop.main.add(timer, forMode: .common)
     }
+}
+
+protocol WithApiException {
+    var apiException: Exec_ApiException? { get async }
+}
+
+extension GRPCAsyncUnaryCall: WithApiException {
+    var apiException: Exec_ApiException? {
+        get async {
+            do {
+                return try await toException(from: self.trailingMetadata)
+            } catch {
+                print("Cannot parse ApiException: \(error)")
+                return nil
+            }
+        }
+    }
+}
+
+extension GRPCStatus {
+    var apiException: Exec_ApiException? {
+        get {
+            try? .from(details: self.details)
+        }
+    }
+}
+
+extension Exec_ApiException {
+    static func from(details: String?) throws -> Self? {
+        try details.flatMap {
+            let padLen = $0.count % 4
+            let padded = $0.padding(toLength: $0.count + (padLen == 0 ? 0: (4 - padLen)), withPad: "=", startingAt: 0)
+            print("has details")
+            return Data(base64Encoded: padded)
+        }.flatMap {
+            print("base64 decoded")
+            return try Google_Rpc_Status(serializedData: $0)
+                .details
+                .first { $0.typeURL == "type.googleapis.com/exec.ApiException" }
+                .map {
+                    print("has apiexception")
+                    return try Exec_ApiException(serializedData: $0.value)
+                }
+        }
+    }
+
+}
+
+func toException(from headers: HPACKHeaders) throws -> Exec_ApiException? {
+    print(headers.description)
+    return try .from(details: headers.first(name: "grpc-status-details-bin"))
 }

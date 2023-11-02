@@ -18,6 +18,9 @@
 		279F2D222AC8364500FEA9D8 /* grpc-swift-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */; };
 		279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */; };
 		279F2D272AC8398A00FEA9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
+		768A92EB2AF3E21B006068F3 /* CGRPCZlib in Frameworks */ = {isa = PBXBuildFile; productRef = 768A92EA2AF3E21B006068F3 /* CGRPCZlib */; };
+		768A92ED2AF3E21B006068F3 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = 768A92EC2AF3E21B006068F3 /* GRPC */; };
+		768A92EF2AF3E21B006068F3 /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 768A92EE2AF3E21B006068F3 /* protoc-gen-grpc-swift */; };
 		76C15CBF2AD82AB300614902 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C15CBE2AD82AB300614902 /* AccountViewModel.swift */; };
 		F5008D6F2AECD156004F326E /* SharedNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5008D6E2AECD156004F326E /* SharedNoteView.swift */; };
 		F5008D772AED50BD004F326E /* ShareKit in Frameworks */ = {isa = PBXBuildFile; productRef = F5008D762AED50BD004F326E /* ShareKit */; };
@@ -79,9 +82,6 @@
 		F5AEFA822AE75DA70052F975 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AEFA812AE75DA70052F975 /* User.swift */; };
 		F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */; };
 		F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */; };
-		F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */ = {isa = PBXBuildFile; productRef = F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */; };
-		F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379012AC41EDA00C88C94 /* GRPC */; };
-		F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */ = {isa = PBXBuildFile; productRef = F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */; };
 		F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C379082AC44BFF00C88C94 /* PaperInfo.swift */; };
 		F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = F5CF43332ADC1FB6004F1A16 /* WindowManagement */; settings = {ATTRIBUTES = (Required, ); }; };
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
@@ -201,13 +201,13 @@
 				F5008D772AED50BD004F326E /* ShareKit in Frameworks */,
 				279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */,
 				F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */,
-				F5C379022AC41EDA00C88C94 /* GRPC in Frameworks */,
 				F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */,
-				F5C379002AC41EDA00C88C94 /* CGRPCZlib in Frameworks */,
 				F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */,
+				768A92EB2AF3E21B006068F3 /* CGRPCZlib in Frameworks */,
+				768A92ED2AF3E21B006068F3 /* GRPC in Frameworks */,
 				279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */,
 				F5643F372AE37C9C00186A2F /* Throttler in Frameworks */,
-				F5C379042AC41EDA00C88C94 /* protoc-gen-grpc-swift in Frameworks */,
+				768A92EF2AF3E21B006068F3 /* protoc-gen-grpc-swift in Frameworks */,
 				279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,9 +490,6 @@
 			);
 			name = PaperPilot;
 			packageProductDependencies = (
-				F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */,
-				F5C379012AC41EDA00C88C94 /* GRPC */,
-				F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */,
 				F547D0DC2AC52A6F006D2216 /* SwiftUIFlow */,
 				279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */,
 				279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */,
@@ -501,6 +498,9 @@
 				F5CF43332ADC1FB6004F1A16 /* WindowManagement */,
 				F5643F362AE37C9C00186A2F /* Throttler */,
 				F5008D762AED50BD004F326E /* ShareKit */,
+				768A92EA2AF3E21B006068F3 /* CGRPCZlib */,
+				768A92EC2AF3E21B006068F3 /* GRPC */,
+				768A92EE2AF3E21B006068F3 /* protoc-gen-grpc-swift */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -532,7 +532,6 @@
 			);
 			mainGroup = F5EBC0A52ABFD98E00B2B4A3;
 			packageReferences = (
-				F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */,
 				F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
 				279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */,
@@ -540,6 +539,7 @@
 				F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */,
 				F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */,
 				F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */,
+				768A92E92AF3E21B006068F3 /* XCRemoteSwiftPackageReference "grpc-swift" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -921,6 +921,14 @@
 				version = 1.23.0;
 			};
 		};
+		768A92E92AF3E21B006068F3 /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MikeWalrus/grpc-swift";
+			requirement = {
+				branch = "status-details";
+				kind = branch;
+			};
+		};
 		F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/LSX-s-Software/share-kit.git";
@@ -1015,6 +1023,21 @@
 			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
 			productName = "protoc-gen-grpc-swift";
 		};
+		768A92EA2AF3E21B006068F3 /* CGRPCZlib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 768A92E92AF3E21B006068F3 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = CGRPCZlib;
+		};
+		768A92EC2AF3E21B006068F3 /* GRPC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 768A92E92AF3E21B006068F3 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = GRPC;
+		};
+		768A92EE2AF3E21B006068F3 /* protoc-gen-grpc-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 768A92E92AF3E21B006068F3 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = "protoc-gen-grpc-swift";
+		};
 		F5008D762AED50BD004F326E /* ShareKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */;
@@ -1029,21 +1052,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */;
 			productName = Throttler;
-		};
-		F5C378FF2AC41EDA00C88C94 /* CGRPCZlib */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
-			productName = CGRPCZlib;
-		};
-		F5C379012AC41EDA00C88C94 /* GRPC */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
-			productName = GRPC;
-		};
-		F5C379032AC41EDA00C88C94 /* protoc-gen-grpc-swift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
-			productName = "protoc-gen-grpc-swift";
 		};
 		F5CF43332ADC1FB6004F1A16 /* WindowManagement */ = {
 			isa = XCSwiftPackageProductDependency;

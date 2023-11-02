@@ -10,45 +10,6 @@ import GRPC
 import NIOHPACK
 import SwiftProtobuf
 
-@available(*, deprecated, message: "Use interceptors instead")
-protocol WithApiException {
-    var apiException: Exec_ApiException? { get async }
-}
-
-@available(*, deprecated, message: "Use interceptors instead")
-extension GRPCAsyncUnaryCall: WithApiException {
-    @available(*, deprecated, message: "Use interceptors instead")
-    var apiException: Exec_ApiException? {
-        get async {
-            do {
-                return try await toException(from: self.trailingMetadata)
-            } catch {
-                print("Cannot parse ApiException: \(error)")
-                return nil
-            }
-        }
-    }
-}
-
-func toException(from headers: HPACKHeaders) throws -> Exec_ApiException? {
-    print(headers.description)
-    return try headers.first(name: "grpc-status-details-bin").flatMap {
-        let padLen = $0.count % 4
-        let padded = $0.padding(toLength: $0.count + (padLen == 0 ? 0: (4 - padLen)), withPad: "=", startingAt: 0)
-        print("has details")
-        return Data(base64Encoded: padded)
-    }.flatMap {
-        print("base64 decoded")
-        return try Google_Rpc_Status(serializedData: $0)
-            .details
-            .first { $0.typeURL == "type.googleapis.com/exec.ApiException" }
-            .map {
-                print("has apiexception")
-                return try Exec_ApiException(serializedData: $0.value)
-            }
-    }
-}
-
 class ErrorInterceptor<I, O>: ClientInterceptor<I, O> {
     override func receive(
         _ part: GRPCClientResponsePart<O>,

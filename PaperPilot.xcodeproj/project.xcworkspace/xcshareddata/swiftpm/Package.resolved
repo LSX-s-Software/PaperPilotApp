@@ -21,10 +21,10 @@
     {
       "identity" : "grpc-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/grpc/grpc-swift.git",
+      "location" : "https://github.com/MikeWalrus/grpc-swift",
       "state" : {
-        "revision" : "84bac657e9930d26e9124bac082f26586dc2d209",
-        "version" : "1.19.1"
+        "branch" : "status-details",
+        "revision" : "0bf4ac81bf7da0527c69145cfc0d608ad5108f6e"
       }
     },
     {

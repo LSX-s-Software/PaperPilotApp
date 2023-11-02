@@ -185,6 +185,7 @@ class AccountViewModel: ObservableObject {
                     guard let token = try await getTokenTask.value else {
                         return
                     }
+                    print("got token")
                     let (data, response) = try await dataTask.value
                     let filename = response.suggestedFilename
                     guard let oss =
@@ -205,7 +206,9 @@ class AccountViewModel: ObservableObject {
                 } catch let error as URLError {
                     print(error)
                 } catch NetworkingError.requestError(_, let message) {
-                    fail(message: String(localized: "Failed to upload the image."), detail: message)
+                  fail(message: String(localized: "Failed to upload the image."), detail: message)
+                } catch let error as GRPCStatus {
+                  fail(message: error.message ?? "", detail: "")
                 } catch {
                     print(error)
                 }

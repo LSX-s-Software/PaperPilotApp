@@ -26,7 +26,7 @@ enum AsyncImageError: LocalizedError {
 
 struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
     @State private var state: LoadState = .empty
-    @Binding private var url: URL?
+    private var url: URL?
     private let content: (Image) -> I
     private let placeholder: () -> P
     private let failure: (any Error) -> F
@@ -39,7 +39,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
     }
 
     public init(
-        url: Binding<URL?>,
+        url: URL?,
         cache: URLCache = .shared,
         @ViewBuilder content: @escaping (Image) -> I,
         @ViewBuilder placeholder: @escaping () -> P,
@@ -53,9 +53,9 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
         conf.urlCache = cache
         self.session = URLSession(configuration: conf)
 
-        self._url = url
+        self.url = url
 
-        guard let url = url.wrappedValue else {
+        guard let url = url else {
             self.request = nil
             self._state = State(initialValue: .empty)
             return
@@ -74,7 +74,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
     }
 
     public init(
-        url: Binding<URL?>,
+        url: URL?,
         cache: URLCache = .shared,
         @ViewBuilder content: @escaping (Image) -> I,
         @ViewBuilder placeholder: @escaping () -> P
@@ -85,7 +85,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
     }
 
     public init(
-        url: Binding<URL?>,
+        url: URL?,
         cache: URLCache = .shared,
         @ViewBuilder placeholder: @escaping () -> P
     ) where F == Text, I == Image {
@@ -99,7 +99,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
     }
 
     public init(
-        url: Binding<URL?>,
+        url: URL?,
         cache: URLCache = .shared
     ) where F == Text, I == Image, P == ProgressView<EmptyView, EmptyView> {
         self.init(
@@ -110,7 +110,7 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
     }
 
     public init(
-        url: Binding<URL?>,
+        url: URL?,
         @ViewBuilder content: @escaping (Image) -> I,
         cache: URLCache = .shared
     ) where F == Text, P == ProgressView<EmptyView, EmptyView> {
