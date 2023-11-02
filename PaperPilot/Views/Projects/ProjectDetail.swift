@@ -27,6 +27,8 @@ struct ProjectDetail: View {
     @State private var message: String?
 
     var body: some View {
+        @Bindable var appState = appState
+
         Table(project.papers.sorted(using: sortOrder),
               selection: $selection,
               sortOrder: $sortOrder,
@@ -173,22 +175,21 @@ struct ProjectDetail: View {
                     appState.isSharingProject.toggle()
                 }
                 .disabled(!loggedIn)
-                .popover(isPresented: Binding { appState.isSharingProject } set: { appState.isSharingProject = $0 },
-                         arrowEdge: .bottom) {
+                .popover(isPresented: $appState.isSharingProject, arrowEdge: .bottom) {
                     ShareProjectView(project: project)
                 }
 
                 Button("Project Settings", systemImage: "folder.badge.gear") {
                     appState.isEditingProject.toggle()
                 }
-                .sheet(isPresented: Binding { appState.isEditingProject } set: { appState.isEditingProject = $0 }) {
+                .sheet(isPresented: $appState.isEditingProject) {
                     ProjectCreateEditView(edit: true, project: project)
                 }
 
                 Button("Add Paper", systemImage: "plus") {
                     appState.isAddingPaper.toggle()
                 }
-                .sheet(isPresented: Binding { appState.isAddingPaper } set: { appState.isAddingPaper = $0 }) {
+                .sheet(isPresented: $appState.isAddingPaper) {
                     AddPaperView(project: project)
                 }
             }

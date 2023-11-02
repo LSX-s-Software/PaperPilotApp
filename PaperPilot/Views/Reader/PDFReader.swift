@@ -46,6 +46,10 @@ struct PDFReader: View {
         PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView)
             .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
             .navigationDocument(pdf.documentURL!)
+#if os(macOS)
+            .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
+#endif
+            // MARK: - 事件处理
             .onChange(of: findVM.findText, performFind)
             .onChange(of: appState.findingPaper, findInPDFHandler)
             .onChange(of: findVM.searchBarPresented) {
@@ -68,9 +72,6 @@ struct PDFReader: View {
                     pdfVM.currentPage = currentPage
                 }
             }
-#if os(macOS)
-            .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
-#endif
             // MARK: - 工具栏
             .toolbar(id: "reader-tools") {
                 // MARK: 搜索选项

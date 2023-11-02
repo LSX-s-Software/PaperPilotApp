@@ -28,6 +28,8 @@ struct ContentView: View {
     private var username: String?
     
     var body: some View {
+        @Bindable var appState = appState
+
         NavigationSplitView {
             // MARK: - 项目列表
             List(selection: $navigationContext.selectedProject) {
@@ -73,7 +75,7 @@ struct ContentView: View {
                         }
                     }
                     .menuStyle(.button)
-                    .sheet(isPresented: Binding { appState.isCreatingProject } set: { appState.isCreatingProject = $0 }) {
+                    .sheet(isPresented: $appState.isCreatingProject) {
                         ProjectCreateEditView()
                     }
                     .sheet(isPresented: $isShowingJoinProjectSheet) {
