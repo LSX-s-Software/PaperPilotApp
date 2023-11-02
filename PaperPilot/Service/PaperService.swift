@@ -220,7 +220,7 @@ extension ModelService {
     /// - Parameters:
     ///   - pdfOnly: 仅删除本地的PDF文件
     ///
-    /// > Warning: 必须使用与ModelService处在同一个context下的Paper对象（可通过``getPaper(id:)``获取）
+    /// > Important: 必须使用与ModelService处在同一个context下的Paper对象（可通过``getPaper(id:)``获取）
     func deletePaper(_ paper: Paper, pdfOnly: Bool = false, localOnly: Bool = false) async throws {
         if pdfOnly,
            let url = paper.localFile,

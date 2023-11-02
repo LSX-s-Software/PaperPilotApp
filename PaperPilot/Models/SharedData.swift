@@ -25,13 +25,6 @@ struct SharedAnnotation: Codable {
         var color: PlatformColor
         /// 作者ID
         var authorId: User.ID
-//        private enum CodingKeys: String, CodingKey {
-//            case page = "p"
-//            case bounds = "b"
-//            case type = "t"
-//            case color = "c"
-//            case authorId = "a"
-//        }
     }
 
     var annotations = [String: Annotation]()

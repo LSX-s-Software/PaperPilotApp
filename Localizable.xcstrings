@@ -2259,6 +2259,16 @@
         }
       }
     },
+    "Update" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新"
+          }
+        }
+      }
+    },
     "Updating..." : {
       "localizations" : {
         "zh-Hans" : {
