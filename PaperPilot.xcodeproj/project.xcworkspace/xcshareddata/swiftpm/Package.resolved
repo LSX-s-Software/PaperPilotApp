@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "down",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnxnguyen/Down.git",
+      "state" : {
+        "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
+        "version" : "0.11.0"
+      }
+    },
+    {
       "identity" : "grpc-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MikeWalrus/grpc-swift",
@@ -160,6 +169,15 @@
       "state" : {
         "revision" : "74203046135342e4a4a627476dd6caf8b28fe11b",
         "version" : "509.0.0"
+      }
+    },
+    {
+      "identity" : "swiftdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/qeude/SwiftDown.git",
+      "state" : {
+        "revision" : "38e000d7b9588db2e90bc004ca07fa3532db5d25",
+        "version" : "0.3.1"
       }
     },
     {

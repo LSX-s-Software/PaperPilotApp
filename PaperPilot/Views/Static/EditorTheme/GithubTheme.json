@@ -1,0 +1,59 @@
+{
+    "name": "Github",
+    "version": "1.0",
+    "styles": {
+        "h1": {
+            "color": "#D36770",
+            "size": 32
+        },
+        "h2": {
+            "color": "#D36770",
+            "size": 26
+        },
+        "h3": {
+            "color": "#D36770",
+            "size": 22
+        },
+        "h4": {
+            "color": "#D36770",
+            "size": 18
+        },
+        "h5": {
+            "color": "#D36770"
+        },
+        "h6": {
+            "color": "#000000"
+        },
+        "body": {
+            "color": "#333333"
+        },
+        "bold": {
+            "font": "PingFangSC-Semibold",
+            "color": "#000000"
+        },
+        "italic": {
+            "font": "Menlo-Italic",
+            "color": "#000000"
+        },
+        "link": {
+            "color": "#4183C4"
+        },
+        "image": {
+            "color": "#4183C4"
+        },
+        "inlineCode": {
+            "font": "SF Mono",
+            "color": "#222222"
+        },
+        "codeBlock": {
+            "font": "SF Mono",
+            "color": "#6C36A9"
+        },
+        "blockQuote": {
+            "color": "#444444"
+        },
+        "list": {
+            "color": "#333333"
+        }
+    }
+}

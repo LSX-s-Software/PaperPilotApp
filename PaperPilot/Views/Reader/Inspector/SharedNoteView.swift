@@ -9,8 +9,11 @@ import SwiftUI
 import ShareKit
 import Throttler
 import Combine
+import SwiftDown
 
 struct SharedNoteView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     @Bindable var paper: Paper
 
     @AppStorage(AppStorageKey.Reader.noteFontSize.rawValue)
@@ -22,9 +25,14 @@ struct SharedNoteView: View {
     @State private var bag = Set<AnyCancellable>()
     @State private var sharedNote = SharedNote()
     let dateFormatter = ISO8601DateFormatter()
+    var themeName: String {
+        colorScheme == .light ? "GithubTheme" : "GithubDarkTheme"
+    }
 
     var body: some View {
-        TextEditor(text: Binding { sharedNote.content } set: { handleModifyNote($0) })
+        SwiftDownEditor(text: Binding { sharedNote.content } set: { handleModifyNote($0) })
+            .insetsSize(6)
+            .theme(Theme(themePath: Bundle.main.path(forResource: themeName, ofType: "json")!))
             .font(.system(size: CGFloat(fontSize)))
             .overlay(alignment: .bottom) {
                 if paper.remoteId != nil {
