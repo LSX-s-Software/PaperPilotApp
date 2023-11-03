@@ -152,7 +152,9 @@ extension Paper {
 // MARK: - Paper扩展构造函数
 extension Paper {
     convenience init(from detail: Paper_PaperDetail) async {
-        self.init(title: detail.title, createTime: detail.hasCreateTime ? detail.createTime.date : Date.now)
+        self.init(status: detail.file.isEmpty ? ModelStatus.normal : ModelStatus.waitingForDownload,
+                  title: detail.title,
+                  createTime: detail.hasCreateTime ? detail.createTime.date : Date.now)
         await ModelService.shared.updatePaper(self, with: detail)
     }
     

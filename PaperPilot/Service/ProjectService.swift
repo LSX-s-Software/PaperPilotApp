@@ -27,13 +27,34 @@ extension ModelService {
             modelContext.insert(project)
             return
         }
-        let project = projects[0]
-        project.update(from: from, userID: userID!)
+        updateProject(projects[0], from: from, userID: userID!)
     }
 
     func updateRemoteProjects(from remoteProjects: [Project_ProjectInfo]) throws {
         for remoteProject in remoteProjects {
             try updateRemoteProject(from: remoteProject)
         }
+    }
+
+    func uploadProject(_ project: Project) async throws {
+        // 创建项目
+        let result = try await API.shared.project.createProject(.with {
+            $0.name = project.name
+            $0.description_p = project.desc
+        })
+        project.remoteId = result.id
+        project.invitationCode = result.inviteCode
+        for paper in project.papers {
+            paper.status = ModelStatus.waitingForUpload.rawValue
+        }
+    }
+
+    func updateProject(_ project: Project, from remote: Project_ProjectInfo, userID: String) {
+        project.remoteId = remote.id
+        project.name = remote.name
+        project.desc = remote.description_p
+        project.invitationCode = remote.inviteCode
+        project.isOwner = remote.ownerID == userID
+        project.members = remote.members.map { User(from: $0) }
     }
 }

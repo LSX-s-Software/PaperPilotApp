@@ -172,6 +172,14 @@ struct ContentView: View {
             API.shared.scheduleRefreshToken(alert: alert)
         }
     }
+
+    func downloadRemoteProjects() async throws {
+        let result = try await API.shared.project.listUserJoinedProjects(.with {
+            $0.page = 0
+            $0.pageSize = 0
+        })
+        try await ModelService.shared.updateRemoteProjects(from: result.projects)
+    }
 }
 
 #Preview {

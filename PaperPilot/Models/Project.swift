@@ -56,37 +56,4 @@ class Project: Hashable, Identifiable {
         self.isOwner = remote.ownerID == userID
         self.papers = []
     }
-
-    func update(from remote: Project_ProjectInfo, userID: String) {
-        self.remoteId = remote.id
-        self.name = remote.name
-        self.desc = remote.description_p
-        self.invitationCode = remote.inviteCode
-        self.isOwner = remote.ownerID == userID
-        self.members = remote.members.map { User(from: $0) }
-    }
-}
-
-// MARK: - Project相关操作
-extension Project {
-    func upload() async throws {
-        // 创建项目
-        let result = try await API.shared.project.createProject(.with {
-            $0.name = name
-            $0.description_p = desc
-        })
-        remoteId = result.id
-        invitationCode = result.inviteCode
-        for paper in self.papers {
-            paper.status = ModelStatus.waitingForUpload.rawValue
-        }
-    }
-}
-
-func downloadRemoteProjects() async throws {
-    let result = try await API.shared.project.listUserJoinedProjects(.with {
-        $0.page = 0
-        $0.pageSize = 0
-    })
-    try await ModelService.shared.updateRemoteProjects(from: result.projects)
 }
