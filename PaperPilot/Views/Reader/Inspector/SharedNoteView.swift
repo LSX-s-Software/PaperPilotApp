@@ -32,7 +32,7 @@ struct SharedNoteView: View {
     var body: some View {
         SwiftDownEditor(text: Binding { sharedNote.content } set: { handleModifyNote($0) })
             .insetsSize(6)
-            .theme(Theme(themePath: Bundle.main.path(forResource: themeName, ofType: "json")!))
+            .theme(Theme(themePath: Bundle.main.path(forResource: themeName, ofType: "json")!, baseFontSize: fontSize))
             .font(.system(size: CGFloat(fontSize)))
             .overlay(alignment: .bottom) {
                 if paper.remoteId != nil {

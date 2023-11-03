@@ -174,10 +174,10 @@
     {
       "identity" : "swiftdown",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/qeude/SwiftDown.git",
+      "location" : "https://github.com/LSX-s-Software/SwiftDown.git",
       "state" : {
-        "revision" : "38e000d7b9588db2e90bc004ca07fa3532db5d25",
-        "version" : "0.3.1"
+        "branch" : "develop",
+        "revision" : "762c5c5a73c5bc665c72d7ef5f8b5c98426543df"
       }
     },
     {

@@ -79,9 +79,9 @@
 		F59FB3C92AE53B590007A76B /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3C82AE53B590007A76B /* GeneralSettingsView.swift */; };
 		F59FB3D12AE555840007A76B /* ShareProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3D02AE555840007A76B /* ShareProjectView.swift */; };
 		F59FB3D72AE580A20007A76B /* NavigationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3D62AE580A20007A76B /* NavigationContext.swift */; };
-		F5A2F3F92AF521320045EF12 /* SwiftDown in Frameworks */ = {isa = PBXBuildFile; productRef = F5A2F3F82AF521320045EF12 /* SwiftDown */; };
 		F5A2F3FE2AF5222A0045EF12 /* GithubTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = F5A2F3FD2AF5222A0045EF12 /* GithubTheme.json */; };
 		F5A2F4012AF52A8F0045EF12 /* GithubDarkTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = F5A2F4002AF52A8F0045EF12 /* GithubDarkTheme.json */; };
+		F5A2F4082AF53D5D0045EF12 /* SwiftDown in Frameworks */ = {isa = PBXBuildFile; productRef = F5A2F4072AF53D5D0045EF12 /* SwiftDown */; };
 		F5AEFA822AE75DA70052F975 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AEFA812AE75DA70052F975 /* User.swift */; };
 		F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */; };
 		F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */; };
@@ -205,7 +205,7 @@
 			files = (
 				F5008D772AED50BD004F326E /* ShareKit in Frameworks */,
 				279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */,
-				F5A2F3F92AF521320045EF12 /* SwiftDown in Frameworks */,
+				F5A2F4082AF53D5D0045EF12 /* SwiftDown in Frameworks */,
 				F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */,
 				F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */,
 				F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */,
@@ -525,7 +525,7 @@
 				768A92EA2AF3E21B006068F3 /* CGRPCZlib */,
 				768A92EC2AF3E21B006068F3 /* GRPC */,
 				768A92EE2AF3E21B006068F3 /* protoc-gen-grpc-swift */,
-				F5A2F3F82AF521320045EF12 /* SwiftDown */,
+				F5A2F4072AF53D5D0045EF12 /* SwiftDown */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -565,7 +565,7 @@
 				F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */,
 				F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */,
 				768A92E92AF3E21B006068F3 /* XCRemoteSwiftPackageReference "grpc-swift" */,
-				F5A2F3F72AF521310045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */,
+				F5A2F4062AF53D5D0045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -981,12 +981,12 @@
 				minimumVersion = 2.1.3;
 			};
 		};
-		F5A2F3F72AF521310045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */ = {
+		F5A2F4062AF53D5D0045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/qeude/SwiftDown.git";
+			repositoryURL = "https://github.com/LSX-s-Software/SwiftDown.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.1;
+				branch = develop;
+				kind = branch;
 			};
 		};
 		F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
@@ -1089,9 +1089,9 @@
 			package = F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */;
 			productName = Throttler;
 		};
-		F5A2F3F82AF521320045EF12 /* SwiftDown */ = {
+		F5A2F4072AF53D5D0045EF12 /* SwiftDown */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F5A2F3F72AF521310045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */;
+			package = F5A2F4062AF53D5D0045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */;
 			productName = SwiftDown;
 		};
 		F5CF43332ADC1FB6004F1A16 /* WindowManagement */ = {

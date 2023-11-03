@@ -4,19 +4,19 @@
     "styles": {
         "h1": {
             "color": "#D36770",
-            "size": 32
+            "size": "2em"
         },
         "h2": {
             "color": "#D36770",
-            "size": 26
+            "size": "1.625em"
         },
         "h3": {
             "color": "#D36770",
-            "size": 22
+            "size": "1.375em"
         },
         "h4": {
             "color": "#D36770",
-            "size": 18
+            "size": "1.125em"
         },
         "h5": {
             "color": "#D36770"
