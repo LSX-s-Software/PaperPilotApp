@@ -41,6 +41,8 @@ struct PaperReaderInspector: View {
     @State private var newTitle = ""
     @State private var newAuthor = ""
     @State private var newAuthors = [String]()
+    @State private var hasError = false
+    @State private var errorMsg: String?
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -147,6 +149,9 @@ struct PaperReaderInspector: View {
                 isShowingInspector.toggle()
             }
         }
+        .alert("Failed to update paper info", isPresented: $hasError) { } message: {
+            Text(errorMsg ?? String(localized: "Unknown error"))
+        }
     }
 
     func handleModifyPaper(newTitle: String? = nil, newAuthors: [String]? = nil) {
@@ -156,7 +161,8 @@ struct PaperReaderInspector: View {
                 try await ModelService.shared.updatePaper(paper, title: newTitle, authors: newAuthors)
                 editing = .none
             } catch {
-                print(error)
+                hasError = true
+                errorMsg = error.localizedDescription
             }
         }
     }

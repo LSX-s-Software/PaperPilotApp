@@ -8,6 +8,8 @@
 import SwiftUI
 
 class DownloadViewModel: ObservableObject {
+    static let logger = LoggerFactory.make(category: "DownloadViewModel")
+
     @Published var downloading = false
     @Published var downloadProgress: Progress?
     private var downloadTask: URLSessionDownloadTask?
@@ -27,11 +29,10 @@ class DownloadViewModel: ObservableObject {
                 self?.downloading = false
             }
             guard let localURL = localURL, error == nil else {
-                print("Download error: \(error?.localizedDescription ?? "Unknown error")")
+                Self.logger.warning("Download error: \(error)")
                 fail(error!)
                 return
             }
-            print("File downloaded to: \(localURL)")
             success(localURL)
         }
 

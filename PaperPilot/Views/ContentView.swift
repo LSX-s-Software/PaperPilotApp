@@ -155,7 +155,6 @@ struct ContentView: View {
         }
         .environment(alert)
         .task(id: username) {
-            print("download remote project list")
             if username == nil {
                 return
             }

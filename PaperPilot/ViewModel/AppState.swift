@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct SelectedPaperKey: FocusedValueKey {
     typealias Value = Binding<Paper>
@@ -19,6 +20,8 @@ extension FocusedValues {
 }
 
 @Observable class AppState {
+    static let logger = LoggerFactory.make(category: "AppState")
+
     var findingPaper: Set<Paper.ID> = []
 
     var isShowingJoinProjectView = false
@@ -39,7 +42,7 @@ extension FocusedValues {
         case .none:
             break
         default:
-            print("Unknown URL: \(url.absoluteString)")
+            Self.logger.warning("Unknown URL: \(url.absoluteString)")
         }
     }
 }
