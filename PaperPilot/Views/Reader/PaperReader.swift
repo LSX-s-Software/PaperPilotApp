@@ -28,10 +28,10 @@ struct PaperReader: View {
     @State private var isImporting = false
     @State private var tocContent: TOCContentType = .none
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
+    @State private var translatorVM = TranslatorViewModel()
+    @State private var findVM = FindViewModel<PDFSelection>()
     @StateObject private var pdfVM = PDFViewModel()
-    @StateObject private var translatorVM = TranslatorViewModel()
     @StateObject private var downloadVM = DownloadViewModel()
-    @StateObject private var findVM = FindViewModel<PDFSelection>()
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -87,7 +87,7 @@ struct PaperReader: View {
                     ProgressView()
                 } else if let pdf = pdfVM.pdf {
                     PDFReader(paper: paper, pdf: pdf, pdfVM: pdfVM)
-                        .environmentObject(findVM)
+                        .environment(findVM)
                 } else {
                     VStack(spacing: 6) {
                         Image(
@@ -142,7 +142,7 @@ struct PaperReader: View {
             .inspector(isPresented: $isShowingInspector) {
                 PaperReaderInspector(paper: paper)
                     .environmentObject(pdfVM)
-                    .environmentObject(translatorVM)
+                    .environment(translatorVM)
             }
         }
         .navigationTitle(paper.title)

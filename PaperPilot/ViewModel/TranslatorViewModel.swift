@@ -8,14 +8,14 @@
 import SwiftUI
 import GRPC
 
-class TranslatorViewModel: ObservableObject {
-    @Published var originalText = ""
-    @Published var translatedText = ""
-    @Published var sourceLanguage = TranslatorLang.auto
-    @Published var targetLanguage = TranslatorLang.chinese
-    @Published var translateBySelection = true
-    @Published var trimNewlines = true
-    @Published var errorMsg: String?
+@Observable class TranslatorViewModel {
+    var originalText = ""
+    var translatedText = ""
+    var sourceLanguage = TranslatorLang.auto
+    var targetLanguage = TranslatorLang.chinese
+    var translateBySelection = true
+    var trimNewlines = true
+    var errorMsg: String?
 
     func translate() async {
         do {

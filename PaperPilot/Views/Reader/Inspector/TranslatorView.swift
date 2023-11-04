@@ -10,9 +10,11 @@ import Throttler
 
 struct TranslatorView: View {
     @EnvironmentObject private var pdfVM: PDFViewModel
-    @EnvironmentObject private var viewModel: TranslatorViewModel
+    @Environment(TranslatorViewModel.self) private var viewModel
 
     var body: some View {
+        @Bindable var viewModel = viewModel
+
         Form {
             DisclosureGroup(isExpanded: .constant(viewModel.translateBySelection)) {
                 Toggle("Trim line breaks", isOn: $viewModel.trimNewlines)
@@ -98,6 +100,6 @@ struct TranslatorView: View {
 #Preview {
     TranslatorView()
         .environmentObject(PDFViewModel())
-        .environmentObject(TranslatorViewModel())
+        .environment(TranslatorViewModel())
         .frame(width: 300)
 }

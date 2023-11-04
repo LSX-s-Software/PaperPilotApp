@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-class FindViewModel<T>: ObservableObject {
-    @Published var findText = ""
-    @Published var searchBarPresented = false
-    @Published var finding = false
-    @Published var findResult = [T]()
-    @Published var caseSensitive = false
-    @Published var currentSelectionIndex = 0
+@Observable class FindViewModel<T> {
+    var findText = ""
+    var searchBarPresented = false
+    var finding = false
+    var findResult = [T]()
+    var caseSensitive = false
+    var currentSelectionIndex = 0
     var findOptions: NSString.CompareOptions {
         var options: NSString.CompareOptions = [.caseInsensitive, .diacriticInsensitive]
         if caseSensitive {

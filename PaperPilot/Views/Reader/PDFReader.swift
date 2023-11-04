@@ -12,9 +12,9 @@ import ShareKit
 import Combine
 
 struct PDFReader: View {
-    @Environment(AppState.self) private var appState
     @Environment(\.modelContext) private var modelContext
-    @EnvironmentObject private var findVM: FindViewModel<PDFSelection>
+    @Environment(AppState.self) private var appState
+    @Environment(FindViewModel<PDFSelection>.self) private var findVM
 
     @AppStorage(AppStorageKey.User.id.rawValue)
     private var userId: String = ""
@@ -43,6 +43,8 @@ struct PDFReader: View {
     let dateFormatter = ISO8601DateFormatter()
 
     var body: some View {
+        @Bindable var findVM = findVM
+
         PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView)
             .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
             .navigationDocument(pdf.documentURL!)
@@ -227,7 +229,7 @@ extension PDFReader {
             findVM.finding = false
             if let firstResult = findVM.findResult.first {
                 findVM.currentSelectionIndex = 0
-                pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
+                await pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
             }
         }
     }

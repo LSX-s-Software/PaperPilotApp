@@ -9,8 +9,8 @@ import SwiftUI
 import PDFKit
 
 struct FindResultView: View {
-    @EnvironmentObject var pdfVM: PDFViewModel
-    @ObservedObject var findVM: FindViewModel<PDFSelection>
+    @EnvironmentObject private var pdfVM: PDFViewModel
+    @Bindable var findVM: FindViewModel<PDFSelection>
 
     @State private var currentSelection: PDFSelection?
 
