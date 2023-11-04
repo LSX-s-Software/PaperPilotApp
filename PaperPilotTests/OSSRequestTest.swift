@@ -131,4 +131,31 @@ final class OSSRequestTests: XCTestCase {
         XCTAssert(bodyString2.contains("name=\"key\"\r\nContent-Type: text/plain; charset=ISO-8859-1\r\nContent-Transfer-Encoding: 8bit\r\n\r\ntestFile.txt"))
     }
 
+    func testOSSRequestPerformance() throws {
+        let policy = """
+            {
+                "expiration": "2014-12-01T12:00:00.000Z",
+                "conditions": [
+                    {"bucket": "johnsmith"},
+                    ["content-length-range", 1, 10],
+                    ["eq", "$success_action_status", "201"],
+                    ["eq", "$key", "testFile2.txt"],
+                    ["in", "$content-type", ["image/jpg", "image/png"]],
+                    ["not-in", "$cache-control", ["no-cache"]]
+                ]
+            }
+            """
+        var token = Util_OssToken()
+        token.host = "https://example.com"
+        token.accessKeyID = "accessKeyID"
+        token.policy = policy.data(using: .utf8)!.base64EncodedString()
+        token.signature = "signature"
+        token.callbackBody = "callbackBody"
+        let fileData = "Hello, world!".data(using: .utf8)!
+
+        measure {
+            let ossRequest = OSSRequest(token: token, fileName: "testFile.txt", fileData: fileData, mimeType: "text/plain")?.urlRequest
+        }
+    }
+
 }
