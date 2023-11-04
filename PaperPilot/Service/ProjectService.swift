@@ -27,7 +27,7 @@ extension ModelService {
             modelContext.insert(project)
             return
         }
-        updateProject(projects[0], from: from, userID: userID!)
+        updateProject(projects[0], from: from)
     }
 
     func updateRemoteProjects(from remoteProjects: [Project_ProjectInfo]) throws {
@@ -49,7 +49,7 @@ extension ModelService {
         }
     }
 
-    func updateProject(_ project: Project, from remote: Project_ProjectInfo, userID: String) {
+    func updateProject(_ project: Project, from remote: Project_ProjectInfo) {
         project.remoteId = remote.id
         project.name = remote.name
         project.desc = remote.description_p

@@ -222,13 +222,14 @@ extension ModelService {
     ///
     /// > Important: 必须使用与ModelService处在同一个context下的Paper对象（可通过``getPaper(id:)``获取）
     func deletePaper(_ paper: Paper, pdfOnly: Bool = false, localOnly: Bool = false) async throws {
-        if pdfOnly,
-           let url = paper.localFile,
-           FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
-            try FileManager.default.removeItem(at: url)
-            paper.localFile = nil
-            if paper.file != nil {
-                paper.status = ModelStatus.waitingForDownload.rawValue
+        if pdfOnly {
+            if let url = paper.localFile,
+               FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
+                try FileManager.default.removeItem(at: url)
+                paper.localFile = nil
+                if paper.file != nil {
+                    paper.status = ModelStatus.waitingForDownload.rawValue
+                }
             }
         } else if let dir = try? FilePath.paperDirectory(for: paper),
                   FileManager.default.fileExists(atPath: dir.path(percentEncoded: false)) {

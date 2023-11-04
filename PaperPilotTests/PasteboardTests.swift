@@ -11,6 +11,7 @@ import XCTest
 final class PasteboardTests: XCTestCase {
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         #if os(macOS)
         NSPasteboard.general.clearContents()
         #else
