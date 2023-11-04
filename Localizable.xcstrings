@@ -2340,6 +2340,16 @@
         }
       }
     },
+    "Year" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "年份"
+          }
+        }
+      }
+    },
     "Yellow" : {
       "extractionState" : "manual",
       "localizations" : {

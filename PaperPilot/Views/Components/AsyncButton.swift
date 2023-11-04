@@ -13,6 +13,7 @@ struct AsyncButton<Content: View>: View {
     let title: () -> Content
     let role: ButtonRole?
     var progressSize: ControlSize {
+        #if os(macOS)
         switch controlSize {
         case .mini, .small:
                 .mini
@@ -21,6 +22,9 @@ struct AsyncButton<Content: View>: View {
         @unknown default:
                 .regular
         }
+        #else
+        return controlSize
+        #endif
     }
     let action: () async -> Void
 

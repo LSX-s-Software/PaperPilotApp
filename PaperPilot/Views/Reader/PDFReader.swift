@@ -119,6 +119,7 @@ struct PDFReader: View {
                     TimerView()
                 }
             }
+            .toolbarRole(.editor)
             // MARK: - 底部叠层
             .overlay(alignment: .bottom) {
                 Group {
@@ -229,7 +230,7 @@ extension PDFReader {
             findVM.finding = false
             if let firstResult = findVM.findResult.first {
                 findVM.currentSelectionIndex = 0
-                await pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
+                pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
             }
         }
     }

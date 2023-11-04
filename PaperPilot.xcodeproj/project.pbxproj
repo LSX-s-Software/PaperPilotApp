@@ -27,6 +27,7 @@
 		F5008D7D2AEFA886004F326E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5008D7C2AEFA886004F326E /* Logger.swift */; };
 		F508805B2AE8B0A200CD7510 /* MicroserviceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */; };
 		F508805F2AE8C24A00CD7510 /* Interceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F508805E2AE8C24A00CD7510 /* Interceptor.swift */; };
+		F50B57822AF68E4B007C8FC2 /* XMLDocument in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = F50B57812AF68E4B007C8FC2 /* XMLDocument */; };
 		F50DE2B12ADCB8680016D0B6 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50DE2B02ADCB8680016D0B6 /* AvatarView.swift */; };
 		F5131BF32AEB70DD0077393E /* ProjectCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5131BF22AEB70DD0077393E /* ProjectCommands.swift */; };
 		F5131BFD2AEBAC700077393E /* ShareCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5131BFC2AEBAC700077393E /* ShareCoordinator.swift */; };
@@ -242,6 +243,7 @@
 				279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */,
 				F5643F372AE37C9C00186A2F /* Throttler in Frameworks */,
 				768A92EF2AF3E21B006068F3 /* protoc-gen-grpc-swift in Frameworks */,
+				F50B57822AF68E4B007C8FC2 /* XMLDocument in Frameworks */,
 				279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,6 +588,7 @@
 				768A92EC2AF3E21B006068F3 /* GRPC */,
 				768A92EE2AF3E21B006068F3 /* protoc-gen-grpc-swift */,
 				F5A2F4072AF53D5D0045EF12 /* SwiftDown */,
+				F50B57812AF68E4B007C8FC2 /* XMLDocument */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -630,6 +633,7 @@
 				F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */,
 				768A92E92AF3E21B006068F3 /* XCRemoteSwiftPackageReference "grpc-swift" */,
 				F5A2F4062AF53D5D0045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */,
+				F50B57802AF68E4B007C8FC2 /* XCRemoteSwiftPackageReference "XMLDocument" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -1107,6 +1111,14 @@
 				kind = branch;
 			};
 		};
+		F50B57802AF68E4B007C8FC2 /* XCRemoteSwiftPackageReference "XMLDocument" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kewlbear/XMLDocument.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ciaranrobrien/SwiftUIFlow.git";
@@ -1220,6 +1232,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */;
 			productName = ShareKit;
+		};
+		F50B57812AF68E4B007C8FC2 /* XMLDocument */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F50B57802AF68E4B007C8FC2 /* XCRemoteSwiftPackageReference "XMLDocument" */;
+			productName = XMLDocument;
 		};
 		F547D0DC2AC52A6F006D2216 /* SwiftUIFlow */ = {
 			isa = XCSwiftPackageProductDependency;

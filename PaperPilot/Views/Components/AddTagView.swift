@@ -17,6 +17,11 @@ struct AddTagView: View {
         Button("Add", systemImage: "plus") {
             editing.toggle()
         }
+        .buttonStyle(.bordered)
+        .labelStyle(.iconOnly)
+        #if os(iOS)
+        .controlSize(.small)
+        #endif
         .popover(isPresented: $editing) {
             HStack {
                 TextField("New Tag", text: $text)

@@ -42,7 +42,7 @@
       "location" : "https://github.com/LSX-s-Software/share-kit.git",
       "state" : {
         "branch" : "master",
-        "revision" : "c46e07455f7b4cb6f432fb2cb546b83aa81d3f6b"
+        "revision" : "30daaa4459df5cd853e8ad524877c95f7840c650"
       }
     },
     {
@@ -241,6 +241,15 @@
       "state" : {
         "revision" : "53fe0639a98903858d0196b699720decb42aee7b",
         "version" : "2.14.0"
+      }
+    },
+    {
+      "identity" : "xmldocument",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kewlbear/XMLDocument.git",
+      "state" : {
+        "revision" : "5b78bcc99c3810ffdf099c00ce8fc50a20c37577",
+        "version" : "1.0.0"
       }
     },
     {

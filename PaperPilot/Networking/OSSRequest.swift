@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if !os(macOS)
+import XMLDocument
+#endif
 
 struct OSSRequest {
     private var request: MultipartFormDataRequest
@@ -45,7 +48,11 @@ extension URLSession {
         let (data, response) = try await self.data(for: request.urlRequest)
         if let response = response as? HTTPURLResponse,
            !(200...299).contains(response.statusCode) {
+#if os(macOS)
             let responseXML = try? XMLDocument(data: data).rootElement()
+#else
+            let responseXML = try? XMLDocument(data: data, options: 0).rootElement()
+#endif
             let message = responseXML?.children?.compactMap { $0.name == "Code" || $0.name == "Message" ? $0.stringValue : nil }
             throw NetworkingError.requestError(code: response.statusCode,
                                                message: message?.joined(separator: ": ") ?? String(localized: "Unknown error"))

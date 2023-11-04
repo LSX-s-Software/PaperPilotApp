@@ -41,7 +41,8 @@ struct AddPaperView: View {
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    
+                    .buttonStyle(.bordered)
+
                     Button {
                         isImporting = true
                     } label: {
@@ -60,6 +61,7 @@ struct AddPaperView: View {
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    .buttonStyle(.bordered)
                     .fileImporter(
                         isPresented: $isImporting,
                         allowedContentTypes: [.pdf],

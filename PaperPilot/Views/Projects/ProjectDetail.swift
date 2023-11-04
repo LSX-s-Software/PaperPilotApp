@@ -46,7 +46,7 @@ struct ProjectDetail: View {
                 .disabledCustomizationBehavior(.visibility)
             TableColumn("Authors", value: \.formattedAuthors)
                 .customizationID("authors")
-            TableColumn("Publication Year") { paper in
+            TableColumn("Year") { paper in
                 Text(paper.publicationYear ?? String(localized: "Unknown"))
             }
             .width(50)

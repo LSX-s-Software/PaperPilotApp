@@ -37,44 +37,44 @@ struct PaperPilotApp: App {
     }
     
     var body: some Scene {
+        Group {
 #if os(macOS)
-        Window("Paper Pilot", id: AppWindow.main.id) {
-            ContentView()
-                .frame(minWidth: 600, minHeight: 300)
-                .environmentObject(navigationContext)
-                .sheet(isPresented: $appState.isShowingJoinProjectView) {
-                    if let url = appState.incomingURL {
-                        JoinProjectView(invitationURL: url)
-                    } else {
-                        JoinProjectView()
+            Window("Paper Pilot", id: AppWindow.main.id) {
+                ContentView()
+                    .frame(minWidth: 600, minHeight: 300)
+                    .environmentObject(navigationContext)
+                    .sheet(isPresented: $appState.isShowingJoinProjectView) {
+                        if let url = appState.incomingURL {
+                            JoinProjectView(invitationURL: url)
+                        } else {
+                            JoinProjectView()
+                        }
                     }
-                }
-                .onOpenURL(perform: appState.handleIncomingURL(url:))
+                    .onOpenURL(perform: appState.handleIncomingURL(url:))
+            }
+            .defaultSize(width: 1200, height: 700)
+#else
+            WindowGroup("Paper Pilot", id: AppWindow.main.id) {
+                ContentView()
+                    .environmentObject(navigationContext)
+                    .sheet(isPresented: $appState.isShowingJoinProjectView) {
+                        if let url = appState.incomingURL {
+                            JoinProjectView(invitationURL: url)
+                        } else {
+                            JoinProjectView()
+                        }
+                    }
+                    .onOpenURL(perform: appState.handleIncomingURL(url:))
+            }
+#endif
         }
-        .defaultSize(width: 1200, height: 700)
         .modelContainer(modelContainer)
         .commands {
             SidebarCommands()
             ProjectCommands()
         }
         .environment(appState)
-#else
-        WindowGroup("Paper Pilot", id: AppWindow.main.id) {
-            ContentView()
-                .frame(minWidth: 600, minHeight: 300)
-                .sheet(isPresented: $appState.isShowingJoinProjectView) {
-                    if let url = appState.incomingURL {
-                        JoinProjectView(invitationURL: url)
-                    } else {
-                        ProgressView()
-                            .padding()
-                    }
-                }
-                .onOpenURL(perform: appState.handleIncomingURL(url:))
-        }
-        .modelContainer(modelContainer)
-#endif
-        
+
         WindowGroup("Paper Reader", id: AppWindow.reader.id, for: PersistentIdentifier.self) { $paperId in
             if let paperId = paperId,
                let paper: Paper = modelContainer.mainContext.registeredModel(for: paperId) {

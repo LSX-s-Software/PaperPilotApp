@@ -23,14 +23,15 @@ struct ContentView: View {
     @State private var isShowingJoinProjectSheet = false
     @State private var hasError = false
     @State private var errorMsg: String?
-    
+    @State private var columnVisibility = NavigationSplitViewVisibility.all
+
     @AppStorage(AppStorageKey.User.username.rawValue)
     private var username: String?
     
     var body: some View {
         @Bindable var appState = appState
 
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             // MARK: - 项目列表
             List(selection: $navigationContext.selectedProject) {
                 if !localProjects.isEmpty {

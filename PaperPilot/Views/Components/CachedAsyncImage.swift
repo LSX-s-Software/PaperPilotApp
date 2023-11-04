@@ -61,12 +61,15 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
             return
         }
         let request = URLRequest(url: url)
-        if let image =
-            cache.cachedResponse(for: request).flatMap({ response in
+        if let image = cache.cachedResponse(for: request).flatMap({ response in
+#if os(macOS)
                 NSImage(data: response.data)
+#else
+                UIImage(data: response.data)
+#endif
             }) {
             self.request = nil
-            self._state = State(initialValue: .success(Image(nsImage: image)))
+            self._state = State(initialValue: .success(Image(image: image)))
         } else {
             self.request = request
             self._state = State(initialValue: .empty)
@@ -143,11 +146,17 @@ struct CachedAsyncImage<I: View, P: View, F: View>: View, Equatable {
         }
         do {
             let (data, _) = try await session.data(for: request)
+#if os(macOS)
             guard let nsImage = NSImage(data: data) else {
                 throw AsyncImageError.dataNotImage
             }
+#else
+            guard let nsImage = UIImage(data: data) else {
+                throw AsyncImageError.dataNotImage
+            }
+#endif
             withAnimation {
-                self.state = .success(Image(nsImage: nsImage))
+                self.state = .success(Image(image: nsImage))
             }
         } catch {
             print(error)

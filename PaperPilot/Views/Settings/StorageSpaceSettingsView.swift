@@ -20,12 +20,14 @@ struct StorageSpaceSettingsView: View {
         Form {
             Section("Local Files") {
                 if let baseDir = baseDir {
+#if os(macOS)
                     HStack {
                         TextField("Location:", text: .constant(baseDir.path(percentEncoded: false)))
                         Button("Show in Finder") {
                             NSWorkspace.shared.open(baseDir)
                         }
                     }
+#endif
 
                     LabeledContent("Total Used Space:") {
                         if let totalUsedSpace = totalUsedSpace {
@@ -64,7 +66,9 @@ struct StorageSpaceSettingsView: View {
                     } message: {
                         Text("Will delete all imported/downloaded PDFs. ") + Text("This action cannot be undone.")
                     }
+#if os(macOS)
                     .dialogSeverity(.critical)
+#endif
                 }
             }
         }

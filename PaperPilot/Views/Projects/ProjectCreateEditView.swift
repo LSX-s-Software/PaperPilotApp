@@ -91,7 +91,9 @@ struct ProjectCreateEditView: View {
                         } message: {
                             Text("This action cannot be undone.")
                         }
+#if os(macOS)
                         .dialogSeverity(.critical)
+#endif
                     }
                 }
             }

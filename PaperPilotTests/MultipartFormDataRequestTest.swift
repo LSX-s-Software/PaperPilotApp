@@ -113,6 +113,7 @@ final class MultipartFormDataRequestTest: XCTestCase {
     }
 }
 
+#if os(macOS)
 extension NSImage {
     func pngData(imageInterpolation: NSImageInterpolation = .high) -> Data? {
         let size = CGSize(width: self.size.width, height: self.size.height)
@@ -147,3 +148,4 @@ extension NSImage {
         return bitmap.representation(using: .png, properties: [:])
     }
 }
+#endif

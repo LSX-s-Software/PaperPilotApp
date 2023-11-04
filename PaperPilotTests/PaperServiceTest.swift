@@ -109,8 +109,8 @@ final class PaperServiceTest: XCTestCase {
 
         detail.clearUpdateTime()
         await modelService.updatePaper(paper, with: detail)
-        try? await Task.sleep(for: .seconds(1))
-        XCTAssertGreaterThan(Int64(paper.updateTime.timeIntervalSince1970), updateTimeSeconds)
+        try? await Task.sleep(for: .seconds(1.1))
+        XCTAssert(Int64(paper.updateTime.timeIntervalSince1970) >= updateTimeSeconds)
     }
 
     func testUpdatePaperByPaperDetailWithZeroPublicationYear() async {

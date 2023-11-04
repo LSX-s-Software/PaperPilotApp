@@ -142,12 +142,20 @@ struct PaperReaderInspector: View {
                 TranslatorView()
             }
         }
-        .inspectorColumnWidth(ideal: 200)
+        .inspectorColumnWidth(min: 250, ideal: 300)
         .toolbar {
+#if os(iOS)
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Show Inspector", systemImage: "sidebar.right") {
+                    isShowingInspector.toggle()
+                }
+            }
+#else
             Spacer()
             Button("Show Inspector", systemImage: "sidebar.right") {
                 isShowingInspector.toggle()
             }
+#endif
         }
         .alert("Failed to update paper info", isPresented: $hasError) { } message: {
             Text(errorMsg ?? String(localized: "Unknown error"))

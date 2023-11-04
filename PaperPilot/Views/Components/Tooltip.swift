@@ -29,4 +29,10 @@ struct TooltipView: NSViewRepresentable {
 
     func updateNSView(_ nsView: NSView, context: NSViewRepresentableContext<TooltipView>) { }
 }
+#else
+extension View {
+    func toolTip(_ toolTip: String?) -> some View {
+        self
+    }
+}
 #endif

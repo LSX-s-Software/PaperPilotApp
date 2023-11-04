@@ -55,9 +55,14 @@ struct PaperReader: View {
                     }
                 }
             }
-            .navigationSplitViewColumnWidth(min: 150, ideal: 175)
+            .navigationTitle(LocalizedStringKey(tocContent.rawValue))
             .environmentObject(pdfVM)
+#if os(iOS)
+            .navigationSplitViewColumnWidth(min: 250, ideal: 250)
+#else
+            .navigationSplitViewColumnWidth(min: 150, ideal: 175)
             .toolbar(removing: .sidebarToggle)
+#endif
             .toolbar {
                 ToolbarItem(placement: columnVisibility == .all ? .automatic : .navigation) {
                     Menu("Table of Contents", systemImage: "sidebar.squares.left") {
