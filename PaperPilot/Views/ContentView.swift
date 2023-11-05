@@ -51,7 +51,13 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Projects")
-            .frame(minWidth: 200)
+#if os(macOS)
+            .navigationSplitViewColumnWidth(min: 200, ideal: 225)
+#else
+            .navigationSplitViewColumnWidth(min: 225, ideal: 275)
+#endif
+            .animation(.default, value: localProjects)
+            .animation(.default, value: remoteProjects)
             .overlay {
                 if localProjects.isEmpty && remoteProjects.isEmpty {
                     ContentUnavailableView {
@@ -67,11 +73,11 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem {
                     Menu("Add Project", systemImage: "folder.badge.plus") {
-                        Button("Create New Project", systemImage: "folder.badge.plus") {
+                        Button("Create New Project", systemImage: "plus") {
                             appState.isCreatingProject.toggle()
                         }
                         
-                        Button("Join Project", systemImage: "folder.badge.person.crop") {
+                        Button("Join Project", systemImage: "person.crop.circle.badge.plus") {
                             isShowingJoinProjectSheet.toggle()
                         }
                     }
