@@ -206,7 +206,7 @@ struct ProjectDetail: View {
                 }
             }
 #if !os(macOS)
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .topBarLeading) {
                 EditButton()
             }
 #endif

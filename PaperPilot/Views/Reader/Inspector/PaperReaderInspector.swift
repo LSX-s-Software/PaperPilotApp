@@ -145,7 +145,7 @@ struct PaperReaderInspector: View {
         .inspectorColumnWidth(min: 250, ideal: 300)
         .toolbar {
 #if os(iOS)
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button("Show Inspector", systemImage: "sidebar.right") {
                     isShowingInspector.toggle()
                 }

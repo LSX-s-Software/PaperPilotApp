@@ -10,6 +10,7 @@ import SwiftUI
 @Observable class FindViewModel<T> {
     var findText = ""
     var searchBarPresented = false
+    var isShowingFindSheet = false
     var finding = false
     var findResult = [T]()
     var caseSensitive = false

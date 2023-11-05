@@ -9,6 +9,7 @@ import SwiftUI
 import PDFKit
 
 struct FindResultView: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var pdfVM: PDFViewModel
     @Bindable var findVM: FindViewModel<PDFSelection>
 
@@ -18,6 +19,9 @@ struct FindResultView: View {
         List(findVM.findResult, id: \.self, selection: Binding { currentSelection } set: { selection in
             if let page = selection?.pages.first {
                 pdfVM.pdfView.go(to: page)
+#if os(iOS)
+                dismiss()
+#endif
             }
             pdfVM.pdfView.setCurrentSelection(selection, animate: true)
         }) { selection in
@@ -39,7 +43,9 @@ struct FindResultView: View {
             currentSelection = findVM.findResult[findVM.currentSelectionIndex]
         }
         .overlay {
-            if findVM.finding {
+            if findVM.findText.isEmpty {
+                ContentUnavailableView("Enter Text to Search", systemImage: "magnifyingglass")
+            } else if findVM.finding {
                 VStack(spacing: 8) {
                     ProgressView()
                     Text("Finding...")
@@ -50,7 +56,7 @@ struct FindResultView: View {
                 .background(.regularMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             } else if findVM.findResult.isEmpty {
-                ContentUnavailableView.search
+                ContentUnavailableView.search(text: findVM.findText)
             }
         }
     }

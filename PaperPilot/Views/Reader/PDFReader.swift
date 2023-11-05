@@ -46,12 +46,27 @@ struct PDFReader: View {
         @Bindable var findVM = findVM
 
         PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView)
-            .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
             .navigationDocument(pdf.documentURL!)
 #if os(macOS)
+            .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
             .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
-#endif
+#elseif os(iOS)
+            .sheet(isPresented: $findVM.isShowingFindSheet) {
+                NavigationStack {
+                    FindResultView(findVM: findVM)
+                        .environmentObject(pdfVM)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Done") {
+                                    findVM.isShowingFindSheet = false
+                                }
+                            }
+                        }
+                }
+                .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
+            }
             .ignoresSafeArea(edges: .bottom)
+#endif
             // MARK: - 事件处理
             .onChange(of: findVM.findText, performFind)
             .onChange(of: appState.findingPaper, findInPDFHandler)
@@ -78,6 +93,7 @@ struct PDFReader: View {
             // MARK: - 工具栏
             .toolbar(id: "reader-tools") {
                 // MARK: 搜索选项
+#if os(macOS)
                 if findVM.searchBarPresented {
                     ToolbarItem(id: "search") {
                         Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
@@ -86,6 +102,13 @@ struct PDFReader: View {
                         .onChange(of: findVM.findOptions, performFind)
                     }
                 }
+#else
+                ToolbarItem(id: "search", placement: .topBarTrailing) {
+                    Button("Search", systemImage: "magnifyingglass") {
+                        findVM.isShowingFindSheet.toggle()
+                    }
+                }
+#endif
                 ToolbarItem(id: "annotation") {
                     // MARK: 标注
                     ControlGroup {

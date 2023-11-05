@@ -596,6 +596,16 @@
         }
       }
     },
+    "Enter Text to Search" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入文本来搜索"
+          }
+        }
+      }
+    },
     "Enter title" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1892,6 +1902,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存中"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索"
           }
         }
       }
