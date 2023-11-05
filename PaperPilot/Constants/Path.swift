@@ -10,7 +10,7 @@ import Foundation
 enum FilePath: String {
     case projectDirectory = "project"
     case paperDirectory = "paper"
-    
+
     /// 项目文件目录
     /// - Parameters:
     ///   - create: 如果文件夹不存在，是否创建目录
@@ -18,7 +18,7 @@ enum FilePath: String {
         let url = try FileManager.default.url(for: .documentDirectory,
                                               in: .userDomainMask,
                                               appropriateFor: nil,
-                                              create: false)
+                                              create: create)
             .appending(path: Self.projectDirectory.rawValue)
             .appending(path: project.id.uuidString)
         if create {
