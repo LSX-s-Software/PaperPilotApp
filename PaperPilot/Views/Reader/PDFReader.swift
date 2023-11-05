@@ -51,6 +51,7 @@ struct PDFReader: View {
 #if os(macOS)
             .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
 #endif
+            .ignoresSafeArea(edges: .bottom)
             // MARK: - 事件处理
             .onChange(of: findVM.findText, performFind)
             .onChange(of: appState.findingPaper, findInPDFHandler)

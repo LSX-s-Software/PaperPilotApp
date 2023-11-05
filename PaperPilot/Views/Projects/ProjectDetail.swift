@@ -12,6 +12,7 @@ import SwiftData
 struct ProjectDetail: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(AppState.self) private var appState
 
     @AppStorage(AppStorageKey.User.loggedIn.rawValue)
@@ -21,6 +22,7 @@ struct ProjectDetail: View {
 
     @Bindable var project: Project
     @State private var selection = Set<Paper.ID>()
+    @State private var currentPaper: Paper?
     @State private var sortOrder = [KeyPathComparator(\Paper.formattedCreateTime, order: .reverse)]
     @State private var updating = false
     @State private var progress: Progress?
@@ -41,6 +43,7 @@ struct ProjectDetail: View {
             .width(35)
             .alignment(.center)
             .customizationID("status")
+            .defaultVisibility(horizontalSizeClass == .compact ? .hidden : .visible)
             TableColumn("Title", value: \.title)
                 .customizationID("title")
                 .disabledCustomizationBehavior(.visibility)
@@ -81,6 +84,12 @@ struct ProjectDetail: View {
                 if selectedPapers.count == 1,
                    let paperId = selectedPapers.first,
                    let paper = project.papers.first(where: { $0.id == paperId }) {
+                    #if os(iOS)
+                    Button("Open in New Window", systemImage: "uiwindow.split.2x1") {
+                        openWindow(id: AppWindow.reader.id, value: paper.persistentModelID)
+                    }
+                    Divider()
+                    #endif
                     Menu("Copy Information", systemImage: "doc.on.doc") {
                         ForEach(Paper.copiableProperties, id: \.0) { name, keypath in
                             Button(LocalizedStringKey(name)) {
@@ -118,10 +127,19 @@ struct ProjectDetail: View {
                 }
             }
         } primaryAction: { selectedPapers in
+#if os(iOS)
+            if let paperId = selectedPapers.first {
+                currentPaper = project.papers.first { $0.id == paperId }
+            }
+#else
             let descriptor = FetchDescriptor(predicate: #Predicate<Paper> { selectedPapers.contains($0.id) })
             try? modelContext.fetchIdentifiers(descriptor).forEach { id in
                 openWindow(id: AppWindow.reader.id, value: id)
             }
+#endif
+        }
+        .navigationDestination(item: $currentPaper) { paper in
+            PaperReader(paper: paper)
         }
         .overlay(alignment: .bottom) {
             if updating || message != nil {
@@ -151,6 +169,8 @@ struct ProjectDetail: View {
         .navigationTitle($project.name)
 #if os(macOS)
         .navigationSubtitle(project.desc)
+#else
+        .navigationBarTitleDisplayMode(.inline)
 #endif
         .toolbar {
             ToolbarItemGroup {

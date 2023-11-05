@@ -1444,6 +1444,16 @@
         }
       }
     },
+    "Open in New Window" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在新窗口中打开"
+          }
+        }
+      }
+    },
     "Optional Info" : {
       "localizations" : {
         "zh-Hans" : {

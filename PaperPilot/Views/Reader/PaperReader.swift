@@ -58,6 +58,7 @@ struct PaperReader: View {
             .navigationTitle(LocalizedStringKey(tocContent.rawValue))
             .environmentObject(pdfVM)
 #if os(iOS)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationSplitViewColumnWidth(min: 250, ideal: 250)
 #else
             .navigationSplitViewColumnWidth(min: 150, ideal: 175)
@@ -168,7 +169,6 @@ extension PaperReader {
             if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
                 pdfVM.pdf = PDFDocument(url: url)
                 tocContent = .outline
-                columnVisibility = .all
                 errorDescription = nil
             } else {
                 paper.localFile = nil
@@ -189,7 +189,6 @@ extension PaperReader {
                 paper.status = ModelStatus.normal.rawValue
                 pdfVM.pdf = PDFDocument(url: savedURL)
                 tocContent = .outline
-                columnVisibility = .all
                 errorDescription = nil
             } catch {
                 errorDescription = String(localized: "Failed to download PDF: ") + error.localizedDescription
@@ -220,7 +219,6 @@ extension PaperReader {
                         }
                         pdfVM.pdf = PDFDocument(url: savedURL)
                         tocContent = .outline
-                        columnVisibility = .all
                         errorDescription = nil
                     } else {
                         errorDescription = String(localized: "You don't have access to the PDF.")

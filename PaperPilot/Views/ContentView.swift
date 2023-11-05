@@ -126,7 +126,9 @@ struct ContentView: View {
             // MARK: - 项目详情
             Group {
                 if let project = navigationContext.selectedProject {
-                    ProjectDetail(project: project)
+                    NavigationStack {
+                        ProjectDetail(project: project)
+                    }
                 } else {
                     Text("Select a project from the left sidebar.")
                         .font(.title)
