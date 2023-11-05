@@ -127,24 +127,24 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
             }
-        }
-        // MARK: - 用户信息工具栏
-        .toolbar {
-            ToolbarItem {
-                if let username = username {
-                    Button {
-                        isShowingLoginSheet.toggle()
-                    } label: {
-                        HStack {
-                            AvatarView(size: 20)
-                            Text(username)
+            // MARK: - 用户信息工具栏
+            .toolbar {
+                ToolbarItem {
+                    if let username = username {
+                        Button {
+                            isShowingLoginSheet.toggle()
+                        } label: {
+                            HStack {
+                                AvatarView(size: 20)
+                                Text(username)
+                            }
                         }
+                    } else {
+                        Button("Log In", systemImage: "person.crop.circle") {
+                            isShowingLoginSheet.toggle()
+                        }
+                        .labelStyle(.titleAndIcon)
                     }
-                } else {
-                    Button("Log In", systemImage: "person.crop.circle") {
-                        isShowingLoginSheet.toggle()
-                    }
-                    .labelStyle(.titleAndIcon)
                 }
             }
         }
