@@ -8,6 +8,10 @@
 import SwiftUI
 import PDFKit
 import PencilKit
+import OSLog
+import Throttler
+
+private let logger = LoggerFactory.make(category: "PDFKitView")
 
 #if os(macOS)
 struct PDFKitView: NSViewRepresentable {
@@ -66,7 +70,7 @@ struct PDFKitView: UIViewRepresentable {
         }
 
         func `class`(forAnnotationType annotationType: String) -> AnyClass {
-            if annotationType == PDFAnnotationSubtype.stamp.rawValue {
+            if annotationType == PKPDFAnnotation.subtypeString {
                 return PKPDFAnnotation.self
             } else {
                 return PDFAnnotation.self
@@ -82,6 +86,7 @@ struct PDFKitView: UIViewRepresentable {
             } else {
                 let canvasView = PKCanvasView(frame: .zero)
                 canvasView.backgroundColor = UIColor.clear
+                canvasView.delegate = self
                 toolPicker.addObserver(canvasView)
                 toolPicker.setVisible(true, forFirstResponder: canvasView)
                 pageToViewMapping[page] = canvasView
@@ -89,8 +94,22 @@ struct PDFKitView: UIViewRepresentable {
             }
 
             // If we have stored a drawing on the page, set it on the canvas
-            if let page = page as? DrawedPDFPage, let drawing = page.drawing {
-                resultView?.drawing = drawing
+            if let page = page as? DrawedPDFPage {
+                if let drawing = page.drawing {
+                    resultView?.drawing = drawing
+                } else if let stampAnnotation = page.annotations.first(where: { $0.type == PKPDFAnnotation.subtypeString }),
+                          let pkAnnotation = stampAnnotation as? PKPDFAnnotation,
+                          let drawingData = pkAnnotation.value(forAnnotationKey: PKPDFAnnotation.annotationKey) as? Data {
+                    do {
+                        if let drawing = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(drawingData) as? PKDrawing {
+                            resultView?.drawing = drawing
+                        } else {
+                            logger.warning("Drawing data cannot convert to PKDrawing")
+                        }
+                    } catch {
+                        logger.warning("Failed to decode: \(error)")
+                    }
+                }
             }
             return resultView
         }
@@ -101,6 +120,16 @@ struct PDFKitView: UIViewRepresentable {
             }
             pageToViewMapping.removeValue(forKey: page)
         }
+
+        // MARK: - PKCanvasView Delegate
+        func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+            debounce {
+                guard let page = self.pageToViewMapping.first(where: { $0.value == canvasView })?.key as? DrawedPDFPage else {
+                    return
+                }
+                page.drawing = canvasView.drawing
+            }
+        }
     }
 }
 
@@ -108,19 +137,35 @@ class DrawedPDFPage: PDFPage {
     var drawing: PKDrawing?
 }
 
-extension UIView {
-    var currentFirstResponder: UIResponder? {
-        if self.isFirstResponder {
-            return self
-        }
+extension PDFAnnotationSubtype {
+    static let pencilKitDrawing = PDFAnnotationSubtype(rawValue: "/PencilKitDrawing")
+}
 
-        for view in self.subviews {
-            if let responder = view.currentFirstResponder {
-                return responder
+class PKPDFAnnotation: PDFAnnotation {
+    static let annotationKey = PDFAnnotationKey(rawValue: "drawingData")
+    static let subtypeString = String(PDFAnnotationSubtype.pencilKitDrawing.rawValue.dropFirst())
+}
+
+extension PDFDocument {
+    func writeWithMarkup(to url: URL, withOptions options: [PDFDocumentWriteOption: Any]? = nil) -> Bool {
+        for i in 0..<pageCount {
+            if let page = page(at: i) as? DrawedPDFPage, let drawing = page.drawing {
+                // 获取已有的标注数据
+                let existingMarkupAnnotation = page.annotations.filter({ $0.type == PKPDFAnnotation.subtypeString })
+
+                let markupAnnotation = PDFAnnotation(bounds: drawing.bounds, forType: .pencilKitDrawing, withProperties: nil)
+                if let codedData = try? NSKeyedArchiver.archivedData(withRootObject: drawing, requiringSecureCoding: true) {
+                    markupAnnotation.setValue(codedData, forAnnotationKey: PKPDFAnnotation.annotationKey)
+                    page.addAnnotation(markupAnnotation)
+                    // 删除原有的标注数据
+                    existingMarkupAnnotation.forEach({ page.removeAnnotation($0) })
+                } else {
+                    logger.warning("Failed to archive drawing")
+                    return false
+                }
             }
         }
-
-        return nil
-     }
+        return self.write(to: url, withOptions: options)
+    }
 }
 #endif

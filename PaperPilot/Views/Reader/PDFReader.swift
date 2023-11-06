@@ -199,6 +199,19 @@ struct PDFReader: View {
                     pdfVM.currentPage = currentPage
                 }
             }
+            .onDisappear {
+                if !isRemote {
+                    Task {
+                        if let url = pdf.documentURL {
+                            if !pdf.writeWithMarkup(to: url) {
+                                print("Failed to write PDF.")
+                            }
+                        } else {
+                            print("You don't have access to the PDF.")
+                        }
+                    }
+                }
+            }
             .task(id: paper.id) {
                 guard let id = paper.remoteId else { return }
                 await ShareCoordinator.shared.connect()
