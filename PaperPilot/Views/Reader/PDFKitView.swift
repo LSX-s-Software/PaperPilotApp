@@ -34,6 +34,7 @@ struct PDFKitView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<PDFKitView>) -> PDFView {
         pdfView.pageOverlayViewProvider = context.coordinator
         pdfView.autoScales = true
+        pdf.delegate = context.coordinator
         pdfView.document = pdf
         return pdfView
     }
@@ -55,10 +56,24 @@ struct PDFKitView: UIViewRepresentable {
         Coordinator()
     }
 
-    class Coordinator: NSObject, PDFPageOverlayViewProvider {
+    class Coordinator: NSObject, PDFDocumentDelegate, PDFPageOverlayViewProvider, PKCanvasViewDelegate {
         var toolPicker = PKToolPicker()
         var pageToViewMapping = [PDFPage: PKCanvasView]()
 
+        // MARK: - PDFDocument Delegate
+        func classForPage() -> AnyClass {
+            return DrawedPDFPage.self
+        }
+
+        func `class`(forAnnotationType annotationType: String) -> AnyClass {
+            if annotationType == PDFAnnotationSubtype.stamp.rawValue {
+                return PKPDFAnnotation.self
+            } else {
+                return PDFAnnotation.self
+            }
+        }
+
+        // MARK: - PDFPage Overlay View Provider
         func pdfView(_ view: PDFView, overlayViewFor page: PDFPage) -> UIView? {
             var resultView: PKCanvasView?
 
