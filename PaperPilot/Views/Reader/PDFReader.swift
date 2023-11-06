@@ -10,6 +10,7 @@ import SwiftData
 import PDFKit
 import ShareKit
 import Combine
+import PencilKit
 
 struct PDFReader: View {
     @Environment(\.modelContext) private var modelContext
@@ -25,6 +26,7 @@ struct PDFReader: View {
     var isRemote: Bool { paper.remoteId != nil }
 
     @State private var annotationColor = HighlighterColor.yellow
+    @State private var isInMarkUpMode = false
     private var pageBookmarked: Bool {
         let page = pdf.index(for: pdfVM.currentPage)
         return paper.bookmarks.contains { $0.page == page }
@@ -45,7 +47,7 @@ struct PDFReader: View {
     var body: some View {
         @Bindable var findVM = findVM
 
-        PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView)
+        PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView, markupMode: $isInMarkUpMode)
             .navigationDocument(pdf.documentURL!)
 #if os(macOS)
             .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
@@ -107,6 +109,13 @@ struct PDFReader: View {
                     Button("Search", systemImage: "magnifyingglass") {
                         findVM.isShowingFindSheet.toggle()
                     }
+                }
+
+                ToolbarItem(id: "markup") {
+                    Button("Markup", systemImage: "pencil.tip.crop.circle") {
+                        isInMarkUpMode.toggle()
+                    }
+                    .symbolVariant(isInMarkUpMode ? .fill : .none)
                 }
 #endif
                 ToolbarItem(id: "annotation") {
