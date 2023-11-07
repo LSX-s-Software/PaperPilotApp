@@ -199,6 +199,7 @@ struct PDFReader: View {
                     pdfVM.currentPage = currentPage
                 }
             }
+#if !os(macOS)
             .onDisappear {
                 if !isRemote {
                     Task {
@@ -206,12 +207,11 @@ struct PDFReader: View {
                             if !pdf.writeWithMarkup(to: url) {
                                 print("Failed to write PDF.")
                             }
-                        } else {
-                            print("You don't have access to the PDF.")
                         }
                     }
                 }
             }
+#endif
             .task(id: paper.id) {
                 guard let id = paper.remoteId else { return }
                 await ShareCoordinator.shared.connect()
@@ -232,6 +232,7 @@ struct PDFReader: View {
                                     sharedAnnotation.pdfAnnotations[key] = addAnnotation(annotation)
                                 }
                             }
+                            // 删除
                             Set(oldKeys).subtracting(newKeys).forEach { key in
                                 if let annotation = sharedAnnotation.pdfAnnotations[key],
                                    let page = sharedAnnotation.annotations[key]?.page,
