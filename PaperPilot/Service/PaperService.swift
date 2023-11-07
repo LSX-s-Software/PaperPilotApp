@@ -116,19 +116,6 @@ extension ModelService {
         paper.updateTime = detail.hasUpdateTime ? detail.updateTime.date : Date.now
     }
     
-    /// 使用远端数据更新论文信息
-    /// - Parameter info: 远端数据
-    ///
-    /// > Warning: 该方法不会处理版本冲突
-    func updatePaper(_ paper: Paper, with info: Paper_PaperInfo) {
-        paper.remoteId = info.id
-        paper.title = info.title
-        paper.authors = info.authors
-        paper.publicationYear = info.publicationYear == 0 ? nil : String(format: "%d", info.publicationYear)
-        paper.publication = info.publication
-        paper.updateTime = Date.now
-    }
-    
     /// 更新论文信息
     ///
     /// 如果远程的版本比本地新，则会先使用远程数据更新本地数据，然后再将即将进行的修改提交到远程，提交成功后将修改应用到本地
