@@ -636,6 +636,16 @@
         }
       }
     },
+    "Event" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会议"
+          }
+        }
+      }
+    },
     "Failed to Add Paper" : {
       "localizations" : {
         "zh-Hans" : {

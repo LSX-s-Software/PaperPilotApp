@@ -5,7 +5,6 @@ disabled_rules: # 执行时排除掉的规则
   - type_body_length
   - cyclomatic_complexity
   - nesting
-  - for_where
 opt_in_rules: # 一些规则仅仅是可选的
   - missing_docs
 included:

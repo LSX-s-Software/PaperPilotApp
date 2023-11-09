@@ -58,6 +58,11 @@ struct ProjectDetail: View {
                 Text(paper.publication ?? String(localized: "Unknown"))
             }
             .customizationID("publication")
+            .defaultVisibility(.hidden)
+            TableColumn("Event") { paper in
+                Text(paper.event ?? String(localized: "Unknown"))
+            }
+            .customizationID("event")
             TableColumn("Date Added", value: \.formattedCreateTime)
                 .width(70)
                 .customizationID("dateAdded")
@@ -237,10 +242,8 @@ struct ProjectDetail: View {
                     project.papers.append(newPaper)
                 }
             }
-            for paper in project.papers {
-                if paper.status == ModelStatus.waitingForUpload.rawValue {
-                    try await ModelService.shared.uploadPaper(paper, to: project)
-                }
+            for paper in project.papers where paper.status == ModelStatus.waitingForUpload.rawValue {
+                try await ModelService.shared.uploadPaper(paper, to: project)
             }
             message = nil
         } catch {

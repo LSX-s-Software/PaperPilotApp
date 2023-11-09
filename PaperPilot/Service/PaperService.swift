@@ -107,6 +107,7 @@ extension ModelService {
         paper.tags = detail.tags
         paper.publicationYear = detail.publicationYear == 0 ? nil : String(format: "%d", detail.publicationYear)
         paper.publication = detail.publication
+        paper.event = detail.event
         paper.volume = detail.volume
         paper.issue = detail.issue
         paper.pages = detail.pages
@@ -114,19 +115,6 @@ extension ModelService {
         paper.doi = detail.doi
         paper.file = detail.file
         paper.updateTime = detail.hasUpdateTime ? detail.updateTime.date : Date.now
-    }
-    
-    /// 使用远端数据更新论文信息
-    /// - Parameter info: 远端数据
-    ///
-    /// > Warning: 该方法不会处理版本冲突
-    func updatePaper(_ paper: Paper, with info: Paper_PaperInfo) {
-        paper.remoteId = info.id
-        paper.title = info.title
-        paper.authors = info.authors
-        paper.publicationYear = info.publicationYear == 0 ? nil : String(format: "%d", info.publicationYear)
-        paper.publication = info.publication
-        paper.updateTime = Date.now
     }
     
     /// 更新论文信息
@@ -142,6 +130,7 @@ extension ModelService {
                      tags: [String]? = nil,
                      publicationYear: String? = nil,
                      publication: String? = nil,
+                     event: String? = nil,
                      volume: String? = nil,
                      issue: String? = nil,
                      pages: String? = nil,
@@ -170,6 +159,7 @@ extension ModelService {
                     $0.tags = tags ?? paper.tags
                     $0.publicationYear = Int32(publicationYear ?? "0") ?? 0
                     $0.publication = publication ?? paper.publication ?? ""
+                    $0.event = event ?? paper.event ?? ""
                     $0.volume = volume ?? paper.volume ?? ""
                     $0.issue = issue ?? paper.issue ?? ""
                     $0.pages = pages ?? paper.pages ?? ""
@@ -187,6 +177,7 @@ extension ModelService {
         if let newTags = tags { paper.tags = newTags }
         if let newPublicationYear = publicationYear { paper.publicationYear = newPublicationYear }
         if let newPublication = publication { paper.publication = newPublication }
+        if let newEvent = event { paper.event = newEvent }
         if let newVolume = volume { paper.volume = newVolume }
         if let newIssue = issue { paper.issue = newIssue }
         if let newPages = pages { paper.pages = newPages }

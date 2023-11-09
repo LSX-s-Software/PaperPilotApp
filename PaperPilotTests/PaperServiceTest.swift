@@ -78,6 +78,7 @@ final class PaperServiceTest: XCTestCase {
             $0.tags = ["Updated Tag"]
             $0.publicationYear = 2022
             $0.publication = "Updated Publication"
+            $0.event = "Updated Event"
             $0.volume = "2"
             $0.issue = "2"
             $0.pages = "11-20"
@@ -99,6 +100,7 @@ final class PaperServiceTest: XCTestCase {
         XCTAssertEqual(paper.tags, ["Updated Tag"])
         XCTAssertEqual(paper.publicationYear, "2022")
         XCTAssertEqual(paper.publication, "Updated Publication")
+        XCTAssertEqual(paper.event, "Updated Event")
         XCTAssertEqual(paper.volume, "2")
         XCTAssertEqual(paper.issue, "2")
         XCTAssertEqual(paper.pages, "11-20")
@@ -124,6 +126,7 @@ final class PaperServiceTest: XCTestCase {
             $0.tags = ["Updated Tag"]
             $0.publicationYear = 0
             $0.publication = "Updated Publication"
+            $0.event = "Updated Event"
             $0.volume = "2"
             $0.issue = "2"
             $0.pages = "11-20"
@@ -146,7 +149,7 @@ final class PaperServiceTest: XCTestCase {
         let insertTime = paper.updateTime
         let noteUpdateTime = paper.noteUpdateTime
 
-        try await modelService.updatePaper(paper, title: "Updated Test Paper", abstract: "This is an updated test paper.", keywords: ["updated"], authors: ["Updated Author"], tags: ["updated"], publicationYear: "2022", publication: "Updated Publication", volume: "2", issue: "2", pages: "11-20", url: "https://updated-example.com", doi: "10.5678/updated")
+        try await modelService.updatePaper(paper, title: "Updated Test Paper", abstract: "This is an updated test paper.", keywords: ["updated"], authors: ["Updated Author"], tags: ["updated"], publicationYear: "2022", publication: "Updated Publication", event: "Updated Event", volume: "2", issue: "2", pages: "11-20", url: "https://updated-example.com", doi: "10.5678/updated")
 
         XCTAssertEqual(paper.title, "Updated Test Paper")
         XCTAssertEqual(paper.abstract, "This is an updated test paper.")
@@ -155,6 +158,7 @@ final class PaperServiceTest: XCTestCase {
         XCTAssertEqual(paper.tags, ["updated"])
         XCTAssertEqual(paper.publicationYear, "2022")
         XCTAssertEqual(paper.publication, "Updated Publication")
+        XCTAssertEqual(paper.event, "Updated Event")
         XCTAssertEqual(paper.volume, "2")
         XCTAssertEqual(paper.issue, "2")
         XCTAssertEqual(paper.pages, "11-20")

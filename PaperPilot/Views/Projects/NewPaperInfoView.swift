@@ -36,6 +36,7 @@ struct NewPaperInfoView: View {
                     } set: {
                         paper.publication = $0.isEmpty ? nil : $0
                     })
+                    TextField("Event", text: Binding { paper.event ?? "" } set: { paper.event = $0.isEmpty ? nil : $0 })
                     TextField("Volume", text: Binding { paper.volume ?? "" } set: { paper.volume = $0.isEmpty ? nil : $0 })
                     TextField("Issue", text: Binding { paper.issue ?? "" } set: { paper.issue = $0.isEmpty ? nil : $0 })
                     TextField("Pages", text: Binding { paper.pages ?? "" } set: { paper.pages = $0.isEmpty ? nil : $0 })

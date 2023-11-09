@@ -84,6 +84,7 @@ struct PaperInfo: View {
     @State private var doi: String
     @State private var publication: String
     @State private var publicationYear: String
+    @State private var event: String
     @State private var volume: String
     @State private var issue: String
     @State private var pages: String
@@ -95,6 +96,7 @@ struct PaperInfo: View {
         self._doi = State(initialValue: paper.doi ?? "")
         self._publication = State(initialValue: paper.publication ?? "")
         self._publicationYear = State(initialValue: paper.publicationYear ?? "")
+        self._event = State(initialValue: paper.event ?? "")
         self._volume = State(initialValue: paper.volume ?? "")
         self._issue = State(initialValue: paper.issue ?? "")
         self._pages = State(initialValue: paper.pages ?? "")
@@ -130,6 +132,7 @@ struct PaperInfo: View {
                 InfoRow(title: "DOI", value: $doi)
                 InfoRow(title: "Publication", value: $publication)
                 InfoRow(title: "Publication Year", value: $publicationYear)
+                InfoRow(title: "Event", value: $event)
                 InfoRow(title: "Volume", value: $volume)
                 InfoRow(title: "Issue", value: $issue)
                 InfoRow(title: "Pages", value: $pages)
@@ -210,6 +213,7 @@ extension PaperInfo {
         doi = paper.doi ?? ""
         publication = paper.publication ?? ""
         publicationYear = paper.publicationYear ?? ""
+        event = paper.event ?? ""
         volume = paper.volume ?? ""
         issue = paper.issue ?? ""
         pages = paper.pages ?? ""
@@ -225,6 +229,7 @@ extension PaperInfo {
                                                           abstract: abstract,
                                                           publicationYear: publicationYear,
                                                           publication: publication,
+                                                          event: event,
                                                           volume: volume,
                                                           issue: issue,
                                                           pages: pages,

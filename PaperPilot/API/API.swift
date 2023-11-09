@@ -165,9 +165,7 @@ extension GRPCAsyncUnaryCall: WithApiException {
 
 extension GRPCStatus {
     var apiException: Exec_ApiException? {
-        get {
-            try? .from(details: self.details)
-        }
+        try? .from(details: self.details)
     }
 }
 

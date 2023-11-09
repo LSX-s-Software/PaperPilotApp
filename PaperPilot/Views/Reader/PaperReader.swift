@@ -186,6 +186,9 @@ extension PaperReader {
                 pdfVM.loading = true
                 let savedURL = try FilePath.paperDirectory(for: paper, create: true)
                     .appending(path: url.lastPathComponent)
+                if FileManager.default.fileExists(atPath: savedURL.path(percentEncoded: false)) {
+                    try FileManager.default.removeItem(at: savedURL)
+                }
                 try FileManager.default.moveItem(at: localURL, to: savedURL)
                 paper.localFile = savedURL
                 paper.status = ModelStatus.normal.rawValue
