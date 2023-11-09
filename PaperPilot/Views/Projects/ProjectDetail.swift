@@ -58,6 +58,11 @@ struct ProjectDetail: View {
                 Text(paper.publication ?? String(localized: "Unknown"))
             }
             .customizationID("publication")
+            .defaultVisibility(.hidden)
+            TableColumn("Event") { paper in
+                Text(paper.event ?? String(localized: "Unknown"))
+            }
+            .customizationID("event")
             TableColumn("Date Added", value: \.formattedCreateTime)
                 .width(70)
                 .customizationID("dateAdded")

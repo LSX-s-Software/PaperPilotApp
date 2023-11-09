@@ -32,8 +32,10 @@ class Paper: Hashable, Identifiable {
     var tags: [String]
     /// 出版日期
     var publicationYear: String?
-    /// 出版方
+    /// 出版物（container title）
     var publication: String?
+    /// 事件
+    var event: String?
     /// 卷号
     var volume: String?
     /// 期号
@@ -83,6 +85,7 @@ class Paper: Hashable, Identifiable {
          tags: [String] = [],
          publicationYear: String? = nil,
          publication: String? = nil,
+         event: String? = nil,
          volume: String? = nil,
          issue: String? = nil,
          pages: String? = nil,
@@ -105,6 +108,7 @@ class Paper: Hashable, Identifiable {
         self.tags = tags
         self.publicationYear = publicationYear
         self.publication = publication
+        self.event = event
         self.volume = volume
         self.issue = issue
         self.pages = pages
@@ -205,10 +209,22 @@ extension Paper {
            datePart.count > 0 {
             self.publicationYear = String(datePart[0])
         }
-        // 解析出版方
+        // 解析出版物信息
+        if let containerTitle = message["container-title"] as? [String] {
+            self.publication = containerTitle.first
+        }
         if let event = message["event"] as? [String: Any],
            let eventName = event["name"] as? String {
-            self.publication = eventName
+            self.event = eventName
+        }
+        if let volume = message["volume"] as? String {
+            self.volume = volume
+        }
+        if let issue = message["issue"] as? String {
+            self.issue = issue
+        }
+        if let page = message["page"] as? String {
+            self.pages = page
         }
         // 解析URL
         if let url = message["URL"] as? String {
