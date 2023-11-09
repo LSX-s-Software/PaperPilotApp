@@ -242,10 +242,8 @@ struct ProjectDetail: View {
                     project.papers.append(newPaper)
                 }
             }
-            for paper in project.papers {
-                if paper.status == ModelStatus.waitingForUpload.rawValue {
-                    try await ModelService.shared.uploadPaper(paper, to: project)
-                }
+            for paper in project.papers where paper.status == ModelStatus.waitingForUpload.rawValue {
+                try await ModelService.shared.uploadPaper(paper, to: project)
             }
             message = nil
         } catch {
