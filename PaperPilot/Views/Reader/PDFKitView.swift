@@ -19,6 +19,8 @@ struct PDFKitView: NSViewRepresentable {
     @Binding var pdfView: PDFView
     /// > Important: 在macOS下无效
     @Binding var markupMode: Bool
+    /// > Important: 在macOS下无效
+    var drawingChanged: ((PDFPage, PKDrawing) -> Void)?
 
     func makeNSView(context: NSViewRepresentableContext<PDFKitView>) -> PDFView {
         pdfView.autoScales = true
@@ -56,6 +58,8 @@ struct PDFKitView: UIViewRepresentable {
     @Binding var pdfView: PDFView
     @Binding var markupMode: Bool
 
+    var drawingChanged: ((PDFPage, PKDrawing) -> Void)?
+
     func makeUIView(context: UIViewRepresentableContext<PDFKitView>) -> PDFView {
         pdfView.pageOverlayViewProvider = context.coordinator
         pdfView.autoScales = true
@@ -78,12 +82,18 @@ struct PDFKitView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator()
+        Coordinator(drawingChanged: drawingChanged)
     }
 
     class Coordinator: NSObject, PDFDocumentDelegate, PDFPageOverlayViewProvider, PKCanvasViewDelegate {
         var toolPicker = PKToolPicker()
         var pageToViewMapping = [PDFPage: PKCanvasView]()
+
+        var drawingChanged: ((PDFPage, PKDrawing) -> Void)?
+
+        init(drawingChanged: ((PDFPage, PKDrawing) -> Void)? = nil) {
+            self.drawingChanged = drawingChanged
+        }
 
         // MARK: - PDFDocument Delegate
         func classForPage() -> AnyClass {
@@ -142,6 +152,11 @@ struct PDFKitView: UIViewRepresentable {
             pageToViewMapping.removeValue(forKey: page)
         }
 
+        func updateDrawing(for page: DrawedPDFPage) {
+            guard let canvasView = pageToViewMapping[page], let drawing = page.drawing else { return }
+            canvasView.drawing = drawing
+        }
+
         // MARK: - PKCanvasView Delegate
         func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
             debounce {
@@ -149,6 +164,7 @@ struct PDFKitView: UIViewRepresentable {
                     return
                 }
                 page.drawing = canvasView.drawing
+                self.drawingChanged?(page, canvasView.drawing)
             }
         }
     }

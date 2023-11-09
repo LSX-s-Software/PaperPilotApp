@@ -38,8 +38,10 @@ struct PDFReader: View {
 
     // 协作
     @State private var connecting = true
-    @State private var shareDocument: ShareDocument<SharedAnnotation>?
+    @State private var sharedAnnotationDoc: ShareDocument<SharedAnnotation>?
+    @State private var sharedCanvasDoc: ShareDocument<SharedCanvas>?
     @State private var sharedAnnotation = SharedAnnotation()
+    @State private var sharedCanvas = SharedCanvas()
     @State private var shareErrorMsg: String?
     @State private var bag = Set<AnyCancellable>()
     let dateFormatter = ISO8601DateFormatter()
@@ -47,7 +49,7 @@ struct PDFReader: View {
     var body: some View {
         @Bindable var findVM = findVM
 
-        PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView, markupMode: $isInMarkUpMode)
+        PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView, markupMode: $isInMarkUpMode, drawingChanged: handleDrawing)
             .navigationDocument(pdf.documentURL!)
 #if os(macOS)
             .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
@@ -190,7 +192,7 @@ struct PDFReader: View {
             }
             .overlay(alignment: .bottomLeading) {
                 if isRemote {
-                    OnlineIndicator(loading: connecting, online: shareDocument != nil, errorMsg: shareErrorMsg)
+                    OnlineIndicator(loading: connecting, online: sharedAnnotationDoc != nil, errorMsg: shareErrorMsg)
                         .offset(x: 20, y: -20)
                 }
             }
@@ -212,15 +214,17 @@ struct PDFReader: View {
                 }
             }
 #endif
+            // MARK: - 协作
             .task(id: paper.id) {
                 guard let id = paper.remoteId else { return }
                 await ShareCoordinator.shared.connect()
                 do {
-                    shareDocument = try await ShareCoordinator.shared.getDocument(id, in: .annotations)
-                    if await shareDocument!.notCreated {
-                        try await shareDocument!.create(SharedAnnotation())
+                    // 标注
+                    sharedAnnotationDoc = try await ShareCoordinator.shared.getDocument(id, in: .annotations)
+                    if await sharedAnnotationDoc!.notCreated {
+                        try await sharedAnnotationDoc!.create(SharedAnnotation())
                     }
-                    await shareDocument!.value
+                    await sharedAnnotationDoc!.value
                         .compactMap { $0 }
                         .receive(on: RunLoop.main)
                         .sink { newAnnotations in
@@ -242,6 +246,32 @@ struct PDFReader: View {
                                 }
                             }
                             sharedAnnotation.annotations = newAnnotations.annotations
+                        }
+                        .store(in: &bag)
+                    // 绘图
+                    sharedCanvasDoc = try await ShareCoordinator.shared.getDocument(id, in: .canvas)
+                    if await sharedCanvasDoc!.notCreated {
+                        try await sharedCanvasDoc!.create(SharedCanvas())
+                    }
+                    await sharedCanvasDoc!.value
+                        .compactMap { $0 }
+                        .receive(on: RunLoop.main)
+                        .sink { newCanvas in
+                            for (page, canvas) in newCanvas.canvas {
+                                if canvas == sharedCanvas.canvas[page] { continue }
+                                if canvas.drawing != sharedCanvas.canvas[page]?.drawing {
+                                    if let drawedPage = pdf.page(at: page) as? DrawedPDFPage,
+                                       let coordinator = pdfVM.pdfView.pageOverlayViewProvider as? PDFKitView.Coordinator {
+                                        drawedPage.drawing = canvas.drawing
+                                        coordinator.updateDrawing(for: drawedPage)
+                                    } else {
+                                        print("Failed to get page \(page)")
+                                    }
+                                } else {
+                                    print("Update skipped for page \(page)")
+                                }
+                                sharedCanvas.canvas[page] = canvas
+                            }
                         }
                         .store(in: &bag)
                 } catch {
@@ -322,7 +352,7 @@ extension PDFReader {
             // 远程论文发送到ShareDB
             Task {
                 do {
-                    try await shareDocument?.change {
+                    try await sharedAnnotationDoc?.change {
                         try $0.annotations.set(sharedAnnotation.annotations)
                     }
                 } catch {
@@ -362,6 +392,29 @@ extension PDFReader {
             let bookmark = Bookmark(page: pageIndex, label: pdfVM.currentPage.label)
             paper.bookmarks.append(bookmark)
         }
+    }
+
+    func handleDrawing(page: PDFPage, drawing: PKDrawing) {
+        #if os(iOS)
+        guard isRemote else { return }
+        let pageIndex = pdf.index(for: page)
+        if sharedCanvas.canvas[pageIndex] != nil {
+            sharedCanvas.canvas[pageIndex]!.drawing = drawing
+            sharedCanvas.canvas[pageIndex]!.authorId = userId
+        } else {
+            sharedCanvas.canvas[pageIndex] = SharedCanvas.Canvas(drawing: drawing, authorId: userId)
+        }
+        Task {
+            do {
+                try await sharedCanvasDoc?.change {
+                    try $0.canvas.set(sharedCanvas.canvas)
+                }
+            } catch {
+                print("update error:", error)
+                shareErrorMsg = error.localizedDescription
+            }
+        }
+        #endif
     }
 }
 
