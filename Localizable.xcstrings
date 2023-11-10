@@ -1282,6 +1282,16 @@
         }
       }
     },
+    "Markup" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标注"
+          }
+        }
+      }
+    },
     "Members" : {
       "localizations" : {
         "zh-Hans" : {

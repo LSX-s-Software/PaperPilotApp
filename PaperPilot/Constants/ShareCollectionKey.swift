@@ -13,4 +13,6 @@ enum ShareCollectionKey: String {
     case notes
     /// 标注
     case annotations
+    /// PencilKit画布
+    case canvas
 }

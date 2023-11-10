@@ -7,6 +7,7 @@
 
 import Foundation
 import PDFKit
+import PencilKit
 
 struct SharedNote: Codable {
     var content = ""
@@ -33,4 +34,15 @@ struct SharedAnnotation: Codable {
     private enum CodingKeys: String, CodingKey {
         case annotations
     }
+}
+
+struct SharedCanvas: Codable {
+    struct Canvas: Codable, Equatable {
+        /// 绘图数据
+        var drawing: PKDrawing
+        /// 作者ID
+        var authorId: User.ID
+    }
+
+    var canvas = [Int: Canvas]()
 }

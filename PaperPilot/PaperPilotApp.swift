@@ -27,6 +27,7 @@ struct PaperPilotApp: App {
     @StateObject private var navigationContext = NavigationContext()
 
     init() {
+        print("App Home:", NSHomeDirectory())
         do {
             modelContainer = try ModelContainer(for: Paper.self, Project.self, Bookmark.self, User.self, MicroserviceStatus.self)
             ModelService.createSharedInstance(modelContainer: modelContainer)
