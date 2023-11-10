@@ -23,6 +23,25 @@ class PKPDFAnnotation: PDFAnnotation {
     static let annotationKey = PDFAnnotationKey(rawValue: "drawingData")
     static let subtypeString = String(PDFAnnotationSubtype.pencilKitDrawing.rawValue.dropFirst())
 
+    init?(page: PDFPage, drawing: PKDrawing) {
+        let pageBounds = page.bounds(for: .cropBox)
+        let annotationBounds = CGRect(x: drawing.bounds.minX,
+                                      y: pageBounds.height - drawing.bounds.maxY,
+                                      width: drawing.bounds.width,
+                                      height: drawing.bounds.height)
+        super.init(bounds: annotationBounds, forType: .pencilKitDrawing, withProperties: nil)
+        if let codedData = try? NSKeyedArchiver.archivedData(withRootObject: drawing, requiringSecureCoding: true) {
+            self.setValue(codedData, forAnnotationKey: PKPDFAnnotation.annotationKey)
+        } else {
+            logger.warning("Failed to archive drawing")
+            return nil
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
 #if os(macOS)
     override func draw(with box: PDFDisplayBox, in context: CGContext) {
         super.draw(with: box, in: context)
@@ -68,22 +87,14 @@ extension PDFDocument {
     func writeWithMarkup(to url: URL, withOptions options: [PDFDocumentWriteOption: Any]? = nil) -> Bool {
         for i in 0..<pageCount {
             if let page = page(at: i) as? DrawedPDFPage, let drawing = page.drawing {
-                // 获取已有的标注数据
-                let existingMarkupAnnotation = page.annotations.filter({ $0.type == PKPDFAnnotation.subtypeString })
-
-                let pageBounds = page.bounds(for: .cropBox)
-                let annotationBounds = CGRect(x: drawing.bounds.minX,
-                                              y: pageBounds.height - drawing.bounds.maxY,
-                                              width: drawing.bounds.width,
-                                              height: drawing.bounds.height)
-                let markupAnnotation = PDFAnnotation(bounds: annotationBounds, forType: .pencilKitDrawing, withProperties: nil)
-                if let codedData = try? NSKeyedArchiver.archivedData(withRootObject: drawing, requiringSecureCoding: true) {
-                    markupAnnotation.setValue(codedData, forAnnotationKey: PKPDFAnnotation.annotationKey)
-                    page.addAnnotation(markupAnnotation)
+                if let newMarkupAnnotation = PKPDFAnnotation(page: page, drawing: drawing) {
+                    // 获取已有的标注数据
+                    let existingMarkupAnnotation = page.annotations.filter({ $0.type == PKPDFAnnotation.subtypeString })
+                    // 添加新的标注
+                    page.addAnnotation(newMarkupAnnotation)
                     // 删除原有的标注数据
                     existingMarkupAnnotation.forEach({ page.removeAnnotation($0) })
                 } else {
-                    logger.warning("Failed to archive drawing")
                     return false
                 }
             }

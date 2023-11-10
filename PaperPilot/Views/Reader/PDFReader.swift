@@ -49,7 +49,7 @@ struct PDFReader: View {
     var body: some View {
         @Bindable var findVM = findVM
 
-        PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView, markupMode: $isInMarkUpMode, drawingChanged: handleDrawing)
+        PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView, markupMode: $isInMarkUpMode, drawingChanged: handleDrawingChanged)
             .navigationDocument(pdf.documentURL!)
 #if os(macOS)
             .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
@@ -120,8 +120,8 @@ struct PDFReader: View {
                     .symbolVariant(isInMarkUpMode ? .fill : .none)
                 }
 #endif
+                // MARK: 标注
                 ToolbarItem(id: "annotation") {
-                    // MARK: 标注
                     ControlGroup {
                         Picker("Highlighter Color", selection: $annotationColor) {
                             ForEach(HighlighterColor.allCases) { color in
@@ -394,7 +394,7 @@ extension PDFReader {
         }
     }
 
-    func handleDrawing(page: PDFPage, drawing: PKDrawing) {
+    func handleDrawingChanged(page: PDFPage, drawing: PKDrawing) {
         #if os(iOS)
         guard isRemote else { return }
         let pageIndex = pdf.index(for: page)
