@@ -223,6 +223,7 @@ struct ProjectDetail: View {
         withAnimation {
             updating = true
         }
+        let dispatchTime = DispatchTime.now() + 0.6
         do {
             let papers = try await API.shared.paper.listPaper(.with {
                 $0.projectID = projectId
@@ -249,8 +250,10 @@ struct ProjectDetail: View {
         } catch {
             message = String(localized: "Failed to update: \(error.localizedDescription)")
         }
-        withAnimation {
-            updating = false
+        DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
+            withAnimation {
+                updating = false
+            }
         }
     }
 
