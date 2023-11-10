@@ -55,7 +55,6 @@ class PKPDFAnnotation: PDFAnnotation {
                let drawingData = self.value(forAnnotationKey: Self.annotationKey) as? Data {
                 do {
                     if let drawing = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(drawingData) as? PKDrawing {
-                        logger.trace("Successfully decoded drawing")
                         page.drawing = drawing
                     } else {
                         logger.warning("Failed to decode PKDrawing")
@@ -89,11 +88,11 @@ extension PDFDocument {
             if let page = page(at: i) as? DrawedPDFPage, let drawing = page.drawing {
                 if let newMarkupAnnotation = PKPDFAnnotation(page: page, drawing: drawing) {
                     // 获取已有的标注数据
-                    let existingMarkupAnnotation = page.annotations.filter({ $0.type == PKPDFAnnotation.subtypeString })
+                    let existingMarkupAnnotation = page.annotations.filter { $0.type == PKPDFAnnotation.subtypeString }
                     // 添加新的标注
                     page.addAnnotation(newMarkupAnnotation)
                     // 删除原有的标注数据
-                    existingMarkupAnnotation.forEach({ page.removeAnnotation($0) })
+                    existingMarkupAnnotation.forEach { page.removeAnnotation($0) }
                 } else {
                     return false
                 }

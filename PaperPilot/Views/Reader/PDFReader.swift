@@ -260,10 +260,20 @@ struct PDFReader: View {
                             for (page, canvas) in newCanvas.canvas {
                                 if canvas == sharedCanvas.canvas[page] { continue }
                                 if canvas.drawing != sharedCanvas.canvas[page]?.drawing {
-                                    if let drawedPage = pdf.page(at: page) as? DrawedPDFPage,
-                                       let coordinator = pdfVM.pdfView.pageOverlayViewProvider as? PDFKitView.Coordinator {
+                                    if let drawedPage = pdf.page(at: page) as? DrawedPDFPage {
                                         drawedPage.drawing = canvas.drawing
-                                        coordinator.updateDrawing(for: drawedPage)
+                                        #if os(macOS)
+                                        if let annotation = PKPDFAnnotation(page: drawedPage, drawing: canvas.drawing) {
+                                            drawedPage.annotations
+                                                .filter { $0.type == PKPDFAnnotation.subtypeString }
+                                                .forEach { drawedPage.removeAnnotation($0) }
+                                            drawedPage.addAnnotation(annotation)
+                                        }
+                                        #else
+                                        if let coordinator = pdfVM.pdfView.pageOverlayViewProvider as? PDFKitView.Coordinator {
+                                            coordinator.updateDrawing(for: drawedPage)
+                                        }
+                                        #endif
                                     } else {
                                         print("Failed to get page \(page)")
                                     }
