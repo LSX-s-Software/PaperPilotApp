@@ -575,6 +575,16 @@
         }
       }
     },
+    "Drop PDF File to Create New Paper" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将PDF文件拖放至此来添加论文"
+          }
+        }
+      }
+    },
     "Edit" : {
       "extractionState" : "manual",
       "localizations" : {

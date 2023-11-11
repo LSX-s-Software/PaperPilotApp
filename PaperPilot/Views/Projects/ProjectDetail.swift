@@ -158,6 +158,27 @@ struct ProjectDetail: View {
         .navigationDestination(item: $currentPaper) { paper in
             PaperReader(paper: paper)
         }
+        .overlay {
+            if isDroping {
+                VStack(spacing: 8) {
+                    Image(systemName: "arrow.down.doc.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(Color.accentColor)
+                        .imageScale(.large)
+                    Text("Drop PDF File to Create New Paper")
+                        .foregroundStyle(.secondary)
+                }
+                .font(.title)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.ultraThinMaterial)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(style: StrokeStyle(lineWidth: 3, dash: [5]))
+                        .foregroundStyle(.secondary)
+                        .padding()
+                }
+            }
+        }
         .overlay(alignment: .bottom) {
             if updating || message != nil {
                 HStack(spacing: 8) {
@@ -300,6 +321,11 @@ struct ProjectDetail: View {
             withAnimation {
                 message = String(localized: "Failed to import: \(String(localized: "Unsupported file type"))")
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                withAnimation {
+                    message = nil
+                }
+            }
             return false
         }
         let paper = Paper(title: url.deletingPathExtension().lastPathComponent)
@@ -329,6 +355,7 @@ struct ProjectDetail: View {
 #Preview {
     ProjectDetail(project: ModelData.project1)
         .modelContainer(previewContainer)
+        .environment(AppState())
 #if os(macOS)
         .frame(width: 800, height: 600)
 #endif
