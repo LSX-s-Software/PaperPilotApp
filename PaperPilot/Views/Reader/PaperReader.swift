@@ -26,6 +26,7 @@ struct PaperReader: View {
 
     @State private var errorDescription: String?
     @State private var isImporting = false
+    @State private var isDroping = false
     @State private var tocContent: TOCContentType = .none
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     @State private var translatorVM = TranslatorViewModel()
@@ -104,6 +105,7 @@ struct PaperReader: View {
                         .symbolRenderingMode(.hierarchical)
                         .foregroundStyle(downloadVM.downloading ? Color.accentColor : .red)
                         .font(.title)
+                        .imageScale(.large)
                         if let errorDescription = errorDescription {
                             Text(errorDescription)
                                 .font(.title)
@@ -114,18 +116,44 @@ struct PaperReader: View {
                             Text("This paper has no PDF file attached.")
                                 .font(.title)
                                 .foregroundStyle(.secondary)
-                            Button("Add PDF File") {
-                                isImporting.toggle()
-                            }
-                            .fileImporter(
-                                isPresented: $isImporting,
-                                allowedContentTypes: [.pdf],
-                                onCompletion: handleImportFile
-                            )
-                            .fileDialogMessage("Select a PDF file to import")
-                            .fileDialogConfirmationLabel("Import")
-                            .dropDestination(for: URL.self) { urls, _ in
-                                handleDropFile(urls: urls)
+                            VStack(spacing: 8) {
+                                Button("Add PDF File") {
+                                    isImporting.toggle()
+                                }
+                                .fileImporter(
+                                    isPresented: $isImporting,
+                                    allowedContentTypes: [.pdf],
+                                    onCompletion: handleImportFile
+                                )
+                                .fileDialogMessage("Select a PDF file to import")
+                                .fileDialogConfirmationLabel("Import")
+
+                                Text("Or")
+                                    .foregroundStyle(.secondary)
+
+                                VStack(spacing: 8) {
+                                    Image(systemName: "arrow.down.doc.fill")
+                                        .symbolRenderingMode(isDroping ? .monochrome : .hierarchical)
+                                        .foregroundStyle(Color.accentColor)
+                                        .imageScale(.large)
+                                    Text("Drag and Drop PDF Here")
+                                        .foregroundStyle(isDroping ? .primary : .secondary)
+                                }
+                                .font(.title2)
+                                .padding(40)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .strokeBorder(style: StrokeStyle(lineWidth: 3, dash: [5]))
+                                        .foregroundStyle(isDroping ? .primary : .secondary)
+                                }
+                                .dropDestination(for: URL.self) { urls, _ in
+                                    handleDropFile(urls: urls)
+                                } isTargeted: { targeted in
+                                    withAnimation {
+                                        isDroping = targeted
+                                    }
+                                }
                             }
                         } else if downloadVM.downloading {
                             Text("Downloading PDF...")
@@ -260,6 +288,7 @@ extension PaperReader {
 
 #Preview {
     PaperReader(paper: ModelData.paper1)
+        .environment(AppState())
 #if os(macOS)
         .frame(width: 900, height: 600)
 #endif
