@@ -40,8 +40,7 @@ class ModelData {
                               publicationYear: "2022",
                               publication: "IEEE Transactions on Natural Language Processing",
                               volume: "10",
-                              issue: "2",
-                              localFile: Bundle.main.url(forResource: "sample", withExtension: "pdf"))
+                              issue: "2")
     static let user1 = User(remoteId: UUID().uuidString, username: "John Appleseed")
     static let user2 = User(remoteId: UUID().uuidString, username: "David Patterson")
     static let project1 = Project(remoteId: UUID().uuidString, name: "Demo project", desc: "CVPR24 Project", members: [user1, user2], papers: [paper1, paper2, paper3])

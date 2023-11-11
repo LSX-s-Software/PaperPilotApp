@@ -26,6 +26,7 @@ struct PaperReader: View {
 
     @State private var errorDescription: String?
     @State private var isImporting = false
+    @State private var isDroping = false
     @State private var tocContent: TOCContentType = .none
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     @State private var translatorVM = TranslatorViewModel()
@@ -104,6 +105,7 @@ struct PaperReader: View {
                         .symbolRenderingMode(.hierarchical)
                         .foregroundStyle(downloadVM.downloading ? Color.accentColor : .red)
                         .font(.title)
+                        .imageScale(.large)
                         if let errorDescription = errorDescription {
                             Text(errorDescription)
                                 .font(.title)
@@ -114,16 +116,45 @@ struct PaperReader: View {
                             Text("This paper has no PDF file attached.")
                                 .font(.title)
                                 .foregroundStyle(.secondary)
-                            Button("Add PDF File") {
-                                isImporting.toggle()
+                            VStack(spacing: 8) {
+                                Button("Add PDF File") {
+                                    isImporting.toggle()
+                                }
+                                .fileImporter(
+                                    isPresented: $isImporting,
+                                    allowedContentTypes: [.pdf],
+                                    onCompletion: handleImportFile
+                                )
+                                .fileDialogMessage("Select a PDF file to import")
+                                .fileDialogConfirmationLabel("Import")
+
+                                Text("Or")
+                                    .foregroundStyle(.secondary)
+
+                                VStack(spacing: 8) {
+                                    Image(systemName: "arrow.down.doc.fill")
+                                        .symbolRenderingMode(isDroping ? .monochrome : .hierarchical)
+                                        .foregroundStyle(Color.accentColor)
+                                        .imageScale(.large)
+                                    Text("Drag and Drop PDF Here")
+                                        .foregroundStyle(isDroping ? .primary : .secondary)
+                                }
+                                .font(.title2)
+                                .padding(40)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .strokeBorder(style: StrokeStyle(lineWidth: 3, dash: [5]))
+                                        .foregroundStyle(isDroping ? .primary : .secondary)
+                                }
+                                .dropDestination(for: URL.self) { urls, _ in
+                                    handleDropFile(urls: urls)
+                                } isTargeted: { targeted in
+                                    withAnimation {
+                                        isDroping = targeted
+                                    }
+                                }
                             }
-                            .fileImporter(
-                                isPresented: $isImporting,
-                                allowedContentTypes: [.pdf],
-                                onCompletion: handleImportFile
-                            )
-                            .fileDialogMessage("Select a PDF file to import")
-                            .fileDialogConfirmationLabel("Import")
                         } else if downloadVM.downloading {
                             Text("Downloading PDF...")
                                 .font(.title)
@@ -201,48 +232,66 @@ extension PaperReader {
             }
         }
     }
-    
-    func handleImportFile(result: Result<URL, Error>) {
-        pdfVM.loading = true
-        Task {
+
+    @discardableResult
+    func importFile(url: URL, securityScoped: Bool = true) -> Bool {
+        let didStartAccessing = !securityScoped || url.startAccessingSecurityScopedResource()
+        defer {
+            if securityScoped {
+                url.stopAccessingSecurityScopedResource()
+            }
+        }
+        if didStartAccessing {
             do {
-                switch result {
-                case .success(let url):
-                    let didStartAccessing = url.startAccessingSecurityScopedResource()
-                    defer { url.stopAccessingSecurityScopedResource() }
-                    if didStartAccessing {
-                        let savedURL = try FilePath.paperDirectory(for: paper, create: true)
-                            .appending(path: url.lastPathComponent)
-                        if FileManager.default.fileExists(atPath: savedURL.path(percentEncoded: false)) {
-                            try FileManager.default.removeItem(at: savedURL)
-                        }
-                        try FileManager.default.copyItem(at: url, to: savedURL)
-                        paper.localFile = savedURL
-                        if paper.project?.remoteId == nil {
-                            paper.status = ModelStatus.normal.rawValue
-                        } else {
-                            paper.status = ModelStatus.waitingForUpload.rawValue
-                        }
-                        pdfVM.pdf = PDFDocument(url: savedURL)
-                        tocContent = .outline
-                        columnVisibility = .all
-                        errorDescription = nil
-                    } else {
-                        errorDescription = String(localized: "You don't have access to the PDF.")
-                    }
-                case .failure(let error):
-                    throw error
+                let savedURL = try FilePath.paperDirectory(for: paper, create: true)
+                    .appending(path: url.lastPathComponent)
+                if FileManager.default.fileExists(atPath: savedURL.path(percentEncoded: false)) {
+                    try FileManager.default.removeItem(at: savedURL)
                 }
+                try FileManager.default.copyItem(at: url, to: savedURL)
+                paper.localFile = savedURL
+                if paper.project?.remoteId == nil {
+                    paper.status = ModelStatus.normal.rawValue
+                } else {
+                    paper.status = ModelStatus.waitingForUpload.rawValue
+                }
+                pdfVM.pdf = PDFDocument(url: savedURL)
+                tocContent = .outline
+                columnVisibility = .all
+                errorDescription = nil
+                return true
             } catch {
                 errorDescription = error.localizedDescription
+                return false
             }
-            pdfVM.loading = false
+        } else {
+            errorDescription = String(localized: "You don't have access to the PDF.")
+            return false
         }
+    }
+
+    func handleImportFile(result: Result<URL, Error>) {
+        switch result {
+        case .success(let url):
+            pdfVM.loading = true
+            Task {
+                importFile(url: url)
+                pdfVM.loading = false
+            }
+        case .failure(let error):
+            errorDescription = error.localizedDescription
+        }
+    }
+
+    func handleDropFile(urls: [URL]) -> Bool {
+        guard let url = urls.first(where: { $0.pathExtension == "pdf" }) else { return false }
+        return importFile(url: url, securityScoped: false)
     }
 }
 
 #Preview {
     PaperReader(paper: ModelData.paper1)
+        .environment(AppState())
 #if os(macOS)
         .frame(width: 900, height: 600)
 #endif

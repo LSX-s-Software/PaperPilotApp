@@ -565,6 +565,26 @@
         }
       }
     },
+    "Drag and Drop PDF Here" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将PDF文件拖放至此"
+          }
+        }
+      }
+    },
+    "Drop PDF File to Create New Paper" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将PDF文件拖放至此来添加论文"
+          }
+        }
+      }
+    },
     "Edit" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -742,6 +762,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导入文件失败"
+          }
+        }
+      }
+    },
+    "Failed to import: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入失败：%@"
           }
         }
       }
@@ -1490,6 +1520,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "可选信息"
+          }
+        }
+      }
+    },
+    "Or" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "或者"
           }
         }
       }
@@ -2305,6 +2345,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知错误"
+          }
+        }
+      }
+    },
+    "Unsupported file type" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持的文件类型"
           }
         }
       }

@@ -27,6 +27,8 @@ struct ProjectDetail: View {
     @State private var updating = false
     @State private var progress: Progress?
     @State private var message: String?
+    @State private var isDroping = false
+    @State private var newPaper: Paper?
 
     var body: some View {
         @Bindable var appState = appState
@@ -143,8 +145,39 @@ struct ProjectDetail: View {
             }
 #endif
         }
+        .dropDestination(for: URL.self) { urls, _ in
+            handleDropFile(urls: urls)
+        } isTargeted: { targeted in
+            withAnimation {
+                isDroping = targeted
+            }
+        }
+        .sheet(item: $newPaper) { paper in
+            NewPaperInfoView(project: project, paper: paper, shouldClose: Binding { false } set: { if $0 { newPaper = nil } })
+        }
         .navigationDestination(item: $currentPaper) { paper in
             PaperReader(paper: paper)
+        }
+        .overlay {
+            if isDroping {
+                VStack(spacing: 8) {
+                    Image(systemName: "arrow.down.doc.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(Color.accentColor)
+                        .imageScale(.large)
+                    Text("Drop PDF File to Create New Paper")
+                        .foregroundStyle(.secondary)
+                }
+                .font(.title)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.ultraThinMaterial)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(style: StrokeStyle(lineWidth: 3, dash: [5]))
+                        .foregroundStyle(.secondary)
+                        .padding()
+                }
+            }
         }
         .overlay(alignment: .bottom) {
             if updating || message != nil {
@@ -282,11 +315,47 @@ struct ProjectDetail: View {
             }
         }
     }
+
+    func handleDropFile(urls: [URL]) -> Bool {
+        guard let url = urls.first(where: { $0.pathExtension == "pdf" }) else {
+            withAnimation {
+                message = String(localized: "Failed to import: \(String(localized: "Unsupported file type"))")
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                withAnimation {
+                    message = nil
+                }
+            }
+            return false
+        }
+        let paper = Paper(title: url.deletingPathExtension().lastPathComponent)
+        paper.project = project
+        do {
+            let savedURL = try FilePath.paperDirectory(for: paper, create: true)
+                .appending(path: url.lastPathComponent)
+            try FileManager.default.copyItem(at: url, to: savedURL)
+            paper.localFile = savedURL
+            if project.remoteId != nil {
+                paper.status = ModelStatus.waitingForUpload.rawValue
+            }
+            newPaper = paper
+            withAnimation {
+                message = nil
+            }
+            return true
+        } catch {
+            withAnimation {
+                message = String(localized: "Failed to import: \(error.localizedDescription)")
+            }
+            return false
+        }
+    }
 }
 
 #Preview {
     ProjectDetail(project: ModelData.project1)
         .modelContainer(previewContainer)
+        .environment(AppState())
 #if os(macOS)
         .frame(width: 800, height: 600)
 #endif
