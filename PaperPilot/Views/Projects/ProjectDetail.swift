@@ -27,6 +27,8 @@ struct ProjectDetail: View {
     @State private var updating = false
     @State private var progress: Progress?
     @State private var message: String?
+    @State private var isDroping = false
+    @State private var newPaper: Paper?
 
     var body: some View {
         @Bindable var appState = appState
@@ -142,6 +144,16 @@ struct ProjectDetail: View {
                 openWindow(id: AppWindow.reader.id, value: id)
             }
 #endif
+        }
+        .dropDestination(for: URL.self) { urls, _ in
+            handleDropFile(urls: urls)
+        } isTargeted: { targeted in
+            withAnimation {
+                isDroping = targeted
+            }
+        }
+        .sheet(item: $newPaper) { paper in
+            NewPaperInfoView(project: project, paper: paper, shouldClose: Binding { false } set: { if $0 { newPaper = nil } })
         }
         .navigationDestination(item: $currentPaper) { paper in
             PaperReader(paper: paper)
@@ -280,6 +292,36 @@ struct ProjectDetail: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 progress = nil
             }
+        }
+    }
+
+    func handleDropFile(urls: [URL]) -> Bool {
+        guard let url = urls.first(where: { $0.pathExtension == "pdf" }) else {
+            withAnimation {
+                message = String(localized: "Failed to import: \(String(localized: "Unsupported file type"))")
+            }
+            return false
+        }
+        let paper = Paper(title: url.deletingPathExtension().lastPathComponent)
+        paper.project = project
+        do {
+            let savedURL = try FilePath.paperDirectory(for: paper, create: true)
+                .appending(path: url.lastPathComponent)
+            try FileManager.default.copyItem(at: url, to: savedURL)
+            paper.localFile = savedURL
+            if project.remoteId != nil {
+                paper.status = ModelStatus.waitingForUpload.rawValue
+            }
+            newPaper = paper
+            withAnimation {
+                message = nil
+            }
+            return true
+        } catch {
+            withAnimation {
+                message = String(localized: "Failed to import: \(error.localizedDescription)")
+            }
+            return false
         }
     }
 }

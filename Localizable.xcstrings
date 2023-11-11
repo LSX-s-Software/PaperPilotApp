@@ -756,6 +756,16 @@
         }
       }
     },
+    "Failed to import: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入失败：%@"
+          }
+        }
+      }
+    },
     "Failed to join project" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2325,6 +2335,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知错误"
+          }
+        }
+      }
+    },
+    "Unsupported file type" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持的文件类型"
           }
         }
       }

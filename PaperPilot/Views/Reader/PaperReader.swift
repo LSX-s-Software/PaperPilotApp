@@ -233,7 +233,8 @@ extension PaperReader {
         }
     }
 
-    func importFile(url: URL, securityScoped: Bool = true) {
+    @discardableResult
+    func importFile(url: URL, securityScoped: Bool = true) -> Bool {
         let didStartAccessing = !securityScoped || url.startAccessingSecurityScopedResource()
         defer {
             if securityScoped {
@@ -258,11 +259,14 @@ extension PaperReader {
                 tocContent = .outline
                 columnVisibility = .all
                 errorDescription = nil
+                return true
             } catch {
                 errorDescription = error.localizedDescription
+                return false
             }
         } else {
             errorDescription = String(localized: "You don't have access to the PDF.")
+            return false
         }
     }
 
@@ -281,8 +285,7 @@ extension PaperReader {
 
     func handleDropFile(urls: [URL]) -> Bool {
         guard let url = urls.first(where: { $0.pathExtension == "pdf" }) else { return false }
-        importFile(url: url, securityScoped: false)
-        return true
+        return importFile(url: url, securityScoped: false)
     }
 }
 
