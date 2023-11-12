@@ -100,7 +100,6 @@
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
 		F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */; };
 		F5D8EEED2AD42D5100501B0E /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* AccountView.swift */; };
-		F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */ = {isa = PBXBuildFile; productRef = F5D8EEF32AD4559300501B0E /* SimpleCodable */; };
 		F5D8EF012AD4F62E00501B0E /* StorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EF002AD4F62E00501B0E /* StorageKey.swift */; };
 		F5DF33FB2AEA086200624672 /* PaperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF33FA2AEA086200624672 /* PaperService.swift */; };
 		F5DF34052AEB537500624672 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF34042AEB537500624672 /* Image.swift */; };
@@ -243,7 +242,6 @@
 				F5008D772AED50BD004F326E /* ShareKit in Frameworks */,
 				279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */,
 				F5A2F4082AF53D5D0045EF12 /* SwiftDown in Frameworks */,
-				F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */,
 				F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */,
 				F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */,
 				768A92EB2AF3E21B006068F3 /* CGRPCZlib in Frameworks */,
@@ -592,7 +590,6 @@
 				279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */,
 				279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */,
 				279F2D002AC8276600FEA9D8 /* protoc-gen-swift */,
-				F5D8EEF32AD4559300501B0E /* SimpleCodable */,
 				F5CF43332ADC1FB6004F1A16 /* WindowManagement */,
 				F5643F362AE37C9C00186A2F /* Throttler */,
 				F5008D762AED50BD004F326E /* ShareKit */,
@@ -639,7 +636,6 @@
 				F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
 				279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */,
-				F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */,
 				F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */,
 				F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */,
 				F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */,
@@ -1191,14 +1187,6 @@
 				minimumVersion = 0.53.0;
 			};
 		};
-		F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Events-Mate-Apps/SimpleCodableMacro.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1286,11 +1274,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
-		};
-		F5D8EEF32AD4559300501B0E /* SimpleCodable */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */;
-			productName = SimpleCodable;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

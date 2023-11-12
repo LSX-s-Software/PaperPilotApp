@@ -46,15 +46,6 @@
       }
     },
     {
-      "identity" : "simplecodablemacro",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Events-Mate-Apps/SimpleCodableMacro.git",
-      "state" : {
-        "revision" : "96600a9ffdd5378c6114b9d599e22af51e233842",
-        "version" : "0.0.1"
-      }
-    },
-    {
       "identity" : "sourcekitten",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jpsim/SourceKitten.git",
