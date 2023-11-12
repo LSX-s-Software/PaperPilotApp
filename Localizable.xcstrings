@@ -445,16 +445,6 @@
         }
       }
     },
-    "Data downloaded cannot be converted to an NSImage." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "下载的数据不能转换成NSImage。"
-          }
-        }
-      }
-    },
     "Date Added" : {
       "localizations" : {
         "zh-Hans" : {
@@ -642,16 +632,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入文本查看翻译"
-          }
-        }
-      }
-    },
-    "Error" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "错误"
           }
         }
       }

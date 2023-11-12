@@ -11,7 +11,6 @@
 		273E52EE2AE80072004331FB /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E52ED2AE80072004331FB /* Alert.swift */; };
 		273E52F42AE80E1C004331FB /* ModelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E52F32AE80E1C004331FB /* ModelService.swift */; };
 		273E52F92AE8FF3F004331FB /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E52F82AE8FF3F004331FB /* ProjectService.swift */; };
-		27428DE12AE2F86C00BBACFB /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */; };
 		279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */; };
 		279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */; };
 		279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */ = {isa = PBXBuildFile; productRef = 279F2D002AC8276600FEA9D8 /* protoc-gen-swift */; };
@@ -45,6 +44,7 @@
 		F5145E852AD59172001860E0 /* NewPaperInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E842AD59172001860E0 /* NewPaperInfoView.swift */; };
 		F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F517100C2ADD690A002E2D79 /* TimerView.swift */; };
 		F51710112ADD78AC002E2D79 /* HighlighterColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51710102ADD78AC002E2D79 /* HighlighterColor.swift */; };
+		F535B75F2B01262D001E8957 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = F535B75E2B01262D001E8957 /* CachedAsyncImage */; };
 		F536A6022AE61E0F0042B86A /* ModelStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F536A6012AE61E0F0042B86A /* ModelStatus.swift */; };
 		F53D81402AC02A7A00865B80 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D813F2AC02A7A00865B80 /* Project.swift */; };
 		F53D81422AC02AF800865B80 /* Paper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81412AC02AF800865B80 /* Paper.swift */; };
@@ -130,7 +130,6 @@
 		273E52ED2AE80072004331FB /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		273E52F32AE80E1C004331FB /* ModelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelService.swift; sourceTree = "<group>"; };
 		273E52F82AE8FF3F004331FB /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
-		27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
 		279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "grpc-swift-config.json"; sourceTree = "<group>"; };
 		279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "swift-protobuf-config.json"; sourceTree = "<group>"; };
 		279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -247,6 +246,7 @@
 				279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */,
 				F5643F372AE37C9C00186A2F /* Throttler in Frameworks */,
 				768A92EF2AF3E21B006068F3 /* protoc-gen-grpc-swift in Frameworks */,
+				F535B75F2B01262D001E8957 /* CachedAsyncImage in Frameworks */,
 				F50B57822AF68E4B007C8FC2 /* XMLDocument in Frameworks */,
 				279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */,
 			);
@@ -417,7 +417,6 @@
 			children = (
 				F59AD1022ACB0CA200DFABCC /* AddTagView.swift */,
 				F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */,
-				27428DE02AE2F86C00BBACFB /* CachedAsyncImage.swift */,
 				F547D0E52AC56F89006D2216 /* EditableText.swift */,
 				F5DF34042AEB537500624672 /* Image.swift */,
 				F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */,
@@ -595,6 +594,7 @@
 				768A92EE2AF3E21B006068F3 /* protoc-gen-grpc-swift */,
 				F5A2F4072AF53D5D0045EF12 /* SwiftDown */,
 				F50B57812AF68E4B007C8FC2 /* XMLDocument */,
+				F535B75E2B01262D001E8957 /* CachedAsyncImage */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -640,6 +640,7 @@
 				768A92E92AF3E21B006068F3 /* XCRemoteSwiftPackageReference "grpc-swift" */,
 				F5A2F4062AF53D5D0045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */,
 				F50B57802AF68E4B007C8FC2 /* XCRemoteSwiftPackageReference "XMLDocument" */,
+				F535B75D2B01262D001E8957 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -713,7 +714,6 @@
 				F58DF0292AE2A60C001D4D68 /* ImageTitleForm.swift in Sources */,
 				F58603B12AE80777001EBFD4 /* ServiceStatusView.swift in Sources */,
 				F58603A72AE7EDDF001EBFD4 /* Tooltip.swift in Sources */,
-				27428DE12AE2F86C00BBACFB /* CachedAsyncImage.swift in Sources */,
 				F5643F482AE430F600186A2F /* Path.swift in Sources */,
 				F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */,
 				F5131C0D2AEC114A0077393E /* PDFViewModel.swift in Sources */,
@@ -1127,6 +1127,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		F535B75D2B01262D001E8957 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 		F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ciaranrobrien/SwiftUIFlow.git";
@@ -1245,6 +1253,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F50B57802AF68E4B007C8FC2 /* XCRemoteSwiftPackageReference "XMLDocument" */;
 			productName = XMLDocument;
+		};
+		F535B75E2B01262D001E8957 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F535B75D2B01262D001E8957 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
 		};
 		F547D0DC2AC52A6F006D2216 /* SwiftUIFlow */ = {
 			isa = XCSwiftPackageProductDependency;
