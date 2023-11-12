@@ -138,6 +138,16 @@
         }
       }
     },
+    "AI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI"
+          }
+        }
+      }
+    },
     "Arabic" : {
       "localizations" : {
         "zh-Hans" : {
@@ -194,6 +204,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "确定要退出登录吗？"
+          }
+        }
+      }
+    },
+    "Ask" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "询问"
+          }
+        }
+      }
+    },
+    "Ask ChatGPT" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "询问ChatGPT"
           }
         }
       }
@@ -319,6 +349,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "区分大小写"
+          }
+        }
+      }
+    },
+    "ChatGPT" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ChatGPT"
           }
         }
       }
@@ -666,6 +706,26 @@
         }
       }
     },
+    "Explain" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解释"
+          }
+        }
+      }
+    },
+    "Explain selected text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解释选中的文本"
+          }
+        }
+      }
+    },
     "Failed to Add Paper" : {
       "localizations" : {
         "zh-Hans" : {
@@ -983,6 +1043,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "绿色"
+          }
+        }
+      }
+    },
+    "Hello @%@! Feel free to ask questions about the paper you're reading." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "@%@你好！有任何关于你正在阅读的论文的问题都可以随时问我。"
           }
         }
       }
@@ -1936,6 +2006,26 @@
         }
       }
     },
+    "Rewrite" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重写"
+          }
+        }
+      }
+    },
+    "Rewrite selected text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重写选中的文本"
+          }
+        }
+      }
+    },
     "Russian" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1992,6 +2082,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请从左侧边栏选择项目。"
+          }
+        }
+      }
+    },
+    "Select some text in the PDF" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在PDF中选中文本"
           }
         }
       }
@@ -2136,6 +2236,26 @@
         }
       }
     },
+    "Summarize" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总结"
+          }
+        }
+      }
+    },
+    "Summarize selected text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总结选中的文本"
+          }
+        }
+      }
+    },
     "Supplement Information" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2172,6 +2292,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "测试中…"
+          }
+        }
+      }
+    },
+    "The generated content exceeds the maximum length." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成的内容超过了长度限制"
+          }
+        }
+      }
+    },
+    "The generated content is filtered." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成的内容被过滤"
+          }
+        }
+      }
+    },
+    "Thinking..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "思考中…"
           }
         }
       }
@@ -2267,6 +2417,16 @@
         }
       }
     },
+    "Translate selected text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译选中的文本"
+          }
+        }
+      }
+    },
     "Translated Text" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2345,6 +2505,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知错误"
+          }
+        }
+      }
+    },
+    "Unknown error: %lld" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知错误：%lld"
           }
         }
       }

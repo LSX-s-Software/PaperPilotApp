@@ -75,6 +75,8 @@
 		F58DF0292AE2A60C001D4D68 /* ImageTitleForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */; };
 		F58DF02D2AE2B743001D4D68 /* ImageTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */; };
 		F58DF0332AE2C5BE001D4D68 /* TranslatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */; };
+		F59324D72AFFC41100D9B8F0 /* GPTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59324D62AFFC41100D9B8F0 /* GPTView.swift */; };
+		F59324DD2AFFCA2A00D9B8F0 /* GPTAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59324DC2AFFCA2A00D9B8F0 /* GPTAction.swift */; };
 		F59367F72AE193CE009230AF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59367F62AE193CE009230AF /* AppState.swift */; };
 		F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59AD1022ACB0CA200DFABCC /* AddTagView.swift */; };
 		F59FB3C02AE51B9A0007A76B /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3BF2AE51B9A0007A76B /* FileManager.swift */; };
@@ -186,6 +188,8 @@
 		F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleForm.swift; sourceTree = "<group>"; };
 		F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitle.swift; sourceTree = "<group>"; };
 		F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorView.swift; sourceTree = "<group>"; };
+		F59324D62AFFC41100D9B8F0 /* GPTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTView.swift; sourceTree = "<group>"; };
+		F59324DC2AFFCA2A00D9B8F0 /* GPTAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTAction.swift; sourceTree = "<group>"; };
 		F59367F62AE193CE009230AF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		F59AD1022ACB0CA200DFABCC /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
 		F59FB3BF2AE51B9A0007A76B /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -313,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				F5131C062AEBF17C0077393E /* PaperReaderInspector.swift */,
+				F59324D62AFFC41100D9B8F0 /* GPTView.swift */,
 				F5C379082AC44BFF00C88C94 /* PaperInfo.swift */,
 				F5008D6E2AECD156004F326E /* SharedNoteView.swift */,
 				F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */,
@@ -443,6 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				F58DF0222AE21963001D4D68 /* AppURLScheme.swift */,
+				F59324DC2AFFCA2A00D9B8F0 /* GPTAction.swift */,
 				F51710102ADD78AC002E2D79 /* HighlighterColor.swift */,
 				F536A6012AE61E0F0042B86A /* ModelStatus.swift */,
 				F5643F472AE430F600186A2F /* Path.swift */,
@@ -729,6 +735,7 @@
 				F53D81422AC02AF800865B80 /* Paper.swift in Sources */,
 				F5643F2C2AE2D89000186A2F /* TranslatorViewModel.swift in Sources */,
 				F58DF0332AE2C5BE001D4D68 /* TranslatorView.swift in Sources */,
+				F59324DD2AFFCA2A00D9B8F0 /* GPTAction.swift in Sources */,
 				F5859E572AF1EBA800737752 /* SharedData.swift in Sources */,
 				F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */,
 				F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */,
@@ -753,6 +760,7 @@
 				F59FB3D12AE555840007A76B /* ShareProjectView.swift in Sources */,
 				F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */,
 				F5131C172AECA5D40077393E /* BookmarkView.swift in Sources */,
+				F59324D72AFFC41100D9B8F0 /* GPTView.swift in Sources */,
 				F59FB3D72AE580A20007A76B /* NavigationContext.swift in Sources */,
 				F5008D6F2AECD156004F326E /* SharedNoteView.swift in Sources */,
 				272423D32AD677F9001748AC /* API.swift in Sources */,

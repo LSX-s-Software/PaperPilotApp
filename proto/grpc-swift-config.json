@@ -8,7 +8,8 @@
                 "paperpilot_common/protobuf/user/auth.proto",
                 "paperpilot_common/protobuf/project/project.proto",
                 "paperpilot_common/protobuf/translation/translation.proto",
-                "paperpilot_common/protobuf/monitor/server.proto"
+                "paperpilot_common/protobuf/monitor/server.proto",
+                "paperpilot_common/protobuf/ai/ai.proto"
             ],
             "server": false
         }

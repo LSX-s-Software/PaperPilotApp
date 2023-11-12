@@ -17,6 +17,7 @@ private enum InspectorContent: String, Identifiable, CaseIterable {
     case info
     case note
     case translator
+    case ai
 
     var id: Self { self }
     var localizedStringKey: LocalizedStringKey {
@@ -24,6 +25,7 @@ private enum InspectorContent: String, Identifiable, CaseIterable {
         case .info: "Info"
         case .note: "Note"
         case .translator: "Translator"
+        case .ai: "AI"
         }
     }
 }
@@ -140,6 +142,8 @@ struct PaperReaderInspector: View {
                 SharedNoteView(paper: paper)
             case .translator:
                 TranslatorView()
+            case .ai:
+                GPTView()
             }
         }
         .inspectorColumnWidth(min: 250, ideal: 300)
