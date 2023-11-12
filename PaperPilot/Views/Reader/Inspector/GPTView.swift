@@ -7,15 +7,18 @@
 
 import SwiftUI
 import Combine
+import GRPC
 
 struct ChatMessage: Identifiable {
     var id: UUID = UUID()
     var isGPT: Bool
     var content: String
     var reference: String?
+    var errorMsg: String?
 }
 
 struct GPTView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var pdfVM: PDFViewModel
 
     @AppStorage(AppStorageKey.User.username.rawValue)
@@ -56,7 +59,7 @@ struct GPTView: View {
                     }
                     if !chat.content.isEmpty {
                         Text(chat.content)
-                    } else {
+                    } else if chat.errorMsg == nil {
                         HStack(spacing: 6) {
                             ProgressView()
 #if os(macOS)
@@ -65,6 +68,17 @@ struct GPTView: View {
                             Text("Thinking...")
                                 .foregroundStyle(.secondary)
                         }
+                    }
+                    if let errorMsg = chat.errorMsg {
+                        HStack {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                            Text(errorMsg)
+                        }
+                        .foregroundStyle(.red)
+                        .padding(10)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.red.opacity(colorScheme == .dark ? 0.3 : 0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                 }
                 .padding(.vertical, 8)
@@ -127,6 +141,17 @@ struct GPTView: View {
 }
 
 extension GPTView {
+    func displayErrorMessage(_ message: String) {
+        if chats.last == nil || !chats.last!.isGPT {
+            withAnimation {
+                chats.append(ChatMessage(isGPT: true, content: "", errorMsg: message))
+            }
+        } else {
+            chats[chats.count - 1].errorMsg = message
+        }
+        scrollPublisher.send()
+    }
+
     func sendRequest(action: GPTAction? = nil) {
         guard !generating else { return }
         let request = Ai_GptRequest.with {
@@ -166,8 +191,10 @@ extension GPTView {
                 }
                 scrollPublisher.send()
             }
+            } catch let error as GRPCStatus {
+                displayErrorMessage(error.message ?? error.localizedDescription)
             } catch {
-                print(error)
+                displayErrorMessage(error.localizedDescription)
             }
             generating = false
         }
