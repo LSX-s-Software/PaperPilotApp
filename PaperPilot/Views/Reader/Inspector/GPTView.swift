@@ -9,14 +9,6 @@ import SwiftUI
 import Combine
 import GRPC
 
-struct ChatMessage: Identifiable {
-    var id: UUID = UUID()
-    var isGPT: Bool
-    var content: String
-    var reference: String?
-    var errorMsg: String?
-}
-
 struct GPTView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var pdfVM: PDFViewModel
@@ -28,12 +20,23 @@ struct GPTView: View {
     @State private var generating = false
     @State private var selectionEmpty = true
     @State private var chats = [ChatMessage]()
+    @State private var keepContext = true
+    @State private var currentContextId: String?
+    @State private var remainingChat: Int32 = 1
     let scrollPublisher = PassthroughSubject<Void, Never>()
 
     var body: some View {
         ScrollViewReader { scrollView in
             List(chats) { chat in
                 VStack(alignment: .leading, spacing: 8) {
+                    if chat.isNewContext {
+                        Label("Context cleared.", systemImage: "wand.and.stars")
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity)
+                        Rectangle()
+                            .frame(height: 1)
+                            .foregroundStyle(.separator)
+                    }
                     HStack {
                         if chat.isGPT {
                             Image("OpenAI")
@@ -80,12 +83,38 @@ struct GPTView: View {
                         .background(.red.opacity(colorScheme == .dark ? 0.3 : 0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
+                    if let totalChat = chat.totalChat, let remainingChat = chat.remainingChat {
+                        HStack {
+                            Circle()
+                                .foregroundStyle(indicatorColor(for: remainingChat))
+                                .frame(width: 8, height: 8)
+                            Text("\(remainingChat)/\(totalChat)")
+                                .foregroundStyle(.secondary)
+                                .font(.footnote)
+                        }
+                    }
                 }
                 .padding(.vertical, 8)
                 .id(chat.id)
             }
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 VStack {
+                    if !selectionEmpty && !keepContext && currentContextId != nil {
+                        HStack(spacing: 0) {
+                            Image(systemName: "plus.bubble")
+                                .foregroundStyle(Color.accentColor)
+                                .padding(.trailing, 4)
+                            Text("Will start a new chat from selection.")
+                                .foregroundStyle(.secondary)
+                            Spacer(minLength: 4)
+                            Button("Keep context") {
+                                keepContext = true
+                            }
+                            .controlSize(.small)
+                            .disabled(remainingChat == 0)
+                        }
+                        .font(.caption)
+                    }
                     ScrollView(.horizontal) {
                         HStack {
                             ForEach(GPTAction.allCases) { action in
@@ -100,6 +129,7 @@ struct GPTView: View {
                         }
                     }
                     .scrollClipDisabled()
+                    .animation(nil, value: selectionEmpty)
                     HStack {
                         TextField("Ask ChatGPT", text: $question)
                             .textFieldStyle(.plain)
@@ -128,14 +158,18 @@ struct GPTView: View {
             }
         }
         .onAppear {
-            chats.append(ChatMessage(isGPT: true,
-                                     content: String(localized: "Hello @\(username)! Feel free to ask questions about the paper you're reading.")))
+            chats.append(ChatMessage.greeting(for: username))
+            selectionEmpty = pdfVM.pdfView.currentSelection?.string == nil
+            keepContext = selectionEmpty
         }
         .onReceive(
             NotificationCenter.default.publisher(for: .PDFViewSelectionChanged)
                 .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
         ) { _ in
-            selectionEmpty = pdfVM.pdfView.currentSelection?.string == nil
+            withAnimation(.easeOut) {
+                selectionEmpty = pdfVM.pdfView.currentSelection?.string == nil
+                keepContext = selectionEmpty
+            }
         }
     }
 }
@@ -154,19 +188,27 @@ extension GPTView {
 
     func sendRequest(action: GPTAction? = nil) {
         guard !generating else { return }
+        if remainingChat == 0 || !keepContext {
+            currentContextId = nil
+        }
         let request = Ai_GptRequest.with {
             if let currentSelection = pdfVM.pdfView.currentSelection?.string {
                 $0.text = currentSelection
             }
             $0.action = action?.rawValue ?? question
+            if let currentContextId = currentContextId {
+                $0.chatID = currentContextId
+            }
         }
         let myMessage = ChatMessage(isGPT: false,
+                                    isNewContext: currentContextId == nil && chats.count > 1,
                                     content: action?.description ?? question,
                                     reference: pdfVM.pdfView.currentSelection?.string)
+        pdfVM.pdfView.clearSelection()
+        generating = true
+        question = ""
         withAnimation {
             chats.append(myMessage)
-            question = ""
-            generating = true
         }
         Task {
             scrollPublisher.send()
@@ -183,8 +225,15 @@ extension GPTView {
                     }
                 }
                 if chats.last == nil || !chats.last!.isGPT {
+                    if response.hasChatID {
+                        currentContextId = response.chatID
+                    }
+                    remainingChat = response.remainChatTimes
                     withAnimation {
-                        chats.append(ChatMessage(isGPT: true, content: response.content))
+                        chats.append(ChatMessage(isGPT: true,
+                                                 content: response.content,
+                                                 totalChat: response.totalChatTimes,
+                                                 remainingChat: response.remainChatTimes))
                     }
                 } else {
                     chats[chats.count - 1].content = (chats.last?.content ?? "") + response.content
@@ -197,6 +246,15 @@ extension GPTView {
                 displayErrorMessage(error.localizedDescription)
             }
             generating = false
+        }
+    }
+
+    func indicatorColor(for count: Int32) -> Color {
+        switch count {
+        case ...0: .red
+        case 1...3: .orange
+        case 10...: .green
+        default: .green
         }
     }
 }

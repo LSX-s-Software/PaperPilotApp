@@ -37,6 +37,22 @@
         }
       }
     },
+    "%d/%d" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$d/%2$d"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$d/%2$d"
+          }
+        }
+      }
+    },
     "Abstract" : {
       "localizations" : {
         "zh-Hans" : {
@@ -401,6 +417,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "连接中…"
+          }
+        }
+      }
+    },
+    "Context cleared." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已清除上下文"
           }
         }
       }
@@ -1047,12 +1073,12 @@
         }
       }
     },
-    "Hello @%@! Feel free to ask questions about the paper you're reading." : {
+    "Hello @%@! Feel free to ask questions about the paper you're reading.\nIf you want to refer to the contents in the PDF, please select them to let me know." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "@%@你好！有任何关于你正在阅读的论文的问题都可以随时问我。"
+            "value" : "@%@你好！有任何关于你正在阅读的论文的问题都可以随时问我。\n如果你想引用论文中的内容，请在PDF中选中你想引用的部分。"
           }
         }
       }
@@ -1195,6 +1221,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "加入项目"
+          }
+        }
+      }
+    },
+    "Keep context" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留上下文"
           }
         }
       }
@@ -2606,6 +2642,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "将会删除所有导入/下载的PDF。"
+          }
+        }
+      }
+    },
+    "Will start a new chat from selection." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将基于选中的文本开始新聊天"
           }
         }
       }

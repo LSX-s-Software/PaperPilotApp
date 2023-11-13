@@ -45,6 +45,7 @@
 		F5145E852AD59172001860E0 /* NewPaperInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E842AD59172001860E0 /* NewPaperInfoView.swift */; };
 		F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F517100C2ADD690A002E2D79 /* TimerView.swift */; };
 		F51710112ADD78AC002E2D79 /* HighlighterColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51710102ADD78AC002E2D79 /* HighlighterColor.swift */; };
+		F535B76B2B01D0FE001E8957 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F535B76A2B01D0FE001E8957 /* ChatMessage.swift */; };
 		F536A6022AE61E0F0042B86A /* ModelStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F536A6012AE61E0F0042B86A /* ModelStatus.swift */; };
 		F53D81402AC02A7A00865B80 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D813F2AC02A7A00865B80 /* Project.swift */; };
 		F53D81422AC02AF800865B80 /* Paper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81412AC02AF800865B80 /* Paper.swift */; };
@@ -158,6 +159,7 @@
 		F517100C2ADD690A002E2D79 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		F51710102ADD78AC002E2D79 /* HighlighterColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlighterColor.swift; sourceTree = "<group>"; };
 		F51A90C02AC19A5A00C26598 /* PaperPilot.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = PaperPilot.entitlements; sourceTree = "<group>"; };
+		F535B76A2B01D0FE001E8957 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		F536A6012AE61E0F0042B86A /* ModelStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStatus.swift; sourceTree = "<group>"; };
 		F53D813F2AC02A7A00865B80 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		F53D81412AC02AF800865B80 /* Paper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paper.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */,
+				F535B76A2B01D0FE001E8957 /* ChatMessage.swift */,
 				F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */,
 				F53D81432AC02C6500865B80 /* ModelData.swift */,
 				F53D81412AC02AF800865B80 /* Paper.swift */,
@@ -768,6 +771,7 @@
 				F5008D7D2AEFA886004F326E /* Logger.swift in Sources */,
 				F59367F72AE193CE009230AF /* AppState.swift in Sources */,
 				F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */,
+				F535B76B2B01D0FE001E8957 /* ChatMessage.swift in Sources */,
 				F5131BF32AEB70DD0077393E /* ProjectCommands.swift in Sources */,
 				F53D81462AC038A700865B80 /* TagView.swift in Sources */,
 				F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */,
