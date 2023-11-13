@@ -317,6 +317,7 @@ extension PDFReader {
             findVM.finding = false
             if let firstResult = findVM.findResult.first {
                 findVM.currentSelectionIndex = 0
+                pdfVM.pdfView.go(to: firstResult)
                 pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
             }
         }

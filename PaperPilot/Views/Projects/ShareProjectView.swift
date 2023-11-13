@@ -22,7 +22,6 @@ struct ShareProjectView: View {
     @State private var downloadProgress: Progress?
 
     var body: some View {
-        let members = project.members
         VStack {
             Image(systemName: "person.3.fill")
                 .symbolRenderingMode(.hierarchical)
@@ -35,11 +34,9 @@ struct ShareProjectView: View {
             if project.remoteId != nil {
                 GroupBox("Members") {
                     LazyVGrid(columns: [GridItem](repeating: GridItem(), count: 6)) {
-                        ForEach(members) { member in
+                        ForEach(project.members) { member in
                             AvatarView(url: URL(string: member.avatar), size: 36)
-#if os(macOS)
                                 .toolTip(member.username)
-#endif
                         }
                     }
                     .frame(minHeight: 36)

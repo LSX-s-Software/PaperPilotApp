@@ -11,6 +11,7 @@ struct StorageSpaceSettingsView: View {
     @State private var totalUsedSpace: UInt64?
     @State private var totalUsedSpaceError: String?
     @State private var isShowingClearFileConfirm = false
+    @State private var cacheCleared = false
 
     var baseDir: URL? {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -18,6 +19,28 @@ struct StorageSpaceSettingsView: View {
 
     var body: some View {
         Form {
+            Section("Cache") {
+                LabeledContent("Network Cache:") {
+                    HStack {
+                        Button("Clear") {
+                            URLCache.shared.removeAllCachedResponses()
+                            withAnimation {
+                                cacheCleared = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                withAnimation {
+                                    cacheCleared = false
+                                }
+                            }
+                        }
+                        if cacheCleared {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                        }
+                    }
+                }
+            }
+
             Section("Local Files") {
                 if let baseDir = baseDir {
 #if os(macOS)

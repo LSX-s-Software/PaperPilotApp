@@ -328,6 +328,16 @@
         }
       }
     },
+    "Cache" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缓存"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -385,6 +395,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "中文"
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清理"
           }
         }
       }
@@ -507,16 +527,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "数据"
-          }
-        }
-      }
-    },
-    "Data downloaded cannot be converted to an NSImage." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "下载的数据不能转换成NSImage。"
           }
         }
       }
@@ -708,16 +718,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入文本查看翻译"
-          }
-        }
-      }
-    },
-    "Error" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "错误"
           }
         }
       }
@@ -1434,6 +1434,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "成员"
+          }
+        }
+      }
+    },
+    "Network Cache:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络缓存："
           }
         }
       }

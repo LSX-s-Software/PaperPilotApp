@@ -17,13 +17,13 @@ struct FindResultView: View {
 
     var body: some View {
         List(findVM.findResult, id: \.self, selection: Binding { currentSelection } set: { selection in
-            if let page = selection?.pages.first {
-                pdfVM.pdfView.go(to: page)
+            if let selection = selection {
 #if os(iOS)
                 dismiss()
 #endif
+                pdfVM.pdfView.go(to: selection)
+                pdfVM.pdfView.setCurrentSelection(selection, animate: true)
             }
-            pdfVM.pdfView.setCurrentSelection(selection, animate: true)
         }) { selection in
             HStack {
                 VStack(alignment: .leading) {

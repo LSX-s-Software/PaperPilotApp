@@ -15,8 +15,8 @@ struct ContentView: View {
     @Environment(AppState.self) private var appState
     @State var alert = Alert()
 
-    @Query(filter: #Predicate<Project> { $0.remoteId == nil }) private var localProjects: [Project]
-    @Query(filter: #Predicate<Project> { $0.remoteId != nil }) private var remoteProjects: [Project]
+    @Query(filter: #Predicate<Project> { $0.remoteId == nil }, animation: .default) private var localProjects: [Project]
+    @Query(filter: #Predicate<Project> { $0.remoteId != nil }, animation: .default) private var remoteProjects: [Project]
     @State private var isShowingLoginSheet = false
     @State private var isShowingAccountView = false
     @State private var isShowingNewProjectSheet = false
@@ -56,8 +56,6 @@ struct ContentView: View {
 #else
             .navigationSplitViewColumnWidth(min: 225, ideal: 275)
 #endif
-            .animation(.default, value: localProjects)
-            .animation(.default, value: remoteProjects)
             .overlay {
                 if localProjects.isEmpty && remoteProjects.isEmpty {
                     ContentUnavailableView {
