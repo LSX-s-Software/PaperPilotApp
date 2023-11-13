@@ -62,6 +62,7 @@ struct GPTView: View {
                     }
                     if !chat.content.isEmpty {
                         Text(chat.content)
+                            .textSelection(.enabled)
                     } else if chat.errorMsg == nil {
                         HStack(spacing: 6) {
                             ProgressView()
