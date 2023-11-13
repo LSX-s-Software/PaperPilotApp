@@ -11,7 +11,8 @@
                 "paperpilot_common/protobuf/common/exce.proto",
                 "paperpilot_common/protobuf/translation/translation.proto",
                 "google/rpc/status.proto",
-                "paperpilot_common/protobuf/monitor/server.proto"
+                "paperpilot_common/protobuf/monitor/server.proto",
+                "paperpilot_common/protobuf/ai/ai.proto"
             ]
         }
     ]

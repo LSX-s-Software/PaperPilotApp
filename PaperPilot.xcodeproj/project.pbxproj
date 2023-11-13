@@ -44,6 +44,7 @@
 		F5145E852AD59172001860E0 /* NewPaperInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5145E842AD59172001860E0 /* NewPaperInfoView.swift */; };
 		F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F517100C2ADD690A002E2D79 /* TimerView.swift */; };
 		F51710112ADD78AC002E2D79 /* HighlighterColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51710102ADD78AC002E2D79 /* HighlighterColor.swift */; };
+		F535B76B2B01D0FE001E8957 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F535B76A2B01D0FE001E8957 /* ChatMessage.swift */; };
 		F535B75F2B01262D001E8957 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = F535B75E2B01262D001E8957 /* CachedAsyncImage */; };
 		F536A6022AE61E0F0042B86A /* ModelStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F536A6012AE61E0F0042B86A /* ModelStatus.swift */; };
 		F53D81402AC02A7A00865B80 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D813F2AC02A7A00865B80 /* Project.swift */; };
@@ -75,6 +76,8 @@
 		F58DF0292AE2A60C001D4D68 /* ImageTitleForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */; };
 		F58DF02D2AE2B743001D4D68 /* ImageTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */; };
 		F58DF0332AE2C5BE001D4D68 /* TranslatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */; };
+		F59324D72AFFC41100D9B8F0 /* GPTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59324D62AFFC41100D9B8F0 /* GPTView.swift */; };
+		F59324DD2AFFCA2A00D9B8F0 /* GPTAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59324DC2AFFCA2A00D9B8F0 /* GPTAction.swift */; };
 		F59367F72AE193CE009230AF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59367F62AE193CE009230AF /* AppState.swift */; };
 		F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59AD1022ACB0CA200DFABCC /* AddTagView.swift */; };
 		F59FB3C02AE51B9A0007A76B /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59FB3BF2AE51B9A0007A76B /* FileManager.swift */; };
@@ -98,7 +101,6 @@
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
 		F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */; };
 		F5D8EEED2AD42D5100501B0E /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* AccountView.swift */; };
-		F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */ = {isa = PBXBuildFile; productRef = F5D8EEF32AD4559300501B0E /* SimpleCodable */; };
 		F5D8EF012AD4F62E00501B0E /* StorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EF002AD4F62E00501B0E /* StorageKey.swift */; };
 		F5DF33FB2AEA086200624672 /* PaperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF33FA2AEA086200624672 /* PaperService.swift */; };
 		F5DF34052AEB537500624672 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF34042AEB537500624672 /* Image.swift */; };
@@ -156,6 +158,7 @@
 		F517100C2ADD690A002E2D79 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		F51710102ADD78AC002E2D79 /* HighlighterColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlighterColor.swift; sourceTree = "<group>"; };
 		F51A90C02AC19A5A00C26598 /* PaperPilot.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = PaperPilot.entitlements; sourceTree = "<group>"; };
+		F535B76A2B01D0FE001E8957 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		F536A6012AE61E0F0042B86A /* ModelStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStatus.swift; sourceTree = "<group>"; };
 		F53D813F2AC02A7A00865B80 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		F53D81412AC02AF800865B80 /* Paper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paper.swift; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 		F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleForm.swift; sourceTree = "<group>"; };
 		F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitle.swift; sourceTree = "<group>"; };
 		F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorView.swift; sourceTree = "<group>"; };
+		F59324D62AFFC41100D9B8F0 /* GPTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTView.swift; sourceTree = "<group>"; };
+		F59324DC2AFFCA2A00D9B8F0 /* GPTAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPTAction.swift; sourceTree = "<group>"; };
 		F59367F62AE193CE009230AF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		F59AD1022ACB0CA200DFABCC /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
 		F59FB3BF2AE51B9A0007A76B /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -238,7 +243,6 @@
 				F5008D772AED50BD004F326E /* ShareKit in Frameworks */,
 				279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */,
 				F5A2F4082AF53D5D0045EF12 /* SwiftDown in Frameworks */,
-				F5D8EEF42AD4559300501B0E /* SimpleCodable in Frameworks */,
 				F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */,
 				F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */,
 				768A92EB2AF3E21B006068F3 /* CGRPCZlib in Frameworks */,
@@ -313,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				F5131C062AEBF17C0077393E /* PaperReaderInspector.swift */,
+				F59324D62AFFC41100D9B8F0 /* GPTView.swift */,
 				F5C379082AC44BFF00C88C94 /* PaperInfo.swift */,
 				F5008D6E2AECD156004F326E /* SharedNoteView.swift */,
 				F58DF0322AE2C5BE001D4D68 /* TranslatorView.swift */,
@@ -324,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				F5E4B2A72ADB81F000F50EDA /* Bookmark.swift */,
+				F535B76A2B01D0FE001E8957 /* ChatMessage.swift */,
 				F508805A2AE8B0A200CD7510 /* MicroserviceStatus.swift */,
 				F53D81432AC02C6500865B80 /* ModelData.swift */,
 				F53D81412AC02AF800865B80 /* Paper.swift */,
@@ -442,6 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				F58DF0222AE21963001D4D68 /* AppURLScheme.swift */,
+				F59324DC2AFFCA2A00D9B8F0 /* GPTAction.swift */,
 				F51710102ADD78AC002E2D79 /* HighlighterColor.swift */,
 				F536A6012AE61E0F0042B86A /* ModelStatus.swift */,
 				F5643F472AE430F600186A2F /* Path.swift */,
@@ -585,7 +592,6 @@
 				279F2CFC2AC8276600FEA9D8 /* SwiftProtobuf */,
 				279F2CFE2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary */,
 				279F2D002AC8276600FEA9D8 /* protoc-gen-swift */,
-				F5D8EEF32AD4559300501B0E /* SimpleCodable */,
 				F5CF43332ADC1FB6004F1A16 /* WindowManagement */,
 				F5643F362AE37C9C00186A2F /* Throttler */,
 				F5008D762AED50BD004F326E /* ShareKit */,
@@ -633,7 +639,6 @@
 				F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
 				279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */,
-				F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */,
 				F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */,
 				F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */,
 				F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */,
@@ -729,6 +734,7 @@
 				F53D81422AC02AF800865B80 /* Paper.swift in Sources */,
 				F5643F2C2AE2D89000186A2F /* TranslatorViewModel.swift in Sources */,
 				F58DF0332AE2C5BE001D4D68 /* TranslatorView.swift in Sources */,
+				F59324DD2AFFCA2A00D9B8F0 /* GPTAction.swift in Sources */,
 				F5859E572AF1EBA800737752 /* SharedData.swift in Sources */,
 				F547D0E62AC56F89006D2216 /* EditableText.swift in Sources */,
 				F517100D2ADD690A002E2D79 /* TimerView.swift in Sources */,
@@ -753,6 +759,7 @@
 				F59FB3D12AE555840007A76B /* ShareProjectView.swift in Sources */,
 				F59AD1032ACB0CA200DFABCC /* AddTagView.swift in Sources */,
 				F5131C172AECA5D40077393E /* BookmarkView.swift in Sources */,
+				F59324D72AFFC41100D9B8F0 /* GPTView.swift in Sources */,
 				F59FB3D72AE580A20007A76B /* NavigationContext.swift in Sources */,
 				F5008D6F2AECD156004F326E /* SharedNoteView.swift in Sources */,
 				272423D32AD677F9001748AC /* API.swift in Sources */,
@@ -764,6 +771,7 @@
 				F5008D7D2AEFA886004F326E /* Logger.swift in Sources */,
 				F59367F72AE193CE009230AF /* AppState.swift in Sources */,
 				F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */,
+				F535B76B2B01D0FE001E8957 /* ChatMessage.swift in Sources */,
 				F5131BF32AEB70DD0077393E /* ProjectCommands.swift in Sources */,
 				F53D81462AC038A700865B80 /* TagView.swift in Sources */,
 				F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */,
@@ -812,6 +820,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = C2A3XCXCZS;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -834,6 +843,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = C2A3XCXCZS;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -856,6 +866,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -885,6 +896,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -918,6 +930,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -947,6 +960,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -976,6 +990,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"PaperPilot/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1020,6 +1035,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"PaperPilot/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1183,14 +1199,6 @@
 				minimumVersion = 0.53.0;
 			};
 		};
-		F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Events-Mate-Apps/SimpleCodableMacro.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1283,11 +1291,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
-		};
-		F5D8EEF32AD4559300501B0E /* SimpleCodable */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5D8EEF22AD4559300501B0E /* XCRemoteSwiftPackageReference "SimpleCodableMacro" */;
-			productName = SimpleCodable;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

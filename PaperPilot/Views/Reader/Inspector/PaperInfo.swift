@@ -19,6 +19,12 @@ extension EnvironmentValues {
     }
 }
 
+private enum EditableContent {
+    case none
+    case title
+    case author
+}
+
 struct EditToggleButton: View {
     @Binding var editing: Bool
     var saving: Bool
@@ -81,6 +87,11 @@ struct PaperInfo: View {
     @State private var hasError = false
     @State private var errorMsg: String?
 
+    @State private var isShowingEditButton = EditableContent.none
+    @State private var isShowingEditPopover = EditableContent.none
+    @State private var newTitle = ""
+    @State private var newAuthor = ""
+    @State private var newAuthors = [String]()
     @State private var doi: String
     @State private var publication: String
     @State private var publicationYear: String
@@ -105,106 +116,184 @@ struct PaperInfo: View {
     }
 
     var body: some View {
-        List {
-            Section("Tags") {
-                VFlow(alignment: .leading, spacing: 4) {
-                    ForEach(Array(paper.tags.enumerated()), id: \.offset) { index, tag in
-                        TagView(text: tag) { newValue in
-                            var newTags = paper.tags
-                            newTags[index] = newValue
-                            modify(newTags: newTags)
-                        } onDelete: {
-                            var newTags = paper.tags
-                            newTags.remove(at: index)
-                            modify(newTags: newTags)
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading) {
+                Text(paper.title)
+                    .font(.title)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .overlay(alignment: .trailing) {
+                        if isShowingEditButton == .title {
+                            Button("Edit", systemImage: "pencil") {
+                                newTitle = paper.title
+                                isShowingEditPopover = .title
+                            }
+                            .labelStyle(.iconOnly)
                         }
                     }
-                    AddTagView { newTag in
-                        var newTags = paper.tags
-                        newTags.append(newTag)
-                        modify(newTags: newTags)
+                    .onHover { hover in
+                        isShowingEditButton = hover ? .title : .none
                     }
-                }
-            }
-            .listRowSeparator(.hidden)
-            
-            Section {
-                InfoRow(title: "DOI", value: $doi)
-                InfoRow(title: "Publication", value: $publication)
-                InfoRow(title: "Publication Year", value: $publicationYear)
-                InfoRow(title: "Event", value: $event)
-                InfoRow(title: "Volume", value: $volume)
-                InfoRow(title: "Issue", value: $issue)
-                InfoRow(title: "Pages", value: $pages)
-                InfoRow(title: "URL", value: $url)
-                HStack {
-                    Text("Date Added")
-                    Spacer()
-                    Text(paper.formattedCreateTime)
-                        .foregroundStyle(.secondary)
-                }
-            } header: {
-                HStack {
-                    Text("Basic Info")
-                    Spacer()
-                    EditToggleButton(editing: $editing, saving: saving, onSubmit: submit, onCancel: reset)
-                }
-            }
-            .environment(\.editing, editing)
+                    .popover(
+                        isPresented: Binding { isShowingEditPopover == .title } set: { _ in isShowingEditPopover = .none },
+                        arrowEdge: .bottom
+                    ) {
+                        TextField("Enter title", text: $newTitle)
+                            .padding()
+                            .onSubmit {
+                                if !newTitle.isEmpty {
+                                    modify(newTitle: newTitle)
+                                }
+                            }
+                    }
 
-            Section("Keywords") {
-                VFlow(alignment: .leading, spacing: 4) {
-                    ForEach(Array(paper.keywords.enumerated()), id: \.offset) { index, keyword in
-                        TagView(text: keyword) { newValue in
-                            var newKeywords = paper.keywords
-                            newKeywords[index] = newValue
-                            modify(newKeywords: newKeywords)
-                        } onDelete: {
-                            var newKeywords = paper.keywords
-                            newKeywords.remove(at: index)
-                            modify(newKeywords: newKeywords)
+                Text(paper.formattedAuthors)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .overlay(alignment: .trailing) {
+                        if isShowingEditButton == .author {
+                            Button("Edit", systemImage: "pencil") {
+                                newAuthors = paper.authors
+                                isShowingEditPopover = .author
+                            }
+                            .labelStyle(.iconOnly)
                         }
                     }
-                    AddTagView { newKeyword in
-                        var newKeywords = paper.keywords
-                        newKeywords.append(newKeyword)
-                        modify(newKeywords: newKeywords)
+                    .onHover { hover in
+                        isShowingEditButton = hover ? .author : .none
                     }
-                }
-            }
-            .listRowSeparator(.hidden)
-            
-            Section {
-                TextEditor(text: $abstract)
-                    .font(.body)
-                    .disabled(!editing)
-                    .scrollContentBackground(.hidden)
-                    .frame(minHeight: 150)
-                    .overlay(alignment: .topLeading) {
-                        if abstract.isEmpty {
-                            Text("No Abstract")
-                                .foregroundStyle(.placeholder)
-                                .offset(x: 8)
-                                .allowsHitTesting(false)
+                    .popover(
+                        isPresented: Binding { isShowingEditPopover == .author } set: { _ in isShowingEditPopover = .none },
+                        arrowEdge: .bottom
+                    ) {
+                        List {
+                            ForEach(newAuthors, id: \.self) { author in
+                                Text(author)
+                            }
+                            .onMove { source, destination in
+                                newAuthors.move(fromOffsets: source, toOffset: destination)
+                                modify(newAuthors: newAuthors)
+                            }
+                            .onDelete {
+                                newAuthors.remove(atOffsets: $0)
+                                modify(newAuthors: newAuthors)
+                            }
+                            Section("Add author") {
+                                TextField("New author", text: $newAuthor)
+                                Button("Add") {
+                                    if !newAuthor.isEmpty {
+                                        newAuthors.append(newAuthor)
+                                        newAuthor = ""
+                                        modify(newAuthors: newAuthors)
+                                    }
+                                }
+                                .keyboardShortcut(.defaultAction)
+                            }
                         }
                     }
-            } header: {
-                HStack {
-                    Text("Abstract")
-                    Spacer()
-                    EditToggleButton(editing: $editing, saving: saving, onSubmit: submit, onCancel: reset)
-                }
             }
-        }
-        .alert("Failed to update paper info", isPresented: $hasError) {} message: {
-            if let errorMsg = errorMsg {
-                Text(errorMsg)
-            }
-        }
+            .multilineTextAlignment(.leading)
+            .padding([.horizontal, .bottom])
 
+            List {
+                Section("Tags") {
+                    VFlow(alignment: .leading, spacing: 4) {
+                        ForEach(Array(paper.tags.enumerated()), id: \.offset) { index, tag in
+                            TagView(text: tag) { newValue in
+                                var newTags = paper.tags
+                                newTags[index] = newValue
+                                modify(newTags: newTags)
+                            } onDelete: {
+                                var newTags = paper.tags
+                                newTags.remove(at: index)
+                                modify(newTags: newTags)
+                            }
+                        }
+                        AddTagView { newTag in
+                            var newTags = paper.tags
+                            newTags.append(newTag)
+                            modify(newTags: newTags)
+                        }
+                    }
+                }
+                .listRowSeparator(.hidden)
+
+                Section {
+                    InfoRow(title: "DOI", value: $doi)
+                    InfoRow(title: "Publication", value: $publication)
+                    InfoRow(title: "Publication Year", value: $publicationYear)
+                    InfoRow(title: "Event", value: $event)
+                    InfoRow(title: "Volume", value: $volume)
+                    InfoRow(title: "Issue", value: $issue)
+                    InfoRow(title: "Pages", value: $pages)
+                    InfoRow(title: "URL", value: $url)
+                    HStack {
+                        Text("Date Added")
+                        Spacer()
+                        Text(paper.formattedCreateTime)
+                            .foregroundStyle(.secondary)
+                    }
+                } header: {
+                    HStack {
+                        Text("Basic Info")
+                        Spacer()
+                        EditToggleButton(editing: $editing, saving: saving, onSubmit: submit, onCancel: reset)
+                    }
+                }
+                .environment(\.editing, editing)
+
+                Section("Keywords") {
+                    VFlow(alignment: .leading, spacing: 4) {
+                        ForEach(Array(paper.keywords.enumerated()), id: \.offset) { index, keyword in
+                            TagView(text: keyword) { newValue in
+                                var newKeywords = paper.keywords
+                                newKeywords[index] = newValue
+                                modify(newKeywords: newKeywords)
+                            } onDelete: {
+                                var newKeywords = paper.keywords
+                                newKeywords.remove(at: index)
+                                modify(newKeywords: newKeywords)
+                            }
+                        }
+                        AddTagView { newKeyword in
+                            var newKeywords = paper.keywords
+                            newKeywords.append(newKeyword)
+                            modify(newKeywords: newKeywords)
+                        }
+                    }
+                }
+                .listRowSeparator(.hidden)
+
+                Section {
+                    TextEditor(text: $abstract)
+                        .font(.body)
+                        .disabled(!editing)
+                        .scrollContentBackground(.hidden)
+                        .frame(minHeight: 150)
+                        .overlay(alignment: .topLeading) {
+                            if abstract.isEmpty {
+                                Text("No Abstract")
+                                    .foregroundStyle(.placeholder)
+                                    .offset(x: 8)
+                                    .allowsHitTesting(false)
+                            }
+                        }
+                } header: {
+                    HStack {
+                        Text("Abstract")
+                        Spacer()
+                        EditToggleButton(editing: $editing, saving: saving, onSubmit: submit, onCancel: reset)
+                    }
+                }
+            }
+            .alert("Failed to update paper info", isPresented: $hasError) {} message: {
+                if let errorMsg = errorMsg {
+                    Text(errorMsg)
+                }
+            }
 #if os(iOS)
-        .listStyle(.insetGrouped)
+            .listStyle(.insetGrouped)
 #endif
+        }
     }
 }
 
@@ -244,11 +333,18 @@ extension PaperInfo {
         }
     }
 
-    func modify(newTags: [String]? = nil, newKeywords: [String]? = nil) {
-        if newTags == nil && newKeywords == nil { return }
+    func modify(newTitle: String? = nil,
+                newAuthors: [String]? = nil,
+                newTags: [String]? = nil,
+                newKeywords: [String]? = nil) {
+        if newTags == nil && newKeywords == nil && newTitle == nil && newAuthors == nil { return }
         Task {
             do {
-                try await ModelService.shared.updatePaper(paper, keywords: newKeywords, tags: newTags)
+                try await ModelService.shared.updatePaper(paper,
+                                                          title: newTitle,
+                                                          keywords: newKeywords,
+                                                          authors: newAuthors,
+                                                          tags: newTags)
             } catch {
                 errorMsg = error.localizedDescription
                 hasError = true

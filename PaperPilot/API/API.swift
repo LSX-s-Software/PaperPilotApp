@@ -18,7 +18,8 @@ import UIKit
 final class API {
     static let eventLoopGroup = PlatformSupport.makeEventLoopGroup(loopCount: 1, networkPreference: .best)
     static let builder = ClientConnection.usingPlatformAppropriateTLS(for: eventLoopGroup)
-    let channel: ClientConnection = builder.connect(host: "paperpilot.jryang.com")
+    let channel = builder.connect(host: "paperpilot.jryang.com")
+    let gptChannel = builder.connect(host: "ai.paperpilot.ziqiang.net.cn")
 
     /// GRPC Monitor public service client
     public var monitor: Monitor_MonitorPublicServiceAsyncClient
@@ -32,6 +33,8 @@ final class API {
     public var paper: Paper_PaperPublicServiceAsyncClient
     /// GRPC Translation public service client
     public var translation: Translation_TranslationPublicServiceAsyncClient
+    /// GRPC AI public service client
+    public var gpt: Ai_GptServiceAsyncClient
 
     static var shared = API()
 
@@ -61,6 +64,7 @@ final class API {
         self.paper = Paper_PaperPublicServiceAsyncClient(channel: channel, interceptors: factory)
         self.translation = Translation_TranslationPublicServiceAsyncClient(channel: channel, interceptors: factory)
         self.monitor = Monitor_MonitorPublicServiceAsyncClient(channel: channel, interceptors: factory)
+        self.gpt = Ai_GptServiceAsyncClient(channel: gptChannel)
 
 #if os(macOS)
         let notification = NSApplication.willTerminateNotification
@@ -86,6 +90,7 @@ final class API {
         project.defaultCallOptions.customMetadata = headers
         paper.defaultCallOptions.customMetadata = headers
         translation.defaultCallOptions.customMetadata = headers
+        gpt.defaultCallOptions.customMetadata = headers
     }
 
     func refreshUserInfo() async throws {

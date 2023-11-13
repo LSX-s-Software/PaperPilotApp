@@ -37,6 +37,22 @@
         }
       }
     },
+    "%d/%d" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$d/%2$d"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$d/%2$d"
+          }
+        }
+      }
+    },
     "Abstract" : {
       "localizations" : {
         "zh-Hans" : {
@@ -138,6 +154,16 @@
         }
       }
     },
+    "AI" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI"
+          }
+        }
+      }
+    },
     "Arabic" : {
       "localizations" : {
         "zh-Hans" : {
@@ -194,6 +220,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "确定要退出登录吗？"
+          }
+        }
+      }
+    },
+    "Ask" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "询问"
+          }
+        }
+      }
+    },
+    "Ask ChatGPT" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "询问ChatGPT"
           }
         }
       }
@@ -333,6 +379,16 @@
         }
       }
     },
+    "ChatGPT" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ChatGPT"
+          }
+        }
+      }
+    },
     "Chinese" : {
       "localizations" : {
         "zh-Hans" : {
@@ -381,6 +437,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "连接中…"
+          }
+        }
+      }
+    },
+    "Context cleared." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已清除上下文"
           }
         }
       }
@@ -662,6 +728,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "会议"
+          }
+        }
+      }
+    },
+    "Explain" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解释"
+          }
+        }
+      }
+    },
+    "Explain selected text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解释选中的文本"
           }
         }
       }
@@ -987,6 +1073,16 @@
         }
       }
     },
+    "Hello @%@! Feel free to ask questions about the paper you're reading.\nIf you want to refer to the contents in the PDF, please select them to let me know." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "@%@你好！有任何关于你正在阅读的论文的问题都可以随时问我。\n如果你想引用论文中的内容，请在PDF中选中你想引用的部分。"
+          }
+        }
+      }
+    },
     "Hide TOC" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1125,6 +1221,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "加入项目"
+          }
+        }
+      }
+    },
+    "Keep context" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留上下文"
           }
         }
       }
@@ -1946,6 +2052,26 @@
         }
       }
     },
+    "Rewrite" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重写"
+          }
+        }
+      }
+    },
+    "Rewrite selected text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重写选中的文本"
+          }
+        }
+      }
+    },
     "Russian" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2002,6 +2128,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请从左侧边栏选择项目。"
+          }
+        }
+      }
+    },
+    "Select some text in the PDF" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在PDF中选中文本"
           }
         }
       }
@@ -2146,6 +2282,26 @@
         }
       }
     },
+    "Summarize" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总结"
+          }
+        }
+      }
+    },
+    "Summarize selected text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总结选中的文本"
+          }
+        }
+      }
+    },
     "Supplement Information" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2182,6 +2338,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "测试中…"
+          }
+        }
+      }
+    },
+    "The generated content exceeds the maximum length." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成的内容超过了长度限制"
+          }
+        }
+      }
+    },
+    "The generated content is filtered." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成的内容被过滤"
+          }
+        }
+      }
+    },
+    "Thinking..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "思考中…"
           }
         }
       }
@@ -2277,6 +2463,16 @@
         }
       }
     },
+    "Translate selected text" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译选中的文本"
+          }
+        }
+      }
+    },
     "Translated Text" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2355,6 +2551,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知错误"
+          }
+        }
+      }
+    },
+    "Unknown error: %lld" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知错误：%lld"
           }
         }
       }
@@ -2446,6 +2652,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "将会删除所有导入/下载的PDF。"
+          }
+        }
+      }
+    },
+    "Will start a new chat from selection." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将基于选中的文本开始新聊天"
           }
         }
       }
