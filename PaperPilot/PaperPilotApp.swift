@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import CoreSpotlight
 #if os(macOS)
 import WindowManagement
 #endif
@@ -52,6 +53,7 @@ struct PaperPilotApp: App {
                         }
                     }
                     .onOpenURL(perform: appState.handleIncomingURL(url:))
+                    .onContinueUserActivity(CSSearchableItemActionType, perform: appState.handleSpotlight)
             }
             .defaultSize(width: 1200, height: 700)
 #else
@@ -66,6 +68,7 @@ struct PaperPilotApp: App {
                         }
                     }
                     .onOpenURL(perform: appState.handleIncomingURL(url:))
+                    .onContinueUserActivity(CSSearchableItemActionType, perform: appState.handleSpotlight)
             }
 #endif
         }
