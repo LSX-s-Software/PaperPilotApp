@@ -77,6 +77,8 @@ struct NewPaperInfoView: View {
                         if paper.project == nil {
                             project.papers.append(paper)
                         }
+                        // Index in CoreSpotlight
+                        SpotlightHelper.index(paper: paper)
                         shouldClose = true
                     }
                     .keyboardShortcut(.defaultAction)

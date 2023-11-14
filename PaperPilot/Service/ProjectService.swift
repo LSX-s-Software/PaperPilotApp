@@ -25,6 +25,7 @@ extension ModelService {
             let project = Project(remote: from, userID: userID!)
             project.members.append(contentsOf: from.members.map {User(from: $0)})
             modelContext.insert(project)
+            SpotlightHelper.index(project: project)
             return
         }
         updateProject(projects[0], from: from)
@@ -56,5 +57,6 @@ extension ModelService {
         project.invitationCode = remote.inviteCode
         project.isOwner = remote.ownerID == userID
         project.members = remote.members.map { User(from: $0) }
+        SpotlightHelper.index(project: project)
     }
 }

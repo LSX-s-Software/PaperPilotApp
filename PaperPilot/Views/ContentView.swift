@@ -110,6 +110,7 @@ struct ContentView: View {
                                    FileManager.default.fileExists(atPath: dir.path(percentEncoded: false)) {
                                     try? FileManager.default.removeItem(at: dir)
                                 }
+                                SpotlightHelper.deleteIndex(of: project)
                                 modelContext.delete(project)
                             }
                         } catch let error as GRPCStatus {

@@ -115,6 +115,7 @@ extension ModelService {
         paper.doi = detail.doi
         paper.file = detail.file
         paper.updateTime = detail.hasUpdateTime ? detail.updateTime.date : Date.now
+        SpotlightHelper.index(paper: paper)
     }
     
     /// 更新论文信息
@@ -184,6 +185,7 @@ extension ModelService {
         if let newUrl = url { paper.url = newUrl }
         if let newDoi = doi { paper.doi = newDoi }
         paper.updateTime = Date.now
+        SpotlightHelper.index(paper: paper)
     }
     
     /// 更新本地缓存的论文信息
@@ -236,6 +238,8 @@ extension ModelService {
                     }
                 }
             }
+            // Delete index in CoreSpotlight
+            SpotlightHelper.deleteIndex(of: paper)
             paper.project?.papers.removeAll { $0.id == paper.id }
             paper.project = nil
             modelContext.delete(paper)

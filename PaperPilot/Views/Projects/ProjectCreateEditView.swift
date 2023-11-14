@@ -127,6 +127,7 @@ struct ProjectCreateEditView: View {
                         project.members.append(user)
                     }
                 }
+                SpotlightHelper.index(project: project)
                 dismiss()
             } catch let error as GRPCStatus {
                 submitError = true
@@ -170,6 +171,7 @@ struct ProjectCreateEditView: View {
            FileManager.default.fileExists(atPath: dir.path(percentEncoded: false)) {
             try? FileManager.default.removeItem(at: dir)
         }
+        SpotlightHelper.deleteIndex(of: project)
         navigationContext.selectedProject = nil
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             modelContext.delete(project)
