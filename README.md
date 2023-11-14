@@ -144,6 +144,7 @@
 - 通过拖放添加论文及 PDF 文件
 - 在 iPadOS 上支持在同窗口、新窗口中打开论文阅读器
 - 在 iPadOS 上使用 PencilKit 支持用 Apple Pencil 绘制标注
+- 支持通过 Spotlight 搜索项目、论文
 - 通过 URL Scheme 启动
 - 深色模式
 - 使用 SwiftData 进行数据持久化
