@@ -148,32 +148,9 @@ struct ProjectCreateEditView: View {
     }
     
     func handleDeleteProject() async {
-        if isRemoteProject || project.remoteId != nil {
-            do {
-                let request = Project_ProjectId.with { $0.id = project.remoteId! }
-                if project.isOwner {
-                    _ = try await API.shared.project.deleteProject(request)
-                } else {
-                    _ = try await API.shared.project.quitProject(request)
-                }
-            } catch let error as GRPCStatus {
-                deleteError = true
-                errorMsg = error.message ?? String(localized: "Unknown error")
-                return
-            } catch {
-                deleteError = true
-                errorMsg = error.localizedDescription
-                return
-            }
-        }
-        if let dir = try? FilePath.projectDirectory(for: project),
-           FileManager.default.fileExists(atPath: dir.path(percentEncoded: false)) {
-            try? FileManager.default.removeItem(at: dir)
-        }
+        guard let project = await ModelService.shared.getProject(id: project.id) else { return }
         navigationContext.selectedProject = nil
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            modelContext.delete(project)
-        }
+        try? await ModelService.shared.deleteProject(project)
         onDelete?()
         dismiss()
     }

@@ -95,27 +95,13 @@ struct ContentView: View {
                         navigationContext.selectedProject = nil
                     }
                     Task {
-                        let errorMsg = String(localized: "Failed to delete project")
                         do {
-                            for project in projects {
-                                if let remoteId = project.remoteId {
-                                    let request = Project_ProjectId.with { $0.id = remoteId }
-                                    if project.isOwner {
-                                        _ = try await API.shared.project.deleteProject(request)
-                                    } else {
-                                        _ = try await API.shared.project.quitProject(request)
-                                    }
-                                }
-                                if let dir = try? FilePath.projectDirectory(for: project),
-                                   FileManager.default.fileExists(atPath: dir.path(percentEncoded: false)) {
-                                    try? FileManager.default.removeItem(at: dir)
-                                }
-                                modelContext.delete(project)
+                            for project in await ModelService.shared.getProjects(id: Set(projects.map { $0.id })) {
+                                try await ModelService.shared.deleteProject(project)
                             }
-                        } catch let error as GRPCStatus {
-                            alert.alert(message: errorMsg, detail: error.message ?? "Unknown Error")
                         } catch {
-                            alert.alert(message: errorMsg, detail: error.localizedDescription)
+                            alert.alert(message: String(localized: "Failed to delete project"),
+                                        detail: error.localizedDescription)
                         }
                     }
                 }
@@ -192,7 +178,7 @@ struct ContentView: View {
             $0.page = 0
             $0.pageSize = 0
         })
-        try await ModelService.shared.updateRemoteProjects(from: result.projects)
+        try await ModelService.shared.updateRemoteProjects(original: remoteProjects, from: result.projects)
     }
 }
 
