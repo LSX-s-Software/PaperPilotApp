@@ -46,6 +46,9 @@ struct PaperReader: View {
                         PDFOutlineView(root: pdf.outlineRoot)
                     case .thumbnail:
                         PDFKitThumbnailView(pdfView: pdfView, thumbnailWidth: 125)
+#if os(visionOS)
+                            .frame(depth: 100)
+#endif
                     case .bookmark:
                         BookmarkView(pdf: pdf, bookmarks: $paper.bookmarks)
                     }
