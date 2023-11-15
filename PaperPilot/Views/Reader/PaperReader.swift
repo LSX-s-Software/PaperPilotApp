@@ -52,10 +52,15 @@ struct PaperReader: View {
                     case .bookmark:
                         BookmarkView(pdf: pdf, bookmarks: $paper.bookmarks)
                     }
-#if os(macOS)
+#if os(macOS) || os(visionOS)
                     if findVM.searchBarPresented && !findVM.findText.isEmpty {
                         FindResultView(findVM: findVM)
-                            .background(.windowBackground)
+    #if os(macOS)
+                            .background(
+                                .windowBackground
+                            )
+    #else
+    #endif
                     }
 #endif
                 }

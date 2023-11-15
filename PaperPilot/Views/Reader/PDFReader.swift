@@ -51,9 +51,11 @@ struct PDFReader: View {
 
         PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView, markupMode: $isInMarkUpMode, drawingChanged: handleDrawingChanged)
             .navigationDocument(pdf.documentURL!)
-#if os(macOS)
+#if os(macOS) || os(visionOS)
             .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
+    #if os(macOS)
             .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
+    #endif
 #elseif os(iOS)
             .sheet(isPresented: $findVM.isShowingFindSheet) {
                 NavigationStack {
@@ -97,7 +99,7 @@ struct PDFReader: View {
             // MARK: - 工具栏
             .toolbar(id: "reader-tools") {
                 // MARK: 搜索选项
-#if os(macOS)
+#if os(macOS) || os(visionOS)
                 if findVM.searchBarPresented {
                     ToolbarItem(id: "search") {
                         Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
@@ -201,7 +203,7 @@ struct PDFReader: View {
                     pdfVM.currentPage = currentPage
                 }
             }
-#if !os(macOS)
+#if os(iOS)
             .onDisappear {
                 if !isRemote {
                     Task {
