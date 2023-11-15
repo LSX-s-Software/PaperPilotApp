@@ -101,19 +101,19 @@ extension ModelService {
     func updatePaper(_ paper: Paper, with detail: Paper_PaperDetail) {
         paper.remoteId = detail.id
         paper.title = detail.title
-        paper.abstract = detail.abstract
+        paper.abstract = detail.abstract.isEmpty ? nil : detail.abstract
         paper.keywords = detail.keywords
         paper.authors = detail.authors
         paper.tags = detail.tags
         paper.publicationYear = detail.publicationYear == 0 ? nil : String(format: "%d", detail.publicationYear)
-        paper.publication = detail.publication
-        paper.event = detail.event
-        paper.volume = detail.volume
-        paper.issue = detail.issue
-        paper.pages = detail.pages
-        paper.url = detail.url
-        paper.doi = detail.doi
-        paper.file = detail.file
+        paper.publication = detail.publication.isEmpty ? nil : detail.publication
+        paper.event = detail.event.isEmpty ? nil : detail.event
+        paper.volume = detail.volume.isEmpty ? nil : detail.volume
+        paper.issue = detail.issue.isEmpty ? nil : detail.issue
+        paper.pages = detail.pages.isEmpty ? nil : detail.pages
+        paper.url = detail.url.isEmpty ? nil : detail.url
+        paper.doi = detail.doi.isEmpty ? nil : detail.doi
+        paper.file = detail.file.isEmpty ? nil : detail.file
         paper.updateTime = detail.hasUpdateTime ? detail.updateTime.date : Date.now
         SpotlightHelper.index(paper: paper)
     }

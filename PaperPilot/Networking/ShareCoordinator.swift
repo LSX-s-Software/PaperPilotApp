@@ -25,7 +25,7 @@ class ShareCoordinator {
         if connection != nil { return }
         return await withCheckedContinuation { continuation in
             // "wss://coordinator.paperpilot.ziqiang.net.cn/"
-            shareClient.connect("ws://localhost:8080") { [weak self] connection in
+            shareClient.connect("wss://coordinator.paperpilot.ziqiang.net.cn/") { [weak self] connection in
                 self?.connection = connection
                 self?.logger.info("Connected to ShareDB")
                 continuation.resume()

@@ -55,6 +55,16 @@ struct AsyncButton<Content: View>: View {
         }
     }
 
+    init(verbatim title: String,
+         role: ButtonRole? = nil,
+         loading: Binding<Bool> = .constant(false),
+         action: @escaping () async -> Void
+    ) where Content == Text {
+        self.init(role: role, loading: loading, action: action) {
+            Text(verbatim: title)
+        }
+    }
+
     var body: some View {
         Button(role: role) {
             hasTaskFinished = false
@@ -78,27 +88,27 @@ struct AsyncButton<Content: View>: View {
 
 #Preview {
     VStack {
-        AsyncButton("Mini") {
+        AsyncButton(verbatim: "Mini") {
             try? await Task.sleep(for: .seconds(1))
         }
         .controlSize(.mini)
 
-        AsyncButton("Small") {
+        AsyncButton(verbatim: "Small") {
             try? await Task.sleep(for: .seconds(1))
         }
         .controlSize(.small)
 
-        AsyncButton("Regular") {
+        AsyncButton(verbatim: "Regular") {
             try? await Task.sleep(for: .seconds(1))
         }
         .controlSize(.regular)
 
-        AsyncButton("Large") {
+        AsyncButton(verbatim: "Large") {
             try? await Task.sleep(for: .seconds(1))
         }
         .controlSize(.large)
 
-        AsyncButton("Extra Large") {
+        AsyncButton(verbatim: "Extra Large") {
             try? await Task.sleep(for: .seconds(1))
         }
         .controlSize(.extraLarge)
