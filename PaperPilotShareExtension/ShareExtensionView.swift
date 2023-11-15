@@ -50,6 +50,7 @@ struct ShareExtensionView: View {
                             .symbolRenderingMode(.hierarchical)
                             .foregroundStyle(.red)
                             .font(.title)
+                            .padding(.bottom, 4)
                         Text("Failed to import this file")
                             .foregroundStyle(.secondary)
                             .font(.title)
@@ -60,7 +61,7 @@ struct ShareExtensionView: View {
                     }
                 } else {
                     Form {
-                        Section {
+                        Section("Files") {
                             ForEach(Array(newPapers.enumerated()), id: \.offset) { index, paper in
                                 LabeledContent(paper.title) {
                                     switch statuses[index] {
@@ -69,7 +70,7 @@ struct ShareExtensionView: View {
                                             Label("Imported", systemImage: "checkmark.circle.fill")
                                                 .foregroundStyle(.green)
                                         } else {
-                                            Text(paper.localFile?.lastPathComponent ?? "")
+                                            Text(paper.tempFile?.lastPathComponent ?? "")
                                         }
                                     case .failure(let error):
                                         Label(error.localizedDescription, systemImage: "exclamationmark.triangle.fill")
@@ -118,7 +119,7 @@ struct ShareExtensionView: View {
                        let url = URL(dataRepresentation: urlData, relativeTo: nil),
                        url.pathExtension == "pdf" {
                         let paper = Paper(title: url.deletingPathExtension().lastPathComponent)
-                        paper.localFile = url
+                        paper.tempFile = url
                         newPapers.append(paper)
                         statuses.append(.success(false))
                     }
@@ -144,8 +145,9 @@ struct ShareExtensionView: View {
         }
         importing = true
         for (index, paper) in newPapers.enumerated() {
+            if case let .success(imported) = statuses[index], imported { continue }
             do {
-                guard let url = paper.localFile else { continue }
+                guard let url = paper.tempFile else { continue }
                 paper.project = selectedProject
                 let didStartAccessing = url.startAccessingSecurityScopedResource()
                 defer {
@@ -154,7 +156,7 @@ struct ShareExtensionView: View {
                 if didStartAccessing {
                     let savedURL = containerURL.appending(path: "\(paper.id.uuidString).pdf")
                     try FileManager.default.copyItem(at: url, to: savedURL)
-                    paper.localFile = savedURL
+                    paper.tempFile = savedURL
                     if selectedProject.remoteId != nil {
                         paper.status = ModelStatus.waitingForUpload.rawValue
                     }

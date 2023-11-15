@@ -972,6 +972,16 @@
         }
       }
     },
+    "Files" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件"
+          }
+        }
+      }
+    },
     "Find in PDF" : {
       "localizations" : {
         "zh-Hans" : {

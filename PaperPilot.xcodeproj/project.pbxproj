@@ -116,6 +116,7 @@
 		F5B2A8962ADE2C1C0088428C /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */; };
 		F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */; };
 		F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C379082AC44BFF00C88C94 /* PaperInfo.swift */; };
+		F5C601A52B05224F004A93AB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5008D7C2AEFA886004F326E /* Logger.swift */; };
 		F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = F5CF43332ADC1FB6004F1A16 /* WindowManagement */; settings = {ATTRIBUTES = (Required, ); }; };
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
 		F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */; };
@@ -657,6 +658,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F5C601A92B052513004A93AB /* PBXTargetDependency */,
 			);
 			name = PaperPilotShareExtension;
 			productName = PaperPilotShareExtension;
@@ -816,6 +818,7 @@
 				F570634B2B03364B008BDCC5 /* Paper.swift in Sources */,
 				F5A9665C2B030D3500F32312 /* ShareViewController.swift in Sources */,
 				F57063492B03364B008BDCC5 /* MicroserviceStatus.swift in Sources */,
+				F5C601A52B05224F004A93AB /* Logger.swift in Sources */,
 				F50C57172B04CE2F0097D0B6 /* AsyncButton.swift in Sources */,
 				F570634C2B03364B008BDCC5 /* Project.swift in Sources */,
 				F50C57142B04CA480097D0B6 /* Path.swift in Sources */,
@@ -943,6 +946,10 @@
 			isa = PBXTargetDependency;
 			target = F5A966482B030A2200F32312 /* PaperPilotShareExtension */;
 			targetProxy = F5A966542B030A2300F32312 /* PBXContainerItemProxy */;
+		};
+		F5C601A92B052513004A93AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = F5C601A82B052513004A93AB /* SwiftLintPlugin */;
 		};
 		F5D825282ACC61330031F00D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1495,6 +1502,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F5A2F4062AF53D5D0045EF12 /* XCRemoteSwiftPackageReference "SwiftDown" */;
 			productName = SwiftDown;
+		};
+		F5C601A82B052513004A93AB /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
 		};
 		F5CF43332ADC1FB6004F1A16 /* WindowManagement */ = {
 			isa = XCSwiftPackageProductDependency;

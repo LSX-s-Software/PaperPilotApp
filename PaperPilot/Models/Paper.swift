@@ -59,6 +59,10 @@ class Paper: Hashable, Identifiable {
     ///
     /// > Important: 使用前需与Paper存储目录进行拼接
     var relativeLocalFile: String?
+    /// 本地临时文件URL
+    ///
+    /// 导入到App Group中的文件的URL
+    var tempFile: URL?
 
     var createTime: Date
     var formattedCreateTime: String {
@@ -95,6 +99,7 @@ class Paper: Hashable, Identifiable {
          doi: String? = nil,
          file: String? = nil,
          relativeLocalFile: String? = nil,
+         tempFile: URL? = nil,
          createTime: Date = Date.now,
          read: Bool = false,
          note: String = "",
@@ -118,6 +123,7 @@ class Paper: Hashable, Identifiable {
         self.doi = doi
         self.file = file
         self.relativeLocalFile = relativeLocalFile
+        self.tempFile = tempFile
         self.createTime = createTime
         self.updateTime = createTime
         self.read = read
