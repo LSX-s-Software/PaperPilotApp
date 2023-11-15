@@ -35,7 +35,7 @@ struct AccountView: View {
                                 Image(systemName: "photo")
                                     .padding(4)
                                     .foregroundColor(.white)
-                                    .background(.blue)
+                                    .background(Color.accentColor)
                                     .clipShape(Circle())
                                     .shadow(radius: 3)
                             })
