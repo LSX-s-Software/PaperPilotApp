@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import GRPC
+import CoreSpotlight
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
@@ -170,6 +171,17 @@ struct ContentView: View {
         }
         .task {
             API.shared.scheduleRefreshToken(alert: alert)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .selectProject)) { notification in
+            guard let projectId = notification.object as? Project.ID else { return }
+            navigationContext.selectedProject =
+                localProjects.first(where: { $0.id == projectId }) ?? remoteProjects.first(where: { $0.id == projectId })
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .selectPaper)) { notification in
+            guard let paperId = notification.object as? Paper.ID else { return }
+            let descriptor = FetchDescriptor<Paper>(predicate: #Predicate { $0.id == paperId })
+            let paper = try? modelContext.fetch(descriptor).first
+            navigationContext.selectedProject = paper?.project
         }
     }
 

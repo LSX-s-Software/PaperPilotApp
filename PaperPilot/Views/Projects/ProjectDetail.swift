@@ -134,16 +134,7 @@ struct ProjectDetail: View {
                 }
             }
         } primaryAction: { selectedPapers in
-#if os(iOS)
-            if let paperId = selectedPapers.first {
-                currentPaper = project.papers.first { $0.id == paperId }
-            }
-#else
-            let descriptor = FetchDescriptor(predicate: #Predicate<Paper> { selectedPapers.contains($0.id) })
-            try? modelContext.fetchIdentifiers(descriptor).forEach { id in
-                openWindow(id: AppWindow.reader.id, value: id)
-            }
-#endif
+            openReader(for: selectedPapers)
         }
         .dropDestination(for: URL.self) { urls, _ in
             handleDropFile(urls: urls)
@@ -205,6 +196,13 @@ struct ProjectDetail: View {
         }
         .task(id: project.id) {
             await updatePaperList()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .selectPaper)) { notification in
+            guard let paperId = notification.object as? Paper.ID else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // Wait for project to be selected
+                selection.insert(paperId)
+                openReader(for: [paperId])
+            }
         }
         .navigationTitle($project.name)
 #if os(macOS)
@@ -351,6 +349,19 @@ struct ProjectDetail: View {
             }
             return false
         }
+    }
+
+    func openReader(for papers: Set<Paper.ID>) {
+#if os(iOS)
+        if let paperId = papers.first {
+            currentPaper = project.papers.first { $0.id == paperId }
+        }
+#else
+        let descriptor = FetchDescriptor(predicate: #Predicate<Paper> { papers.contains($0.id) })
+        try? modelContext.fetchIdentifiers(descriptor).forEach { id in
+            openWindow(id: AppWindow.reader.id, value: id)
+        }
+#endif
     }
 }
 

@@ -127,6 +127,7 @@ struct ProjectCreateEditView: View {
                         project.members.append(user)
                     }
                 }
+                SpotlightHelper.index(project: project)
                 dismiss()
             } catch let error as GRPCStatus {
                 submitError = true

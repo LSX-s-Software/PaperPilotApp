@@ -47,6 +47,7 @@ extension ModelService {
                 let newProject = Project(remote: project, userID: userID!)
                 modelContext.insert(newProject)
                 newProject.members.append(contentsOf: project.members.map { User(from: $0) })
+                SpotlightHelper.index(project: newProject)
             }
         }
     }
@@ -71,6 +72,7 @@ extension ModelService {
         project.invitationCode = remote.inviteCode
         project.isOwner = remote.ownerID == userID
         project.members = remote.members.map { User(from: $0) }
+        SpotlightHelper.index(project: project)
     }
 
     /// 删除项目
@@ -93,6 +95,7 @@ extension ModelService {
            FileManager.default.fileExists(atPath: dir.path(percentEncoded: false)) {
             try? FileManager.default.removeItem(at: dir)
         }
+        SpotlightHelper.deleteIndex(of: project)
         modelContext.delete(project)
     }
 }
