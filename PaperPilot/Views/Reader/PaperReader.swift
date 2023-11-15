@@ -14,16 +14,16 @@ private enum TOCContentType: String, Identifiable, CaseIterable {
     case outline = "Outline"
     case thumbnail = "Thumbnail"
     case bookmark = "Bookmark"
-
+    
     var id: Self { self }
 }
 
 struct PaperReader: View {
     @Bindable var paper: Paper
-
+    
     @AppStorage(AppStorageKey.Reader.isShowingInspector.rawValue)
     private var isShowingInspector = true
-
+    
     @State private var errorDescription: String?
     @State private var isImporting = false
     @State private var isDroping = false
@@ -32,7 +32,7 @@ struct PaperReader: View {
     @State private var findVM = FindViewModel<PDFSelection>()
     @State private var pdfVM = PDFViewModel()
     @State private var downloadVM = DownloadViewModel()
-
+    
     var body: some View {
         let pdfView = Binding(get: { pdfVM.pdfView }, set: { pdfVM.pdfView = $0 })
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -90,90 +90,99 @@ struct PaperReader: View {
             }
         } detail: {
             // MARK: - 中间内容
-            Group {
-                if pdfVM.loading {
-                    ProgressView()
-                } else if let pdf = pdfVM.pdf {
-                    PDFReader(paper: paper, pdf: pdf, pdfVM: pdfVM)
-                        .environment(findVM)
-                } else {
-                    VStack(spacing: 6) {
-                        Image(
-                            systemName: downloadVM.downloading ?
-                            "arrow.down.circle.fill" : "exclamationmark.triangle.fill"
-                        )
-                        .symbolRenderingMode(.hierarchical)
-                        .foregroundStyle(downloadVM.downloading ? Color.accentColor : .red)
-                        .font(.title)
-                        .imageScale(.large)
-                        if let errorDescription = errorDescription {
-                            Text(errorDescription)
-                                .font(.title)
-                                .multilineTextAlignment(.center)
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal)
-                        } else if paper.file == nil && paper.relativeLocalFile == nil {
-                            Text("This paper has no PDF file attached.")
-                                .font(.title)
-                                .foregroundStyle(.secondary)
-                            VStack(spacing: 8) {
-                                Button("Add PDF File") {
-                                    isImporting.toggle()
-                                }
-                                .fileImporter(
-                                    isPresented: $isImporting,
-                                    allowedContentTypes: [.pdf],
-                                    onCompletion: handleImportFile
-                                )
-                                .fileDialogMessage("Select a PDF file to import")
-                                .fileDialogConfirmationLabel("Import")
-
-                                Text("Or")
+            HStack {
+                Group {
+                    if pdfVM.loading {
+                        ProgressView()
+                    } else if let pdf = pdfVM.pdf {
+                        PDFReader(paper: paper, pdf: pdf, pdfVM: pdfVM)
+                            .environment(findVM)
+                    } else {
+                        VStack(spacing: 6) {
+                            Image(
+                                systemName: downloadVM.downloading ?
+                                "arrow.down.circle.fill" : "exclamationmark.triangle.fill"
+                            )
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundStyle(downloadVM.downloading ? Color.accentColor : .red)
+                            .font(.title)
+                            .imageScale(.large)
+                            if let errorDescription = errorDescription {
+                                Text(errorDescription)
+                                    .font(.title)
+                                    .multilineTextAlignment(.center)
                                     .foregroundStyle(.secondary)
-
+                                    .padding(.horizontal)
+                            } else if paper.file == nil && paper.relativeLocalFile == nil {
+                                Text("This paper has no PDF file attached.")
+                                    .font(.title)
+                                    .foregroundStyle(.secondary)
                                 VStack(spacing: 8) {
-                                    Image(systemName: "arrow.down.doc.fill")
-                                        .symbolRenderingMode(isDroping ? .monochrome : .hierarchical)
-                                        .foregroundStyle(Color.accentColor)
-                                        .imageScale(.large)
-                                    Text("Drag and Drop PDF Here")
-                                        .foregroundStyle(isDroping ? .primary : .secondary)
-                                }
-                                .font(.title2)
-                                .padding(40)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .strokeBorder(style: StrokeStyle(lineWidth: 3, dash: [5]))
-                                        .foregroundStyle(isDroping ? .primary : .secondary)
-                                }
-                                .dropDestination(for: URL.self) { urls, _ in
-                                    handleDropFile(urls: urls)
-                                } isTargeted: { targeted in
-                                    withAnimation {
-                                        isDroping = targeted
+                                    Button("Add PDF File") {
+                                        isImporting.toggle()
+                                    }
+                                    .fileImporter(
+                                        isPresented: $isImporting,
+                                        allowedContentTypes: [.pdf],
+                                        onCompletion: handleImportFile
+                                    )
+                                    .fileDialogMessage("Select a PDF file to import")
+                                    .fileDialogConfirmationLabel("Import")
+                                    
+                                    Text("Or")
+                                        .foregroundStyle(.secondary)
+                                    
+                                    VStack(spacing: 8) {
+                                        Image(systemName: "arrow.down.doc.fill")
+                                            .symbolRenderingMode(isDroping ? .monochrome : .hierarchical)
+                                            .foregroundStyle(Color.accentColor)
+                                            .imageScale(.large)
+                                        Text("Drag and Drop PDF Here")
+                                            .foregroundStyle(isDroping ? .primary : .secondary)
+                                    }
+                                    .font(.title2)
+                                    .padding(40)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .strokeBorder(style: StrokeStyle(lineWidth: 3, dash: [5]))
+                                            .foregroundStyle(isDroping ? .primary : .secondary)
+                                    }
+                                    .dropDestination(for: URL.self) { urls, _ in
+                                        handleDropFile(urls: urls)
+                                    } isTargeted: { targeted in
+                                        withAnimation {
+                                            isDroping = targeted
+                                        }
                                     }
                                 }
-                            }
-                        } else if downloadVM.downloading {
-                            Text("Downloading PDF...")
-                                .font(.title)
-                            Group {
-                                if let progress = downloadVM.downloadProgress {
-                                    ProgressView(value: progress.fractionCompleted)
-                                } else {
-                                    ProgressView()
+                            } else if downloadVM.downloading {
+                                Text("Downloading PDF...")
+                                    .font(.title)
+                                Group {
+                                    if let progress = downloadVM.downloadProgress {
+                                        ProgressView(value: progress.fractionCompleted)
+                                    } else {
+                                        ProgressView()
+                                    }
                                 }
+                                .progressViewStyle(.linear)
+                                .padding(.horizontal)
+                                .frame(maxWidth: 350)
+                            } else {
+                                Text("Unknown error")
+                                    .font(.title)
                             }
-                            .progressViewStyle(.linear)
-                            .padding(.horizontal)
-                            .frame(maxWidth: 350)
-                        } else {
-                            Text("Unknown error")
-                                .font(.title)
                         }
                     }
                 }
+#if os(visionOS)
+                .frame(minWidth: 300)
+#endif
+#if os(visionOS)
+                PaperReaderInspector(paper: paper)
+                    .environment(pdfVM)
+#endif
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             // MARK: - 右侧内容
