@@ -105,7 +105,7 @@ struct ShareProjectView: View {
             downloadProgress = Progress(totalUnitCount: Int64(project.papers.count))
             for paper in project.papers {
                 promptMsg = String(localized: "Downloading: \(paper.title)")
-                if let localFile = paper.localFile,
+                if let localFile = FilePath.paperFileURL(for: paper),
                    FileManager.default.isReadableFile(atPath: localFile.path(percentEncoded: false)) {
                     downloadProgress?.completedUnitCount += 1
                     continue
@@ -115,7 +115,7 @@ struct ShareProjectView: View {
                     let savedURL = try FilePath.paperDirectory(for: paper, create: true)
                         .appending(path: url.lastPathComponent)
                     try FileManager.default.moveItem(at: localURL, to: savedURL)
-                    paper.localFile = savedURL
+                    paper.relativeLocalFile = savedURL.lastPathComponent
                 } else {
                     downloadProgress?.completedUnitCount += 1
                 }

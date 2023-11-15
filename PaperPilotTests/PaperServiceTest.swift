@@ -225,13 +225,13 @@ final class PaperServiceTest: XCTestCase {
         FileManager.default.createFile(atPath: url.path(percentEncoded: false), contents: "Hello".data(using: .utf8), attributes: nil)
         XCTAssert(FileManager.default.fileExists(atPath: url.path(percentEncoded: false)))
         paper.file = url.path(percentEncoded: false)
-        paper.localFile = url
+        paper.relativeLocalFile = url.lastPathComponent
         let paperId = paper.id
 
         let fetchedPaper = await modelService.getPaper(id: paperId)
         XCTAssertNotNil(fetchedPaper)
         try await modelService.deletePaper(fetchedPaper!, pdfOnly: true)
-        XCTAssertNil(fetchedPaper!.localFile)
+        XCTAssertNil(fetchedPaper!.relativeLocalFile)
         XCTAssertEqual(fetchedPaper!.status, ModelStatus.waitingForDownload.rawValue)
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path(percentEncoded: false)))
         XCTAssert(FileManager.default.fileExists(atPath: url.deletingLastPathComponent().path(percentEncoded: false)))
@@ -246,13 +246,13 @@ final class PaperServiceTest: XCTestCase {
         let url = try FilePath.paperDirectory(for: paper, create: true).appendingPathComponent("file.pdf")
         FileManager.default.createFile(atPath: url.path(percentEncoded: false), contents: "Hello".data(using: .utf8), attributes: nil)
         XCTAssert(FileManager.default.fileExists(atPath: url.path(percentEncoded: false)))
-        paper.localFile = url
+        paper.relativeLocalFile = url.lastPathComponent
         let paperId = paper.id
 
         let fetchedPaper = await modelService.getPaper(id: paperId)
         XCTAssertNotNil(fetchedPaper)
         try await modelService.deletePaper(fetchedPaper!, pdfOnly: true)
-        XCTAssertNil(fetchedPaper!.localFile)
+        XCTAssertNil(fetchedPaper!.relativeLocalFile)
         XCTAssertEqual(fetchedPaper!.status, ModelStatus.normal.rawValue)
         XCTAssertFalse(FileManager.default.fileExists(atPath: url.path(percentEncoded: false)))
         XCTAssert(FileManager.default.fileExists(atPath: url.deletingLastPathComponent().path(percentEncoded: false)))
@@ -267,7 +267,7 @@ final class PaperServiceTest: XCTestCase {
         let url = try FilePath.paperDirectory(for: paper, create: true).appendingPathComponent("file.pdf")
         FileManager.default.createFile(atPath: url.path(percentEncoded: false), contents: "Hello".data(using: .utf8), attributes: nil)
         XCTAssert(FileManager.default.fileExists(atPath: url.path(percentEncoded: false)))
-        paper.localFile = url
+        paper.relativeLocalFile = url.lastPathComponent
         let paperId = paper.id
 
         var fetchedPaper = await modelService.getPaper(id: paperId)

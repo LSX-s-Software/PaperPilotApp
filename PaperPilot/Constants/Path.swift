@@ -39,4 +39,13 @@ enum FilePath: String {
         }
         return url
     }
+
+    static func paperFileURL(for paper: Paper) -> URL? {
+        if let relativeLocalFile = paper.relativeLocalFile,
+           let url = try? Self.paperDirectory(for: paper).appending(path: relativeLocalFile) {
+            return url
+        } else {
+            return nil
+        }
+    }
 }

@@ -112,7 +112,7 @@ struct PaperReader: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(.secondary)
                                 .padding(.horizontal)
-                        } else if paper.file == nil && paper.localFile == nil {
+                        } else if paper.file == nil && paper.relativeLocalFile == nil {
                             Text("This paper has no PDF file attached.")
                                 .font(.title)
                                 .foregroundStyle(.secondary)
@@ -197,14 +197,14 @@ extension PaperReader {
         pdfVM.loading = true
         defer { pdfVM.loading = false }
         // 从本地文件加载
-        if let url = paper.localFile {
+        if let url = FilePath.paperFileURL(for: paper) {
             if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
                 pdfVM.pdf = PDFDocument(url: url)
                 tocContent = .outline
                 columnVisibility = .all
                 errorDescription = nil
             } else {
-                paper.localFile = nil
+                paper.relativeLocalFile = nil
                 errorDescription = String(localized: "Failed to load PDF: ") + String(localized: "File not found")
             }
             return
@@ -221,7 +221,7 @@ extension PaperReader {
                     try FileManager.default.removeItem(at: savedURL)
                 }
                 try FileManager.default.moveItem(at: localURL, to: savedURL)
-                paper.localFile = savedURL
+                paper.relativeLocalFile = url.lastPathComponent
                 paper.status = ModelStatus.normal.rawValue
                 pdfVM.pdf = PDFDocument(url: savedURL)
                 tocContent = .outline
@@ -249,7 +249,7 @@ extension PaperReader {
                     try FileManager.default.removeItem(at: savedURL)
                 }
                 try FileManager.default.copyItem(at: url, to: savedURL)
-                paper.localFile = savedURL
+                paper.relativeLocalFile = url.lastPathComponent
                 if paper.project?.remoteId == nil {
                     paper.status = ModelStatus.normal.rawValue
                 } else {

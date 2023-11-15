@@ -34,7 +34,7 @@ class SpotlightHelper {
             attributeSet.relatedUniqueIdentifier = identifier
             attributeSet.identifier = identifier
             attributeSet.metadataModificationDate = paper.updateTime
-            if let localFile = paper.localFile,
+            if let localFile = FilePath.paperFileURL(for: paper),
                let document = PDFDocument(url: localFile),
                let thumbnail = document.page(at: 0)?.thumbnail(of: CGSize(width: 180, height: 270), for: .cropBox),
                let thumbnailData = thumbnail.pngData() {

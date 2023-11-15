@@ -54,7 +54,7 @@ extension ModelService {
             }
             guard let remoteId = paper.remoteId else { return }
             // 上传文件
-            if let localFile = paper.localFile,
+            if let localFile = FilePath.paperFileURL(for: paper),
                FileManager.default.isReadableFile(atPath: localFile.path(percentEncoded: false)) {
                 // 读取本地文件
                 let fileData = try Data(contentsOf: localFile)
@@ -216,10 +216,10 @@ extension ModelService {
     /// > Important: 必须使用与ModelService处在同一个context下的Paper对象（可通过``getPaper(id:)``获取）
     func deletePaper(_ paper: Paper, pdfOnly: Bool = false, localOnly: Bool = false) async throws {
         if pdfOnly {
-            if let url = paper.localFile,
+            if let url = FilePath.paperFileURL(for: paper),
                FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
                 try FileManager.default.removeItem(at: url)
-                paper.localFile = nil
+                paper.relativeLocalFile = nil
                 if paper.file != nil {
                     paper.status = ModelStatus.waitingForDownload.rawValue
                 }
