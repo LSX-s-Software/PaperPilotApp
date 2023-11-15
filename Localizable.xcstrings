@@ -1134,6 +1134,36 @@
         }
       }
     },
+    "Import Files to Paper Pilot" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入文件到Paper Pilot"
+          }
+        }
+      }
+    },
+    "Import to" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入到"
+          }
+        }
+      }
+    },
+    "Imported" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已导入"
+          }
+        }
+      }
+    },
     "Info" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1281,6 +1311,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "更新时间："
+          }
+        }
+      }
+    },
+    "Loading..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载中…"
           }
         }
       }

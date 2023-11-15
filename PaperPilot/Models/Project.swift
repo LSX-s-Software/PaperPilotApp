@@ -46,14 +46,4 @@ class Project: Hashable, Identifiable {
         self.members = members
         self.papers = papers
     }
-
-    init(remote: Project_ProjectInfo, userID: String) {
-        self.id = UUID()
-        self.remoteId = remote.id
-        self.name = remote.name
-        self.desc = remote.description_p
-        self.invitationCode = remote.inviteCode
-        self.isOwner = remote.ownerID == userID
-        self.papers = []
-    }
 }
