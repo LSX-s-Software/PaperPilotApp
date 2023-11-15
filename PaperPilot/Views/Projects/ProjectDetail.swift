@@ -186,6 +186,7 @@ struct ProjectDetail: View {
                         if let progress = progress {
                             ProgressView(value: progress.fractionCompleted)
                                 .progressViewStyle(.circular)
+                                .controlSize(.small)
                         } else {
                             ProgressView().controlSize(.small)
                         }
