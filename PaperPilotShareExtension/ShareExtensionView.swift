@@ -152,7 +152,7 @@ struct ShareExtensionView: View {
                     url.stopAccessingSecurityScopedResource()
                 }
                 if didStartAccessing {
-                    let savedURL = containerURL.appending(path: url.lastPathComponent)
+                    let savedURL = containerURL.appending(path: "\(paper.id.uuidString).pdf")
                     try FileManager.default.copyItem(at: url, to: savedURL)
                     paper.localFile = savedURL
                     if selectedProject.remoteId != nil {
