@@ -10,7 +10,7 @@ import PDFKit
 
 struct FindResultView: View {
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var pdfVM: PDFViewModel
+    @Environment(PDFViewModel.self) private var pdfVM: PDFViewModel
     @Bindable var findVM: FindViewModel<PDFSelection>
 
     @State private var currentSelection: PDFSelection?

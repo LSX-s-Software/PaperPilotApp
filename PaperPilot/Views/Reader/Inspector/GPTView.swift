@@ -11,7 +11,7 @@ import GRPC
 
 struct GPTView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var pdfVM: PDFViewModel
+    @Environment(PDFViewModel.self) private var pdfVM: PDFViewModel
 
     @AppStorage(AppStorageKey.User.username.rawValue)
     private var username = ""
@@ -262,6 +262,6 @@ extension GPTView {
 
 #Preview {
     GPTView()
-        .environmentObject(PDFViewModel())
+        .environment(PDFViewModel())
         .frame(width: 300)
 }

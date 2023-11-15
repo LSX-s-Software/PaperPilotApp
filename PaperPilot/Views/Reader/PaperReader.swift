@@ -31,8 +31,8 @@ struct PaperReader: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     @State private var translatorVM = TranslatorViewModel()
     @State private var findVM = FindViewModel<PDFSelection>()
-    @StateObject private var pdfVM = PDFViewModel()
-    @StateObject private var downloadVM = DownloadViewModel()
+    @State private var pdfVM = PDFViewModel()
+    @State private var downloadVM = DownloadViewModel()
 
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -58,7 +58,7 @@ struct PaperReader: View {
                 }
             }
             .navigationTitle(LocalizedStringKey(tocContent.rawValue))
-            .environmentObject(pdfVM)
+            .environment(pdfVM)
 #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             .navigationSplitViewColumnWidth(min: 250, ideal: 250)
@@ -179,7 +179,7 @@ struct PaperReader: View {
             // MARK: - 右侧内容
             .inspector(isPresented: $isShowingInspector) {
                 PaperReaderInspector(paper: paper)
-                    .environmentObject(pdfVM)
+                    .environment(pdfVM)
                     .environment(translatorVM)
             }
         }

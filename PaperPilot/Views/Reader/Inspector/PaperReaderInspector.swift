@@ -74,7 +74,7 @@ struct PaperReaderInspector: View {
 
 #Preview {
     PaperReaderInspector(paper: ModelData.paper1)
-        .environmentObject(PDFViewModel())
+        .environment(PDFViewModel())
         .environment(TranslatorViewModel())
         .frame(width: 300)
 }

@@ -8,9 +8,9 @@
 import SwiftUI
 import PDFKit
 
-class PDFViewModel: ObservableObject {
-    @Published var loading = true
-    @Published var pdf: PDFDocument?
-    @Published var pdfView = PDFView()
-    @Published var currentPage = PDFPage()
+@Observable class PDFViewModel {
+    var loading = true
+    var pdf: PDFDocument?
+    var pdfView = PDFView()
+    var currentPage = PDFPage()
 }

@@ -22,7 +22,7 @@ struct PDFReader: View {
 
     @Bindable var paper: Paper
     var pdf: PDFDocument
-    @ObservedObject var pdfVM: PDFViewModel
+    @Bindable var pdfVM: PDFViewModel
     var isRemote: Bool { paper.remoteId != nil }
 
     @State private var annotationColor = HighlighterColor.yellow
@@ -58,7 +58,7 @@ struct PDFReader: View {
             .sheet(isPresented: $findVM.isShowingFindSheet) {
                 NavigationStack {
                     FindResultView(findVM: findVM)
-                        .environmentObject(pdfVM)
+                        .environment(pdfVM)
                         .toolbar {
                             ToolbarItem(placement: .cancellationAction) {
                                 Button("Done") {
@@ -317,8 +317,8 @@ extension PDFReader {
             findVM.finding = false
             if let firstResult = findVM.findResult.first {
                 findVM.currentSelectionIndex = 0
-                pdfVM.pdfView.go(to: firstResult)
-                pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
+                await pdfVM.pdfView.go(to: firstResult)
+                await pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
             }
         }
     }

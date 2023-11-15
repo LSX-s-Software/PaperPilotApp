@@ -9,7 +9,7 @@ import SwiftUI
 import Throttler
 
 struct TranslatorView: View {
-    @EnvironmentObject private var pdfVM: PDFViewModel
+    @Environment(PDFViewModel.self) private var pdfVM: PDFViewModel
     @Environment(TranslatorViewModel.self) private var viewModel
 
     var body: some View {
@@ -99,7 +99,7 @@ struct TranslatorView: View {
 
 #Preview {
     TranslatorView()
-        .environmentObject(PDFViewModel())
+        .environment(PDFViewModel())
         .environment(TranslatorViewModel())
         .frame(width: 300)
 }
