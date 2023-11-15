@@ -2332,6 +2332,16 @@
         }
       }
     },
+    "Successfully imported all files." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功导入所有文件"
+          }
+        }
+      }
+    },
     "Summarize" : {
       "localizations" : {
         "zh-Hans" : {

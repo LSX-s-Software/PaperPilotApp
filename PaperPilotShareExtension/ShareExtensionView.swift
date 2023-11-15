@@ -21,6 +21,7 @@ struct ShareExtensionView: View {
     @State private var projects: [Project]
     @State private var selectedProjectId: Project.ID
     @State private var importing = false
+    @State private var success = false
 
     var close: () -> Void
 
@@ -96,6 +97,25 @@ struct ShareExtensionView: View {
                         }
                     }
                     .formStyle(.grouped)
+                    .overlay {
+                        if success {
+                            VStack {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .imageScale(.large)
+                                    .symbolRenderingMode(.hierarchical)
+                                    .foregroundStyle(.green)
+                                    .font(.title)
+                                    .padding(.bottom, 4)
+                                Text("Successfully imported all files.")
+                                    .foregroundStyle(.secondary)
+                                    .font(.title)
+                                Button("Close", action: close)
+                                    .buttonStyle(.borderedProminent)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(.regularMaterial)
+                        }
+                    }
                 }
             }
             .padding()
@@ -178,8 +198,8 @@ struct ShareExtensionView: View {
                 return false
             }
         }) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                close()
+            withAnimation {
+                success = true
             }
         }
     }
