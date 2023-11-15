@@ -128,9 +128,17 @@ struct ContentView: View {
                         ProjectDetail(project: project)
                     }
                 } else {
-                    Text("Select a project from the left sidebar.")
-                        .font(.title)
-                        .foregroundStyle(.secondary)
+                    VStack(spacing: 20) {
+                        Image(ImageResource.cover)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 125)
+                            .padding(.horizontal)
+                        Text("Select a project from the left sidebar to start.")
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
+                    }
+                    .offset(y: -24)
                 }
             }
             // MARK: - 用户信息工具栏

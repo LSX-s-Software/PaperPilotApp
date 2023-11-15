@@ -39,7 +39,7 @@ struct GPTView: View {
                     }
                     HStack {
                         if chat.isGPT {
-                            Image("OpenAI")
+                            Image(ImageResource.openAI)
                                 .resizable()
                                 .scaledToFit()
                                 .padding(6)
