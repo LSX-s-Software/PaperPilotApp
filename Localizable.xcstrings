@@ -752,9 +752,6 @@
         }
       }
     },
-    "Extra Large" : {
-
-    },
     "Failed to Add Paper" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1267,9 +1264,6 @@
           }
         }
       }
-    },
-    "Large" : {
-
     },
     "Larger" : {
       "localizations" : {
@@ -1968,9 +1962,6 @@
         }
       }
     },
-    "Regular" : {
-
-    },
     "Relevant paper info not found" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2240,9 +2231,6 @@
           }
         }
       }
-    },
-    "Small" : {
-
     },
     "Smaller" : {
       "localizations" : {
