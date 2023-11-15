@@ -10,7 +10,7 @@ import Throttler
 
 struct TranslatorView: View {
     @Environment(PDFViewModel.self) private var pdfVM: PDFViewModel
-    @Environment(TranslatorViewModel.self) private var viewModel
+    @State private var viewModel = TranslatorViewModel()
 
     var body: some View {
         @Bindable var viewModel = viewModel
@@ -100,6 +100,5 @@ struct TranslatorView: View {
 #Preview {
     TranslatorView()
         .environment(PDFViewModel())
-        .environment(TranslatorViewModel())
         .frame(width: 300)
 }

@@ -29,12 +29,12 @@ struct PaperReader: View {
     @State private var isDroping = false
     @State private var tocContent: TOCContentType = .none
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
-    @State private var translatorVM = TranslatorViewModel()
     @State private var findVM = FindViewModel<PDFSelection>()
     @State private var pdfVM = PDFViewModel()
     @State private var downloadVM = DownloadViewModel()
 
     var body: some View {
+        let pdfView = Binding(get: { pdfVM.pdfView }, set: { pdfVM.pdfView = $0 })
         NavigationSplitView(columnVisibility: $columnVisibility) {
             // MARK: - 左侧内容
             ZStack {
@@ -45,7 +45,7 @@ struct PaperReader: View {
                     case .outline:
                         PDFOutlineView(root: pdf.outlineRoot)
                     case .thumbnail:
-                        PDFKitThumbnailView(pdfView: $pdfVM.pdfView, thumbnailWidth: 125)
+                        PDFKitThumbnailView(pdfView: pdfView, thumbnailWidth: 125)
                     case .bookmark:
                         BookmarkView(pdf: pdf, bookmarks: $paper.bookmarks)
                     }
@@ -180,7 +180,6 @@ struct PaperReader: View {
             .inspector(isPresented: $isShowingInspector) {
                 PaperReaderInspector(paper: paper)
                     .environment(pdfVM)
-                    .environment(translatorVM)
             }
             .inspectorColumnWidth(min: 250, ideal: 300)
         }
