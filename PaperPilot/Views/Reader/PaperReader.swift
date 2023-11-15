@@ -182,6 +182,7 @@ struct PaperReader: View {
                     .environment(pdfVM)
                     .environment(translatorVM)
             }
+            .inspectorColumnWidth(min: 250, ideal: 300)
         }
         .navigationTitle(paper.title)
         .task(id: paper.id) {
