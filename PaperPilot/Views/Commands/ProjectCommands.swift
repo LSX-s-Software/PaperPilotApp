@@ -36,7 +36,11 @@ struct ProjectCommands: Commands {
             Button("Edit Project", systemImage: "pencil") {
                 appState.isEditingProject = true
             }
+#if os(macOS)
             .keyboardShortcut("e")
+#else
+            .keyboardShortcut("e", modifiers: [.command, .option])
+#endif
 
             Divider()
 

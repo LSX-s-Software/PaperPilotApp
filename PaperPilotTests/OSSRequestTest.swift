@@ -154,7 +154,7 @@ final class OSSRequestTests: XCTestCase {
         let fileData = "Hello, world!".data(using: .utf8)!
 
         measure {
-            let ossRequest = OSSRequest(token: token, fileName: "testFile.txt", fileData: fileData, mimeType: "text/plain")?.urlRequest
+            _ = OSSRequest(token: token, fileName: "testFile.txt", fileData: fileData, mimeType: "text/plain")?.urlRequest
         }
     }
 

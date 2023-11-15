@@ -53,10 +53,12 @@ class Paper: Hashable, Identifiable {
     ///
     /// 可下载的PDF文件的URL字符串，当本地文件不可用时可从此处获取
     var file: String?
-    /// 本地文件URL
+    /// 本地文件名
     ///
-    /// 已经移动到Document文件夹的文件URL
-    var localFile: URL?
+    /// 已经移动到沙盒中的文件的文件名
+    ///
+    /// > Important: 使用前需与Paper存储目录进行拼接
+    var relativeLocalFile: String?
 
     var createTime: Date
     var formattedCreateTime: String {
@@ -92,7 +94,7 @@ class Paper: Hashable, Identifiable {
          url: String? = nil,
          doi: String? = nil,
          file: String? = nil,
-         localFile: URL? = nil,
+         relativeLocalFile: String? = nil,
          createTime: Date = Date.now,
          read: Bool = false,
          note: String = "",
@@ -115,7 +117,7 @@ class Paper: Hashable, Identifiable {
         self.url = url
         self.doi = doi
         self.file = file
-        self.localFile = localFile
+        self.relativeLocalFile = relativeLocalFile
         self.createTime = createTime
         self.updateTime = createTime
         self.read = read

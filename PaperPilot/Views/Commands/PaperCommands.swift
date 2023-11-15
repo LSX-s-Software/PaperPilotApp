@@ -24,7 +24,11 @@ struct PaperCommands: Commands {
                     }
                 }
             }
+#if os(macOS)
             .keyboardShortcut("f")
+#else
+            .keyboardShortcut("f", modifiers: [.command, .option])
+#endif
             .disabled(selectedPaper == nil)
         }
         

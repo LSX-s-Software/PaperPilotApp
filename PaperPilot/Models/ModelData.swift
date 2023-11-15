@@ -22,8 +22,7 @@ class ModelData {
                               issue: "3",
                               pages: "123-135",
                               url: "https://www.jmlr.org/papers/v42/Smith21a.html",
-                              doi: "10.5555/123456789",
-                              localFile: Bundle.main.url(forResource: "sample", withExtension: "pdf"))
+                              doi: "10.5555/123456789")
     static let paper2 = Paper(title: "An Introduction to Swift Programming",
                               abstract: nil,
                               keywords: [],

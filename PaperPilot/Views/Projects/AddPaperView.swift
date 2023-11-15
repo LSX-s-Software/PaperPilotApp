@@ -101,7 +101,7 @@ struct AddPaperView: View {
                     let savedURL = try FilePath.paperDirectory(for: paper, create: true)
                         .appending(path: url.lastPathComponent)
                     try FileManager.default.copyItem(at: url, to: savedURL)
-                    paper.localFile = savedURL
+                    paper.relativeLocalFile = url.lastPathComponent
                     if project.remoteId != nil {
                         paper.status = ModelStatus.waitingForUpload.rawValue
                     }
