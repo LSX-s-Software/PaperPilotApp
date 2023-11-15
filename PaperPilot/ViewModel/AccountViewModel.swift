@@ -9,8 +9,11 @@ import Foundation
 import GRPC
 import SwiftUI
 import SwiftData
+import OSLog
 
 class AccountViewModel: ObservableObject {
+    private let logger = LoggerFactory.make(category: "AccountViewModel")
+    
     @Published var phoneInput: String = ""
     @Published var password: String = ""
     @Published var newPassword: String = ""
@@ -70,7 +73,7 @@ class AccountViewModel: ObservableObject {
                 self.hasFailed = true
             }
         } catch {
-            print(error)
+            logger.error("Unknown error: \(error)")
         }
         DispatchQueue.main.async {
             self.secRemaining = 60
@@ -185,7 +188,7 @@ class AccountViewModel: ObservableObject {
                     guard let token = try await getTokenTask.value else {
                         return
                     }
-                    print("got token")
+                    logger.info("Got oss token for uploading avatar.")
                     let (data, response) = try await dataTask.value
                     let filename = response.suggestedFilename
                     guard let oss =
@@ -195,22 +198,24 @@ class AccountViewModel: ObservableObject {
                                 fileData: data,
                                 mimeType: "image/jpeg"
                             ) else {
-                        print("invalid token \(token)")
+                        logger.error("Cannot initialize OSSRequest.")
                         return
                     }
                     try await URLSession.shared.upload(for: oss)
+                    logger.info("before \(self.avatar!)")
                     try await API.shared.refreshUserInfo()
+                    logger.info("after \(self.avatar!)")
                     DispatchQueue.main.async {
                         self.isChangingAvatar = false
                     }
                 } catch let error as URLError {
-                    print(error)
+                    logger.error("URLError: \(error)")
                 } catch NetworkingError.requestError(_, let message) {
-                  fail(message: String(localized: "Failed to upload the image."), detail: message)
+                    fail(message: String(localized: "Failed to upload the image."), detail: message)
                 } catch let error as GRPCStatus {
-                  fail(message: error.message ?? "", detail: "")
+                    fail(message: error.message ?? "", detail: "")
                 } catch {
-                    print(error)
+                    logger.error("Unknown error: \(error)")
                 }
             }
         case .failure(let error):
