@@ -189,6 +189,7 @@ struct PaperInfo: View {
                                 .keyboardShortcut(.defaultAction)
                             }
                         }
+                        .frame(minWidth: 300, minHeight: 400)
                     }
             }
             .multilineTextAlignment(.leading)
