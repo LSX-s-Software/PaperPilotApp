@@ -177,11 +177,13 @@ struct PaperReader: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             // MARK: - 右侧内容
+#if !os(visionOS)
             .inspector(isPresented: $isShowingInspector) {
                 PaperReaderInspector(paper: paper)
                     .environment(pdfVM)
             }
             .inspectorColumnWidth(min: 250, ideal: 300)
+#endif
         }
         .navigationTitle(paper.title)
         .task(id: paper.id) {
