@@ -5,7 +5,7 @@
 //  Created by 林思行 on 2023/11/6.
 //
 
-#if os(iOS)
+#if os(iOS) || os(visionOS)
 import UIKit
 
 extension UIView {
