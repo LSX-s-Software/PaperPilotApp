@@ -1,21 +1,15 @@
 //
-//  ShareViewController.swift
-//  PaperPilotShareExtension
+//  ActionViewController.swift
+//  PaperPilotActionExtension
 //
-//  Created by 林思行 on 2023/11/14.
+//  Created by 林思行 on 2023/11/16.
 //
 
+#if canImport(UIKit)
+import UIKit
 import SwiftUI
 
-#if canImport(AppKit)
-import Cocoa
-class ShareViewController: NSViewController { }
-#else
-import UIKit
-class ShareViewController: UIViewController { }
-#endif
-
-extension ShareViewController {
+class ActionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,11 +20,7 @@ extension ShareViewController {
         }
 
         let rootView = ShareExtensionView(itemProviders: attachments, close: close)
-#if canImport(AppKit)
-        let contentView = NSHostingController(rootView: rootView)
-#else
         let contentView = UIHostingController(rootView: rootView)
-#endif
         self.addChild(contentView)
         self.view.addSubview(contentView.view)
 
@@ -43,6 +33,7 @@ extension ShareViewController {
     }
 
     func close() {
-        self.extensionContext?.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
+        self.extensionContext!.completeRequest(returningItems: self.extensionContext!.inputItems, completionHandler: nil)
     }
 }
+#endif
