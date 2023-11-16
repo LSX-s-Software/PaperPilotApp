@@ -158,7 +158,7 @@ struct ShareExtensionView: View {
                 }
             }
         }
-        .tint(.accentColor)
+        .tint(Color("AccentColor"))
         .task {
             do {
                 let identifier = UTType.fileURL.identifier
