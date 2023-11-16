@@ -117,6 +117,7 @@
 		F5B2A89C2ADEE4410088428C /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */; };
 		F5C379092AC44BFF00C88C94 /* PaperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C379082AC44BFF00C88C94 /* PaperInfo.swift */; };
 		F5C601A52B05224F004A93AB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5008D7C2AEFA886004F326E /* Logger.swift */; };
+		F5C601B22B05C582004A93AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5C601B12B05C582004A93AB /* Assets.xcassets */; };
 		F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = F5CF43332ADC1FB6004F1A16 /* WindowManagement */; settings = {ATTRIBUTES = (Required, ); }; };
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
 		F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */; };
@@ -261,6 +262,7 @@
 		F5B2A8952ADE2C1C0088428C /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		F5B2A89B2ADEE4410088428C /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		F5C379082AC44BFF00C88C94 /* PaperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperInfo.swift; sourceTree = "<group>"; };
+		F5C601B12B05C582004A93AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinProjectView.swift; sourceTree = "<group>"; };
 		F5D8EEEC2AD42D5100501B0E /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				F5A9665B2B030D3500F32312 /* ShareViewController.swift */,
 				F5A9665D2B030F0100F32312 /* ShareExtensionView.swift */,
 				F5A966522B030A2300F32312 /* Info.plist */,
+				F5C601B12B05C582004A93AB /* Assets.xcassets */,
 				F5A966532B030A2300F32312 /* PaperPilotShareExtension.entitlements */,
 			);
 			path = PaperPilotShareExtension;
@@ -772,6 +775,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5A9665F2B030FEF00F32312 /* Localizable.xcstrings in Resources */,
+				F5C601B22B05C582004A93AB /* Assets.xcassets in Resources */,
 				F5A9664C2B030A2300F32312 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

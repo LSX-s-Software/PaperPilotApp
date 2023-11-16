@@ -7,33 +7,15 @@
 
 import SwiftUI
 
-#if canImport(UIKit)
-import UIKit
-
-class ShareViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-#elseif canImport(AppKit)
+#if canImport(AppKit)
 import Cocoa
+class ShareViewController: NSViewController { }
+#else
+import UIKit
+class ShareViewController: UIViewController { }
+#endif
 
-class ShareViewController: NSViewController {
+extension ShareViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,22 +24,25 @@ class ShareViewController: NSViewController {
             close()
             return
         }
-        
+
         let rootView = ShareExtensionView(itemProviders: attachments, close: close)
+#if canImport(AppKit)
         let contentView = NSHostingController(rootView: rootView)
+#else
+        let contentView = UIHostingController(rootView: rootView)
+#endif
         self.addChild(contentView)
         self.view.addSubview(contentView.view)
 
         // Set up constraints
         contentView.view.translatesAutoresizingMaskIntoConstraints = false
         contentView.view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        contentView.view.bottomAnchor.constraint (equalTo: self.view.bottomAnchor).isActive = true
+        contentView.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         contentView.view.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        contentView.view.rightAnchor.constraint (equalTo: self.view.rightAnchor).isActive = true
+        contentView.view.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
     }
 
     func close() {
         self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
 }
-#endif

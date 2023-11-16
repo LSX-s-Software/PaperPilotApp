@@ -9,14 +9,18 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>NSExtensionActivationRule</key>
-			<string>{extensionItems = ({
-                attachments = ({
-                    registeredTypeIdentifiers = (
-                        "com.adobe.pdf",
-                        "public.file-url"
-                    );
-                });
-            })}</string>
+            <string>SUBQUERY (
+                    extensionItems,
+                    $extensionItem,
+                    SUBQUERY (
+                        $extensionItem.attachments,
+                        $attachment,
+                        (
+                        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.adobe.pdf"
+                        )
+                    ).@count >= 1
+                ).@count >= 1
+            </string>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.share-services</string>

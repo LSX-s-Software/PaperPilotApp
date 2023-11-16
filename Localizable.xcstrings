@@ -53,6 +53,16 @@
         }
       }
     },
+    "A paper with the same name will be created for each imported file." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将会为每个导入的文件创建同名的论文"
+          }
+        }
+      }
+    },
     "Abstract" : {
       "localizations" : {
         "zh-Hans" : {
@@ -972,12 +982,12 @@
         }
       }
     },
-    "Files" : {
+    "Files to import" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "文件"
+            "value" : "导入的文件"
           }
         }
       }
@@ -1140,6 +1150,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "导入"
+          }
+        }
+      }
+    },
+    "Import %lld Files" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入%lld个文件"
           }
         }
       }

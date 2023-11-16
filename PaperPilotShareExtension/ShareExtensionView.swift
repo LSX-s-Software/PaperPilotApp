@@ -29,7 +29,8 @@ struct ShareExtensionView: View {
         self.itemProviders = itemProviders
         self.close = close
         do {
-            self.modelContainer = try ModelContainer(for: Paper.self, Project.self, Bookmark.self, User.self, MicroserviceStatus.self)
+            self.modelContainer = try ModelContainer(for: Paper.self, Project.self, Bookmark.self,
+                                                     User.self, MicroserviceStatus.self)
             self.modelContext = ModelContext(modelContainer)
             let projects = try modelContext.fetch(FetchDescriptor<Project>())
             self._projects = State(initialValue: projects)
@@ -58,11 +59,28 @@ struct ShareExtensionView: View {
                         Text(errorMsg ?? String(localized: "Unsupported file type"))
                             .foregroundStyle(.secondary)
                             .font(.title3)
+#if os(macOS)
                         Button("Cancel", role: .cancel, action: close)
+#endif
                     }
+                    .padding()
                 } else {
                     Form {
-                        Section("Files") {
+#if os(macOS)
+                        Section {
+                            VStack {
+                                Image(ImageResource.icon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 64)
+                                    .padding(8)
+                                Text("Import Files to Paper Pilot")
+                                    .font(.title2)
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+#endif
+                        Section {
                             ForEach(Array(newPapers.enumerated()), id: \.offset) { index, paper in
                                 LabeledContent(paper.title) {
                                     switch statuses[index] {
@@ -79,21 +97,28 @@ struct ShareExtensionView: View {
                                     }
                                 }
                             }
+                        } header: {
+                            Text("Files to import")
+                        } footer: {
+                            Text("A paper with the same name will be created for each imported file.")
                         }
+
                         Section("Import to") {
                             Picker("Project", selection: $selectedProjectId) {
                                 ForEach(projects) { project in
                                     Text(project.name).tag(project.id)
                                 }
                             }
+#if os(macOS)
                             HStack {
                                 Button("Cancel", role: .cancel, action: close)
-                                AsyncButton("Import") {
+                                AsyncButton("Import \(newPapers.count) Files") {
                                     handleImport()
                                 }
                                 .keyboardShortcut(.defaultAction)
                             }
                             .frame(maxWidth: .infinity, alignment: .trailing)
+#endif
                         }
                     }
                     .formStyle(.grouped)
@@ -118,28 +143,38 @@ struct ShareExtensionView: View {
                     }
                 }
             }
-            .padding()
             .navigationTitle("Import Files to Paper Pilot")
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", role: .cancel, action: close)
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    AsyncButton("Import") {
-                        handleImport()
+                if !success {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel", role: .cancel, action: close)
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        AsyncButton("Import") {
+                            handleImport()
+                        }
+                        .disabled(newPapers.isEmpty)
                     }
                 }
             }
         }
+        .tint(.accentColor)
         .task {
             do {
+                let identifier = UTType.fileURL.identifier
                 for itemProvider in itemProviders {
-                    if itemProvider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier),
-                       let urlData = try await itemProvider.loadItem(forTypeIdentifier: UTType.fileURL.identifier) as? Data,
-                       let url = URL(dataRepresentation: urlData, relativeTo: nil),
-                       url.pathExtension == "pdf" {
-                        let paper = Paper(title: url.deletingPathExtension().lastPathComponent)
-                        paper.tempFile = url
+                    guard itemProvider.hasItemConformingToTypeIdentifier(identifier) else { continue }
+                    let item = try await itemProvider.loadItem(forTypeIdentifier: identifier)
+
+                    var url: URL?
+                    if let item = item as? URL {
+                        url = item
+                    } else if let urlData = item as? Data {
+                        url = URL(dataRepresentation: urlData, relativeTo: nil)
+                    }
+
+                    if let url = url, url.pathExtension == "pdf" {
+                        let paper = Paper(title: url.deletingPathExtension().lastPathComponent, tempFile: url)
                         newPapers.append(paper)
                         statuses.append(.success(false))
                     }
