@@ -33,6 +33,7 @@
 
 - macOS 14.0+
 - iPadOS 17.0+
+- visionOS 1.0+
 
 ## 开发要求
 

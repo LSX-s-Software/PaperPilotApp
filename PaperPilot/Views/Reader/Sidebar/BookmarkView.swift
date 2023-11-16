@@ -11,7 +11,7 @@ import PDFKit
 struct BookmarkView: View {
     var pdf: PDFDocument
     @Binding var bookmarks: [Bookmark]
-    @EnvironmentObject private var pdfVM: PDFViewModel
+    @Environment(PDFViewModel.self) private var pdfVM: PDFViewModel
 
     var body: some View {
         List(
@@ -44,5 +44,5 @@ struct BookmarkView: View {
 
 #Preview {
     BookmarkView(pdf: PDFDocument(url: Bundle.main.url(forResource: "sample", withExtension: "pdf")!)!, bookmarks: .constant([]))
-        .environmentObject(PDFViewModel())
+        .environment(PDFViewModel())
 }

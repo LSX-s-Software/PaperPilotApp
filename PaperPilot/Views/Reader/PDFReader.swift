@@ -22,7 +22,7 @@ struct PDFReader: View {
 
     @Bindable var paper: Paper
     var pdf: PDFDocument
-    @ObservedObject var pdfVM: PDFViewModel
+    @Bindable var pdfVM: PDFViewModel
     var isRemote: Bool { paper.remoteId != nil }
 
     @State private var annotationColor = HighlighterColor.yellow
@@ -51,14 +51,16 @@ struct PDFReader: View {
 
         PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView, markupMode: $isInMarkUpMode, drawingChanged: handleDrawingChanged)
             .navigationDocument(pdf.documentURL!)
-#if os(macOS)
+#if os(macOS) || os(visionOS)
             .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
+    #if os(macOS)
             .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
+    #endif
 #elseif os(iOS)
             .sheet(isPresented: $findVM.isShowingFindSheet) {
                 NavigationStack {
                     FindResultView(findVM: findVM)
-                        .environmentObject(pdfVM)
+                        .environment(pdfVM)
                         .toolbar {
                             ToolbarItem(placement: .cancellationAction) {
                                 Button("Done") {
@@ -97,7 +99,7 @@ struct PDFReader: View {
             // MARK: - 工具栏
             .toolbar(id: "reader-tools") {
                 // MARK: 搜索选项
-#if os(macOS)
+#if os(macOS) || os(visionOS)
                 if findVM.searchBarPresented {
                     ToolbarItem(id: "search") {
                         Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
@@ -201,7 +203,7 @@ struct PDFReader: View {
                     pdfVM.currentPage = currentPage
                 }
             }
-#if !os(macOS)
+#if os(iOS)
             .onDisappear {
                 if !isRemote {
                     Task {
@@ -317,8 +319,8 @@ extension PDFReader {
             findVM.finding = false
             if let firstResult = findVM.findResult.first {
                 findVM.currentSelectionIndex = 0
-                pdfVM.pdfView.go(to: firstResult)
-                pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
+                await pdfVM.pdfView.go(to: firstResult)
+                await pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
             }
         }
     }
