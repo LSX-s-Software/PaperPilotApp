@@ -120,7 +120,7 @@
 		F5C601B22B05C582004A93AB /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5C601B12B05C582004A93AB /* Media.xcassets */; };
 		F5C601D72B06188A004A93AB /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C601BB2B05D196004A93AB /* UniformTypeIdentifiers.framework */; };
 		F5C601DC2B06188A004A93AB /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C601DB2B06188A004A93AB /* ActionViewController.swift */; };
-		F5C601E32B06188A004A93AB /* PaperPilotActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F5C601D62B06188A004A93AB /* PaperPilotActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F5C601E32B06188A004A93AB /* PaperPilotActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F5C601D62B06188A004A93AB /* PaperPilotActionExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F5C601E72B061950004A93AB /* ShareExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A9665D2B030F0100F32312 /* ShareExtensionView.swift */; };
 		F5C601E92B061B46004A93AB /* Paper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53D81412AC02AF800865B80 /* Paper.swift */; };
 		F5C601EA2B061B46004A93AB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AEFA812AE75DA70052F975 /* User.swift */; };
@@ -1068,6 +1068,7 @@
 		};
 		F5C601E22B06188A004A93AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = F5C601D52B06188A004A93AB /* PaperPilotActionExtension */;
 			targetProxy = F5C601E12B06188A004A93AB /* PBXContainerItemProxy */;
 		};
