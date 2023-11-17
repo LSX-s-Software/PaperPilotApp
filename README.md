@@ -39,6 +39,7 @@
 
 - macOS 14.0+
 - Xcode 15.0+
+- [protoc、protoc-gen-swift、protoc-gen-grpc-swift](https://github.com/grpc/grpc-swift#getting-the-protoc-plugins)
 
 ## 完整功能列表
 
