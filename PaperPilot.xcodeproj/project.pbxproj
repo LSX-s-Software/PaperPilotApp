@@ -764,6 +764,8 @@
 			);
 			dependencies = (
 				F5D825282ACC61330031F00D /* PBXTargetDependency */,
+				279F2D092AC82A8A00FEA9D8 /* PBXTargetDependency */,
+				279F2D052AC82A7800FEA9D8 /* PBXTargetDependency */,
 				279F2CEE2AC8240900FEA9D8 /* PBXTargetDependency */,
 				278201142AC8199000D8BA05 /* PBXTargetDependency */,
 				F5A966552B030A2300F32312 /* PBXTargetDependency */,
@@ -1049,6 +1051,14 @@
 		279F2CEE2AC8240900FEA9D8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 279F2CED2AC8240900FEA9D8 /* SwiftProtobufPlugin */;
+		};
+		279F2D052AC82A7800FEA9D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 279F2D042AC82A7800FEA9D8 /* protoc-gen-swift */;
+		};
+		279F2D092AC82A8A00FEA9D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 279F2D082AC82A8A00FEA9D8 /* protoc-gen-grpc-swift */;
 		};
 		F5A2F4122AF5E43F0045EF12 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1652,6 +1662,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
 			productName = "protoc-gen-swift";
+		};
+		279F2D042AC82A7800FEA9D8 /* protoc-gen-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = "protoc-gen-swift";
+		};
+		279F2D082AC82A8A00FEA9D8 /* protoc-gen-grpc-swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			productName = "protoc-gen-grpc-swift";
 		};
 		5279DACB2B04991700B2AAF0 /* SwiftDown */ = {
 			isa = XCSwiftPackageProductDependency;
