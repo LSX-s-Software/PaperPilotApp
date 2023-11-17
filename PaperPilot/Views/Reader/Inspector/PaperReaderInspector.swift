@@ -54,7 +54,6 @@ struct PaperReaderInspector: View {
                 GPTView()
             }
         }
-        .inspectorColumnWidth(min: 250, ideal: 300)
         .toolbar {
 #if os(iOS)
             ToolbarItem(placement: .topBarTrailing) {
@@ -74,7 +73,6 @@ struct PaperReaderInspector: View {
 
 #Preview {
     PaperReaderInspector(paper: ModelData.paper1)
-        .environmentObject(PDFViewModel())
-        .environment(TranslatorViewModel())
+        .environment(PDFViewModel())
         .frame(width: 300)
 }

@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-class DownloadViewModel: ObservableObject {
+@Observable class DownloadViewModel {
     static let logger = LoggerFactory.make(category: "DownloadViewModel")
 
-    @Published var downloading = false
-    @Published var downloadProgress: Progress?
+    var downloading = false
+    var downloadProgress: Progress?
     private var downloadTask: URLSessionDownloadTask?
     private var observation: NSKeyValueObservation?
 

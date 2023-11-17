@@ -165,10 +165,10 @@
     {
       "identity" : "swiftdown",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/LSX-s-Software/SwiftDown.git",
+      "location" : "https://github.com/MikeWalrus/SwiftDown",
       "state" : {
-        "branch" : "develop",
-        "revision" : "b18007a429a1e198169f42ba7c3a2b48e47284b3"
+        "branch" : "visionOS",
+        "revision" : "3ecc009f7263b0eb5e4d8bc94572d97ad5d69c9c"
       }
     },
     {

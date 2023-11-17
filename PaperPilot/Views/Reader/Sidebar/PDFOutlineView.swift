@@ -17,7 +17,7 @@ private struct PDFOutlineItem: Identifiable, Hashable {
 struct PDFOutlineView: View {
     let root: PDFOutline?
 
-    @EnvironmentObject private var pdfVM: PDFViewModel
+    @Environment(PDFViewModel.self) private var pdfVM: PDFViewModel
     @State private var outline: PDFOutlineItem?
 
     var body: some View {
@@ -72,6 +72,6 @@ struct PDFOutlineView: View {
 
 #Preview {
     PDFOutlineView(root: PDFDocument(url: Bundle.main.url(forResource: "sample", withExtension: "pdf")!)!.outlineRoot)
-        .environmentObject(PDFViewModel())
+        .environment(PDFViewModel())
         .frame(width: 150, height: 500)
 }

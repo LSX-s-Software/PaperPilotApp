@@ -16,7 +16,7 @@ struct ShareProjectView: View {
     @AppStorage(AppStorageKey.User.username.rawValue)
     private var username: String?
 
-    @StateObject private var downloadVM = DownloadViewModel()
+    @State private var downloadVM = DownloadViewModel()
     @State private var promptMsg: String?
     @State private var downloading = false
     @State private var downloadProgress: Progress?
