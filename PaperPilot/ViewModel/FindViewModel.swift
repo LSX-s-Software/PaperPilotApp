@@ -23,12 +23,11 @@ import SwiftUI
         return options
     }
 
-    func focusSearchBar() {
-        searchBarPresented = true
+    func setSearchBarFocused(_ focused: Bool) {
+        searchBarPresented = focused
     }
 
     func reset() {
-        searchBarPresented = false
         findText = ""
         finding = false
         findResult.removeAll()

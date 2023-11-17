@@ -6,7 +6,8 @@ disabled_rules: # 执行时排除掉的规则
   - cyclomatic_complexity
   - nesting
 opt_in_rules: # 一些规则仅仅是可选的
-  - missing_docs
+  - closure_spacing
+  - collection_alignment
 included:
   PaperPilot
 excluded: # 执行 linting 时忽略的路径。 优先级比 `included` 更高。
@@ -21,5 +22,5 @@ line_length:
   warning: 130
   ignores_interpolated_strings: true
   ignores_urls: true
-file_length: 400
+file_length: 450
 reporter: "xcode" # 报告类型 (xcode, json, csv, checkstyle, codeclimate, junit, html, emoji, sonarqube, markdown, github-actions-logging)

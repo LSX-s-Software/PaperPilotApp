@@ -43,18 +43,17 @@ struct PDFReader: View {
     @State private var sharedCanvas = SharedCanvas()
     @State private var shareErrorMsg: String?
     @State private var bag = Set<AnyCancellable>()
-    let dateFormatter = ISO8601DateFormatter()
 
     var body: some View {
         @Bindable var findVM = findVM
 
         PDFKitView(pdf: pdf, pdfView: $pdfVM.pdfView, markupMode: $isInMarkUpMode, drawingChanged: handleDrawingChanged)
             .navigationDocument(pdf.documentURL!)
+#if os(macOS)
+            .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
+#endif
 #if os(macOS) || os(visionOS)
             .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
-    #if os(macOS)
-            .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
-    #endif
 #elseif os(iOS)
             .sheet(isPresented: $findVM.isShowingFindSheet) {
                 NavigationStack {
@@ -191,14 +190,8 @@ struct PDFReader: View {
             }
 #if os(iOS)
             .onDisappear {
-                if !isRemote {
-                    Task {
-                        if let url = pdf.documentURL {
-                            if !pdf.writeWithMarkup(to: url) {
-                                print("Failed to write PDF.")
-                            }
-                        }
-                    }
+                if !isRemote, let url = pdf.documentURL, !pdf.writeWithMarkup(to: url) {
+                    print("Failed to write PDF.")
                 }
             }
 #endif
@@ -247,26 +240,21 @@ struct PDFReader: View {
                         .sink { newCanvas in
                             for (page, canvas) in newCanvas.canvas {
                                 if canvas == sharedCanvas.canvas[page] { continue }
-                                if canvas.drawing != sharedCanvas.canvas[page]?.drawing {
-                                    if let drawedPage = pdf.page(at: page) as? DrawedPDFPage {
-                                        drawedPage.drawing = canvas.drawing
-                                        #if os(macOS)
-                                        if let annotation = PKPDFAnnotation(page: drawedPage, drawing: canvas.drawing) {
-                                            drawedPage.annotations
-                                                .filter { $0.type == PKPDFAnnotation.subtypeString }
-                                                .forEach { drawedPage.removeAnnotation($0) }
-                                            drawedPage.addAnnotation(annotation)
-                                        }
-                                        #else
-                                        if let coordinator = pdfVM.pdfView.pageOverlayViewProvider as? PDFKitView.Coordinator {
-                                            coordinator.updateDrawing(for: drawedPage)
-                                        }
-                                        #endif
-                                    } else {
-                                        print("Failed to get page \(page)")
+                                if canvas.drawing != sharedCanvas.canvas[page]?.drawing,
+                                   let drawedPage = pdf.page(at: page) as? DrawedPDFPage {
+                                    drawedPage.drawing = canvas.drawing
+#if os(macOS)
+                                    if let annotation = PKPDFAnnotation(page: drawedPage, drawing: canvas.drawing) {
+                                        drawedPage.annotations
+                                            .filter { $0.type == PKPDFAnnotation.subtypeString }
+                                            .forEach { drawedPage.removeAnnotation($0) }
+                                        drawedPage.addAnnotation(annotation)
                                     }
-                                } else {
-                                    print("Update skipped for page \(page)")
+#else
+                                    if let coordinator = pdfVM.pdfView.pageOverlayViewProvider as? PDFKitView.Coordinator {
+                                        coordinator.updateDrawing(for: drawedPage)
+                                    }
+#endif
                                 }
                                 sharedCanvas.canvas[page] = canvas
                             }
@@ -284,9 +272,10 @@ struct PDFReader: View {
 extension PDFReader {
     func findInPDFHandler() {
         if appState.findingPaper.contains(paper.id) {
-            findVM.focusSearchBar()
+            findVM.setSearchBarFocused(true)
         } else {
             findVM.reset()
+            findVM.setSearchBarFocused(false)
         }
     }
 
@@ -327,9 +316,7 @@ extension PDFReader {
         select.forEach { selection in
             if let page = selection.pages.first {
                 let bounds = selection.bounds(for: page)
-                let newPDFAnnotation = PDFAnnotation(bounds: bounds,
-                                                     forType: type,
-                                                     withProperties: nil)
+                let newPDFAnnotation = PDFAnnotation(bounds: bounds, forType: type, withProperties: nil)
                 newPDFAnnotation.color = annotationColor.platformColor
                 page.addAnnotation(newPDFAnnotation)
 
@@ -354,7 +341,6 @@ extension PDFReader {
                         try $0.annotations.set(sharedAnnotation.annotations)
                     }
                 } catch {
-                    print("update error:", error)
                     shareErrorMsg = error.localizedDescription
                 }
             }
