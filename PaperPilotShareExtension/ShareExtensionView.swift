@@ -218,7 +218,7 @@ struct ShareExtensionView: View {
                     modelContext.insert(paper)
                     statuses[index] = .success(true)
                 } else {
-                    statuses[index] = .failure(String(localized: "You don't have access to the PDF."))
+                    statuses[index] = .failure(PDFError.noAccess)
                     modelContext.delete(paper)
                 }
             } catch {
@@ -238,8 +238,4 @@ struct ShareExtensionView: View {
             }
         }
     }
-}
-
-extension String: LocalizedError {
-    public var errorDescription: String? { return self }
 }

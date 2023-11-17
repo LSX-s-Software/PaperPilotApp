@@ -922,12 +922,12 @@
         }
       }
     },
-    "Failed to save PDF" : {
+    "Failed to save PDF: %@" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PDF保存失败"
+            "value" : "PDF保存失败：%@"
           }
         }
       }

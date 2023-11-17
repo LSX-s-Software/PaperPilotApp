@@ -107,9 +107,8 @@ struct AddPaperView: View {
                     }
                     newPaper = paper
                 } else {
-                    errorMsg = String(localized: "You don't have access to the PDF.")
-                    hasError = true
                     modelContext.delete(paper)
+                    throw PDFError.noAccess
                 }
             case .failure(let error):
                 throw error

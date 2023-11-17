@@ -284,7 +284,7 @@ extension PaperReader {
                 return false
             }
         } else {
-            errorDescription = String(localized: "You don't have access to the PDF.")
+            errorDescription = PDFError.noAccess.localizedDescription
             return false
         }
     }

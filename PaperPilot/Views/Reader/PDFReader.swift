@@ -33,8 +33,7 @@ struct PDFReader: View {
     }
 
     @State private var savingPDF = false
-    @State private var saveErrorMsg: LocalizedStringKey?
-    @State private var isShowingSaveErrorDetail = false
+    @State private var saveError: LocalizedError?
 
     // 协作
     @State private var connecting = true
@@ -159,38 +158,25 @@ struct PDFReader: View {
             .toolbarRole(.editor)
             // MARK: - 底部叠层
             .overlay(alignment: .bottom) {
-                Group {
-                    if savingPDF {
-                        HStack(spacing: 6) {
+                if savingPDF || saveError != nil {
+                    HStack(spacing: 6) {
+                        if savingPDF {
                             ProgressView()
                                 .controlSize(.mini)
                             Text("Saving")
                                 .foregroundStyle(.secondary)
-                        }
-                    } else if let errorMsg = saveErrorMsg {
-                        HStack(spacing: 6) {
-                            Image(systemName: "exclamationmark.triangle")
-                                .foregroundStyle(.red)
-                            Text("Failed to save PDF")
-                        }
-                        .onTapGesture {
-                            isShowingSaveErrorDetail.toggle()
-                        }
-                        .popover(isPresented: $isShowingSaveErrorDetail) {
-                            HStack {
-                                Text(errorMsg)
-                                Button {
-                                    saveErrorMsg = nil
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                }
-                                .buttonStyle(.plain)
+                        } else if let saveError = saveError {
+                            Group {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                Text("Failed to save PDF: \(saveError.localizedDescription)")
                             }
-                            .padding()
+                            .foregroundStyle(.red)
                         }
                     }
+                    .padding(8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(.regularMaterial)
                 }
-                .padding(.vertical, 8)
             }
             .overlay(alignment: .bottomLeading) {
                 if isRemote {
@@ -287,7 +273,6 @@ struct PDFReader: View {
                         }
                         .store(in: &bag)
                 } catch {
-                    print("init error:", error)
                     shareErrorMsg = error.localizedDescription
                 }
                 connecting = false
@@ -381,10 +366,10 @@ extension PDFReader {
             Task {
                 if let url = pdf.documentURL {
                     if !pdf.write(to: url) {
-                        saveErrorMsg = "Failed to write PDF."
+                        saveError = PDFError.writeFailed
                     }
                 } else {
-                    saveErrorMsg = "You don't have access to the PDF."
+                    saveError = PDFError.noAccess
                 }
                 withAnimation {
                     savingPDF = false
@@ -423,7 +408,6 @@ extension PDFReader {
                     try $0.canvas.set(sharedCanvas.canvas)
                 }
             } catch {
-                print("update error:", error)
                 shareErrorMsg = error.localizedDescription
             }
         }
