@@ -53,6 +53,16 @@
         }
       }
     },
+    "A paper with the same name will be created for each imported file." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将会为每个导入的文件创建同名的论文"
+          }
+        }
+      }
+    },
     "Abstract" : {
       "localizations" : {
         "zh-Hans" : {
@@ -972,6 +982,16 @@
         }
       }
     },
+    "Files to import" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入的文件"
+          }
+        }
+      }
+    },
     "Find in PDF" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1134,6 +1154,46 @@
         }
       }
     },
+    "Import %lld Files" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入%lld个文件"
+          }
+        }
+      }
+    },
+    "Import Files to Paper Pilot" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入文件到Paper Pilot"
+          }
+        }
+      }
+    },
+    "Import to" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入到"
+          }
+        }
+      }
+    },
+    "Imported" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已导入"
+          }
+        }
+      }
+    },
     "Info" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1281,6 +1341,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "更新时间："
+          }
+        }
+      }
+    },
+    "Loading..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载中…"
           }
         }
       }
@@ -2278,6 +2348,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "存储空间"
+          }
+        }
+      }
+    },
+    "Successfully imported all files." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功导入所有文件"
           }
         }
       }

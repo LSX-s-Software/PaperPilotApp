@@ -7,6 +7,8 @@
 
 import Foundation
 
+private let logger = LoggerFactory.make(category: "FilePath")
+
 enum FilePath: String {
     case projectDirectory = "project"
     case paperDirectory = "paper"
@@ -44,6 +46,20 @@ enum FilePath: String {
         if let relativeLocalFile = paper.relativeLocalFile,
            let url = try? Self.paperDirectory(for: paper).appending(path: relativeLocalFile) {
             return url
+        } else if let tempFile = paper.tempFile,
+                  FileManager.default.fileExists(atPath: tempFile.path(percentEncoded: false)),
+                  let paperDir = try? Self.paperDirectory(for: paper, create: true) {
+            // 如果论文储存在临时文件夹，则转移到沙盒中
+            do {
+                let sandboxPaperURL = paperDir.appending(path: tempFile.lastPathComponent)
+                try FileManager.default.moveItem(at: tempFile, to: sandboxPaperURL)
+                paper.tempFile = nil
+                paper.relativeLocalFile = sandboxPaperURL.lastPathComponent
+                return sandboxPaperURL
+            } catch {
+                logger.error("Failed to move the file of paper \"\(paper.title)\" from temp folder to sandbox: \(error)")
+                return nil
+            }
         } else {
             return nil
         }
