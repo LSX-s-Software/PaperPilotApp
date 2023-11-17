@@ -726,7 +726,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F5C601A92B052513004A93AB /* PBXTargetDependency */,
 			);
 			name = PaperPilotShareExtension;
 			productName = PaperPilotShareExtension;
@@ -744,7 +743,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F5C602162B0673F5004A93AB /* PBXTargetDependency */,
 			);
 			name = PaperPilotActionExtension;
 			productName = PaperPilotActionExtension;
@@ -755,6 +753,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5EBC0BD2ABFD99000B2B4A3 /* Build configuration list for PBXNativeTarget "PaperPilot" */;
 			buildPhases = (
+				F54F66FB2B07394400941CA0 /* SwiftLint */,
 				F5EBC0AA2ABFD98E00B2B4A3 /* Sources */,
 				F5EBC0AB2ABFD98E00B2B4A3 /* Frameworks */,
 				F5EBC0AC2ABFD98E00B2B4A3 /* Resources */,
@@ -763,7 +762,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F5D825282ACC61330031F00D /* PBXTargetDependency */,
 				279F2CEE2AC8240900FEA9D8 /* PBXTargetDependency */,
 				278201142AC8199000D8BA05 /* PBXTargetDependency */,
 				F5A966552B030A2300F32312 /* PBXTargetDependency */,
@@ -827,7 +825,6 @@
 			packageReferences = (
 				F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */,
 				279F2CFB2AC8276600FEA9D8 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
-				F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */,
 				F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */,
 				F5008D752AED50BD004F326E /* XCRemoteSwiftPackageReference "share-kit" */,
@@ -892,6 +889,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F54F66FB2B07394400941CA0 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F5A2F4092AF5E43E0045EF12 /* Sources */ = {
@@ -1060,23 +1079,11 @@
 			target = F5A966482B030A2200F32312 /* PaperPilotShareExtension */;
 			targetProxy = F5A966542B030A2300F32312 /* PBXContainerItemProxy */;
 		};
-		F5C601A92B052513004A93AB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = F5C601A82B052513004A93AB /* SwiftLintPlugin */;
-		};
 		F5C601E22B06188A004A93AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
 			target = F5C601D52B06188A004A93AB /* PaperPilotActionExtension */;
 			targetProxy = F5C601E12B06188A004A93AB /* PBXContainerItemProxy */;
-		};
-		F5C602162B0673F5004A93AB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = F5C602152B0673F5004A93AB /* SwiftLintPlugin */;
-		};
-		F5D825282ACC61330031F00D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = F5D825272ACC61330031F00D /* SwiftLintPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1306,7 +1313,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1370,7 +1377,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1617,14 +1624,6 @@
 				minimumVersion = 2.1.1;
 			};
 		};
-		F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.53.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1698,25 +1697,10 @@
 			package = F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */;
 			productName = Throttler;
 		};
-		F5C601A82B052513004A93AB /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
-		F5C602152B0673F5004A93AB /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
 		F5CF43332ADC1FB6004F1A16 /* WindowManagement */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F5CF43322ADC1FB6004F1A16 /* XCRemoteSwiftPackageReference "SwiftUI-WindowManagement" */;
 			productName = WindowManagement;
-		};
-		F5D825272ACC61330031F00D /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5D825262ACC60A60031F00D /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
