@@ -15,6 +15,8 @@ import AppKit
 import UIKit
 #endif
 
+private let logger = LoggerFactory.make(category: "API")
+
 final class API {
     static let eventLoopGroup = PlatformSupport.makeEventLoopGroup(loopCount: 1, networkPreference: .best)
     static let builder = ClientConnection.usingPlatformAppropriateTLS(for: eventLoopGroup)
@@ -71,11 +73,11 @@ final class API {
 #else
         let notification = UIApplication.willTerminateNotification
 #endif
-        NotificationCenter.default.addObserver(forName: notification, object: nil, queue: .main ) { _ in
+        NotificationCenter.default.addObserver(forName: notification, object: nil, queue: .main) { _ in
             do {
                 try self.channel.close().wait()
             } catch {
-                print(error.localizedDescription)
+                logger.warning("Failed to close GRPC channel: \(error.localizedDescription)")
             }
         }
     }
@@ -108,20 +110,19 @@ final class API {
             })
             self.accessToken = result.access.value
             self.accessTokenExpireTime = Double(result.access.expireTime.seconds)
-            print("Refreshed access token.")
+            logger.trace("Refreshed access token.")
             if self.accessTokenExpireTime! > self.refreshTokenExpireTime! {
-                print("Refresh token is about to expire.")
+                logger.trace("Refresh token is about to expire.")
                 // TODO: Ask for password
             }
             self.scheduleRefreshToken(alert: alert)
         } catch let error as GRPCStatus {
             DispatchQueue.main.async {
-                alert.alert(
-                    message: String(localized: "Failed to refresh the access token."),
-                    detail: error.message ?? "")
+                alert.alert(message: String(localized: "Failed to refresh the access token."),
+                            detail: error.message ?? "")
             }
         } catch {
-            print("Failed to refresh: \(error.localizedDescription)")
+            logger.error("Failed to refresh: \(error.localizedDescription)")
         }
     }
 
@@ -139,10 +140,9 @@ final class API {
             return
         }
 
-        let timer = Timer(
-            fire: refreshExpireDate.advanced(by: -secBeforeExpire),
-            interval: 0,
-            repeats: false) { _ in
+        let timer = Timer(fire: refreshExpireDate.advanced(by: -secBeforeExpire),
+                          interval: 0,
+                          repeats: false) { _ in
                 Task {
                     await self.refreshAccessToken(alert: alert)
                 }
@@ -161,7 +161,7 @@ extension GRPCAsyncUnaryCall: WithApiException {
             do {
                 return try await toException(from: self.trailingMetadata)
             } catch {
-                print("Cannot parse ApiException: \(error)")
+                logger.warning("Cannot parse ApiException: \(error)")
                 return nil
             }
         }
@@ -179,15 +179,12 @@ extension Exec_ApiException {
         try details.flatMap {
             let padLen = $0.count % 4
             let padded = $0.padding(toLength: $0.count + (padLen == 0 ? 0: (4 - padLen)), withPad: "=", startingAt: 0)
-            print("has details")
             return Data(base64Encoded: padded)
         }.flatMap {
-            print("base64 decoded")
             return try Google_Rpc_Status(serializedData: $0)
                 .details
                 .first { $0.typeURL == "type.googleapis.com/exec.ApiException" }
                 .map {
-                    print("has apiexception")
                     return try Exec_ApiException(serializedData: $0.value)
                 }
         }
@@ -196,6 +193,6 @@ extension Exec_ApiException {
 }
 
 func toException(from headers: HPACKHeaders) throws -> Exec_ApiException? {
-    print(headers.description)
+    logger.debug("GRPC Response Header: \(headers.description)")
     return try .from(details: headers.first(name: "grpc-status-details-bin"))
 }

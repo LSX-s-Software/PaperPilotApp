@@ -10,6 +10,8 @@ import GRPC
 import NIOHPACK
 import SwiftProtobuf
 
+private let logger = LoggerFactory.make(category: "API")
+
 class ErrorInterceptor<I, O>: ClientInterceptor<I, O> {
     override func receive(
         _ part: GRPCClientResponsePart<O>,
@@ -19,13 +21,13 @@ class ErrorInterceptor<I, O>: ClientInterceptor<I, O> {
         case .end(var status, let trailers):
             do {
                 if !status.isOk, let exception = try toException(from: trailers) {
-                    print("RPC error \(exception.code): \(exception.detail)")
+                    logger.warning("RPC error \(exception.code): \(exception.detail)")
                     status.message = exception.message
                     context.receive(.end(status, trailers))
                 }
                 context.receive(part)
             } catch {
-                print("failed to extract ApiException: \(error)")
+                logger.warning("failed to extract ApiException: \(error)")
             }
         default:
             context.receive(part)
