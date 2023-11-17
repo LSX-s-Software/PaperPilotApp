@@ -53,7 +53,7 @@ struct PDFReader: View {
             .navigationSubtitle("Page: \(pdfVM.currentPage.label ?? "Unknown")/\(pdf.pageCount)")
 #endif
 #if os(macOS) || os(visionOS)
-            .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
+            .searchable(text: $findVM.findText, isPresented: $findVM.searchBarFocused, prompt: Text("Find in PDF"))
 #elseif os(iOS)
             .sheet(isPresented: $findVM.isShowingFindSheet) {
                 NavigationStack {
@@ -67,15 +67,15 @@ struct PDFReader: View {
                             }
                         }
                 }
-                .searchable(text: $findVM.findText, isPresented: $findVM.searchBarPresented, prompt: Text("Find in PDF"))
+                .searchable(text: $findVM.findText, isPresented: $findVM.searchBarFocused, prompt: Text("Find in PDF"))
             }
             .ignoresSafeArea(edges: .bottom)
 #endif
             // MARK: - 事件处理
             .onChange(of: findVM.findText, performFind)
             .onChange(of: appState.findingPaper, findInPDFHandler)
-            .onChange(of: findVM.searchBarPresented) {
-                if !findVM.searchBarPresented && findVM.findText.isEmpty {
+            .onChange(of: findVM.searchBarFocused) {
+                if !findVM.searchBarFocused && findVM.findText.isEmpty {
                     appState.findingPaper.remove(paper.id)
                 }
             }
@@ -98,7 +98,7 @@ struct PDFReader: View {
             .toolbar(id: "reader-tools") {
                 // MARK: 搜索选项
 #if os(macOS) || os(visionOS)
-                if findVM.searchBarPresented {
+                if findVM.searchBarFocused {
                     ToolbarItem(id: "search") {
                         Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
                             Toggle("Case Sensitive", systemImage: "textformat", isOn: $findVM.caseSensitive)
@@ -272,10 +272,12 @@ struct PDFReader: View {
 extension PDFReader {
     func findInPDFHandler() {
         if appState.findingPaper.contains(paper.id) {
-            findVM.setSearchBarFocused(true)
+            findVM.isShowingFindSheet = true
+            findVM.searchBarFocused = true
         } else {
             findVM.reset()
-            findVM.setSearchBarFocused(false)
+            findVM.searchBarFocused = false
+            findVM.isShowingFindSheet = false
         }
     }
 

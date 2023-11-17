@@ -9,7 +9,7 @@ import SwiftUI
 
 @Observable class FindViewModel<T> {
     var findText = ""
-    var searchBarPresented = false
+    var searchBarFocused = false
     var isShowingFindSheet = false
     var finding = false
     var findResult = [T]()
@@ -21,10 +21,6 @@ import SwiftUI
             options.remove(.caseInsensitive)
         }
         return options
-    }
-
-    func setSearchBarFocused(_ focused: Bool) {
-        searchBarPresented = focused
     }
 
     func reset() {

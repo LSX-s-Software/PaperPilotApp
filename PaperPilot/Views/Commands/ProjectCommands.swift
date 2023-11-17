@@ -39,7 +39,7 @@ struct ProjectCommands: Commands {
 #if os(macOS)
             .keyboardShortcut("e")
 #else
-            .keyboardShortcut("e", modifiers: [.command, .option])
+            .keyboardShortcut("e", modifiers: [.command, .shift])
 #endif
 
             Divider()
