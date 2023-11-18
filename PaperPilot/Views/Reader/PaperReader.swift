@@ -46,9 +46,6 @@ struct PaperReader: View {
                         PDFOutlineView(root: pdf.outlineRoot)
                     case .thumbnail:
                         PDFKitThumbnailView(pdfView: pdfView, thumbnailWidth: 125)
-#if os(visionOS)
-                            .frame(depth: 100)
-#endif
                     case .bookmark:
                         BookmarkView(pdf: pdf, bookmarks: $paper.bookmarks)
                     }
@@ -67,7 +64,7 @@ struct PaperReader: View {
             }
             .navigationTitle(LocalizedStringKey(tocContent.rawValue))
             .environment(pdfVM)
-#if os(iOS)
+#if os(iOS) || os(visionOS)
             .navigationBarTitleDisplayMode(.inline)
             .navigationSplitViewColumnWidth(min: 250, ideal: 250)
 #else
@@ -184,17 +181,30 @@ struct PaperReader: View {
                         }
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
 #if os(visionOS)
-                .frame(minWidth: 300)
-#endif
-#if os(visionOS)
-                PaperReaderInspector(paper: paper)
-                    .environment(pdfVM)
+                if isShowingInspector {
+                    PaperReaderInspector(paper: paper)
+                        .frame(maxWidth: 350)
+                        .environment(pdfVM)
+                }
 #endif
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .navigationTitle(paper.title)
             // MARK: - 右侧内容
-#if !os(visionOS)
+#if os(visionOS)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Show Inspector", systemImage: "sidebar.right") {
+                        withAnimation {
+                            isShowingInspector.toggle()
+                        }
+                    }
+                }
+            }
+#else
             .inspector(isPresented: $isShowingInspector) {
                 PaperReaderInspector(paper: paper)
                     .environment(pdfVM)
@@ -202,7 +212,6 @@ struct PaperReader: View {
             .inspectorColumnWidth(min: 250, ideal: 300)
 #endif
         }
-        .navigationTitle(paper.title)
         .task(id: paper.id) {
             await loadPDF()
             await ModelService.shared.setPaperRead(paper, read: true)

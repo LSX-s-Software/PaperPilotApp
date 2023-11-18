@@ -61,7 +61,7 @@ struct PaperReaderInspector: View {
                     isShowingInspector.toggle()
                 }
             }
-#else
+#elseif os(macOS)
             Spacer()
             Button("Show Inspector", systemImage: "sidebar.right") {
                 isShowingInspector.toggle()

@@ -95,6 +95,8 @@ struct PaperPilotApp: App {
         .register(AppWindow.reader.id)
         .disableRestoreOnLaunch()
         .defaultSize(width: 1200, height: 800)
+#elseif os(visionOS)
+        .defaultSize(width: 1920, height: 1200)
 #endif
         .modelContainer(modelContainer)
         .commandsRemoved()
