@@ -5,15 +5,15 @@
 //  Created by ljx on 2023/10/12.
 //
 
-import Foundation
 import GRPC
 import SwiftUI
 import SwiftData
 import OSLog
+import PhotosUI
 
 class AccountViewModel: ObservableObject {
     private let logger = LoggerFactory.make(category: "AccountViewModel")
-    
+
     @Published var phoneInput: String = ""
     @Published var password: String = ""
     @Published var newPassword: String = ""
@@ -133,13 +133,13 @@ class AccountViewModel: ObservableObject {
                 }
             }
         } catch let error as GRPCStatus {
-            await apiFail(error)
+            apiFail(error)
         } catch {
-            print(error)
+            logger.warning("Submit Failed: \(error)")
         }
     }
 
-    func apiFail(_ error: GRPCStatus) async {
+    func apiFail(_ error: GRPCStatus) {
         fail(message: error.message ?? "Unknown error", detail: "")
     }
 
@@ -152,75 +152,44 @@ class AccountViewModel: ObservableObject {
     }
 
     func logout() {
+        self.loggedInStored = false
         self.accessToken = nil
+        self.accessTokenExpireTime = nil
+        self.refreshToken = nil
+        self.refreshTokenExpireTime = nil
         self.usernameStored = nil
         self.phoneStored = nil
-        self.usernameStored = nil
+        self.id = nil
     }
 
-    private func getAvatarOSSToken() async throws -> Util_OssToken? {
-        do {
-            return try await API.shared.user.uploadUserAvatar(.init()).token
-        } catch let error as GRPCStatus {
-            await apiFail(error)
-            return nil
-        }
-    }
-
-    func handleAvatarChange(result: Result<URL, Error>) {
-        let errorChooseImageMsg = String(localized: "Failed to choose an image file.")
-        switch result {
-        case .success(let url):
-            let gotAccess = url.startAccessingSecurityScopedResource()
-            if !gotAccess {
-                fail(message: errorChooseImageMsg, detail: String(localized: "Cannot access the file."))
-                return
-            }
-            let getTokenTask = Task { return try await getAvatarOSSToken() }
-            let session = URLSession(configuration: .default)
-            let request = URLRequest(url: url)
-            let dataTask = Task { return try await session.data(for: request) }
-            Task {
-                defer {
-                    url.stopAccessingSecurityScopedResource()
-                }
-                do {
-                    guard let token = try await getTokenTask.value else {
-                        return
-                    }
-                    logger.info("Got oss token for uploading avatar.")
-                    let (data, response) = try await dataTask.value
-                    let filename = response.suggestedFilename
-                    guard let oss =
-                            OSSRequest(
-                                token: token,
-                                fileName: filename ?? "",
-                                fileData: data,
-                                mimeType: "image/jpeg"
-                            ) else {
-                        logger.error("Cannot initialize OSSRequest.")
-                        return
-                    }
-                    try await URLSession.shared.upload(for: oss)
-                    logger.info("before \(self.avatar!)")
-                    try await API.shared.refreshUserInfo()
-                    logger.info("after \(self.avatar!)")
-                    DispatchQueue.main.async {
-                        self.isChangingAvatar = false
-                    }
-                } catch let error as URLError {
-                    logger.error("URLError: \(error)")
-                } catch NetworkingError.requestError(_, let message) {
-                    fail(message: String(localized: "Failed to upload the image."), detail: message)
-                } catch let error as GRPCStatus {
-                    fail(message: error.message ?? "", detail: "")
-                } catch {
-                    logger.error("Unknown error: \(error)")
+    func handleAvatarChange(avatarItem: PhotosPickerItem) {
+        isChangingAvatar = true
+        Task {
+            defer {
+                DispatchQueue.main.async {
+                    self.isChangingAvatar = false
                 }
             }
-        case .failure(let error):
-            fail(message: errorChooseImageMsg, detail: error.localizedDescription)
-            self.isChangingAvatar = false
+            do {
+                guard let data = try await avatarItem.loadTransferable(type: Data.self) else {
+                    fail(message: String(localized: "Failed to load the image."), detail: nil)
+                    return
+                }
+                let token = try await API.shared.user.uploadUserAvatar(.init()).token
+                guard let oss = OSSRequest(token: token,
+                                           fileName: avatarItem.itemIdentifier ?? "",
+                                           fileData: data,
+                                           mimeType: "image/jpeg") else {
+                    logger.error("Cannot initialize OSSRequest.")
+                    throw NetworkingError.responseFormatError
+                }
+                try await URLSession.shared.upload(for: oss)
+                try await API.shared.refreshUserInfo()
+            } catch let error as GRPCStatus {
+                apiFail(error)
+            } catch {
+                fail(message: String(localized: "Failed to change avatar."), detail: error.localizedDescription)
+            }
         }
     }
 }

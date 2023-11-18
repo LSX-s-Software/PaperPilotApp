@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct AccountView: View {
     @Environment(\.dismiss) private var dismiss
@@ -13,7 +14,7 @@ struct AccountView: View {
     @StateObject private var viewModel = AccountViewModel()
 
     @State private var isShowingLogoutConfirmation = false
-    @State private var isShowingFileImporter = false
+    @State private var avatarItem: PhotosPickerItem?
 
     private static let avatarSize: CGFloat = 80
 
@@ -27,23 +28,31 @@ struct AccountView: View {
                         .symbolRenderingMode(.hierarchical)
                 } else {
                     AvatarView(size: Self.avatarSize)
+                        .overlay {
+                            if viewModel.isChangingAvatar {
+                                ProgressView()
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .background(.thickMaterial)
+                                    .clipShape(Circle())
+                            }
+                        }
                         .overlay(alignment: .bottomTrailing) {
-                            AsyncButton(loading: $viewModel.isChangingAvatar, action: {
-                                viewModel.isChangingAvatar = true
-                                isShowingFileImporter = true
-                            }, label: {
+                            PhotosPicker(selection: $avatarItem) {
                                 Image(systemName: "photo")
                                     .padding(4)
                                     .foregroundColor(.white)
                                     .background(Color.accentColor)
                                     .clipShape(Circle())
                                     .shadow(radius: 3)
-                            })
+                            }
                             .buttonStyle(.plain)
+                            .disabled(viewModel.isChangingAvatar)
                         }
-                        .fileImporter(isPresented: $isShowingFileImporter,
-                                      allowedContentTypes: [.image],
-                                      onCompletion: viewModel.handleAvatarChange)
+                        .onChange(of: avatarItem) {
+                            if let avatarItem {
+                                viewModel.handleAvatarChange(avatarItem: avatarItem)
+                            }
+                        }
                 }
 
                 Group {

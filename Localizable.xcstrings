@@ -359,16 +359,6 @@
         }
       }
     },
-    "Cannot access the file." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法访问文件。"
-          }
-        }
-      }
-    },
     "Cannot invite others to join local projects." : {
       "localizations" : {
         "zh-Hans" : {
@@ -782,12 +772,12 @@
         }
       }
     },
-    "Failed to choose an image file." : {
+    "Failed to change avatar." : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择图像失败。"
+            "value" : "更换头像失败"
           }
         }
       }
@@ -892,6 +882,16 @@
         }
       }
     },
+    "Failed to load the image." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载图像失败"
+          }
+        }
+      }
+    },
     "Failed to quit project" : {
       "localizations" : {
         "zh-Hans" : {
@@ -948,16 +948,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "更新失败：%@"
-          }
-        }
-      }
-    },
-    "Failed to upload the image." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "上传图像失败。"
           }
         }
       }
