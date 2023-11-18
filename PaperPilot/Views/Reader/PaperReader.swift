@@ -52,12 +52,11 @@ struct PaperReader: View {
 #if os(macOS) || os(visionOS)
                     if findVM.searchBarFocused && !findVM.findText.isEmpty {
                         FindResultView(findVM: findVM)
-    #if os(macOS)
-                            .background(
-                                .windowBackground
-                            )
-    #else
-    #endif
+#if os(macOS)
+                            .background(.windowBackground)
+#else
+                            .glassBackgroundEffect()
+#endif
                     }
 #endif
                 }

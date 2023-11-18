@@ -92,7 +92,7 @@ struct PDFReader: View {
             // MARK: - 工具栏
             .toolbar(id: "reader-tools") {
                 // MARK: 搜索选项
-#if os(macOS) || os(visionOS)
+#if os(macOS)
                 if findVM.searchBarFocused {
                     ToolbarItem(id: "search") {
                         Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
@@ -100,6 +100,13 @@ struct PDFReader: View {
                         }
                         .onChange(of: findVM.findOptions, performFind)
                     }
+                }
+#elseif os(visionOS)
+                ToolbarItem(id: "search", placement: .topBarTrailing) {
+                    Menu("Find Options", systemImage: "doc.text.magnifyingglass") {
+                        Toggle("Case Sensitive", systemImage: "textformat", isOn: $findVM.caseSensitive)
+                    }
+                    .onChange(of: findVM.findOptions, performFind)
                 }
 #else
                 ToolbarItem(id: "search", placement: .topBarTrailing) {
