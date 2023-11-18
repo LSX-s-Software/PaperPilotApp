@@ -11,41 +11,35 @@ import PDFKit
 struct FindResultView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(PDFViewModel.self) private var pdfVM: PDFViewModel
-    @Bindable var findVM: FindViewModel<PDFSelection>
+    @Bindable var findVM: FindViewModel<PDFFindResult>
 
     @State private var currentSelection: PDFSelection?
 
     var body: some View {
-        List(findVM.findResult, id: \.self, selection: Binding { currentSelection } set: { selection in
-            if let selection = selection {
+        List(findVM.findResult, id: \.page, selection: $currentSelection) { result in
+            Section("Page \(result.page.label ?? "")") {
+                ForEach(result.selections) { selection in
+                    FindResultRow(selection: selection)
+                        .id(selection.id)
+                        .tag(selection.id)
+                }
+            }
+            .id(result.page)
+        }
+        .environment(findVM)
+        .onChange(of: currentSelection) {
+            if let selection = currentSelection {
 #if os(iOS)
                 dismiss()
 #endif
                 pdfVM.pdfView.go(to: selection)
                 pdfVM.pdfView.setCurrentSelection(selection, animate: true)
             }
-        }) { selection in
-            HStack {
-                VStack(alignment: .leading) {
-                    if let page = selection.pages.first?.label {
-                        Text("Page \(page)")
-                            .font(.caption)
-                    }
-                    Text(findResultText(for: selection))
-                        .multilineTextAlignment(.leading)
-                }
-            }
-            .padding(.bottom, 8)
-            .tag(selection)
-        }
-        .animation(.easeInOut, value: findVM.finding)
-        .onChange(of: findVM.currentSelectionIndex) {
-            currentSelection = findVM.findResult[findVM.currentSelectionIndex]
         }
         .overlay {
             if findVM.findText.isEmpty {
                 ContentUnavailableView("Enter Text to Search", systemImage: "magnifyingglass")
-            } else if findVM.finding {
+            } else if findVM.finding && findVM.findResult.isEmpty {
                 VStack(spacing: 8) {
                     ProgressView()
                     Text("Finding...")
@@ -59,15 +53,5 @@ struct FindResultView: View {
                 ContentUnavailableView.search(text: findVM.findText)
             }
         }
-    }
-
-    func findResultText(for selection: PDFSelection) -> AttributedString {
-        guard let extendSelection = selection.copy() as? PDFSelection else { return "" }
-        extendSelection.extendForLineBoundaries()
-        var attributedString = AttributedString(extendSelection.string ?? "")
-        guard let range = attributedString.range(of: selection.string ?? "", options: findVM.findOptions) else { return "" }
-        attributedString[range].inlinePresentationIntent = .stronglyEmphasized
-        attributedString[range].foregroundColor = .yellow
-        return attributedString
     }
 }

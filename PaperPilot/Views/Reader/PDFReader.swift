@@ -15,7 +15,7 @@ import PencilKit
 struct PDFReader: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(AppState.self) private var appState
-    @Environment(FindViewModel<PDFSelection>.self) private var findVM
+    @Environment(FindViewModel<PDFFindResult>.self) private var findVM
 
     @AppStorage(AppStorageKey.User.id.rawValue)
     private var userId: String = ""
@@ -42,7 +42,7 @@ struct PDFReader: View {
     @State private var sharedAnnotation = SharedAnnotation()
     @State private var sharedCanvas = SharedCanvas()
     @State private var shareErrorMsg: String?
-    @State private var bag = Set<AnyCancellable>()
+    @State private var subscriptions = Set<AnyCancellable>()
 
     var body: some View {
         @Bindable var findVM = findVM
@@ -82,11 +82,6 @@ struct PDFReader: View {
             .onSubmit(of: .search) {
                 if findVM.findResult.isEmpty {
                     performFind()
-                } else {
-                    findVM.currentSelectionIndex = (findVM.currentSelectionIndex + 1) % findVM.findResult.count
-                    let nextSelection = findVM.findResult[findVM.currentSelectionIndex]
-                    pdfVM.pdfView.go(to: nextSelection)
-                    pdfVM.pdfView.setCurrentSelection(nextSelection, animate: true)
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .PDFViewPageChanged)) { _ in
@@ -228,7 +223,7 @@ struct PDFReader: View {
                             }
                             sharedAnnotation.annotations = newAnnotations.annotations
                         }
-                        .store(in: &bag)
+                        .store(in: &subscriptions)
                     // 绘图
                     sharedCanvasDoc = try await ShareCoordinator.shared.getDocument(id, in: .canvas)
                     if await sharedCanvasDoc!.notCreated {
@@ -259,7 +254,7 @@ struct PDFReader: View {
                                 sharedCanvas.canvas[page] = canvas
                             }
                         }
-                        .store(in: &bag)
+                        .store(in: &subscriptions)
                 } catch {
                     shareErrorMsg = error.localizedDescription
                 }
@@ -282,7 +277,9 @@ extension PDFReader {
     }
 
     private func performFind() {
-        guard !findVM.finding else { return }
+        if findVM.finding {
+            pdf.cancelFindString()
+        }
         if findVM.findText.isEmpty {
             findVM.finding = false
             appState.findingPaper.remove(paper.id)
@@ -290,15 +287,32 @@ extension PDFReader {
         }
         findVM.finding = true
         appState.findingPaper.insert(paper.id)
-        Task {
-            findVM.findResult = pdf.findString(findVM.findText, withOptions: findVM.findOptions)
-            findVM.finding = false
-            if let firstResult = findVM.findResult.first {
-                findVM.currentSelectionIndex = 0
-                await pdfVM.pdfView.go(to: firstResult)
-                await pdfVM.pdfView.setCurrentSelection(firstResult, animate: true)
+        findVM.findResult.removeAll()
+        findVM.findSubscription = NotificationCenter.default.publisher(for: .PDFDocumentDidFindMatch)
+            .sink { notification in
+                guard let userInfo = notification.userInfo,
+                      let selection = userInfo["PDFDocumentFoundSelection"] as? PDFSelection,
+                      let currentPage = selection.pages.first,
+                      let extendSelection = selection.copy() as? PDFSelection else { return }
+                extendSelection.extendForLineBoundaries()
+                guard let extendSelectionString = extendSelection.string else { return }
+                let attributedSelection = PDFFindResult.Selection(selection: selection, string: extendSelectionString)
+                if let last = findVM.findResult.last, last.page == currentPage {
+                    if extendSelectionString != last.selections.last?.string {
+                        findVM.findResult[findVM.findResult.count - 1].selections.append(attributedSelection)
+                    }
+                } else {
+                    findVM.findResult.append(PDFFindResult(selections: [attributedSelection], page: currentPage))
+                }
             }
-        }
+        NotificationCenter.default.publisher(for: .PDFDocumentDidEndFind)
+            .first()
+            .sink { _ in
+                findVM.finding = false
+                findVM.findSubscription = nil
+            }
+            .store(in: &subscriptions)
+        pdf.beginFindString(findVM.findText, withOptions: findVM.findOptions)
     }
 }
 

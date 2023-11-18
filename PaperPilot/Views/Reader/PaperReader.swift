@@ -29,7 +29,7 @@ struct PaperReader: View {
     @State private var isDroping = false
     @State private var tocContent: TOCContentType = .none
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
-    @State private var findVM = FindViewModel<PDFSelection>()
+    @State private var findVM = FindViewModel<PDFFindResult>()
     @State private var pdfVM = PDFViewModel()
     @State private var downloadVM = DownloadViewModel()
     

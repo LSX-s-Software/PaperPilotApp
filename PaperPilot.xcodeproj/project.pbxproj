@@ -90,6 +90,7 @@
 		F58603B12AE80777001EBFD4 /* ServiceStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58603B02AE80777001EBFD4 /* ServiceStatusView.swift */; };
 		F588C8DF2AF89900000405E3 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F588C8DE2AF89900000405E3 /* UIKitExtensions.swift */; };
 		F588C8E52AF91446000405E3 /* PDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = F588C8E42AF91446000405E3 /* PDF.swift */; };
+		F589A5012B088DA90034E6AC /* FindResultRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F589A5002B088DA90034E6AC /* FindResultRow.swift */; };
 		F58DF0232AE21963001D4D68 /* AppURLScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0222AE21963001D4D68 /* AppURLScheme.swift */; };
 		F58DF0292AE2A60C001D4D68 /* ImageTitleForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */; };
 		F58DF02D2AE2B743001D4D68 /* ImageTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */; };
@@ -259,6 +260,7 @@
 		F58603B02AE80777001EBFD4 /* ServiceStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStatusView.swift; sourceTree = "<group>"; };
 		F588C8DE2AF89900000405E3 /* UIKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
 		F588C8E42AF91446000405E3 /* PDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDF.swift; sourceTree = "<group>"; };
+		F589A5002B088DA90034E6AC /* FindResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindResultRow.swift; sourceTree = "<group>"; };
 		F58DF0222AE21963001D4D68 /* AppURLScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppURLScheme.swift; sourceTree = "<group>"; };
 		F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleForm.swift; sourceTree = "<group>"; };
 		F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitle.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 			children = (
 				F5131C162AECA5D40077393E /* BookmarkView.swift */,
 				F5131C142AECA4B50077393E /* FindResultView.swift */,
+				F589A5002B088DA90034E6AC /* FindResultRow.swift */,
 				F5FDF8E62AD6D968001D9460 /* PDFKitThumbnailView.swift */,
 				F578D8202AD78ABE00322819 /* PDFOutlineView.swift */,
 			);
@@ -958,6 +961,7 @@
 				F54F66F62B07158200941CA0 /* PDFError.swift in Sources */,
 				F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */,
 				F508805F2AE8C24A00CD7510 /* Interceptor.swift in Sources */,
+				F589A5012B088DA90034E6AC /* FindResultRow.swift in Sources */,
 				F53D814B2AC1385300865B80 /* PaperReader.swift in Sources */,
 				F5131C012AEBB5090077393E /* ShareCoordinatorError.swift in Sources */,
 				F508805B2AE8B0A200CD7510 /* MicroserviceStatus.swift in Sources */,
