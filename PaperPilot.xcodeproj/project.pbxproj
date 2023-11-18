@@ -467,6 +467,7 @@
 			children = (
 				F588C8E42AF91446000405E3 /* PDF.swift */,
 				F59FB3BF2AE51B9A0007A76B /* FileManager.swift */,
+				F5DF34042AEB537500624672 /* Image.swift */,
 				F5008D7C2AEFA886004F326E /* Logger.swift */,
 				F53EA70D2ADFCDC900B97EB0 /* Pasteboard.swift */,
 				F5859E5A2AF2020900737752 /* PlatformSupport.swift */,
@@ -566,7 +567,6 @@
 				F59AD1022ACB0CA200DFABCC /* AddTagView.swift */,
 				F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */,
 				F547D0E52AC56F89006D2216 /* EditableText.swift */,
-				F5DF34042AEB537500624672 /* Image.swift */,
 				F58DF02C2AE2B742001D4D68 /* ImageTitle.swift */,
 				F5145E822AD58332001860E0 /* ImageTitleDialog.swift */,
 				F58DF0282AE2A60C001D4D68 /* ImageTitleForm.swift */,

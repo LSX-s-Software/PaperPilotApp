@@ -163,22 +163,39 @@ class AccountViewModel: ObservableObject {
     }
 
     func handleAvatarChange(avatarItem: PhotosPickerItem) {
-        isChangingAvatar = true
+        withAnimation {
+            isChangingAvatar = true
+        }
         Task {
             defer {
                 DispatchQueue.main.async {
-                    self.isChangingAvatar = false
+                    withAnimation {
+                        self.isChangingAvatar = false
+                    }
                 }
             }
             do {
-                guard let data = try await avatarItem.loadTransferable(type: Data.self) else {
+                guard let data = try await avatarItem.loadTransferable(type: Data.self),
+                      let image = PlatformImage(data: data),
+                      let resizedImage = image.resized(notLargerThan: CGSize(width: 250, height: 250)) else {
                     fail(message: String(localized: "Failed to load the image."), detail: nil)
                     return
                 }
+#if os(macOS)
+                guard let jpegData = resizedImage.jpegData() else {
+                    fail(message: String(localized: "Failed to compress the image."), detail: nil)
+                    return
+                }
+#else
+                guard let jpegData = resizedImage.jpegData(compressionQuality: 0.8) else {
+                    fail(message: String(localized: "Failed to compress the image."), detail: nil)
+                    return
+                }
+#endif
                 let token = try await API.shared.user.uploadUserAvatar(.init()).token
                 guard let oss = OSSRequest(token: token,
                                            fileName: avatarItem.itemIdentifier ?? "",
-                                           fileData: data,
+                                           fileData: jpegData,
                                            mimeType: "image/jpeg") else {
                     logger.error("Cannot initialize OSSRequest.")
                     throw NetworkingError.responseFormatError

@@ -782,6 +782,16 @@
         }
       }
     },
+    "Failed to compress the image." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "压缩图片失败"
+          }
+        }
+      }
+    },
     "Failed to create project" : {
       "localizations" : {
         "zh-Hans" : {
