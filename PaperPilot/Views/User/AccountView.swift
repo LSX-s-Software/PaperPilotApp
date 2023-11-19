@@ -128,7 +128,9 @@ struct AccountView: View {
                 }
             }
             .padding()
+#if os(macOS)
             .frame(width: 325)
+#endif
             .toolbar {
                 if viewModel.hasLoggedIn {
                     ToolbarItem(placement: .destructiveAction) {
