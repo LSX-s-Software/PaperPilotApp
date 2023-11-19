@@ -15,6 +15,9 @@ struct ProjectCreateEditView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var navigationContext: NavigationContext
 
+    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
+    private var loggedIn = false
+
     @Bindable var project: Project
     @State private var isShowingDeleteConfirm = false
     @State private var isRemoteProject = false
@@ -47,7 +50,7 @@ struct ProjectCreateEditView: View {
             ) {
                 TextField("Project Name", text: $newName)
 
-                if !edit {
+                if !edit && loggedIn {
                     Picker("Project Type", selection: $isRemoteProject) {
                         Text("Local").tag(false)
                         Text("Remote").tag(true)

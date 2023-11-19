@@ -972,6 +972,16 @@
         }
       }
     },
+    "Feature Unavailable." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "功能不可用"
+          }
+        }
+      }
+    },
     "File not found" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2803,6 +2813,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你没有访问此PDF的权限"
+          }
+        }
+      }
+    },
+    "You need to login to use this feature." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你需要登录来使用这个功能"
           }
         }
       }

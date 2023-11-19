@@ -31,6 +31,8 @@ struct PaperReaderInspector: View {
     private var inspectorContent = InspectorContent.info
     @AppStorage(AppStorageKey.Reader.isShowingInspector.rawValue)
     private var isShowingInspector = true
+    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
+    private var loggedIn = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -43,15 +45,22 @@ struct PaperReaderInspector: View {
             .labelsHidden()
             .padding()
 
-            switch inspectorContent {
-            case .info:
-                PaperInfo(paper: paper)
-            case .note:
-                SharedNoteView(paper: paper)
-            case .translator:
-                TranslatorView()
-            case .ai:
-                GPTView()
+            Group {
+                switch inspectorContent {
+                case .info:
+                    PaperInfo(paper: paper)
+                case .note:
+                    SharedNoteView(paper: paper)
+                case .translator:
+                    TranslatorView()
+                case .ai:
+                    GPTView()
+                }
+            }
+            .overlay {
+                if !loggedIn && (inspectorContent == .translator || inspectorContent == .ai) {
+                    LoginPromptView()
+                }
             }
         }
         .toolbar {
@@ -74,5 +83,5 @@ struct PaperReaderInspector: View {
 #Preview {
     PaperReaderInspector(paper: ModelData.paper1)
         .environment(PDFViewModel())
-        .frame(width: 300)
+        .frame(width: 300, height: 500)
 }

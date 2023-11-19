@@ -14,7 +14,7 @@ struct GPTView: View {
     @Environment(PDFViewModel.self) private var pdfVM: PDFViewModel
 
     @AppStorage(AppStorageKey.User.username.rawValue)
-    private var username = ""
+    private var username: String?
 
     @State private var question = ""
     @State private var generating = false
@@ -50,7 +50,7 @@ struct GPTView: View {
                         } else {
                             AvatarView(size: 28)
                         }
-                        Text(chat.isGPT ? "ChatGPT" : username)
+                        Text(chat.isGPT ? "ChatGPT" : username ?? "")
                             .font(.title2)
                     }
                     if let reference = chat.reference {
@@ -163,7 +163,7 @@ struct GPTView: View {
             }
         }
         .onAppear {
-            chats.append(ChatMessage.greeting(for: username))
+            chats.append(ChatMessage.greeting(for: username ?? ""))
             selectionEmpty = pdfVM.pdfView.currentSelection?.string == nil
             keepContext = selectionEmpty
         }

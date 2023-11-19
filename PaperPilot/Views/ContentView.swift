@@ -26,9 +26,11 @@ struct ContentView: View {
     @State private var errorMsg: String?
     @State private var columnVisibility = NavigationSplitViewVisibility.all
 
+    @AppStorage(AppStorageKey.User.loggedIn.rawValue)
+    private var loggedIn = false
     @AppStorage(AppStorageKey.User.username.rawValue)
     private var username: String?
-    
+
     var body: some View {
         @Bindable var appState = appState
 
@@ -79,6 +81,7 @@ struct ContentView: View {
                         Button("Join Project", systemImage: "person.crop.circle.badge.plus") {
                             isShowingJoinProjectSheet.toggle()
                         }
+                        .disabled(!loggedIn)
                     }
                     .menuStyle(.button)
                     .sheet(isPresented: $appState.isCreatingProject) {
@@ -156,10 +159,8 @@ struct ContentView: View {
             Text(alert.errorDetail)
         }
         .environment(alert)
-        .task(id: username) {
-            if username == nil {
-                return
-            }
+        .task(id: loggedIn) {
+            guard loggedIn else { return }
             let msg = String(localized: "Failed to fetch remote projects.")
             do {
                 try await downloadRemoteProjects()
