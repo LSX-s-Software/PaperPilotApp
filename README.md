@@ -144,6 +144,7 @@
 - 通过拖放添加论文及 PDF 文件
 - 在 iPadOS 上支持在同窗口、新窗口中打开论文阅读器
 - 在 iPadOS 上使用 PencilKit 支持用 Apple Pencil 绘制标注
+- 在 visionOS 上使用 Ornament 摆放论文详细信息
 - 支持通过 Spotlight 搜索项目、论文
 - 支持通过系统共享表单导入 PDF 文件
 - 通过 URL Scheme 启动
