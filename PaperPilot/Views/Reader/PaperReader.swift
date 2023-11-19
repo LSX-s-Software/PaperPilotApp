@@ -55,7 +55,7 @@ struct PaperReader: View {
 #if os(macOS)
                             .background(.windowBackground)
 #else
-                            .glassBackgroundEffect()
+                            .glassBackgroundEffect(in: RoundedRectangle(cornerRadius: 10))
 #endif
                     }
 #endif
