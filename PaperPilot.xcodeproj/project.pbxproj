@@ -840,6 +840,7 @@
 				F50B57802AF68E4B007C8FC2 /* XCRemoteSwiftPackageReference "XMLDocument" */,
 				F535B75D2B01262D001E8957 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				5279DACA2B04991700B2AAF0 /* XCRemoteSwiftPackageReference "SwiftDown" */,
+				52683B292B09F72600B38B2E /* XCRemoteSwiftPackageReference "Bib" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -1110,7 +1111,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperPilotTests";
+				PRODUCT_BUNDLE_IDENTIFIER = LSX-s-Software.PaperPilotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1133,7 +1134,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperPilotTests";
+				PRODUCT_BUNDLE_IDENTIFIER = LSX-s-Software.PaperPilotTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -1166,7 +1167,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperPilot.PaperPilotShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = LSX-s-Software.PaperPilot.PaperPilotShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1200,7 +1201,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperPilot.PaperPilotShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = LSX-s-Software.PaperPilot.PaperPilotShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1234,7 +1235,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperPilot.PaperPilotActionExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = LSX-s-Software.PaperPilot.PaperPilotActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1270,7 +1271,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "LSX-s-Software.PaperPilot.PaperPilotActionExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = LSX-s-Software.PaperPilot.PaperPilotActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1562,6 +1563,14 @@
 			requirement = {
 				kind = exactVersion;
 				version = 1.23.0;
+			};
+		};
+		52683B292B09F72600B38B2E /* XCRemoteSwiftPackageReference "Bib" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MikeWalrus/Bib.git";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 		5279DACA2B04991700B2AAF0 /* XCRemoteSwiftPackageReference "SwiftDown" */ = {
