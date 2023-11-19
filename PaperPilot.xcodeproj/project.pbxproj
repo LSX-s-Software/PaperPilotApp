@@ -1215,7 +1215,7 @@
 		F5C601E52B06188A004A93AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppExtensionIcon-iOS";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppExtensionIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_WARNINGS = NO;
 				CODE_SIGN_ENTITLEMENTS = PaperPilotActionExtension/PaperPilotActionExtension.entitlements;
@@ -1251,7 +1251,7 @@
 		F5C601E62B06188A004A93AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppExtensionIcon-iOS";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppExtensionIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_WARNINGS = NO;
 				CODE_SIGN_ENTITLEMENTS = PaperPilotActionExtension/PaperPilotActionExtension.entitlements;
