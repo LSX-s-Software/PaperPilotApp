@@ -113,6 +113,9 @@ final class API {
     }
 
     fileprivate func refreshAccessToken(alert: Alert) async {
+        if self.refreshToken == nil {
+            return
+        }
         do {
             let result = try await Self.shared.auth.refresh(.with {
                 $0.refresh = self.refreshToken!
