@@ -181,24 +181,24 @@ struct PaperReader: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-#if os(visionOS)
-                if isShowingInspector {
-                    PaperReaderInspector(paper: paper)
-                        .frame(maxWidth: 350)
-                        .environment(pdfVM)
-                }
-#endif
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle(paper.title)
+            // MARK: - 右侧内容
 #if os(visionOS)
+            .ornament(visibility: isShowingInspector ? .visible : .hidden,
+                      attachmentAnchor: .scene(.trailing),
+                      contentAlignment: .leading) {
+                PaperReaderInspector(paper: paper)
+                    .frame(minWidth: 200, idealWidth: 350,
+                           minHeight: 500, idealHeight: 1000)
+                    .glassBackgroundEffect()
+                    .environment(pdfVM)
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Show Inspector", systemImage: "sidebar.right") {
-                        withAnimation {
-                            isShowingInspector.toggle()
-                        }
+                    Button("Toggle Inspector", systemImage: "sidebar.right") {
+                        isShowingInspector.toggle()
                     }
                 }
                 if tocContent == .none {
@@ -212,7 +212,6 @@ struct PaperReader: View {
                 }
             }
 #else
-            // MARK: - 右侧内容
             .inspector(isPresented: $isShowingInspector) {
                 PaperReaderInspector(paper: paper)
                     .environment(pdfVM)

@@ -145,7 +145,11 @@ struct GPTView: View {
                     }
                     .padding(10)
                     .background(.regularMaterial)
+#if os(visionOS)
+                    .clipShape(Capsule())
+#else
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+#endif
                 }
                 .padding(12)
                 .background(.bar)

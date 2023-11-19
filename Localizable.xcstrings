@@ -2282,16 +2282,6 @@
         }
       }
     },
-    "Show Inspector" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示详细信息"
-          }
-        }
-      }
-    },
     "Show TOC" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2519,6 +2509,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标题"
+          }
+        }
+      }
+    },
+    "Toggle Inspector" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示/隐藏详细信息"
           }
         }
       }

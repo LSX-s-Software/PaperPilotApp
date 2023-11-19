@@ -57,13 +57,13 @@ struct PaperReaderInspector: View {
         .toolbar {
 #if os(iOS)
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Show Inspector", systemImage: "sidebar.right") {
+                Button("Toggle Inspector", systemImage: "sidebar.right") {
                     isShowingInspector.toggle()
                 }
             }
 #elseif os(macOS)
             Spacer()
-            Button("Show Inspector", systemImage: "sidebar.right") {
+            Button("Toggle Inspector", systemImage: "sidebar.right") {
                 isShowingInspector.toggle()
             }
 #endif
