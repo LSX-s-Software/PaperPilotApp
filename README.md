@@ -1,6 +1,6 @@
 # PaperPilot App
 
-![macOS 14.0+](https://img.shields.io/badge/macOS-14.0%2B-ffffff) ![iPadOS 17.0+](https://img.shields.io/badge/iPadOS-17.0%2B-ffffff) ![Swift 5.9+](https://img.shields.io/badge/Swift-5.9%2B-F05138) ![gRPC](https://img.shields.io/badge/gRPC-proto3-2ca1aa)
+![macOS 14.0+](https://img.shields.io/badge/macOS-14.0%2B-ffffff) ![iPadOS 17.0+](https://img.shields.io/badge/iPadOS-17.0%2B-ffffff) ![visionOS 1.0+](https://img.shields.io/badge/visionOS-1.0%2B-ffffff) ![Swift 5.9+](https://img.shields.io/badge/Swift-5.9%2B-F05138) ![gRPC](https://img.shields.io/badge/gRPC-proto3-2ca1aa)
 
 ![wakatime](https://wakatime.com/badge/user/271fef5a-1d0a-45c6-a8f0-9fb67a1417b6/project/c213100d-56fa-45ff-8ade-7c744cf7f708.svg) + ![wakatime](https://wakatime.com/badge/user/271fef5a-1d0a-45c6-a8f0-9fb67a1417b6/project/018b704b-24a1-4f1c-ae04-fae191ff7dc8.svg)
 
