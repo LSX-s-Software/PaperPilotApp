@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@ invites you to join the project \"%@\" on Paper Pilot." : {
       "localizations" : {
         "en" : {
@@ -480,6 +483,9 @@
           }
         }
       }
+    },
+    "Copy Bibliography" : {
+
     },
     "Copy Information" : {
       "localizations" : {

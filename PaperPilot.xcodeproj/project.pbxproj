@@ -17,6 +17,7 @@
 		279F2D222AC8364500FEA9D8 /* grpc-swift-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D202AC8364500FEA9D8 /* grpc-swift-config.json */; };
 		279F2D232AC8364500FEA9D8 /* swift-protobuf-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D212AC8364500FEA9D8 /* swift-protobuf-config.json */; };
 		279F2D272AC8398A00FEA9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
+		522585492B09FF48003C4965 /* Bib in Frameworks */ = {isa = PBXBuildFile; productRef = 522585482B09FF48003C4965 /* Bib */; };
 		5279DACC2B04991700B2AAF0 /* SwiftDown in Frameworks */ = {isa = PBXBuildFile; productRef = 5279DACB2B04991700B2AAF0 /* SwiftDown */; };
 		768A92EB2AF3E21B006068F3 /* CGRPCZlib in Frameworks */ = {isa = PBXBuildFile; productRef = 768A92EA2AF3E21B006068F3 /* CGRPCZlib */; };
 		768A92ED2AF3E21B006068F3 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = 768A92EC2AF3E21B006068F3 /* GRPC */; };
@@ -349,6 +350,7 @@
 				279F2CFF2AC8276600FEA9D8 /* SwiftProtobufPluginLibrary in Frameworks */,
 				F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */,
 				F547D0DD2AC52A6F006D2216 /* SwiftUIFlow in Frameworks */,
+				522585492B09FF48003C4965 /* Bib in Frameworks */,
 				768A92EB2AF3E21B006068F3 /* CGRPCZlib in Frameworks */,
 				768A92ED2AF3E21B006068F3 /* GRPC in Frameworks */,
 				279F2CFD2AC8276600FEA9D8 /* SwiftProtobuf in Frameworks */,
@@ -789,6 +791,7 @@
 				F50B57812AF68E4B007C8FC2 /* XMLDocument */,
 				F535B75E2B01262D001E8957 /* CachedAsyncImage */,
 				5279DACB2B04991700B2AAF0 /* SwiftDown */,
+				522585482B09FF48003C4965 /* Bib */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -1690,6 +1693,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F5C378FE2AC41EDA00C88C94 /* XCRemoteSwiftPackageReference "grpc-swift" */;
 			productName = "protoc-gen-grpc-swift";
+		};
+		522585482B09FF48003C4965 /* Bib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52683B292B09F72600B38B2E /* XCRemoteSwiftPackageReference "Bib" */;
+			productName = Bib;
 		};
 		5279DACB2B04991700B2AAF0 /* SwiftDown */ = {
 			isa = XCSwiftPackageProductDependency;

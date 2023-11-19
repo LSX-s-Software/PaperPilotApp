@@ -7,6 +7,7 @@
 
 import SwiftUI
 import GRPC
+import Bib
 
 struct ShareProjectView: View {
     @EnvironmentObject private var navigationContext: NavigationContext
@@ -64,6 +65,31 @@ struct ShareProjectView: View {
                             subject: Text(project.name),
                             message: Text("\(username ?? String(localized: "I")) invites you to join the project \"\(project.name)\" on Paper Pilot.")
                         )
+
+                        Menu("Copy Bibliography") {
+                            ForEach(OutputFormat.allCases, id: \.rawValue) { format in
+                                Button {
+                                    let entries = project.papers.map {
+                                        let year = Int($0.publication ?? "") ?? 0
+                                        return Entry(
+                                            type: .inproceedings,
+                                            title: $0.title,
+                                            year: year,
+                                            containerTitle: $0.publication ?? "Unknown",
+                                            author: $0.authors,
+                                            url: $0.url,
+                                            doi: $0.doi,
+                                            page: $0.pages,
+                                            volume: $0.volume
+                                        )
+                                    }
+                                    let bib = export(entries: entries, to: format)
+                                    setPasteboard(bib)
+                                } label: {
+                                    Text(LocalizedStringKey(format.rawValue))
+                                }
+                            }
+                        }
                     }
                 }
                 .disabled(project.invitationCode == nil || project.invitationCode!.isEmpty)
