@@ -157,6 +157,8 @@ class AccountViewModel: ObservableObject {
         } catch {
             fail(message: "Cannot remove remote projects.", detail: error.localizedDescription)
         }
+        
+        API.shared.unsetToken()
 
         DispatchQueue.main.async {
             self.loggedInStored = false

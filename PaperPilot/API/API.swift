@@ -87,12 +87,21 @@ final class API {
             return
         }
         let headers: HPACKHeaders = ["authorization": "Bearer \(accessToken)"]
+        setHeaders(headers)
+    }
+    
+    private func setHeaders(_ headers: HPACKHeaders) {
         auth.defaultCallOptions.customMetadata = headers
         user.defaultCallOptions.customMetadata = headers
         project.defaultCallOptions.customMetadata = headers
         paper.defaultCallOptions.customMetadata = headers
         translation.defaultCallOptions.customMetadata = headers
         gpt.defaultCallOptions.customMetadata = headers
+    }
+    
+    func unsetToken() {
+        let headers: HPACKHeaders = [:]
+        setHeaders(headers)
     }
 
     func refreshUserInfo() async throws {
