@@ -138,7 +138,7 @@ struct AccountView: View {
                             isShowingLogoutConfirmation = true
                         }
                         .confirmationDialog("Are you sure you want to log out?", isPresented: $isShowingLogoutConfirmation) {
-                            Button("Confirm", role: .destructive, action: viewModel.logout)
+                            Button("Confirm", role: .destructive, action: { Task { await viewModel.logout() } })
                         }
                     }
 

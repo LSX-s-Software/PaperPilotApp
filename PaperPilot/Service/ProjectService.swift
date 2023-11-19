@@ -98,4 +98,12 @@ extension ModelService {
         SpotlightHelper.deleteIndex(of: project)
         modelContext.delete(project)
     }
+
+    func removeRemoteProjectsLocally() async throws {
+        let descriptor = FetchDescriptor<Project>(predicate: #Predicate { $0.remoteId != nil })
+        let projects = try modelContext.fetch(descriptor)
+        for project in projects {
+            try await deleteProject(project, localOnly: true)
+        }
+    }
 }

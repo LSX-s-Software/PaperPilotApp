@@ -151,15 +151,23 @@ class AccountViewModel: ObservableObject {
         }
     }
 
-    func logout() {
-        self.loggedInStored = false
-        self.accessToken = nil
-        self.accessTokenExpireTime = nil
-        self.refreshToken = nil
-        self.refreshTokenExpireTime = nil
-        self.usernameStored = nil
-        self.phoneStored = nil
-        self.id = nil
+    func logout() async {
+        do {
+            try await ModelService.shared.removeRemoteProjectsLocally()
+        } catch {
+            fail(message: "Cannot remove remote projects.", detail: error.localizedDescription)
+        }
+
+        DispatchQueue.main.async {
+            self.loggedInStored = false
+            self.accessToken = nil
+            self.accessTokenExpireTime = nil
+            self.refreshToken = nil
+            self.refreshTokenExpireTime = nil
+            self.usernameStored = nil
+            self.phoneStored = nil
+            self.id = nil
+        }
     }
 
     func handleAvatarChange(avatarItem: PhotosPickerItem) {
