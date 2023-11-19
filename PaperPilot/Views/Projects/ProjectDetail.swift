@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftUIFlow
 import SwiftData
+import Bib
 
 struct ProjectDetail: View {
     @Environment(\.openWindow) private var openWindow
@@ -105,6 +106,13 @@ struct ProjectDetail: View {
                                 }
                             }
                             .disabled(!(paper[keyPath: keypath] is String))
+                        }
+                    }
+                }
+                Menu("Export Bibliography", systemImage: "books.vertical") {
+                    ForEach(OutputFormat.allCases, id: \.rawValue) { format in
+                        Button(format.rawValue) {
+                            copyBib(for: selectedPapers, format: format)
                         }
                     }
                 }
@@ -213,7 +221,16 @@ struct ProjectDetail: View {
         .toolbar {
             ToolbarItemGroup {
                 Spacer()
-                Button("Share", systemImage: "square.and.arrow.up") {
+                Menu("Export Bibliography", systemImage: "square.and.arrow.up") {
+                    ForEach(OutputFormat.allCases, id: \.rawValue) { format in
+                        Button(format.rawValue) {
+                            copyBib(format: format)
+                        }
+                    }
+                }
+                .disabled(project.papers.isEmpty)
+                
+                Button("Collaborate", systemImage: "person.crop.circle.badge.plus") {
                     appState.isSharingProject.toggle()
                 }
                 .disabled(!loggedIn)
@@ -362,6 +379,27 @@ struct ProjectDetail: View {
             openWindow(id: AppWindow.reader.id, value: id)
         }
 #endif
+    }
+    
+    /// 复制Bib信息
+    /// - Parameters:
+    ///   - papers: Paper的ID集合，如果不设置则拷贝项目中所有论文的Bib
+    func copyBib(for papers: Set<Paper.ID>? = nil, format: OutputFormat) {
+        let entries = project.papers.filter({ papers == nil || papers!.contains($0.id) }).map {
+            Entry(
+                type: .inproceedings,
+                title: $0.title,
+                year: Int($0.publication ?? "") ?? 0,
+                containerTitle: $0.publication ?? "Unknown",
+                author: $0.authors,
+                url: $0.url,
+                doi: $0.doi,
+                page: $0.pages,
+                volume: $0.volume
+            )
+        }
+        let bib = export(entries: entries, to: format)
+        setPasteboard(bib)
     }
 }
 

@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
     "%@ invites you to join the project \"%@\" on Paper Pilot." : {
       "localizations" : {
         "en" : {
@@ -423,6 +420,16 @@
         }
       }
     },
+    "Collaborate" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "协作"
+          }
+        }
+      }
+    },
     "Confirm" : {
       "localizations" : {
         "zh-Hans" : {
@@ -483,9 +490,6 @@
           }
         }
       }
-    },
-    "Copy Bibliography" : {
-
     },
     "Copy Information" : {
       "localizations" : {
@@ -754,6 +758,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "解释选中的文本"
+          }
+        }
+      }
+    },
+    "Export Bibliography" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出参考文献"
           }
         }
       }
@@ -2254,16 +2268,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "服务状态"
-          }
-        }
-      }
-    },
-    "Share" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "共享"
           }
         }
       }
