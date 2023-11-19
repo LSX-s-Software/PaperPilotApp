@@ -192,7 +192,6 @@ struct PaperReader: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle(paper.title)
-            // MARK: - 右侧内容
 #if os(visionOS)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -202,8 +201,18 @@ struct PaperReader: View {
                         }
                     }
                 }
+                if tocContent == .none {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Show TOC", systemImage: "sidebar.squares.left") {
+                            withAnimation {
+                                tocContent = .outline
+                            }
+                        }
+                    }
+                }
             }
 #else
+            // MARK: - 右侧内容
             .inspector(isPresented: $isShowingInspector) {
                 PaperReaderInspector(paper: paper)
                     .environment(pdfVM)

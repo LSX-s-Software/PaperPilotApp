@@ -2292,6 +2292,16 @@
         }
       }
     },
+    "Show TOC" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示目录"
+          }
+        }
+      }
+    },
     "Sidebar Content" : {
       "localizations" : {
         "zh-Hans" : {
