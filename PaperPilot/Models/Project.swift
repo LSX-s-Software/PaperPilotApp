@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 import SwiftUI
-import Bib
 
 /// 项目
 @Model
