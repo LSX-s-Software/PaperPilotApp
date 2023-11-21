@@ -58,7 +58,9 @@ final class API {
     @AppStorage(AppStorageKey.User.username.rawValue)
     var username: String?
 
-    init() {
+    private(set) var tokenRefreshTimer: Timer?
+
+    private init() {
         let factory = ErrorInterceptorFactory()
         self.auth = Auth_AuthPublicServiceAsyncClient(channel: channel, interceptors: factory)
         self.user = User_UserPublicServiceAsyncClient(channel: channel, interceptors: factory)
@@ -160,6 +162,7 @@ final class API {
                 }
             }
         RunLoop.main.add(timer, forMode: .common)
+        tokenRefreshTimer = timer
     }
 }
 

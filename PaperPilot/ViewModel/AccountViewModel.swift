@@ -159,6 +159,7 @@ class AccountViewModel: ObservableObject {
         }
         
         API.shared.unsetToken()
+        API.shared.tokenRefreshTimer?.invalidate()
 
         DispatchQueue.main.async {
             self.loggedInStored = false
