@@ -10,8 +10,6 @@
 
 ## 核心功能
 
-> 功能正在开发中
-
 - [x] 文献管理
   - [x] 通过文献的 DOI/URL 添加文献
   - [x] 导出 BibTeX、GB/T 7714 等格式的引用
@@ -38,8 +36,32 @@
 ## 开发要求
 
 - macOS 14.0+
-- Xcode 15.0+
+- Xcode 15.0+（**如果需要在 visionOS 上运行，则需要带有 visionOS SDK 的 Xcode beta**）
 - [protoc、protoc-gen-swift、protoc-gen-grpc-swift](https://github.com/grpc/grpc-swift#getting-the-protoc-plugins)
+
+### 开发步骤
+
+1. Clone 整个项目，包括 [paperpilot-common](https://github.com/Nagico/paperpilot-common) 子模块
+
+   ```shell
+   git clone --recursive https://github.com/LSX-s-Software/PaperPilotApp.git
+   ```
+
+2. 将项目根目录中的 `team.xcconfig.template` 文件改名为 `team.xcconfig`，并在其中填写自己的 `DEVELOPMENT_TEAM` 和 `PRODUCT_BUNDLE_IDENTIFIER`
+
+3. 安装 [protoc、protoc-gen-swift、protoc-gen-grpc-swift](https://github.com/grpc/grpc-swift#getting-the-protoc-plugins)，并确保能在 Shell 中正常使用
+
+4. **使用 Shell 运行 Xcode（或 Xcode beta）**
+
+   由于直接运行 Xcode 会导致 Xcode 无法继承在 Shell 中注册的环境变量，所以需要在 Shell 中用以下命令运行 Xcode：
+
+   ```shell
+   open /Applications/Xcode.app
+   ```
+
+5. 打开 Xcode 的项目设置，在除了 `PaperPilot` 之外的项目设置中修改 `DEVELOPMENT_TEAM` 和 `PRODUCT_BUNDLE_IDENTIFIER`
+
+6. 完成
 
 ## 完整功能列表
 
