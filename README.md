@@ -1,4 +1,4 @@
-# PaperPilot App
+![cover](docs/cover.jpg)
 
 ![macOS 14.0+](https://img.shields.io/badge/macOS-14.0%2B-ffffff) ![iPadOS 17.0+](https://img.shields.io/badge/iPadOS-17.0%2B-ffffff) ![visionOS 1.0+](https://img.shields.io/badge/visionOS-1.0%2B-ffffff) ![Swift 5.9+](https://img.shields.io/badge/Swift-5.9%2B-F05138) ![gRPC](https://img.shields.io/badge/gRPC-proto3-2ca1aa)
 
@@ -8,13 +8,16 @@
 
 **100% 原生，不含任何网页、JavaScript 等代码**
 
+**简体中文** | [English](docs/README.en.md)
+
 ## 核心功能
 
 - [x] 文献管理
   - [x] 通过文献的 DOI/URL 添加文献
   - [x] 导出 BibTeX、GB/T 7714 等格式的引用
 - [x] 跨平台、跨设备访问
-  - [x] 在电脑、平板、Apple Vision Pro 等设备上查看文献
+  - [x] 在 Mac、iPad、Apple Vision Pro 等设备上查看文献
+  - [x] 在 iPad 上使用 Apple Pencil 标注 PDF
   - [x] 数据多端同步
 - [x] 多人协同阅读
   - [x] **实时同步**富文本笔记
@@ -53,7 +56,7 @@
 
 4. **使用 Shell 运行 Xcode（或 Xcode beta）**
 
-   由于直接运行 Xcode 会导致 Xcode 无法继承在 Shell 中注册的环境变量，所以需要在 Shell 中用以下命令运行 Xcode：
+   由于直接运行 Xcode 会导致 Xcode 无法继承在 Shell 中注册的环境变量，编译时 SwiftProtobuf 插件会找不到 protoc 命令，所以需要在 Shell 中用以下命令运行 Xcode：
 
    ```shell
    open /Applications/Xcode.app
@@ -131,7 +134,6 @@
   - 自定义搜索选项（是否区分大小写）
   - 显示搜索结果列表
   - 在 PDF 中高亮搜索结果
-  - 通过回车键跳转到下一条搜索结果
 - 书签
 - 论文划词划句翻译
   - 自动检测语言
@@ -173,9 +175,9 @@
 - 通过 URL Scheme 启动
 - 深色模式
 - 使用 SwiftData 进行数据持久化
-- 多语言
-  - 英文
-  - 简体中文
+- 多语言（i18n）
+  - [x] 英文
+  - [x] 简体中文
 
 ### 其他
 
