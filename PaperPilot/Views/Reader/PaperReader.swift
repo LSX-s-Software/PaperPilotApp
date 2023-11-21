@@ -9,8 +9,8 @@ import SwiftUI
 import PDFKit
 import Throttler
 
-private enum TOCContentType: String, Identifiable, CaseIterable {
-    case none = "Hide TOC"
+private enum NavigatorContentType: String, Identifiable, CaseIterable {
+    case none = "Hide Navigator"
     case outline = "Outline"
     case thumbnail = "Thumbnail"
     case bookmark = "Bookmark"
@@ -27,7 +27,7 @@ struct PaperReader: View {
     @State private var errorDescription: String?
     @State private var isImporting = false
     @State private var isDroping = false
-    @State private var tocContent: TOCContentType = .none
+    @State private var navigatorContent: NavigatorContentType = .none
     @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
     @State private var findVM = FindViewModel<PDFFindResult>()
     @State private var pdfVM = PDFViewModel()
@@ -39,7 +39,7 @@ struct PaperReader: View {
             // MARK: - 左侧内容
             ZStack {
                 if let pdf = pdfVM.pdf {
-                    switch tocContent {
+                    switch navigatorContent {
                     case .none:
                         EmptyView()
                     case .outline:
@@ -61,7 +61,7 @@ struct PaperReader: View {
 #endif
                 }
             }
-            .navigationTitle(LocalizedStringKey(tocContent.rawValue))
+            .navigationTitle(LocalizedStringKey(navigatorContent.rawValue))
             .environment(pdfVM)
 #if os(iOS) || os(visionOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -72,16 +72,16 @@ struct PaperReader: View {
 #endif
             .toolbar {
                 ToolbarItem(placement: columnVisibility == .all ? .automatic : .navigation) {
-                    Menu("Table of Contents", systemImage: "sidebar.squares.left") {
-                        Picker("Table of Contents", selection: $tocContent) {
-                            ForEach(TOCContentType.allCases) { type in
+                    Menu("Navigator", systemImage: "sidebar.squares.left") {
+                        Picker("Navigator", selection: $navigatorContent) {
+                            ForEach(NavigatorContentType.allCases) { type in
                                 Text(LocalizedStringKey(type.rawValue)).tag(type)
                             }
                         }
                         .pickerStyle(.inline)
-                        .onChange(of: tocContent) {
+                        .onChange(of: navigatorContent) {
                             withAnimation {
-                                if tocContent == .none {
+                                if navigatorContent == .none {
                                     columnVisibility = .detailOnly
                                 } else if columnVisibility == .detailOnly {
                                     columnVisibility = .all
@@ -201,11 +201,11 @@ struct PaperReader: View {
                         isShowingInspector.toggle()
                     }
                 }
-                if tocContent == .none {
+                if navigatorContent == .none {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("Show TOC", systemImage: "sidebar.squares.left") {
+                        Button("Show Navigator", systemImage: "sidebar.squares.left") {
                             withAnimation {
-                                tocContent = .outline
+                                navigatorContent = .outline
                             }
                         }
                     }
@@ -235,7 +235,7 @@ extension PaperReader {
         if let url = FilePath.paperFileURL(for: paper) {
             if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
                 pdfVM.pdf = PDFDocument(url: url)
-                tocContent = .outline
+                navigatorContent = .outline
                 columnVisibility = .all
                 errorDescription = nil
             } else {
@@ -259,7 +259,7 @@ extension PaperReader {
                 paper.relativeLocalFile = url.lastPathComponent
                 paper.status = ModelStatus.normal.rawValue
                 pdfVM.pdf = PDFDocument(url: savedURL)
-                tocContent = .outline
+                navigatorContent = .outline
                 columnVisibility = .all
                 errorDescription = nil
             } catch {
@@ -291,7 +291,7 @@ extension PaperReader {
                     paper.status = ModelStatus.waitingForUpload.rawValue
                 }
                 pdfVM.pdf = PDFDocument(url: savedURL)
-                tocContent = .outline
+                navigatorContent = .outline
                 columnVisibility = .all
                 errorDescription = nil
                 return true

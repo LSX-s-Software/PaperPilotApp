@@ -1133,13 +1133,13 @@
         }
       }
     },
-    "Hide TOC" : {
+    "Hide Navigator" : {
       "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "隐藏目录"
+            "value" : "隐藏导航器"
           }
         }
       }
@@ -1534,6 +1534,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "成员"
+          }
+        }
+      }
+    },
+    "Navigator" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导航器"
           }
         }
       }
@@ -2302,16 +2312,6 @@
         }
       }
     },
-    "Show TOC" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示目录"
-          }
-        }
-      }
-    },
     "Sidebar Content" : {
       "localizations" : {
         "zh-Hans" : {
@@ -2408,16 +2408,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "补充信息"
-          }
-        }
-      }
-    },
-    "Table of Contents" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目录"
           }
         }
       }
