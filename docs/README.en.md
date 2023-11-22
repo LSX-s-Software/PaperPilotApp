@@ -64,6 +64,11 @@ For more details, please refer to the [Feature List](#Feature%20List).
 
 6. Done.
 
+## Related Repositories
+
+- Project's main repo: [PaperPilot](https://github.com/LSX-s-Software/PaperPilot)
+- Backend's repo: [paperpilot-backend](https://github.com/Nagico/paperpilot-backend)
+
 ## Feature List
 
 ### Projects

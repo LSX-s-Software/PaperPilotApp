@@ -66,6 +66,11 @@
 
 6. 完成
 
+## 相关仓库
+
+- 项目主仓库：[PaperPilot](https://github.com/LSX-s-Software/PaperPilot)
+- 后端程序仓库：[paperpilot-backend](https://github.com/Nagico/paperpilot-backend)
+
 ## 完整功能列表
 
 ### 项目
