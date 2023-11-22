@@ -140,6 +140,7 @@
 		F5C601FB2B061BD3004A93AB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 279F2D262AC8398A00FEA9D8 /* Localizable.xcstrings */; };
 		F5C602022B063221004A93AB /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5C602012B063221004A93AB /* Media.xcassets */; };
 		F5CF43342ADC1FB6004F1A16 /* WindowManagement in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = F5CF43332ADC1FB6004F1A16 /* WindowManagement */; settings = {ATTRIBUTES = (Required, ); }; };
+		F5D017432B0DABC40055D579 /* ProjectServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D017422B0DABC40055D579 /* ProjectServiceTest.swift */; };
 		F5D2BC5A2AE12546008DCDE6 /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */; };
 		F5D2BC5C2AE134A7008DCDE6 /* JoinProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */; };
 		F5D8EEED2AD42D5100501B0E /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D8EEEC2AD42D5100501B0E /* AccountView.swift */; };
@@ -302,6 +303,7 @@
 		F5C601E02B06188A004A93AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5C601FE2B061EBA004A93AB /* PaperPilotActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PaperPilotActionExtension.entitlements; sourceTree = "<group>"; };
 		F5C602012B063221004A93AB /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		F5D017422B0DABC40055D579 /* ProjectServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectServiceTest.swift; sourceTree = "<group>"; };
 		F5D2BC592AE12546008DCDE6 /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		F5D2BC5B2AE134A7008DCDE6 /* JoinProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinProjectView.swift; sourceTree = "<group>"; };
 		F5D8EEEC2AD42D5100501B0E /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -511,11 +513,12 @@
 		F5A2F40E2AF5E43E0045EF12 /* PaperPilotTests */ = {
 			isa = PBXGroup;
 			children = (
-				F5A2F4202AF63A7E0045EF12 /* PaperServiceTest.swift */,
 				F5A2F41A2AF5E5450045EF12 /* MultipartFormDataRequestTest.swift */,
 				F5A2F4182AF5E5000045EF12 /* OSSRequestTest.swift */,
 				F5A2F40F2AF5E43F0045EF12 /* PaperPilotTests.swift */,
+				F5A2F4202AF63A7E0045EF12 /* PaperServiceTest.swift */,
 				F5A2F41C2AF5FBC80045EF12 /* PasteboardTests.swift */,
+				F5D017422B0DABC40055D579 /* ProjectServiceTest.swift */,
 			);
 			path = PaperPilotTests;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5A2F41D2AF5FBC80045EF12 /* PasteboardTests.swift in Sources */,
+				F5D017432B0DABC40055D579 /* ProjectServiceTest.swift in Sources */,
 				F5A2F4102AF5E43F0045EF12 /* PaperPilotTests.swift in Sources */,
 				F5A2F4212AF63A7E0045EF12 /* PaperServiceTest.swift in Sources */,
 				F5A2F4192AF5E5000045EF12 /* OSSRequestTest.swift in Sources */,
