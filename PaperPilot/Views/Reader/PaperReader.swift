@@ -183,7 +183,9 @@ struct PaperReader: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+#if !os(iOS)
             .navigationTitle(paper.title)
+#endif
             // MARK: - 右侧内容
 #if os(visionOS)
             .ornament(visibility: isShowingInspector ? .visible : .hidden,
@@ -219,6 +221,9 @@ struct PaperReader: View {
             .inspectorColumnWidth(min: 250, ideal: 300)
 #endif
         }
+#if os(iOS)
+        .navigationTitle(paper.title)
+#endif
         .task(id: paper.id) {
             await loadPDF()
             await ModelService.shared.setPaperRead(paper, read: true)
