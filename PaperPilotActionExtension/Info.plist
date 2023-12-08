@@ -14,7 +14,7 @@
                         $extensionItem.attachments,
                         $attachment,
                         (
-                        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.adobe.pdf&quot;
+                        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.adobe.pdf"
                         )
                     ).@count &gt;= 1
                 ).@count &gt;= 1
@@ -24,10 +24,10 @@
 			<key>NSExtensionServiceAllowsTouchBarItem</key>
 			<false/>
 		</dict>
-		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).ActionViewController</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.ui-services</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>$(PRODUCT_MODULE_NAME).ActionViewController</string>
 	</dict>
 </dict>
 </plist>

@@ -69,7 +69,7 @@ extension Paper {
 
         // 解析论文信息
         self.init(title: title.joined(), doi: doi)
-        if let subtitle = message["subtitle"] as? [String] {
+        if let subtitle = message["subtitle"] as? [String], !subtitle.isEmpty {
             self.title += ": " + subtitle.joined()
         }
         // 解析作者
