@@ -113,7 +113,6 @@ struct PaperPilotApp: App {
                 .frame(minWidth: 500)
         }
         .modelContainer(modelContainer)
-        .defaultPosition(.top)
 #endif
     }
 }
