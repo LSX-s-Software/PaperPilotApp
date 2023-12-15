@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "antlr4-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MaxHaertwig/ANTLR4-Swift.git",
+      "state" : {
+        "revision" : "0b4eed93b803c931db67cc30434b5531f72d50b1",
+        "version" : "4.9.1"
+      }
+    },
+    {
       "identity" : "bib",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MikeWalrus/Bib.git",
@@ -214,6 +223,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "b300d3c0110116f3520066dfb8dcf3006cf593c3"
+      }
+    },
+    {
+      "identity" : "swiftybibtex",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MaxHaertwig/SwiftyBibtex.git",
+      "state" : {
+        "revision" : "b653c01e6315cf06c2c55a8396a397cdadaddccf",
+        "version" : "1.0.0"
       }
     },
     {

@@ -1669,6 +1669,16 @@
         }
       }
     },
+    "No publication found." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有找到出版物信息"
+          }
+        }
+      }
+    },
     "Not found" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1756,6 +1766,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "或者"
+          }
+        }
+      }
+    },
+    "Or Update By BibTeX" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "或者使用BibTeX"
           }
         }
       }
@@ -2671,6 +2691,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不支持的文件类型"
+          }
+        }
+      }
+    },
+    "Unsupported publication type." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持的BibTeX类型"
           }
         }
       }

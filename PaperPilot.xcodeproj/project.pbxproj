@@ -67,6 +67,7 @@
 		F54F66F72B07158200941CA0 /* PDFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54F66F52B07158200941CA0 /* PDFError.swift */; };
 		F54F66F82B07158200941CA0 /* PDFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54F66F52B07158200941CA0 /* PDFError.swift */; };
 		F55714122B0A03EC00EA9BAA /* LoginPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55714112B0A03EC00EA9BAA /* LoginPromptView.swift */; };
+		F55AC1622B2C6E6C00019F3C /* SwiftyBibtex in Frameworks */ = {isa = PBXBuildFile; productRef = F55AC1612B2C6E6C00019F3C /* SwiftyBibtex */; };
 		F5643F322AE3662100186A2F /* TranslatorLang.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643F312AE3662100186A2F /* TranslatorLang.swift */; };
 		F5643F372AE37C9C00186A2F /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = F5643F362AE37C9C00186A2F /* Throttler */; };
 		F5643F3B2AE3C63200186A2F /* MultipartFormDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5643F3A2AE3C63200186A2F /* MultipartFormDataRequest.swift */; };
@@ -364,6 +365,7 @@
 				F50B57822AF68E4B007C8FC2 /* XMLDocument in Frameworks */,
 				279F2D012AC8276600FEA9D8 /* protoc-gen-swift in Frameworks */,
 				5279DACC2B04991700B2AAF0 /* SwiftDown in Frameworks */,
+				F55AC1622B2C6E6C00019F3C /* SwiftyBibtex in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -799,6 +801,7 @@
 				F535B75E2B01262D001E8957 /* CachedAsyncImage */,
 				5279DACB2B04991700B2AAF0 /* SwiftDown */,
 				522585482B09FF48003C4965 /* Bib */,
+				F55AC1612B2C6E6C00019F3C /* SwiftyBibtex */,
 			);
 			productName = PaperPilot;
 			productReference = F5EBC0AE2ABFD98E00B2B4A3 /* PaperPilot.app */;
@@ -851,6 +854,7 @@
 				F535B75D2B01262D001E8957 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				5279DACA2B04991700B2AAF0 /* XCRemoteSwiftPackageReference "SwiftDown" */,
 				52683B292B09F72600B38B2E /* XCRemoteSwiftPackageReference "Bib" */,
+				F55AC1602B2C6E6C00019F3C /* XCRemoteSwiftPackageReference "SwiftyBibtex" */,
 			);
 			productRefGroup = F5EBC0AF2ABFD98E00B2B4A3 /* Products */;
 			projectDirPath = "";
@@ -1634,6 +1638,14 @@
 				kind = branch;
 			};
 		};
+		F55AC1602B2C6E6C00019F3C /* XCRemoteSwiftPackageReference "SwiftyBibtex" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MaxHaertwig/SwiftyBibtex.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		F5643F352AE37C9C00186A2F /* XCRemoteSwiftPackageReference "Throttler" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/boraseoksoon/Throttler.git";
@@ -1748,6 +1760,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F547D0DB2AC52A6F006D2216 /* XCRemoteSwiftPackageReference "SwiftUIFlow" */;
 			productName = SwiftUIFlow;
+		};
+		F55AC1612B2C6E6C00019F3C /* SwiftyBibtex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F55AC1602B2C6E6C00019F3C /* XCRemoteSwiftPackageReference "SwiftyBibtex" */;
+			productName = SwiftyBibtex;
 		};
 		F5643F362AE37C9C00186A2F /* Throttler */ = {
 			isa = XCSwiftPackageProductDependency;
